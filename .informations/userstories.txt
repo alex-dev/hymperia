@@ -1,8 +1,12 @@
 1 - En tant qu'utilisateur anonyme, je veux m'inscrire pour accéder aux fonctionnalités d'Hymperia.
 2 - En tant qu'utilisateur d'Hymperia, je veux me connecter pour utiliser Hymperia.
-3 - En tant qu'utilisateur connecté, je pourrai modifier mon mot de passe et permettre au logiciel de me connecter automatiquement.
-4 - En tant qu'utilisateur connecté, je pourrai supprimer mes projets rapidement depuis l'écran principal.
-5 - En tant qu'utilisateur connecté, je pourrai ne plus voir les projets qui m'ont été partagé en les supprimant.
+3 - En tant qu'utilisateur d'Hymperia, je veux que le logiciel me connecte automatiquement.
+4 - En tant qu'utilisateur connecté, je veux modifier mon mot de passe pour protéger mon compte Hymperia.
+5 - En tant qu'utilisateur connecté, je veux supprimer mes projets rapidement depuis l'écran principal.
 6 - En tant qu'utilisateur connecté, je veux créer un plan de clôture.
 7 - En tant qu'utilisateur connecté, je veux éditer un plan préexistent pour le rendre.
-6 - En tant qu'utilisateur connecté, lorsque j'édite un plan, je veux pouvoir 
+8 - En tant qu'utilisateur connecté, lorsque j'édite un plan, je veux pouvoir ajouter des éléments au plan et les déplacer.
+9 - En tant qu'utilisateur connecté, lorsque j'édite un plan, je veux pouvoir modifier la taille des éléments et la forme des éléments de mon plan.
+10 - En tant qu'utilisateur connecté, lorsque j'édite un plan, je veux pouvoir modifier la direction et la profondeur (zoom) de la caméra.
+11 - En tant qu'utilisateur connecté, je veux partager mes plans avec d'autres utilisateurs d'Hymperia.
+12 - 
