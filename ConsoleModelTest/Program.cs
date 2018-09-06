@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Hymperia.Model;
 
-namespace ConsoleModelTest
+namespace Hymperia.ConsoleModelTest
 {
   static class Program
   {
@@ -38,6 +38,7 @@ namespace ConsoleModelTest
     {
       Migrate().Wait();
       Types[args[0].ToLowerInvariant()]().Wait();
+      Console.ReadKey(true);
     }
 
     private static async Task Migrate()
