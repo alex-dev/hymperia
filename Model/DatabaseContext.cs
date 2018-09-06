@@ -1,4 +1,6 @@
 ﻿using System.Configuration;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,26 +35,40 @@ namespace Hymperia.Model
 
     #region Constructors
 
-    public DatabaseContext([CanBeNull] DbContextOptions<DatabaseContext> options = null)
-      : base(BuildOptions(options))
-    {
-      users = null;
-    }
+    /// <summary>Initialise le contexte selon les options par défaut.</summary>
+    public DatabaseContext() : base() { }
 
-    private static DbContextOptions<DatabaseContext> BuildOptions([CanBeNull] DbContextOptions<DatabaseContext> options)
+    /// <summary>Initialise le contexte selon les options passées.</summary>
+    /// <param name="options">Les options préconfigurées passées au contexte.</param>
+    public DatabaseContext([NotNull] DbContextOptions<DatabaseContext> options)
+      : base(options) { }
+
+    #endregion
+
+    #region Methods
+
+    public async Task Migrate(CancellationToken token = default)
     {
-      return (options is null
-          ? new DbContextOptionsBuilder<DatabaseContext>()
-          : new DbContextOptionsBuilder<DatabaseContext>(options))
-        .UseMySQL(ConfigurationManager.ConnectionStrings[ConfigurationName].ConnectionString)
-        .Options;
+      await Database.MigrateAsync(token);
     }
 
     #endregion
 
     #region Events Override
 
+    /// <inheritdoc/>
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      builder.Entity<User>().HasAlternateKey(user => user.Name);
+      base.OnModelCreating(builder);
+    }
 
+    /// <inheritdoc/>
+    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    {
+      builder.UseMySql(ConfigurationManager.ConnectionStrings[ConfigurationName].ConnectionString);
+      base.OnConfiguring(builder);
+    }
 
     #endregion
   }

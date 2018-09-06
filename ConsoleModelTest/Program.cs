@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Hymperia.Model;
 
 namespace ConsoleModelTest
@@ -19,11 +20,11 @@ namespace ConsoleModelTest
     ///   </list>
     /// </remarks>
     /// 
-    private static IDictionary<string, Action> Types
+    private static IDictionary<string, Func<Task>> Types
     {
-      get => new Dictionary<string, Action>
+      get => new Dictionary<string, Func<Task>>
       {
-        { "users", () => Print(context => context.Users ) }
+        { "users", async () => await Print(context => context.Users) }
       };
     }
 
@@ -35,22 +36,31 @@ namespace ConsoleModelTest
     /// </param>
     public static void Main(string[] args)
     {
-      Types[args[0].ToLowerInvariant()]();
+      Migrate().Wait();
+      Types[args[0].ToLowerInvariant()]().Wait();
     }
 
-    private static void Print<T>(Func<DatabaseContext, IEnumerable<T>> callable) where T : class
+    private static async Task Migrate()
     {
-      foreach (var item in Query(callable))
+      using (var context = new DatabaseContext())
+      {
+        await context.Migrate();
+      }
+    }
+
+    private static async Task Print<T>(Func<DatabaseContext, DbSet<T>> callable) where T : class
+    {
+      foreach (var item in await Query(callable))
       {
         Console.WriteLine(item);
       }
     }
 
-    private static IEnumerable<T> Query<T>(Func<DatabaseContext, IEnumerable<T>> callable) where T : class
+    private static async Task<IEnumerable<T>> Query<T>(Func<DatabaseContext, DbSet<T>> callable) where T : class
     {
       using (var context = new DatabaseContext())
       {
-        return callable(context).ToList();
+        return await callable(context).ToListAsync();
       }
     }
   }
