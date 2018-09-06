@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
@@ -9,6 +10,7 @@ namespace Hymperia.Model.Modeles
     [Key]
     public int Id { get; private set; }
 
+    [NotNull]
     [MaxLength(25)]
     public string Name { get; private set; }
 
@@ -16,6 +18,8 @@ namespace Hymperia.Model.Modeles
 
     #region ToString
 
+    [Pure]
+    [NotNull]
     public override string ToString()
     {
       return $"{ Id } - { Name }";

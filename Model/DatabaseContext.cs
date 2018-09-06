@@ -28,6 +28,7 @@ namespace Hymperia.Model
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
+    [ItemNotNull]
     public DbSet<User> Users
     {
       get => users ?? (users = Set<User>());
@@ -49,7 +50,7 @@ namespace Hymperia.Model
 
     #region Methods
 
-    public async Task Migrate(CancellationToken token = default)
+    public async Task Migrate([NotNull] CancellationToken token = default)
     {
       await Database.MigrateAsync(token);
     }
@@ -59,14 +60,14 @@ namespace Hymperia.Model
     #region Events Override
 
     /// <inheritdoc/>
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
       builder.Entity<User>().HasAlternateKey(user => user.Name);
       base.OnModelCreating(builder);
     }
 
     /// <inheritdoc/>
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
       builder.UseMySql(ConfigurationManager.ConnectionStrings[ConfigurationName].ConnectionString);
       base.OnConfiguring(builder);

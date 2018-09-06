@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Hymperia.Model;
 
@@ -19,7 +20,7 @@ namespace Hymperia.ConsoleModelTest
     ///     </item>
     ///   </list>
     /// </remarks>
-    /// 
+    [ItemNotNull]
     private static IDictionary<string, Func<Task>> Types
     {
       get => new Dictionary<string, Func<Task>>
@@ -49,7 +50,7 @@ namespace Hymperia.ConsoleModelTest
       }
     }
 
-    private static async Task Print<T>(Func<DatabaseContext, DbSet<T>> callable) where T : class
+    private static async Task Print<T>([NotNull] Func<DatabaseContext, DbSet<T>> callable) where T : class
     {
       foreach (var item in await Query(callable))
       {
@@ -57,7 +58,7 @@ namespace Hymperia.ConsoleModelTest
       }
     }
 
-    private static async Task<IEnumerable<T>> Query<T>(Func<DatabaseContext, DbSet<T>> callable) where T : class
+    private static async Task<IEnumerable<T>> Query<T>([NotNull] Func<DatabaseContext, DbSet<T>> callable) where T : class
     {
       using (var context = new DatabaseContext())
       {
