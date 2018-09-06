@@ -14,7 +14,7 @@ namespace Hymperia.ConsoleModelTest
     ///   <list type="bullet">
     ///     <item>La clé n'est que l'argument passé par la console. Choisir quelque chose de simple et court.</item>
     ///     <item>
-    ///       L'<see cref="Action"/> devrait appelé <see cref="Print{T}"/> avec un callback prenant en paramètre
+    ///       L'<see cref="Func{Task}<"/> devrait appelé <see cref="Print{T}"/> avec un callback prenant en paramètre
     ///       le contexte de la DB et retournant le DBSet correspondant à la clé.
     ///     </item>
     ///   </list>
@@ -34,10 +34,10 @@ namespace Hymperia.ConsoleModelTest
     ///     <item>Le type de la collection à afficher.</item>
     ///   </list>
     /// </param>
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-      Migrate().Wait();
-      Types[args[0].ToLowerInvariant()]().Wait();
+      await Migrate();
+      await Types[args[0].ToLowerInvariant()]();
       Console.ReadKey(true);
     }
 

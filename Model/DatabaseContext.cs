@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Hymperia.Model.Modeles;
 
 namespace Hymperia.Model
 {
@@ -23,8 +24,9 @@ namespace Hymperia.Model
     /// <summary>Retourne le <see cref="DbSet{User}"/>.</summary>
     /// <remarks>
     ///   La syntaxe <code>users ?? (users = Set<User>())</code> retourne users s'il est connu (non <see cref="null"/>),
-    ///   sinon l'affecte à un nouveau <see cref="DbSet{User}"/> puis le retourne.
-    ///   Un accès "lazy" est préférable ici plutôt que de créer tous les set initialement, ce qui peut être lourd.
+    ///   sinon lui affecte un nouveau <see cref="DbSet{User}"/> puis le retourne.
+    ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
+    ///   ce qui peut être lourd.
     /// </remarks>
     public DbSet<User> Users
     {

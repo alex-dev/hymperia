@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Hymperia.Model
+namespace Hymperia.Model.Modeles
 {
   public class User
   {
