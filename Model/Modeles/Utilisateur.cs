@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public class User
+  public class Utilisateur
   {
     #region Attributes
 
@@ -12,7 +12,7 @@ namespace Hymperia.Model.Modeles
 
     [NotNull]
     [MaxLength(25)]
-    public string Name { get; private set; }
+    public string Nom { get; private set; }
 
     #endregion
 
@@ -22,7 +22,7 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     public override string ToString()
     {
-      return $"{ Id } - { Name }";
+      return $"{ Id } - { Nom }";
     }
 
     #endregion

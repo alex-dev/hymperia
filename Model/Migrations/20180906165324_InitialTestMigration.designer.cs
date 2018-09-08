@@ -18,7 +18,7 @@ namespace Hymperia.Model.Migrations
       .HasAnnotation("ProductVersion", "2.2.0-preview1-35029")
       .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-      modelBuilder.Entity("Hymperia.Model.User", b =>
+      modelBuilder.Entity("Hymperia.Model.Utilisateur", b =>
         {
           b.Property<int>("Id")
             .ValueGeneratedOnAdd();
@@ -31,7 +31,7 @@ namespace Hymperia.Model.Migrations
 
           b.HasAlternateKey("Name");
 
-          b.ToTable("Users");
+          b.ToTable("Utilisateurs");
         });
 #pragma warning restore 612, 618
     }

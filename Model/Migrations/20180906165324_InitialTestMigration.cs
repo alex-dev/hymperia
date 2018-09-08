@@ -8,23 +8,23 @@ namespace Hymperia.Model.Migrations
     protected override void Up(MigrationBuilder migrationBuilder)
     {
       migrationBuilder.CreateTable(
-        name: "Users",
+        name: "Utilisateurs",
         columns: table => new
         {
           Id = table.Column<int>(nullable: false)
                 .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-          Name = table.Column<string>(maxLength: 25, nullable: false)
+          Nom = table.Column<string>(maxLength: 25, nullable: false)
         },
         constraints: table =>
         {
-          table.PrimaryKey("PK_Users", x => x.Id);
-          table.UniqueConstraint("AK_Users_Name", x => x.Name);
+          table.PrimaryKey("PK_Utilisateurs", x => x.Id);
+          table.UniqueConstraint("AK_Utilisateurs_Nom", x => x.Nom);
         });
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-      migrationBuilder.DropTable(name: "Users");
+      migrationBuilder.DropTable(name: "Utilisateurs");
     }
   }
 }

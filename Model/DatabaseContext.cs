@@ -18,20 +18,20 @@ namespace Hymperia.Model
     #region DBSets
 
     #region Fields
-    private DbSet<User> users;
+    private DbSet<Utilisateur> utilisateurs;
     #endregion
 
-    /// <summary>Retourne le <see cref="DbSet{User}"/>.</summary>
+    /// <summary>Retourne le <see cref="DbSet{Utilisateur}"/>.</summary>
     /// <remarks>
-    ///   La syntaxe <code>users ?? (users = Set<User>())</code> retourne users s'il est connu (non <see cref="null"/>),
-    ///   sinon lui affecte un nouveau <see cref="DbSet{User}"/> puis le retourne.
+    ///   La syntaxe <code>Utilisateurs ?? (Utilisateurs = Set<Utilisateur>())</code> retourne Utilisateurs s'il est connu (non <see cref="null"/>),
+    ///   sinon lui affecte un nouveau <see cref="DbSet{Utilisateur}"/> puis le retourne.
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
     [ItemNotNull]
-    public DbSet<User> Users
+    public DbSet<Utilisateur> Utilisateurs
     {
-      get => users ?? (users = Set<User>());
+      get => utilisateurs ?? (utilisateurs = Set<Utilisateur>());
     }
 
     #endregion
@@ -62,7 +62,7 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
-      builder.Entity<User>().HasAlternateKey(user => user.Name);
+      builder.Entity<Utilisateur>().HasAlternateKey(Utilisateur => Utilisateur.Nom);
       base.OnModelCreating(builder);
     }
 

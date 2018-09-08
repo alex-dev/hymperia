@@ -25,7 +25,7 @@ namespace Hymperia.ConsoleModelTest
     {
       get => new Dictionary<string, Func<Task>>
       {
-        { "users", async () => await Print(context => context.Users) }
+        { "utilisateurs", async () => await Print(context => context.Utilisateurs) }
       };
     }
 
