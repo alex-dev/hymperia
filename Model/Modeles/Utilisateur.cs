@@ -6,12 +6,14 @@ namespace Hymperia.Model.Modeles
   public class Utilisateur
   {
     #region Attributes
-
+    
     [Key]
+    [NotNull]
     public int Id { get; private set; }
 
     [NotNull]
     [MaxLength(25)]
+    [Required]
     public string Nom { get; private set; }
 
     #endregion
