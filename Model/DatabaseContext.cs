@@ -23,8 +23,8 @@ namespace Hymperia.Model
 
     /// <summary>Retourne le <see cref="DbSet{Utilisateur}"/>.</summary>
     /// <remarks>
-    ///   La syntaxe <code>Utilisateurs ?? (Utilisateurs = Set<Utilisateur>())</code> retourne Utilisateurs s'il est connu (non <see cref="null"/>),
-    ///   sinon lui affecte un nouveau <see cref="DbSet{Utilisateur}"/> puis le retourne.
+    ///   La syntaxe <code>Utilisateurs ?? (Utilisateurs = Set<Utilisateur>())</code> retourne Utilisateurs s'il est connu
+    ///   (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Utilisateur}"/> puis le retourne.
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>

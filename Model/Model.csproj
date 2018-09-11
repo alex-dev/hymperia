@@ -37,11 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
-    <Compile Include="Migrations\20180906165324_InitialTestMigration.cs" />
-    <Compile Include="Migrations\20180906165324_InitialTestMigration.designer.cs">
-      <DependentUpon>20180906165324_InitialTestMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modeles\Utilisateur.cs" />
   </ItemGroup>
