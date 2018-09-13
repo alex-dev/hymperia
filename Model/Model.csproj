@@ -39,7 +39,7 @@
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Modeles\Acces.cs" />
     <Compile Include="Modeles\Forme.cs" />
-    <Compile Include="Modeles\Matériau.cs" />
+    <Compile Include="Modeles\Materiau.cs" />
     <Compile Include="Modeles\Projet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modeles\Utilisateur.cs" />
