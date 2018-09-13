@@ -1,6 +1,6 @@
 ﻿namespace Hymperia.Model.Modeles
 {
-  public class Matériau
+  public class Materiau
   {
     #region Attributes
 
