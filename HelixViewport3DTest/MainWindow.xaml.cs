@@ -27,9 +27,14 @@ namespace Hymperia.HelixViewport3DTest
       Control = control;
     }
 
-    private void PlaceGrid_Click(object sender, RoutedEventArgs e)
+    private void AddShapeOnCursor_Click(object sender, RoutedEventArgs e)
     {
       PlaceUserControl(new PlaceRandomShapes());
+    }
+
+    private void SelectableShape_Click(object sender, RoutedEventArgs e)
+    {
+      PlaceUserControl(new SelectableShapes());
     }
   }
 }

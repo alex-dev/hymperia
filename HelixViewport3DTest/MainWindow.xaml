@@ -10,7 +10,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <Button Click="PlaceGrid_Click" Content="Grid + Camera Control"/>
+            <Button Click="AddShapeOnCursor_Click" Content="Shape on Cursor"/>
+            <Button Click="SelectableShape_Click" Content="Selectable Shape"/>
         </StackPanel>
     </Grid>
 </Window>
