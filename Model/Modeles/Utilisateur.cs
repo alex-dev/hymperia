@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -8,40 +10,88 @@ namespace Hymperia.Model.Modeles
   {
     #region Attributes
 
-    [Key]
-    [NotNull]
+    /// <summary>La clé primaire de l'utilisateur.</summary>
     public int Id { get; private set; }
 
+    /// <summary>Le nom d'utilisateur.</summary>
+    /// <remarks>Alternate Key</remarks>
     [NotNull]
-    [MinLength(1, ErrorMessage = "Le nom d'utilisateur ne peut pas être vide.")]
     [Required]
+    [MinLength(1, ErrorMessage = "Le nom d'utilisateur ne peut pas être vide.")]
     public string Nom { get; private set; }
 
+    /// <summary>Le mot de passe encrypté de l'utilisateur.</summary>
+    /// <remarks>Probablement hassed avec BCrypt.</remarks>
     [NotNull]
-    [MinLength(1, ErrorMessage = "Le mot de passe ne peut pas être vide.")]
     [Required]
+    [MinLength(1, ErrorMessage = "Le mot de passe ne peut pas être vide.")]
     public string MotDePasse { get; set; }
 
+    /// <summary>Les accès aux projets de l'utilisateur.</summary>
+    /// <remarks>Modifiable, mais privé.</remarks>
+    [ItemNotNull]
+    private IList<Acces> _Acces { get; set; }
 
-    public IEnumerable<Acces> Acces { get; private set; }
+    /// <summary>Les accès aux projets de l'utilisateur.</summary>
+    /// <remarks>Utilise une <see cref="ReadOnlyCollection{Acces}"/> pour éviter les modifications non contrôlées.</remarks>
+    [NotMapped]
+    [ItemNotNull]
+    public IReadOnlyCollection<Acces> Acces
+    {
+      get => new ReadOnlyCollection<Acces>(_Acces);
+    }
 
     #endregion
 
     #region Constructors
 
     /// <param name="nom">Le nom d'utilisateur.</param>
-    /// <param name="motDePasse">Le mot de passe de l'utilisateur. { <code>!string.IsNullOrWhitespace()</code> }</param>
+    /// <param name="motDePasse">Le mot de passe encrypté de l'utilisateur.</param>
     public Utilisateur([NotNull][MinLength(1)] string nom, [NotNull] string motDePasse)
     {
       Nom = nom;
       MotDePasse = motDePasse;
+      _Acces = new List<Acces> { };
     }
 
     #endregion
 
     #region Methods
 
-    public Acces CreerProjet([NotNull] string nom)
+    /// <summary></summary>
+    /// <param name="nom"></param>
+    /// <returns></returns>
+    public Projet CreerProjet([NotNull] string nom)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    /// <summary></summary>
+    /// <param name="projet"></param>
+    public void RecevoirProjet([NotNull] Projet projet)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    /// <summary></summary>
+    /// <param name="projet"></param>
+    public void RetirerProjet([NotNull] Projet projet)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    /// <summary></summary>
+    /// <param name="projet"></param>
+    /// <returns></returns>
+    public bool EstPropietaireDe([NotNull] Projet projet)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    /// <summary></summary>
+    /// <param name="projet"></param>
+    /// <returns></returns>
+    public bool PeutModifier([NotNull] Projet projet)
     {
       throw new System.NotImplementedException();
     }
@@ -54,7 +104,7 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     public override string ToString()
     {
-      return $"{ Id } - { Nom }";
+      return $"{ Id } - { Nom }: { Acces.Count } projets";
     }
 
     #endregion

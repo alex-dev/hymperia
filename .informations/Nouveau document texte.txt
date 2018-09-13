@@ -1,1 +1,3 @@
 http://www.helix-toolkit.org/
+
+BCrypt.NET > encrypt user passwords
