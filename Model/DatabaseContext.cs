@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Hymperia.Model.Migrations;
 using Hymperia.Model.Modeles;
 
 namespace Hymperia.Model
@@ -19,8 +20,8 @@ namespace Hymperia.Model
 
     #region Fields
     private DbSet<Utilisateur> utilisateurs;
-    private DbSet<Projet> projets;
-    private DbSet<Materiau> materiau;
+    private DbSet<Acces> acces;
+    private DbSet<Materiau> materiaux;
     #endregion
 
     /// <summary>Retourne le <see cref="DbSet{Utilisateur}"/>.</summary>
@@ -37,32 +38,32 @@ namespace Hymperia.Model
       get => utilisateurs ?? (utilisateurs = Set<Utilisateur>());
     }
 
-    /// <summary>Retourne le <see cref="DbSet{Projet}"/>.</summary>
+    /// <summary>Retourne le <see cref="DbSet{Acces}"/>.</summary>
     /// <remarks>
-    ///   La syntaxe <code>projets ?? (projets = Set<Projet>())</code> retourne <see cref="projets"/>
-    ///   s'il est connu (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Projet}"/> puis le 
+    ///   La syntaxe <code>acces ?? (acces = Set<Acces>())</code> retourne <see cref="acces"/>
+    ///   s'il est connu (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Acces}"/> puis le 
     ///   retourne.
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
     [ItemNotNull]
-    public DbSet<Projet> Projets
+    public DbSet<Acces> Acces
     {
-      get => projets ?? (projets = Set<Projet>());
+      get => acces ?? (acces = Set<Acces>());
     }
 
     /// <summary>Retourne le <see cref="DbSet{Materiau}"/>.</summary>
     /// <remarks>
-    ///   La syntaxe <code>materiau ?? (materiau = Set<Materiau>())</code> retourne <see cref="materiau"/>
+    ///   La syntaxe <code>materiaux ?? (materiaux = Set<Materiau>())</code> retourne <see cref="materiaux"/>
     ///   s'il est connu (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Materiau}"/> puis le 
     ///   retourne.
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
     [ItemNotNull]
-    public DbSet<Materiau> Materiau
+    public DbSet<Materiau> Materiaux
     {
-      get => materiau ?? (materiau = Set<Materiau>());
+      get => materiaux ?? (materiaux = Set<Materiau>());
     }
 
     #endregion
@@ -84,6 +85,7 @@ namespace Hymperia.Model
     public async Task Migrate([NotNull] CancellationToken token = default)
     {
       await Database.MigrateAsync(token);
+      await new Initializer().Initialize(utilisateurs, acces, materiaux);
     }
 
     #endregion
@@ -93,8 +95,10 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
-      builder.Entity<Utilisateur>().HasAlternateKey(Utilisateur => Utilisateur.Nom);
-      builder.Entity<Acces>().HasKey(Acces => new { Acces.Projet, Acces.Utilisateur });
+      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+      builder.Entity<Acces>().HasKey(acces => new { acces.Projet, acces.Utilisateur });
+      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
+      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
       base.OnModelCreating(builder);
     }
 

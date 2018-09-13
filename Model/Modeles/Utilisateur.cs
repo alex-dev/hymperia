@@ -8,7 +8,7 @@ namespace Hymperia.Model.Modeles
 {
   public class Utilisateur
   {
-    #region Attributes
+    #region Properties
 
     /// <summary>La clé primaire de l'utilisateur.</summary>
     public int Id { get; private set; }
@@ -31,6 +31,10 @@ namespace Hymperia.Model.Modeles
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
     private IList<Acces> _Acces { get; set; }
+
+    #endregion
+
+    #region Not Mapped Properties
 
     /// <summary>Les accès aux projets de l'utilisateur.</summary>
     /// <remarks>Utilise une <see cref="ReadOnlyCollection{Acces}"/> pour éviter les modifications non contrôlées.</remarks>

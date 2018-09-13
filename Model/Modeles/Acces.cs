@@ -8,25 +8,33 @@ namespace Hymperia.Model.Modeles
   {
     public enum Droit { Lecture, LectureEcriture, Possession }
 
-    #region Attributes
+    #region Properties
 
-    /// <summary>L'utilisateur pouvant accéder au projet.</summary>
+    /// <summary>Le projet protégé par ce droit d'accès.</summary>
     [NotNull]
     [Required]
     public Projet Projet { get; private set; }
 
+    /// <summary>L'utilisateur pouvant accéder au <see cref="Projet"/>.</summary>
     [NotNull]
     [Required]
     public Utilisateur Utilisateur { get; private set; }
 
+    /// <summary>Le droit d'accès de l'<see cref="Utilisateur"/> sur le <see cref="Projet"/>.</summary>
     public Droit DroitDAcces { get; set; }
 
+    #endregion
+
+    #region Not Mapped Properties
+
+    /// <summary>Indique si l'<see cref="Utilisateur"/> est le propriétaire du <see cref="Projet"/>.</summary>
     [NotMapped]
     public bool EstPropriétaire
     {
       get => DroitDAcces >= Droit.Possession;
     }
 
+    /// <summary>Indique si l'<see cref="Utilisateur"/> peut modifier le <see cref="Projet"/>.</summary>
     [NotMapped]
     public bool PeutModifier
     {
