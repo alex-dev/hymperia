@@ -17,10 +17,8 @@ namespace Hymperia.HelixViewport3DTest
       InitializeComponent();
     }
 
-    private void viewport_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private void Viewport_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-      viewport.pos
-      var point = e.GetPosition(viewport);
       viewport.Children.Add(new BoxVisual3D { Center = viewport.CursorPosition ?? default });
     }
   }

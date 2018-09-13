@@ -6,9 +6,9 @@
              xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" MouseDoubleClick="viewport_MouseDoubleClick">
+    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True" MouseDoubleClick="Viewport_MouseDoubleClick">
         <Helix:SunLight/>
-        <Helix:GridLinesVisual3D Width="8" Length="8" MinorDistance="1" MajorDistance="1" Thickness="0.01"></Helix:GridLinesVisual3D>
+        <Helix:GridLinesVisual3D Width="8" Length="8" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>
     </Helix:HelixViewport3D>
 
 </UserControl>
