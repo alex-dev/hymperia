@@ -23,7 +23,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Les formes dans le projet.</summary>
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
-    private IList<Forme> _Formes { get; set; }
+    internal IList<Forme> _Formes { get; set; }
 
     #endregion
 
