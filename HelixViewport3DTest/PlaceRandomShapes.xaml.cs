@@ -1,15 +1,10 @@
-﻿using System.Windows.Controls;
-using HelixToolkit.Wpf;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
+﻿using System;
 using System.Windows.Input;
-using System;
+using System.Windows.Controls;
+using HelixToolkit.Wpf;
 
 namespace Hymperia.HelixViewport3DTest
 {
-  /// <summary>
-  /// Logique d'interaction pour PlaceRandomShapes.xaml
-  /// </summary>
   public partial class PlaceRandomShapes : UserControl
   {
     private Random Random { get; set; }
@@ -21,7 +16,7 @@ namespace Hymperia.HelixViewport3DTest
       Random = new Random();
       Generator = new Func<MeshElement3D>[]
       {
-        //CreateBox,
+        CreateBox,
         CreateSphere,
       };
 
@@ -49,9 +44,7 @@ namespace Hymperia.HelixViewport3DTest
       return new SphereVisual3D
       {
         Center = viewport.CursorPosition ?? default,
-        Radius = Random.Next(1, 5),
-        //PhiDiv = Random.Next(0, 90),
-        //ThetaDiv = Random.Next(0, 90)
+        Radius = Random.Next(1, 5)
       };
 
     }

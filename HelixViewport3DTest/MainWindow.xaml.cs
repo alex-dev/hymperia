@@ -1,15 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using HelixToolkit.Wpf;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
 
 namespace Hymperia.HelixViewport3DTest
 {
-  /// <summary>
-  /// Logique d'interaction pour MainWindow.xaml
-  /// </summary>
   public partial class MainWindow : Window
   {
     private UserControl Control { get; set; }

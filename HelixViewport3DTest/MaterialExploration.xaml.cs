@@ -23,6 +23,7 @@ namespace Hymperia.HelixViewport3DTest
         public MaterialExploration()
         {
             InitializeComponent();
+
         }
     }
 }
