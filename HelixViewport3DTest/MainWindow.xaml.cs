@@ -32,9 +32,15 @@ namespace Hymperia.HelixViewport3DTest
       PlaceUserControl(new PlaceRandomShapes());
     }
 
-    private void SelectableShape_Click(object sender, RoutedEventArgs e)
+    private void MaterialExploration_Click(object sender, RoutedEventArgs e)
     {
-      PlaceUserControl(new SelectableShapes());
+      PlaceUserControl(new MaterialExploration());
     }
-  }
+
+    private void SpherePhiThetaExploration_Click(object sender, RoutedEventArgs e)
+    {
+        PlaceUserControl(new SpherePhiThetaExploration());
+    }
+        
+    }
 }

@@ -11,7 +11,8 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <Button Click="AddShapeOnCursor_Click" Content="Shape on Cursor"/>
-            <Button Click="SelectableShape_Click" Content="Selectable Shape"/>
+            <Button Click="MaterialExploration_Click" Content="Material Exploration"/>
+            <Button Click="SpherePhiThetaExploration_Click" Content="Sphere Phi Theta"/>
         </StackPanel>
     </Grid>
 </Window>
