@@ -85,7 +85,8 @@ namespace Hymperia.Model
     public async Task Migrate([NotNull] CancellationToken token = default)
     {
       await Database.MigrateAsync(token);
-      await new Initializer().Initialize(utilisateurs, acces, materiaux);
+      Task.WaitAll(new Initializer().Initialize(utilisateurs, acces, materiaux));
+      await SaveChangesAsync();
     }
 
     #endregion
