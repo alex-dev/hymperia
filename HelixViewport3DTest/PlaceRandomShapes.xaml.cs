@@ -21,7 +21,7 @@ namespace Hymperia.HelixViewport3DTest
       Random = new Random();
       Generator = new Func<MeshElement3D>[]
       {
-        CreateBox,
+        //CreateBox,
         CreateSphere,
       };
 
@@ -50,8 +50,8 @@ namespace Hymperia.HelixViewport3DTest
       {
         Center = viewport.CursorPosition ?? default,
         Radius = Random.Next(1, 5),
-        /*PhiDiv = Random.Next(3),
-        ThetaDiv = Random.Next(3)*/
+        //PhiDiv = Random.Next(0, 90),
+        //ThetaDiv = Random.Next(0, 90)
       };
 
     }
