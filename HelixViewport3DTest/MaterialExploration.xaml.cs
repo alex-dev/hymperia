@@ -15,14 +15,16 @@ using System.Windows.Shapes;
 
 namespace Hymperia.HelixViewport3DTest
 {
-    /// <summary>
-    /// Logique d'interaction pour MaterialExploration.xaml
-    /// </summary>
-    public partial class MaterialExploration : UserControl
+  /// <summary>
+  /// Logique d'interaction pour MaterialExploration.xaml
+  /// </summary>
+  public partial class MaterialExploration : UserControl
+  {
+    public MaterialExploration()
     {
-        public MaterialExploration()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
     }
+
+    
+  }
 }
