@@ -30,7 +30,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Les accès aux projets de l'utilisateur.</summary>
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
-    private IList<Acces> _Acces { get; set; }
+    internal IList<Acces> _Acces { get; set; }
 
     #endregion
 
