@@ -81,6 +81,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ManipulatorExploration.xaml.cs">
+      <DependentUpon>ManipulatorExploration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SpherePhiThetaExploration.xaml.cs">
       <DependentUpon>SpherePhiThetaExploration.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ManipulatorExploration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MaterialExploration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
