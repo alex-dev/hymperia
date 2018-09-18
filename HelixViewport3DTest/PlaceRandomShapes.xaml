@@ -4,10 +4,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" mc:Ignorable="d" d:DesignHeight="450"
-    d:DesignWidth="800">
-  <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True"
-      MouseDoubleClick="Viewport_MouseDoubleClick">
-    <Helix:SunLight />
-    <Helix:GridLinesVisual3D Width="100" Length="100" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
-  </Helix:HelixViewport3D>
+    d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+  <Grid Name="grid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="150px" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <ListBox Name="lstboxKeys" ItemsSource="{Binding Keys}" Grid.Column="0" SelectionMode="Extended">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True"
+        MouseDoubleClick="Viewport_MouseDoubleClick" Grid.Column="1">
+      <Helix:SunLight />
+      <Helix:GridLinesVisual3D Width="100" Length="100" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
+    </Helix:HelixViewport3D>
+  </Grid>
 </UserControl>

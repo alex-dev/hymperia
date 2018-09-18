@@ -8,7 +8,7 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0">
-      <Button Click="AddShapeOnCursor_Click" Content="Shape on Cursor" />
+      <Button Click="AddShapeOnCursor_Click" Content="Random Shape on Cursor" />
       <Button Click="SpherePhiThetaExploration_Click" Content="Sphere Phi Theta" />
       <Button Click="MaterialExploration_Click" Content="Material Exploration" />
     </StackPanel>
