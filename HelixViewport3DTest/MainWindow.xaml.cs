@@ -28,7 +28,7 @@ namespace Hymperia.HelixViewport3DTest
 
     private void MaterialExploration_Click(object sender, RoutedEventArgs e)
     {
-      PlaceUserControl(new MaterialExploration());
+      PlaceUserControl(new FormBrushesExploration());
     }
 
     private void SpherePhiThetaExploration_Click(object sender, RoutedEventArgs e)
