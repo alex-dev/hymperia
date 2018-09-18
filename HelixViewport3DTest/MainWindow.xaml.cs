@@ -35,6 +35,11 @@ namespace Hymperia.HelixViewport3DTest
     {
         PlaceUserControl(new SpherePhiThetaExploration());
     }
-        
+
+    private void ManipulatorExploration_Click(object sender, RoutedEventArgs e)
+    {
+      PlaceUserControl(new ManipulatorExploration());
     }
+
+  }
 }
