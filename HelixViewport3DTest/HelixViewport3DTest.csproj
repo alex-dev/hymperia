@@ -103,7 +103,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MaterialExploration.xaml">
+    <Page Include="FormBrushesExploration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,8 +117,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaterialExploration.xaml.cs">
-      <DependentUpon>MaterialExploration.xaml</DependentUpon>
+    <Compile Include="FormBrushesExploration.xaml.cs">
+      <DependentUpon>FormBrushesExploration.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlaceRandomShapes.xaml.cs">
       <DependentUpon>PlaceRandomShapes.xaml</DependentUpon>

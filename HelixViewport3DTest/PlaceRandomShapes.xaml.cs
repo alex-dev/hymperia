@@ -26,7 +26,8 @@ namespace Hymperia.HelixViewport3DTest
         { "Elipsoid", CreateEllipsoid },
         { "Flèche", CreateArrow },
         { "Prisme rectangulaire", CreateBox },
-        { "Sphère", CreateSphere }
+        { "Sphère", CreateSphere },
+        { "Cylindre", CreatePipe }
       };
 
       InitializeComponent();
@@ -124,5 +125,28 @@ namespace Hymperia.HelixViewport3DTest
         Radius = Random.Next(1, 5)
       };
     }
+
+    /// <remarks>
+    ///   <list type="bullet">
+    ///     <item><see cref="PipeVisual3D.Diameter"/>: Diamètre extérieur du cylindre</item>
+    ///     <item><see cref="PipeVisual3D.InnerDiameter"/>: Diamètre intérieur du cylindre</item>
+    ///     <item><see cref="PipeVisual3D.Point1"/>: Base du cylindre</item>
+    ///     <item><see cref="PipeVisual3D.Point2"/>: Dessus du cylindre</item>
+    ///     <item><see cref="PipeVisual3D.ThetaDiv"/>: Le moitié du nombre de segments utilisés pour former le(s) côté(s) du cylindre.(Permet plusieurs sortes de bases comme triangulaire, pentagonale, etc)</item>
+    ///   </list>
+    /// </remarks>
+    private MeshElement3D CreatePipe()
+    {
+
+      return new PipeVisual3D
+      {
+        Diameter = Random.Next(1, 3),
+        InnerDiameter = Random.NextDouble(),
+        Point1 = viewport.CursorPosition ?? default,
+        Point2 = new Point3D(viewport.CursorPosition.Value.X + Random.Next(-5, 5), viewport.CursorPosition.Value.Y + Random.Next(-5, 5), viewport.CursorPosition.Value.Z + Random.Next(-5,5)),
+        ThetaDiv = Random.Next(3, 30)
+      };
+    }
+    
   }
 }

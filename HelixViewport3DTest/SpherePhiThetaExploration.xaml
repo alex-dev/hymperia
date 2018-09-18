@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" mc:Ignorable="d" d:DesignHeight="450"
-    d:DesignWidth="800">
+    xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" mc:Ignorable="d">
   <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True">
     <Helix:SunLight />
     <Helix:GridLinesVisual3D Width="6" Length="15" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
