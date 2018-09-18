@@ -122,15 +122,6 @@ namespace Hymperia.HelixViewport3DTest
         Center = viewport.CursorPosition ?? default,
         Radius = Random.Next(1, 5)
       };
-
     }
-    /*private MeshElement3D CreatePipe()
-    {
-      return new PipeVisual3D { Center = viewport.CursorPosition ?? default };
-
-    }  */
-
-
-
   }
 }
