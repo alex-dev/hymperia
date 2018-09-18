@@ -20,7 +20,7 @@
     <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True"
         MouseDoubleClick="Viewport_MouseDoubleClick" Grid.Column="1">
       <Helix:SunLight />
-      <Helix:GridLinesVisual3D Width="100" Length="100" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
+      <Helix:GridLinesVisual3D Width="15" Length="15" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
     </Helix:HelixViewport3D>
   </Grid>
 </UserControl>
