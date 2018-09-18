@@ -1,10 +1,13 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Hymperia.Model.Migrations;
 using Hymperia.Model.Modeles;
+using Newtonsoft.Json.Linq;
 
 namespace Hymperia.Model
 {

@@ -11,7 +11,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>La clé primaire de la forme.</summary>
     public int Id { get; private set; }
 
-    /// <summary></summary>
+    /// <summary>Le matériau de la forme.</summary>
     [NotNull]
     [Required]
     public Materiau Materiau { get; set; }
@@ -24,18 +24,12 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     public double Prix
     {
-      get => throw new System.NotImplementedException();
+      get => Materiau.Prix * Volume;
     }
 
     /// <summary>Le volume de la forme.</summary>
     [NotMapped]
-    protected double Volume
-    {
-      get
-      {
-        throw new System.NotImplementedException();
-      }
-    }
+    protected abstract double Volume { get; }
 
     #endregion
 
@@ -55,10 +49,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"{ Id }: { Materiau.Nom }";
-    }
+    public abstract override string ToString();
 
     #endregion
   }

@@ -39,8 +39,11 @@
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Migrations\Initializer.cs" />
     <Compile Include="Modeles\Acces.cs" />
+    <Compile Include="Modeles\Ellipsoide.cs" />
     <Compile Include="Modeles\Forme.cs" />
     <Compile Include="Modeles\Materiau.cs" />
+    <Compile Include="Modeles\JsonObject\Point.cs" />
+    <Compile Include="Modeles\PrismeRectangulaire.cs" />
     <Compile Include="Modeles\Projet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modeles\Utilisateur.cs" />

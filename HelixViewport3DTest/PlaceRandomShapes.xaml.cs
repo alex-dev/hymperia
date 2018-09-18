@@ -101,7 +101,8 @@ namespace Hymperia.HelixViewport3DTest
       {
         Center = viewport.CursorPosition ?? default,
         RadiusX = Random.Next(1, 5),
-        RadiusY = Random.Next(1, 5)
+        RadiusY = Random.Next(1, 5),
+        RadiusZ = Random.Next(1, 5)
       };
 
     }
@@ -112,8 +113,8 @@ namespace Hymperia.HelixViewport3DTest
     ///     <item><see cref="SphereVisual3D.ThetaDiv"/>: La moitié du nombre de segments polaires utilisés pour former l'axe polaire de la sphère.</item>
     ///   </list>
     ///   <seealso cref="SpherePhiThetaExploration"/> pour une explication visuelle.
-    ///   <seealso cref="EllipsoidVisual3D"/> pour une forme pouvant créer une sphère lorsque <see cref="EllipsoidVisual3D.RadiusX"/> et
-    ///   <see cref="EllipsoidVisual3D.RadiusY"/> sont égaux.
+    ///   <seealso cref="EllipsoidVisual3D"/> pour une forme pouvant créer une sphère lorsque <see cref="EllipsoidVisual3D.RadiusX"/>,
+    ///   <see cref="EllipsoidVisual3D.RadiusY"/> et <see cref="EllipsoidVisual3D.RadiusZ"/> sont égaux.
     /// </remarks>
     private MeshElement3D CreateSphere()
     {

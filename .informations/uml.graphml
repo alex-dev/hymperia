@@ -172,13 +172,17 @@
     <node id="n6">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="170.0" width="195.0" x="1032.0" y="369.0"/>
+          <y:Geometry height="132.3705522729514" width="195.0" x="1257.0" y="369.00000000000006"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="42.6953125" x="76.15234375" y="4.0">Sphere</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="28.0" modelName="custom" textColor="#000000" visible="true" width="44.0" x="2.0" y="30.701171875">&lt;html&gt;
-&lt;p&gt;-Id: uint&lt;/p&gt;
-&lt;hr /&gt;
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="55.36328125" x="69.818359375" y="4.0">Ellipsoide</y:NodeLabel>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="100.0" modelName="custom" textColor="#000000" visible="true" width="99.0" x="2.0" y="30.701171875">&lt;html&gt;
+&lt;p&gt;-Centre: Point&lt;/p&gt;
+&lt;p&gt;-RadiusX: double&lt;/p&gt;
+&lt;p&gt;-RadiusY: double&lt;/p&gt;
+&lt;p&gt;-RadiusZ: double&lt;/p&gt;
+&lt;p&gt;-PhiDiv: int&lt;/p&gt;
+&lt;p&gt;-ThetaDiv: int &lt;/p&gt;
 &lt;/html&gt;<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
@@ -195,13 +199,15 @@
     <node id="n7">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="170.0" width="195.0" x="1482.0" y="369.0"/>
+          <y:Geometry height="101.25603759740545" width="195.0" x="1482.0" y="369.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="115.380859375" x="39.8095703125" y="4.0">PrismeRectangulaire</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="28.0" modelName="custom" textColor="#000000" visible="true" width="44.0" x="2.0" y="30.701171875">&lt;html&gt;
-&lt;p&gt;-Id: uint&lt;/p&gt;
-&lt;hr /&gt;
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="68.0" modelName="custom" textColor="#000000" visible="true" width="105.0" x="2.0" y="30.701171875">&lt;html&gt;
+&lt;p&gt;-Centre: Point&lt;/p&gt;
+&lt;p&gt;-Hauteur: double&lt;/p&gt;
+&lt;p&gt;-Largeur: double&lt;/p&gt;
+&lt;p&gt;-Longueur: double&lt;/p&gt;
 &lt;/html&gt;<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
@@ -218,7 +224,7 @@
     <node id="n8">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="170.0" width="195.0" x="1257.0" y="369.0"/>
+          <y:Geometry height="170.0" width="195.0" x="1032.0" y="369.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="128.728515625" x="33.1357421875" y="4.0">PyramideRectangulaire</y:NodeLabel>
