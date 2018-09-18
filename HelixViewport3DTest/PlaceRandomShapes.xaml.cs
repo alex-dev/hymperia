@@ -137,11 +137,10 @@ namespace Hymperia.HelixViewport3DTest
     /// </remarks>
     private MeshElement3D CreatePipe()
     {
-
       return new PipeVisual3D
       {
         Diameter = Random.Next(1, 3),
-        InnerDiameter = Random.NextDouble(),
+        InnerDiameter = Random.Next(0, 3),
         Point1 = viewport.CursorPosition ?? default,
         Point2 = new Point3D(viewport.CursorPosition.Value.X + Random.Next(-5, 5), viewport.CursorPosition.Value.Y + Random.Next(-5, 5), viewport.CursorPosition.Value.Z + Random.Next(-5,5)),
         ThetaDiv = Random.Next(3, 30)

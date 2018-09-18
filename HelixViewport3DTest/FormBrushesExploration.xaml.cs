@@ -21,10 +21,27 @@ namespace Hymperia.HelixViewport3DTest
   {
     private SphereVisual3D Sphere { get; set; }
 
+    #region SolidColorBrush
+
     public byte CouleurA { get; set; }
     public byte CouleurR { get; set; }
     public byte CouleurG { get; set; }
     public byte CouleurB { get; set; }
+
+    public void ModificationMateriauxARGB(object sender, RoutedEventArgs e)
+    {
+      var couleur = Color.FromArgb(CouleurA, CouleurR, CouleurG, CouleurB);
+      var maBrush = new SolidColorBrush(couleur);
+      Sphere.Fill = maBrush;
+    }
+
+    #endregion
+
+    #region LinearGradientBrush
+    #endregion
+
+    #region RadialGradiantBrush
+    #endregion
 
     public FormBrushesExploration()
     {
@@ -33,13 +50,6 @@ namespace Hymperia.HelixViewport3DTest
       ModificationMateriauxARGB(null, null);
       InitializeComponent();
       viewport.Children.Add(Sphere);
-    }
-
-    public void ModificationMateriauxARGB(object sender, RoutedEventArgs e)
-    {
-      var couleur = Color.FromArgb(CouleurA, CouleurR, CouleurG, CouleurB);
-      var maBrush = new SolidColorBrush(couleur);
-      Sphere.Fill = maBrush;
     }
   }
 }
