@@ -23,13 +23,31 @@
       <TextBox Text="{Binding CouleurB}" />
       <Button Click="ModificationMateriauxARGB" Content="Modification du ARGB" />
     </StackPanel>
-    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="False" Grid.Column="1" Grid.RowSpan="3">
+    <StackPanel Grid.Column="1" Grid.Row="0">
+      <Label Content="LinearGradientBrush" />
+      <Label Content="Point 1" />
+      <TextBox Text="{Binding Point1X}" />
+      <TextBox Text="{Binding Point1Y}" />
+      <TextBox Text="{Binding Couleur1A}" />
+      <TextBox Text="{Binding Couleur1R}" />
+      <TextBox Text="{Binding Couleur1G}" />
+      <TextBox Text="{Binding Couleur1B}" />
+    </StackPanel>
+    <StackPanel Grid.Column="1" Grid.Row="1">
+      <Label Content="Point 2" />
+      <TextBox Text="{Binding Point2X}" />
+      <TextBox Text="{Binding Point2Y}" />
+      <TextBox Text="{Binding Couleur2A}" />
+      <TextBox Text="{Binding Couleur2R}" />
+      <TextBox Text="{Binding Couleur2G}" />
+      <TextBox Text="{Binding Couleur2B}" />
+    <Button Click="ModificationLinearGradientBrush" Content="Modifié LinearGradientBrush" />
+      <Button Click="ModificationRadialGradientBrush" Content="Modifié RadialGradientBrush" />
+    </StackPanel>
+    
+    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="False" Grid.Column="3" Grid.Row="3"
+        Grid.RowSpan="3">
       <Helix:SunLight />
-      <!-- 
-        SpecularIntensity basically amounts to the amount of light reflected by the shape's material 
-        Where 1 being the most reflective to 0 being completely matte
-        -->
-      <!--<Helix:SphereVisual3D Center="5,0,0" Radius="1" Material="{Helix:Material Black, SpecularIntensity=1.0}"/>-->
     </Helix:HelixViewport3D>
   </Grid>
 </UserControl>
