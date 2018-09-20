@@ -33,13 +33,13 @@ namespace Hymperia.HelixViewport3DTest
 
     public void KeyDown(object sender, KeyEventArgs e)
     {
-      if (Keyboard.IsKeyDown(Key.NumPad4))
-        DeplacementGauche();
-      if (Keyboard.IsKeyDown(Key.NumPad6))
-        DeplacementDroite();
       if (Keyboard.IsKeyDown(Key.NumPad8))
-        DeplacementHaut();
+        DeplacementGauche();
       if (Keyboard.IsKeyDown(Key.NumPad2))
+        DeplacementDroite();
+      if (Keyboard.IsKeyDown(Key.NumPad6))
+        DeplacementHaut();
+      if (Keyboard.IsKeyDown(Key.NumPad4))
         DeplacementBas();
     }
 
