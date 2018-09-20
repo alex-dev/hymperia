@@ -114,6 +114,7 @@ namespace Hymperia.Model
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
       builder.Entity<Forme>().ToTable("Formes");
+      builder.Entity<Cone>().HasBaseType<Forme>();
       builder.Entity<Cylindre>().HasBaseType<Forme>();
       builder.Entity<Ellipsoide>().HasBaseType<Forme>();
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();

@@ -7,7 +7,7 @@ namespace Hymperia.Model.Modeles
 {
   public class PrismeRectangulaire : Forme
   {
-    #region Attribute
+    #region Attributes
 
     public JsonObject<Point> Centre { get; set; }
     public double Hauteur { get; set; }

@@ -37,13 +37,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
+    <Compile Include="DoubleExtension.cs" />
     <Compile Include="Migrations\20180920181807_InitialDatabase.cs" />
     <Compile Include="Migrations\20180920181807_InitialDatabase.designer.cs">
       <DependentUpon>20180920181807_InitialDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180920221024_ConesMigration.cs" />
+    <Compile Include="Migrations\20180920221024_ConesMigration.designer.cs">
+      <DependentUpon>20180920221024_ConesMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />
     <Compile Include="Modeles\Acces.cs" />
+    <Compile Include="Modeles\Cone.cs" />
     <Compile Include="Modeles\Cylindre.cs" />
     <Compile Include="Modeles\Ellipsoide.cs" />
     <Compile Include="Modeles\Forme.cs" />
@@ -51,6 +57,7 @@
     <Compile Include="Modeles\JsonObject\Point.cs" />
     <Compile Include="Modeles\PrismeRectangulaire.cs" />
     <Compile Include="Modeles\Projet.cs" />
+    <Compile Include="Modeles\ThetaDivForme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modeles\Utilisateur.cs" />
   </ItemGroup>

@@ -34,8 +34,15 @@ namespace Hymperia.Model.Migrations
         {
           Point1 = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
           Point2 = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
-          Diametre = Random.Next(1, 15),
+          Diametre = Random.Next(1, 15)
+        },
+        materiaux => new Cone(materiaux[Random.Next(materiaux.Length)])
+        {
+          Origine = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Hauteur = Random.Next(1, 15),
+          RayonBase = Random.Next(1, 15)
         }
+
       };
     }
 

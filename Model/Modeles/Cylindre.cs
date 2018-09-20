@@ -5,15 +5,14 @@ using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Modeles
 {
-  public class Cylindre : Forme
+  public class Cylindre : ThetaDivForme
   {
-    #region Attribute
+    #region Attributes
 
     public JsonObject<Point> Point1 { get; set; }
     public JsonObject<Point> Point2 { get; set; }
     public double Diametre { get; set; }
     public double InnerDiametre { get; set; }
-    public int ThetaDiv { get; set; }
 
     #endregion
 
@@ -43,7 +42,14 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     public override double Volume
     {
-      get => Math.PI * Math.Pow((Diametre - InnerDiametre) / 2, 2) * Hauteur;
+      get => Aire * Hauteur;
+    }
+
+    [NotMapped]
+    protected override double Aire
+    {
+      get => CalculeAire(Diametre / 2)
+        - (InnerDiametre == 0 ? 0 : CalculeAire(InnerDiametre / 2));
     }
 
     #endregion
@@ -58,7 +64,6 @@ namespace Hymperia.Model.Modeles
     {
       Diametre = 1;
       InnerDiametre = 0;
-      ThetaDiv = 60;
     }
 
     #endregion
