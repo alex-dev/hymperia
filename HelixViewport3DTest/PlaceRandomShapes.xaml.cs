@@ -124,7 +124,8 @@ namespace Hymperia.HelixViewport3DTest
       return new SphereVisual3D
       {
         Center = viewport.CursorPosition ?? default,
-        Radius = Random.Next(1, 5)
+        Radius = Random.Next(1, 5),
+        ThetaDiv = ThetaDiv()
       };
     }
 
@@ -145,7 +146,7 @@ namespace Hymperia.HelixViewport3DTest
         InnerDiameter = Random.Next(0, 3),
         Point1 = viewport.CursorPosition ?? default,
         Point2 = new Point3D(viewport.CursorPosition.Value.X + Random.Next(-5, 5), viewport.CursorPosition.Value.Y + Random.Next(-5, 5), viewport.CursorPosition.Value.Z + Random.Next(-5, 5)),
-        ThetaDiv = Random.Next(3, 30)
+        ThetaDiv = ThetaDiv()
       };
     }
 
@@ -166,12 +167,21 @@ namespace Hymperia.HelixViewport3DTest
       return new TruncatedConeVisual3D
       {
         Origin = viewport.CursorPosition ?? default,
-        ThetaDiv = Random.Next(3, 30),
+        ThetaDiv = ThetaDiv(),
         Height = Random.Next(1, 5),
         BaseRadius = Random.Next(1, 5),
-        /*TopRadius = Random.Next(1, 5)*/
+        /*TopRadius = Random.Next(0, 3)*/
       };
     }
 
+    private int ThetaDiv()
+    {
+      return Random.Next(4, 50);
+    }
+
+    private int PhiDiv()
+    {
+      return Random.Next(3, 50);
+    }
   }
 }

@@ -29,6 +29,42 @@ namespace Hymperia.HelixViewport3DTest
       Cylindre = new PipeVisual3D();
       InitializeComponent();
       viewport.Children.Add(Cylindre);
+
+      
+      Cylindre.Point2 = new Point3D(0, 0, -10);
+
+      // Translate X
+      TranslateManipulator translateManipulatorX = new TranslateManipulator();
+      translateManipulatorX.Visibility = Visibility.Visible;
+      translateManipulatorX.Bind(Cylindre);
+      translateManipulatorX.Color = Colors.DarkRed;
+      translateManipulatorX.Direction = new Vector3D(1, 0, 0);
+      viewport.Children.Add(translateManipulatorX);
+
+      // Translate Y
+      TranslateManipulator translateManipulatorY = new TranslateManipulator();
+      translateManipulatorY.Visibility = Visibility.Visible;
+      translateManipulatorY.Bind(Cylindre);
+      translateManipulatorY.Color = Colors.AliceBlue;
+      translateManipulatorY.Direction = new Vector3D(0,1,0);
+      viewport.Children.Add(translateManipulatorY);
+
+      // Translate Z
+      TranslateManipulator translateManipulatorZ = new TranslateManipulator();
+      translateManipulatorZ.Visibility = Visibility.Visible;
+      translateManipulatorZ.Bind(Cylindre);
+      translateManipulatorZ.Color = Colors.ForestGreen;
+      translateManipulatorZ.Direction = new Vector3D(0,0,-1);
+      viewport.Children.Add(translateManipulatorZ);
+
+
+      viewport.Visibility = Visibility.Visible;
+      
+    }
+
+    public void Pause(object sender, RoutedEventArgs e)
+    {
+      return;
     }
 
     public void KeyDown(object sender, KeyEventArgs e)
@@ -45,12 +81,16 @@ namespace Hymperia.HelixViewport3DTest
 
     public void DeplacementGauche()
     {
-      Point3D point1 = Cylindre.Point1;
-      Point3D point2 = Cylindre.Point2;
-      point1.X --;
-      point2.X --;
-      Cylindre.Point1 = point1;
-      Cylindre.Point2 = point2;
+      Transform3D transform3D;
+      Vector3D vector3D = new Vector3D();
+
+      TranslateManipulator translateManipulator = new TranslateManipulator();
+      //Point3D point1 = Cylindre.Point1;
+      //Point3D point2 = Cylindre.Point2;
+      //point1.X --;
+      //point2.X --;
+      //Cylindre.Point1 = point1;
+      //Cylindre.Point2 = point2;
     }
 
     public void DeplacementDroite()
@@ -82,6 +122,6 @@ namespace Hymperia.HelixViewport3DTest
       Cylindre.Point1 = point1;
       Cylindre.Point2 = point2;
     }
-
+    
   }
 }
