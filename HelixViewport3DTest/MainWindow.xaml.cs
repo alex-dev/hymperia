@@ -41,10 +41,17 @@ namespace Hymperia.HelixViewport3DTest
       PlaceUserControl(new ManipulatorExploration());
     }
 
+<<<<<<< HEAD
     private void SelectionExploration_Click(object sender, RoutedEventArgs e)
     {
       PlaceUserControl(new SelectionExploration());
     }
 
+=======
+    private void DeplacementForme_Click(object sender, RoutedEventArgs e)
+    {
+      PlaceUserControl(new DeplacementForme());
+    }
+>>>>>>> 1140e3a7454185f8686d4f2cd33d534fbba215b7
   }
 }

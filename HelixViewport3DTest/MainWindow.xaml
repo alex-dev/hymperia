@@ -12,7 +12,11 @@
       <Button Click="SpherePhiThetaExploration_Click" Content="Sphere Phi Theta" />
       <Button Click="MaterialExploration_Click" Content="Material Exploration" />
       <Button Click="ManipulatorExploration_Click" Content="Manipulator Exploration" />
+<<<<<<< HEAD
       <Button Click="SelectionExploration_Click" Content="Selection Exploration" />
+=======
+      <Button Click="DeplacementForme_Click" Content="Deplacement forme" />
+>>>>>>> 1140e3a7454185f8686d4f2cd33d534fbba215b7
     </StackPanel>
   </Grid>
 </Window>
