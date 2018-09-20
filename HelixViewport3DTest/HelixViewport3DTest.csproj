@@ -87,6 +87,9 @@
     <Compile Include="ManipulatorExploration.xaml.cs">
       <DependentUpon>ManipulatorExploration.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RotationForme.xaml.cs">
+      <DependentUpon>RotationForme.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectionExploration.xaml.cs">
       <DependentUpon>SelectionExploration.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PlaceRandomShapes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RotationForme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
