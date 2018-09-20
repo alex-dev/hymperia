@@ -31,6 +31,10 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
+    /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
+    internal Ellipsoide() : this(null) { }
+
+    /// <inheritdoc />
     public Ellipsoide([NotNull] Materiau materiau): base(materiau)
     {
       RayonX = RayonY = RayonZ = 1;

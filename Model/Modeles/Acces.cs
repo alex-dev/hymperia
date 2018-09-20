@@ -10,8 +10,6 @@ namespace Hymperia.Model.Modeles
 
     #region Properties
 
-    public int Key { get; private set; }
-
     /// <summary>Le projet protégé par ce droit d'accès.</summary>
     [NotNull]
     [Required]
@@ -47,14 +45,18 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
+    /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
+    /// <param name="droitDAcces"></param>
+    internal Acces(Droit droitDAcces) : this(null, null, droitDAcces) { }
+
     /// <param name="utilisateur">L'utilisateur pouvant accéder au projet.</param>
     /// <param name="projet">Le projet auquel l'utilisateur peut accéder.</param>
     /// <param name="droit">Le droit d'accès.</param>
-    public Acces(Projet projet, Utilisateur utilisateur, Droit droitDAcces)
+    public Acces([NotNull] Projet projet, [NotNull] Utilisateur utilisateur, Droit droit)
     {
       Projet = projet;
       Utilisateur = utilisateur;
-      DroitDAcces = droitDAcces;
+      DroitDAcces = droit;
     }
 
     #endregion

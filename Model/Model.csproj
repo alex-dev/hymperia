@@ -37,6 +37,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
+    <Compile Include="Migrations\20180920181807_InitialDatabase.cs" />
+    <Compile Include="Migrations\20180920181807_InitialDatabase.designer.cs">
+      <DependentUpon>20180920181807_InitialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />
     <Compile Include="Modeles\Acces.cs" />
     <Compile Include="Modeles\Cylindre.cs" />

@@ -24,7 +24,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Les formes dans le projet.</summary>
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
-    internal IList<Forme> _Formes { get; set; }
+    internal List<Forme> _Formes { get; set; }
 
     #endregion
 
@@ -53,6 +53,7 @@ namespace Hymperia.Model.Modeles
     /// <param name="name">Le nom du projet.</param>
     public Projet([NotNull] string nom)
     {
+      Id = default;
       Nom = nom;
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -28,6 +29,7 @@ namespace Hymperia.Model.Modeles
     /// <param name="prix">Le prix du matériaux par volume.</param>
     public Materiau([NotNull] string nom, double prix)
     {
+      Id = default;
       Nom = nom;
       Prix = prix;
     }

@@ -30,7 +30,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Les accès aux projets de l'utilisateur.</summary>
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
-    internal IList<Acces> _Acces { get; set; }
+    internal List<Acces> _Acces { get; set; }
 
     #endregion
 
@@ -53,6 +53,7 @@ namespace Hymperia.Model.Modeles
     /// <param name="motDePasse">Le mot de passe encrypté de l'utilisateur.</param>
     public Utilisateur([NotNull][MinLength(1)] string nom, [NotNull] string motDePasse)
     {
+      Id = default;
       Nom = nom;
       MotDePasse = motDePasse;
       _Acces = new List<Acces> { };

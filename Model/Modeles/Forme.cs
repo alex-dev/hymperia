@@ -35,8 +35,10 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
+    /// <param name="materiau">Le matériau composant la forme.</param>
     public Forme([NotNull] Materiau materiau)
     {
+      Id = default;
       Materiau = materiau;
     }
 

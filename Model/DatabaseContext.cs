@@ -21,24 +21,11 @@ namespace Hymperia.Model
     #region DBSets
 
     #region Fields
-    private DbSet<Utilisateur> utilisateurs;
     private DbSet<Acces> acces;
     private DbSet<Materiau> materiaux;
+    private DbSet<Projet> projets;
+    private DbSet<Utilisateur> utilisateurs;
     #endregion
-
-    /// <summary>Retourne le <see cref="DbSet{Utilisateur}"/>.</summary>
-    /// <remarks>
-    ///   La syntaxe <code>utilisateurs ?? (utilisateurs = Set<Utilisateur>())</code> retourne <see cref="utilisateurs"/>
-    ///   s'il est connu (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Utilisateur}"/> puis le 
-    ///   retourne.
-    ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
-    ///   ce qui peut être lourd.
-    /// </remarks>
-    [ItemNotNull]
-    public DbSet<Utilisateur> Utilisateurs
-    {
-      get => utilisateurs ?? (utilisateurs = Set<Utilisateur>());
-    }
 
     /// <summary>Retourne le <see cref="DbSet{Acces}"/>.</summary>
     /// <remarks>
@@ -68,6 +55,34 @@ namespace Hymperia.Model
       get => materiaux ?? (materiaux = Set<Materiau>());
     }
 
+    /// <summary>Retourne le <see cref="DbSet{Projet}"/>.</summary>
+    /// <remarks>
+    ///   La syntaxe <code>projets ?? (projets = Set<Projet>())</code> retourne <see cref="projets"/>
+    ///   s'il est connu (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Projet}"/> puis le 
+    ///   retourne.
+    ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
+    ///   ce qui peut être lourd.
+    /// </remarks>
+    [ItemNotNull]
+    public DbSet<Projet> Projets
+    {
+      get => projets ?? (projets = Set<Projet>());
+    }
+
+    /// <summary>Retourne le <see cref="DbSet{Utilisateur}"/>.</summary>
+    /// <remarks>
+    ///   La syntaxe <code>utilisateurs ?? (utilisateurs = Set<Utilisateur>())</code> retourne <see cref="utilisateurs"/>
+    ///   s'il est connu (non <see cref="null"/>), sinon lui affecte un nouveau <see cref="DbSet{Utilisateur}"/> puis le 
+    ///   retourne.
+    ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
+    ///   ce qui peut être lourd.
+    /// </remarks>
+    [ItemNotNull]
+    public DbSet<Utilisateur> Utilisateurs
+    {
+      get => utilisateurs ?? (utilisateurs = Set<Utilisateur>());
+    }
+
     #endregion
 
     #region Constructors
@@ -86,9 +101,9 @@ namespace Hymperia.Model
 
     public async Task Migrate([NotNull] CancellationToken token = default)
     {
+      await Database.EnsureDeletedAsync(token);
       await Database.MigrateAsync(token);
-      Task.WaitAll(new Initializer().Initialize(utilisateurs, acces, materiaux));
-      await SaveChangesAsync();
+      await new Initializer().Initialize(this);
     }
 
     #endregion
@@ -98,12 +113,28 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
-      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
-      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
-      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
-      builder.Entity<Acces>().HasAlternateKey(acces => new { acces.Projet, acces.Utilisateur });
+      builder.Entity<Forme>().ToTable("Formes");
+      builder.Entity<Cylindre>().HasBaseType<Forme>();
+      builder.Entity<Ellipsoide>().HasBaseType<Forme>();
+      builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
+
+      builder.Entity<Acces>().Property<int>("idProjet");
+      builder.Entity<Acces>().Property<int>("idUtilisateur");
       builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
         .HasConversion(new EnumToStringConverter<Acces.Droit>());
+      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany().HasForeignKey("idProjet");
+      builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
+        .HasForeignKey("idUtilisateur");
+      builder.Entity<Acces>().HasKey("idProjet", "idUtilisateur");
+
+      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+
+      builder.Entity<Projet>().ToTable("Projets");
+      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
+      builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne();
+
+      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+
       base.OnModelCreating(builder);
     }
 
@@ -113,6 +144,8 @@ namespace Hymperia.Model
       string connection = ConfigurationManager.ConnectionStrings[ConfigurationName]?.ConnectionString
           ?? "Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;";
       builder.UseMySql(connection);
+      builder.EnableRichDataErrorHandling();
+      builder.EnableSensitiveDataLogging();
       base.OnConfiguring(builder);
     }
 

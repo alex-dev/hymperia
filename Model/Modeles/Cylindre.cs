@@ -50,6 +50,10 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
+    /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
+    internal Cylindre() : this(null) { }
+
+    /// <inheritdoc />
     public Cylindre([NotNull] Materiau materiau) : base(materiau)
     {
       Diametre = 1;

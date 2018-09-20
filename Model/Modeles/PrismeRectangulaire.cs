@@ -29,6 +29,10 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
+    /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
+    internal PrismeRectangulaire() : this(null) { }
+
+    /// <inheritdoc />
     public PrismeRectangulaire([NotNull] Materiau materiau) : base(materiau)
     {
       Hauteur = Largeur = Longueur = 1;

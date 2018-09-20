@@ -44,22 +44,21 @@ namespace Hymperia.Model.Migrations
       Random = new Random();
     }
 
-    public Task[] Initialize(DbSet<Utilisateur> utilisateurs, DbSet<Acces> acces, DbSet<Materiau> materiaux)
+    public async Task Initialize(DatabaseContext context)
     {
-      var _materiaux = InitializeMateriaux();
-      #if DEBUG
-      var _utilisateurs = InitializeUtilisateurs();
-      var projets = InitializeProjets(_materiaux);
-      #endif
+      await context.Materiaux.AddRangeAsync(InitializeMateriaux());
+      await context.SaveChangesAsync();
 
-      return new Task[]
-      {
-        #if DEBUG
-        utilisateurs.AddRangeAsync(_utilisateurs),
-        acces.AddRangeAsync(InitializeAcces(_utilisateurs, projets)),
-        #endif
-        materiaux.AddRangeAsync(_materiaux)
-      };
+      #if DEBUG
+      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs());
+      await context.SaveChangesAsync();
+
+      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync()));
+      await context.SaveChangesAsync();
+
+      InitializeAcces(await context.Utilisateurs.ToArrayAsync(), await context.Projets.ToArrayAsync());
+      await context.SaveChangesAsync();
+      #endif
     }
 
     private Acces[] InitializeAcces(Utilisateur[] utilisateurs, Projet[] projets)
@@ -75,7 +74,9 @@ namespace Hymperia.Model.Migrations
 
           if (droit is Acces.Droit _droit)
           {
-            acces.Add(new Acces(projets[i], utilisateurs[j], _droit));
+            var _acces = new Acces(projets[i], utilisateurs[j], _droit);
+            utilisateurs[j]._Acces.Add(_acces);
+            acces.Add(_acces);
           }
         }
       }
