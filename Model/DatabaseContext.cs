@@ -4,10 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Hymperia.Model.Migrations;
 using Hymperia.Model.Modeles;
-using Newtonsoft.Json.Linq;
 
 namespace Hymperia.Model
 {
@@ -99,17 +98,21 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
-      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
-      builder.Entity<Acces>().HasKey(acces => new { acces.Projet, acces.Utilisateur });
-      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
+      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+      builder.Entity<Acces>().HasAlternateKey(acces => new { acces.Projet, acces.Utilisateur });
+      builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
+        .HasConversion(new EnumToStringConverter<Acces.Droit>());
       base.OnModelCreating(builder);
     }
 
     /// <inheritdoc/>
     protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
-      builder.UseMySql(ConfigurationManager.ConnectionStrings[ConfigurationName].ConnectionString);
+      string connection = ConfigurationManager.ConnectionStrings[ConfigurationName]?.ConnectionString
+          ?? "Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;";
+      builder.UseMySql(connection);
       base.OnConfiguring(builder);
     }
 

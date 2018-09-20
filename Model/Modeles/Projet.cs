@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -42,7 +43,7 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     public double Prix
     {
-      get => throw new System.NotImplementedException();
+      get => Formes.Sum(forme => forme.Prix);
     }
 
     #endregion
@@ -80,10 +81,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"{ Id } - { Nom }: { Formes.Count } pièces";
-    }
+    public override string ToString() => $"{ Id } - { Nom }: { Formes.Count } pièces";
 
     #endregion
   }

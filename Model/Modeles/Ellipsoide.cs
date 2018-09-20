@@ -22,7 +22,7 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     [NotMapped]
-    protected override double Volume
+    public override double Volume
     {
       get => (4.0 * Math.PI * RayonX * RayonY * RayonZ) / 3.0;
     }
@@ -31,7 +31,10 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
-    public Ellipsoide([NotNull] Materiau materiau): base(materiau) { }
+    public Ellipsoide([NotNull] Materiau materiau): base(materiau)
+    {
+      RayonX = RayonY = RayonZ = 1;
+    }
 
     #endregion
 
@@ -39,10 +42,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"Prisme rectangulaire { Id }: { Centre } - { Materiau }";
-    }
+    public override string ToString() => $"Ellipsoïde { Id }: { Centre } - { Materiau }";
 
     #endregion
   }

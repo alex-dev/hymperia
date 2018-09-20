@@ -20,7 +20,7 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     [NotMapped]
-    protected override double Volume
+    public override double Volume
     {
       get => Hauteur * Largeur * Longueur;
     }
@@ -29,7 +29,10 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
-    public PrismeRectangulaire([NotNull] Materiau materiau) : base(materiau) { }
+    public PrismeRectangulaire([NotNull] Materiau materiau) : base(materiau)
+    {
+      Hauteur = Largeur = Longueur = 1;
+    }
 
     #endregion
 
@@ -37,10 +40,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"Prisme rectangulaire { Id }: { Centre } - { Materiau }";
-    }
+    public override string ToString() => $"Prisme rectangulaire { Id }: { Centre } - { Materiau }";
 
     #endregion
   }

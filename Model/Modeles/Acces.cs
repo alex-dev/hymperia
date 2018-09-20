@@ -10,6 +10,8 @@ namespace Hymperia.Model.Modeles
 
     #region Properties
 
+    public int Key { get; private set; }
+
     /// <summary>Le projet protégé par ce droit d'accès.</summary>
     [NotNull]
     [Required]
@@ -48,11 +50,11 @@ namespace Hymperia.Model.Modeles
     /// <param name="utilisateur">L'utilisateur pouvant accéder au projet.</param>
     /// <param name="projet">Le projet auquel l'utilisateur peut accéder.</param>
     /// <param name="droit">Le droit d'accès.</param>
-    public Acces(Projet projet, Utilisateur utilisateur, Droit droit)
+    public Acces(Projet projet, Utilisateur utilisateur, Droit droitDAcces)
     {
       Projet = projet;
       Utilisateur = utilisateur;
-      DroitDAcces = droit;
+      DroitDAcces = droitDAcces;
     }
 
     #endregion
@@ -61,10 +63,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"{ Utilisateur.Nom } - { Projet.Nom }: { DroitDAcces }";
-    }
+    public override string ToString() => $"{ Utilisateur.Nom } - { Projet.Nom }: { DroitDAcces }";
 
     #endregion
   }

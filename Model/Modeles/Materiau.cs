@@ -38,10 +38,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"{ Id } - { Nom }: { Prix }";
-    }
+    public override string ToString() => $"{ Id } - { Nom }: { Prix }";
 
     #endregion
   }

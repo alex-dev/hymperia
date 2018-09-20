@@ -39,6 +39,7 @@
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Migrations\Initializer.cs" />
     <Compile Include="Modeles\Acces.cs" />
+    <Compile Include="Modeles\Cylindre.cs" />
     <Compile Include="Modeles\Ellipsoide.cs" />
     <Compile Include="Modeles\Forme.cs" />
     <Compile Include="Modeles\Materiau.cs" />

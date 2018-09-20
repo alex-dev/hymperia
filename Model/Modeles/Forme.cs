@@ -29,7 +29,7 @@ namespace Hymperia.Model.Modeles
 
     /// <summary>Le volume de la forme.</summary>
     [NotMapped]
-    protected abstract double Volume { get; }
+    public abstract double Volume { get; }
 
     #endregion
 

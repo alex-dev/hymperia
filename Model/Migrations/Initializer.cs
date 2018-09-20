@@ -1,14 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Hymperia.Model.Modeles;
+using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Migrations
 {
   internal class Initializer
   {
     private Random Random { get; set; }
+
+    private Func<Materiau[], Forme>[] FormeCreators
+    {
+      get => new Func<Materiau[], Forme>[]
+      {
+        materiaux => new PrismeRectangulaire(materiaux[Random.Next(materiaux.Length)])
+        {
+          Centre = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Hauteur = Random.Next(1, 15),
+          Largeur = Random.Next(1, 15),
+          Longueur = Random.Next(1, 15)
+        },
+        materiaux => new Ellipsoide(materiaux[Random.Next(materiaux.Length)])
+        {
+          Centre = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          RayonX = Random.Next(1, 15),
+          RayonY = Random.Next(1, 15),
+          RayonZ = Random.Next(1, 15)
+        },
+        materiaux => new Cylindre(materiaux[Random.Next(materiaux.Length)])
+        {
+          Point1 = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Point2 = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Diametre = Random.Next(1, 15),
+        }
+      };
+    }
 
     public Initializer()
     {
@@ -54,6 +83,17 @@ namespace Hymperia.Model.Migrations
       return acces.ToArray();
     }
 
+    private IEnumerable<Forme> InitializeFormes(Materiau[] materiaux)
+    {
+      var creators = FormeCreators;
+      int count = Random.Next(10, 50);
+
+      for (int i = 0; i < count; ++i)
+      {
+        yield return creators[Random.Next(creators.Length)](materiaux);
+      }
+    }
+
     private Materiau[] InitializeMateriaux()
     {
       return new Materiau[]
@@ -67,15 +107,10 @@ namespace Hymperia.Model.Migrations
     {
       var projets = new Projet[]
       {
-        new Projet("Projet 1"),
-        new Projet("Projet 2"),
-        new Projet("Projet 3")
+        new Projet("Projet 1") { _Formes = InitializeFormes(materiaux).ToList() },
+        new Projet("Projet 2") { _Formes = InitializeFormes(materiaux).ToList() },
+        new Projet("Projet 3") { _Formes = InitializeFormes(materiaux).ToList() }
       };
-
-      foreach (var projet in projets)
-      {
-
-      }
 
       return projets;
     }

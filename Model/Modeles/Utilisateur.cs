@@ -106,10 +106,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString()
-    {
-      return $"{ Id } - { Nom }: { Acces.Count } projets";
-    }
+    public override string ToString() => $"{ Id } - { Nom }: { Acces.Count } projets";
 
     #endregion
   }
