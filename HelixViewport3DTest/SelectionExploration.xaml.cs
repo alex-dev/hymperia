@@ -120,6 +120,7 @@ namespace Hymperia.HelixViewport3DTest
         {
           geometryModel.Material = geometryModel.BackMaterial = material;
         }
+        
       }
     }
   }
