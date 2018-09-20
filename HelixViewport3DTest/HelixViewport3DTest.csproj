@@ -81,12 +81,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DeplacementForme.xaml.cs">
+      <DependentUpon>DeplacementForme.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManipulatorExploration.xaml.cs">
       <DependentUpon>ManipulatorExploration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectionExploration.xaml.cs">
+      <DependentUpon>SelectionExploration.xaml</DependentUpon>
     </Compile>
     <Compile Include="SpherePhiThetaExploration.xaml.cs">
       <DependentUpon>SpherePhiThetaExploration.xaml</DependentUpon>
     </Compile>
+    <Page Include="DeplacementForme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PlaceRandomShapes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectionExploration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

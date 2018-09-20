@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
+using System.Windows.Media;
 
 namespace Hymperia.HelixViewport3DTest
 {
@@ -27,7 +28,8 @@ namespace Hymperia.HelixViewport3DTest
         { "Flèche", CreateArrow },
         { "Prisme rectangulaire", CreateBox },
         { "Sphère", CreateSphere },
-        { "Cylindre", CreatePipe }
+        { "Cylindre", CreatePipe },
+        { "Cone", CreateTruncatedCone }
       };
 
       InitializeComponent();
@@ -142,10 +144,34 @@ namespace Hymperia.HelixViewport3DTest
         Diameter = Random.Next(1, 3),
         InnerDiameter = Random.Next(0, 3),
         Point1 = viewport.CursorPosition ?? default,
-        Point2 = new Point3D(viewport.CursorPosition.Value.X + Random.Next(-5, 5), viewport.CursorPosition.Value.Y + Random.Next(-5, 5), viewport.CursorPosition.Value.Z + Random.Next(-5,5)),
+        Point2 = new Point3D(viewport.CursorPosition.Value.X + Random.Next(-5, 5), viewport.CursorPosition.Value.Y + Random.Next(-5, 5), viewport.CursorPosition.Value.Z + Random.Next(-5, 5)),
         ThetaDiv = Random.Next(3, 30)
       };
     }
-    
+
+    /// <remarks>
+    ///   <list type="bullet">
+    ///     <item><see cref="TruncatedConeVisual3D.Origin"/>: Point central à la base du cône</item>
+    ///     <item>
+    ///       <see cref="TruncatedConeVisual3D.ThetaDiv"/>: La moitié du nombre de segment utilisés pour former le(s) côté(s) du cône.(Permet techniquement de faire des pyramides ayant des bases différentes)
+    ///       <seealso cref="PipeVisual3D.ThetaDiv"/>: Fonctionne selon le même principe  
+    ///     </item>
+    ///     <item><see cref="TruncatedConeVisual3D.Height"/>: Hauteur du cône</item>
+    ///     <item><see cref="TruncatedConeVisual3D.BaseRadius"/>: Longueur d'un rayon du cône</item>
+    ///     <item><see cref="TruncatedConeVisual3D.TopRadius"/>: Longueur d'un rayon au haut du cône pour un haut plat</item>
+    ///   </list>
+    /// </remarks>
+    private MeshElement3D CreateTruncatedCone()
+    {
+      return new TruncatedConeVisual3D
+      {
+        Origin = viewport.CursorPosition ?? default,
+        ThetaDiv = Random.Next(3, 30),
+        Height = Random.Next(1, 5),
+        BaseRadius = Random.Next(1, 5),
+        /*TopRadius = Random.Next(1, 5)*/
+      };
+    }
+
   }
 }
