@@ -15,6 +15,7 @@
       <Button Click="SelectionExploration_Click" Content="Selection Exploration" />
       <Button Click="DeplacementForme_Click" Content="Deplacement forme" />
       <Button Click="RotationForme_Click" Content="Rotation forme" />
+      <Button Click="DataBinding_Click" Content="DataBinding Forme" />
     </StackPanel>
   </Grid>
 </Window>
