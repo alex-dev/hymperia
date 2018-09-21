@@ -2,6 +2,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True" Title="{Binding Title}">
   <Grid>
-    <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="150" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <StackPanel>
+      <Button Click="Close_Click" Content="Close"/>
+      <Button Click="Open_Click" Content="Open"/>
+    </StackPanel>
+    <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" />
   </Grid>
 </Window>

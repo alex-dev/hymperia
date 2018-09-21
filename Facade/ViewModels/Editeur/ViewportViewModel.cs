@@ -39,7 +39,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private IEnumerable<MeshElement3D> ElementFormes
     {
-      get;
+      get => Editeur.Formes ?? Enumerable.Empty<MeshElement3D>();
     }
 
     private static IEnumerable<ModelVisual3D> BaseFormes

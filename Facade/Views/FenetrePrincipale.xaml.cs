@@ -6,10 +6,28 @@ namespace Hymperia.Facade.Views
 {
   public partial class FenetrePrincipale : Window
   {
+    private IRegionManager Manager { get; set; }
+
     public FenetrePrincipale(IRegionManager manager)
     {
+      Manager = manager;
       InitializeComponent();
-      manager.RegisterViewWithRegion("ContentRegion", typeof(ProjetEditeur));
+      //manager.RegisterViewWithRegion("ContentRegion", typeof(ProjetEditeur));
+    }
+
+    private void Close_Click(object sender, RoutedEventArgs e)
+    {
+      var children = LogicalChildren;
+      while (children.MoveNext())
+      {
+        if (children.Current is ProjetEditeur editeur)
+          RemoveLogicalChild(editeur);
+      }
+    }
+
+    private void Open_Click(object sender, RoutedEventArgs e)
+    {
+      Manager.RequestNavigate("ContentRegion", "Editeur");
     }
   }
 }

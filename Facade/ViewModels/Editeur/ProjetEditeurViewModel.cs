@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Media.Media3D;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Threading;
 using HelixToolkit.Wpf;
-using Prism.Mvvm;
+using Hymperia.Model;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class ProjetEditeurViewModel : BindableBase
+  public class ProjetEditeurViewModel : DatabaseContextAwareViewModel
   {
     #region Attributes
 
     #region Fields
 
-    private ObservableCollection<ModelVisual3D> formes;
+    private ObservableCollection<MeshElement3D> formes;
 
     #endregion
 
     #region Binding
 
-    public ObservableCollection<ModelVisual3D> Formes
+    public ObservableCollection<MeshElement3D> Formes
     {
       get => formes;
       private set => SetProperty(ref formes, value);
@@ -38,8 +37,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    public ProjetEditeurViewModel()
+    public ProjetEditeurViewModel(DatabaseContext context) : base(context)
     {
+      Dispatcher.CurrentDispatcher.ShutdownStarted += (sender, args) => Dispose();
     }
   }
 }
