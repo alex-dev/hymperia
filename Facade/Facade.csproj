@@ -161,16 +161,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\DatabaseContextAwareViewModel.cs" />
-    <Compile Include="ViewModels\DisposableViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
-    <Compile Include="Views\DisposableViewModelView.cs" />
     <Compile Include="Views\Editeur\ProjetEditeur.xaml.cs">
       <DependentUpon>ProjetEditeur.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +216,10 @@
     <Page Include="Views\Editeur\Viewport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -1,17 +1,20 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using HelixToolkit.Wpf;
+using Prism.Mvvm;
 using Hymperia.Model;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class ProjetEditeurViewModel : DatabaseContextAwareViewModel
+  public class ProjetEditeurViewModel : BindableBase
   {
     #region Attributes
 
     #region Fields
 
     private ObservableCollection<MeshElement3D> formes;
+
+    private DatabaseContext Context { get; set; }
 
     #endregion
 
@@ -37,9 +40,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    public ProjetEditeurViewModel(DatabaseContext context) : base(context)
+    public ProjetEditeurViewModel(DatabaseContext context)
     {
-      Dispatcher.CurrentDispatcher.ShutdownStarted += (sender, args) => Dispose();
+      Context = context;
     }
   }
 }

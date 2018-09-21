@@ -17,12 +17,7 @@ namespace Hymperia.Facade.Views
 
     private void Close_Click(object sender, RoutedEventArgs e)
     {
-      var children = LogicalChildren;
-      while (children.MoveNext())
-      {
-        if (children.Current is ProjetEditeur editeur)
-          RemoveLogicalChild(editeur);
-      }
+      Manager.RequestNavigate("ContentRegion", "Test");
     }
 
     private void Open_Click(object sender, RoutedEventArgs e)

@@ -10,6 +10,6 @@
       <Button Click="Close_Click" Content="Close"/>
       <Button Click="Open_Click" Content="Open"/>
     </StackPanel>
-    <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" />
+    <ContentControl Name="control" prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" />
   </Grid>
 </Window>
