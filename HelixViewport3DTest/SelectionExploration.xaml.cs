@@ -31,6 +31,7 @@ namespace Hymperia.HelixViewport3DTest
       DataContext = vm;
       viewport.InputBindings.Add(new MouseBinding(vm.RectangleSelectionCommand, new MouseGesture(MouseAction.LeftClick)));
       viewport.InputBindings.Add(new MouseBinding(vm.PointSelectionCommand, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
+      viewport.InputBindings.Add(new MouseBinding(vm.PointSelectionCommand2, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
 
     }
   }
@@ -49,11 +50,12 @@ namespace Hymperia.HelixViewport3DTest
     {
       RectangleSelectionCommand = new RectangleSelectionCommand(viewport, HandleSelectionModelsEvent, HandleSelectionVisualsEvent);
       PointSelectionCommand = new PointSelectionCommand(viewport, HandleSelectionModelsEvent, HandleSelectionVisualsEvent);
+      PointSelectionCommand2 = new PointSelectionCommand(viewport, HandleSelectionModelsEvent, HandleSelectionVisualsEvent);
     }
 
     public RectangleSelectionCommand RectangleSelectionCommand { get; private set; }
-
     public PointSelectionCommand PointSelectionCommand { get; private set; }
+    public PointSelectionCommand PointSelectionCommand2 { get; private set; }
 
     public SelectionHitMode SelectionMode
     {
@@ -91,7 +93,9 @@ namespace Hymperia.HelixViewport3DTest
     }
     private void HandleSelectionModelsEvent(object sender, ModelsSelectedEventArgs args)
     {
-      ChangeMaterial(selectedModels, Materials.Blue);
+
+      ChangeMaterial(selectedModels, Materials.Gray);
+
       selectedModels = args.SelectedModels;
       var rectangleSelectionArgs = args as ModelsSelectedByRectangleEventArgs;
       if (rectangleSelectionArgs != null)
@@ -120,7 +124,7 @@ namespace Hymperia.HelixViewport3DTest
         {
           geometryModel.Material = geometryModel.BackMaterial = material;
         }
-        
+
       }
     }
   }
