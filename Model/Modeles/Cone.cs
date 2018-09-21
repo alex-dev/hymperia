@@ -44,7 +44,7 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     private double FullHauteur
     {
-      get => throw new System.NotImplementedException();
+      get => Hauteur / (RayonBase - RayonTop) * RayonBase;
     }
 
     [NotMapped]
