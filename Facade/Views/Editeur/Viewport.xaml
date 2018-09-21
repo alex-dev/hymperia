@@ -1,6 +1,6 @@
-﻿<UserControl x:Class="Hymperia.Facade.Views.Viewport" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.Viewport" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True"
     xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf">
-  <Helix:HelixViewport3D ItemsSource="{Binding Formes}" />
+  <Helix:HelixViewport3D Name="viewport" ItemsSource="{Binding Formes}" />
 </UserControl>

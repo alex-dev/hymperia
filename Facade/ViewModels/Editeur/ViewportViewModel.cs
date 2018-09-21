@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Prism.Mvvm;
 
-namespace Hymperia.Facade.ViewModels
+namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class ViewportViewModel : BindableBase
   {
@@ -17,18 +17,29 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
+    #region Binding
+
     public ObservableCollection<ModelVisual3D> Formes
     {
       get => formes;
       private set => SetProperty(ref formes, value);
     }
 
+    #endregion
+
+    #region Commands
+
+
+
+    #endregion
+
+    #region Private
+
+    private ProjetEditeurViewModel Editeur { get; set; }
+
     private IEnumerable<MeshElement3D> ElementFormes
     {
-      get
-      {
-        yield return new SphereVisual3D { Radius = 5 };
-      }
+      get;
     }
 
     private static IEnumerable<ModelVisual3D> BaseFormes
@@ -42,8 +53,11 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
-    public ViewportViewModel()
+    #endregion
+
+    public ViewportViewModel(ProjetEditeurViewModel editeur)
     {
+      Editeur = editeur;
       Formes = new ObservableCollection<ModelVisual3D>(Enumerable.Union(BaseFormes, ElementFormes));
     }
   }

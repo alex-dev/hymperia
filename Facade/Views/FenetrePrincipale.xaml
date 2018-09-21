@@ -2,6 +2,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True" Title="{Binding Title}">
   <Grid>
-    <ContentControl prism:RegionManager.RegionName="ContenuRegion" />
+    <ContentControl prism:RegionManager.RegionName="ContentRegion" />
   </Grid>
 </Window>
