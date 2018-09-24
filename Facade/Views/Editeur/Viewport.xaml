@@ -2,5 +2,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True"
     xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf">
-  <Helix:HelixViewport3D Name="viewport" ItemsSource="{Binding Formes}" />
+  <Helix:HelixViewport3D Name="viewport">
+    <Helix:GridLinesVisual3D Length="100" Width="100" />
+    <Helix:SunLight />
+  </Helix:HelixViewport3D>
 </UserControl>

@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Threading;
-using HelixToolkit.Wpf;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Media.Media3D;
 using Prism.Mvvm;
-using Hymperia.Model;
+using Hymperia.Facade.Services;
+using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -12,15 +13,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Fields
 
-    private ObservableCollection<MeshElement3D> formes;
+    private ObservableCollection<ModelVisual3D> formes;
 
-    private DatabaseContext Context { get; set; }
+    private IDictionary<Forme, ModelVisual3D> MappingFormes { get; set; }
 
     #endregion
 
     #region Binding
 
-    public ObservableCollection<MeshElement3D> Formes
+    public ObservableCollection<ModelVisual3D> Formes
     {
       get => formes;
       private set => SetProperty(ref formes, value);
@@ -30,19 +31,25 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-
-
     #endregion
 
     #region Private
 
-    #endregion
+    private ContextFactory ContextFactory { get; set; }
 
     #endregion
 
-    public ProjetEditeurViewModel(DatabaseContext context)
+    #endregion
+
+    public ProjetEditeurViewModel(ContextFactory factory)
     {
-      Context = context;
+      ContextFactory = factory;
+
+      using (var context = ContextFactory.GetContext())
+      {
+      }
+
+      Formes = new ObservableCollection<ModelVisual3D>(MappingFormes.Values);
     }
   }
 }

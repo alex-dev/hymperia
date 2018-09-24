@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Media.Media3D;
-using HelixToolkit.Wpf;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
@@ -11,45 +8,19 @@ namespace Hymperia.Facade.ViewModels.Editeur
   {
     #region Attributes
 
-    #region Fields
-
-    private ObservableCollection<ModelVisual3D> formes;
-
-    #endregion
-
     #region Binding
 
-    public ObservableCollection<ModelVisual3D> Formes
-    {
-      get => formes;
-      private set => SetProperty(ref formes, value);
-    }
+    public ObservableCollection<ModelVisual3D> Formes => Editeur.Formes;
 
     #endregion
 
     #region Commands
-
-
 
     #endregion
 
     #region Private
 
     private ProjetEditeurViewModel Editeur { get; set; }
-
-    private IEnumerable<MeshElement3D> ElementFormes
-    {
-      get => Editeur.Formes ?? Enumerable.Empty<MeshElement3D>();
-    }
-
-    private static IEnumerable<ModelVisual3D> BaseFormes
-    {
-      get
-      {
-        yield return new SunLight { };
-        yield return new GridLinesVisual3D { };
-      }
-    }
 
     #endregion
 
@@ -58,7 +29,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public ViewportViewModel(ProjetEditeurViewModel editeur)
     {
       Editeur = editeur;
-      Formes = new ObservableCollection<ModelVisual3D>(Enumerable.Union(BaseFormes, ElementFormes));
     }
   }
 }
