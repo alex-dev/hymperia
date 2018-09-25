@@ -37,7 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
+    <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="DoubleExtension.cs" />
+    <Compile Include="IIdentity.cs" />
     <Compile Include="Migrations\20180920181807_InitialDatabase.cs" />
     <Compile Include="Migrations\20180920181807_InitialDatabase.designer.cs">
       <DependentUpon>20180920181807_InitialDatabase.cs</DependentUpon>

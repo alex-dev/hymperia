@@ -12,7 +12,7 @@ namespace Hymperia.Facade.Views
     {
       Manager = manager;
       InitializeComponent();
-      //manager.RegisterViewWithRegion("ContentRegion", typeof(ProjetEditeur));
+      manager.RegisterViewWithRegion("ContentRegion", typeof(ProjetEditeur));
     }
 
     private void Close_Click(object sender, RoutedEventArgs e)

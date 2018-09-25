@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public abstract class Forme
+  public abstract class Forme : IIdentity
   {
     #region Attributes
 

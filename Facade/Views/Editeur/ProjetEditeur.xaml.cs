@@ -11,7 +11,7 @@ namespace Hymperia.Facade.Views.Editeur
     public ProjetEditeur(IRegionManager manager)
     {
       InitializeComponent();
-      manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
+      manager.RegisterViewWithRegion("ViewportRegion", typeof(Editeur));
     }
   }
 }

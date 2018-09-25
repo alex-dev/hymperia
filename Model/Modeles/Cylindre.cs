@@ -21,12 +21,10 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     public JsonObject<Point> Centre
     {
-      get => new Point
-      {
-        X = (Point1.Object.X + Point2.Object.X) / 2,
-        Y = (Point1.Object.Y + Point2.Object.Y) / 2,
-        Z = (Point1.Object.Z + Point2.Object.Z) / 2,
-      };
+      get => new Point(
+        (Point1.Object.X + Point2.Object.X) / 2,
+        (Point1.Object.Y + Point2.Object.Y) / 2,
+        (Point1.Object.Z + Point2.Object.Z) / 2);
     }
 
     [NotMapped]

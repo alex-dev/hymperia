@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public class Utilisateur
+  public class Utilisateur : IIdentity
   {
     #region Properties
 
