@@ -53,7 +53,14 @@ namespace Hymperia.HelixViewport3DTest
           }
           break;
         case NotifyCollectionChangedAction.Replace:
-          
+          foreach (Visual3D item in e.OldItems)
+          {
+            viewport.Children.Remove(item);
+          }
+          foreach (Visual3D item in e.NewItems)
+          {
+            viewport.Children.Add(item);
+          }
           break;
         case NotifyCollectionChangedAction.Move:
 
@@ -67,10 +74,12 @@ namespace Hymperia.HelixViewport3DTest
           break;
       }
     }
-    
+
+    private int i = 5;
+
     private void AjouterSphere(object sender, RoutedEventArgs e)
     {
-      var sphere = new SphereVisual3D { Radius = Aleatoire.Next(5, 20)};
+      var sphere = new SphereVisual3D { Radius = i++ };
       Formes.Add(sphere);
     }
 
@@ -91,7 +100,7 @@ namespace Hymperia.HelixViewport3DTest
 
     private void MoveSphere(object sender, RoutedEventArgs e)
     {
-      Formes.Move(0, Formes.Count - 1);
+      Formes.Move(0, Formes.Count - 2);
     }
 
     private void ResetSphere(object sender, RoutedEventArgs e)
