@@ -6,7 +6,7 @@ using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Modeles
 {
-  public abstract class Forme
+  public abstract class Forme : IIdentity
   {
     #region Attributes
 

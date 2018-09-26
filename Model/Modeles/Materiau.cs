@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public class Materiau
+  public class Materiau : IIdentity
   {
     #region Properties
 

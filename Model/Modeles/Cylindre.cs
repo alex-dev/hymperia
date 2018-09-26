@@ -29,12 +29,10 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     public Point Centre
     {
-      get => new Point
-      {
-        X = (Origine.X + Point.X) / 2,
-        Y = (Origine.Y + Point.Y) / 2,
-        Z = (Origine.Z + Point.Z) / 2,
-      };
+      get => new Point(
+        (Origine.X + Point.X) / 2,
+        (Origine.Y + Point.Y) / 2,
+        (Origine.Z + Point.Z) / 2);
     }
 
     [NotMapped]

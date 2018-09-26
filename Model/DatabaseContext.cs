@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -152,12 +151,25 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
-      string connection = ConfigurationManager.ConnectionStrings[ConfigurationName]?.ConnectionString
-          ?? "Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;";
-      builder.UseMySql(connection);
+      builder.UseMySql(GetConnectionString());
       builder.EnableRichDataErrorHandling();
       builder.EnableSensitiveDataLogging();
       base.OnConfiguring(builder);
+    }
+
+    private string GetConnectionString()
+    {
+      const string connection = "Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;";
+
+      try
+      {
+        return ConfigurationManager.ConnectionStrings[ConfigurationName]?.ConnectionString
+          ?? connection;
+      }
+      catch (ConfigurationErrorsException)
+      {
+        return connection;
+      }
     }
 
     #endregion
