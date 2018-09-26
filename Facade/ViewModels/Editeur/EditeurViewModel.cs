@@ -108,6 +108,23 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes convertisseur)
     {
+      new System.Windows.Threading.DispatcherTimer(new TimeSpan(5000), System.Windows.Threading.DispatcherPriority.Normal, (sender, args) =>
+      {
+        if (Projet is null)
+          return;
+
+        var r = new Random();
+        var x = r.Next(100, 150);
+
+        System.Diagnostics.Debug.Assert(!Projet.Formes.OfType<Ellipsoide>().Any(forme => forme.RayonX == x), "Invalid Test");
+        Projet.Formes.OfType<Ellipsoide>().First(forme => forme.RayonX < 100).RayonX = x;
+        System.Diagnostics.Debug.Assert(Formes.OfType<EllipsoidVisual3D>().Any(forme => forme.RadiusX == x), "Failed");
+
+        //System.Diagnostics.Debug.Assert(!Projet.Formes.OfType<PrismeRectangulaire>().Any(forme => forme.Hauteur == x), "Invalid Test");
+        //Formes.OfType<BoxVisual3D>().First(forme => forme.Height < 100).Height = x;
+        //System.Diagnostics.Debug.Assert(Projet.Formes.OfType<PrismeRectangulaire>().Any(forme => forme.Hauteur == x), "Failed");
+      }, System.Windows.Threading.Dispatcher.CurrentDispatcher);
+
       ContextFactory = factory;
       Convertisseur = convertisseur;
 
@@ -146,7 +163,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     [NotNull]
     private MeshElement3D CreeForme([NotNull] Forme forme, ref int index)
     {
-      return Convertisseur.Lier(Convertisseur.Convertir(forme), $"Formes[{ ++index }]");
+      var x = Convertisseur.Lier(Convertisseur.Convertir(forme), $"Formes[{ ++index }]");
+
+      return x;
     }
 
     #endregion

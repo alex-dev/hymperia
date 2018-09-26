@@ -162,16 +162,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DependancyObject\Viewport.cs" />
     <Compile Include="PointExtension.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\PointValueConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
-    <Compile Include="Views\Editeur\ProjetEditeur.xaml.cs">
-      <DependentUpon>ProjetEditeur.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Editeur\Editeur.xaml.cs">
       <DependentUpon>Editeur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\ProjetEditeur.xaml.cs">
+      <DependentUpon>ProjetEditeur.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +209,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Editeur\Editeur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editeur\ProjetEditeur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,10 +220,6 @@
     <Page Include="Views\FenetrePrincipale.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\Editeur.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

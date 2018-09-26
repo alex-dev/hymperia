@@ -1,66 +1,28 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using HelixToolkit.Wpf;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace Hymperia.Facade.Views.Editeur
 {
   /// <summary>
-  /// Logique d'interaction pour Viewport.xaml
+  /// Logique d'interaction pour Editeur.xaml
   /// </summary>
   public partial class Editeur : UserControl
   {
-    #region Dependancy Properties
-
-    public static DependencyProperty SourceFormesProperty;
-    public static DependencyProperty SelectedItemsProperty;
-
-    #endregion
-
-    #region Properties
-
-    public ObservableCollection<MeshElement3D> SourceFormes
-    {
-      get => (ObservableCollection<MeshElement3D>)GetValue(SourceFormesProperty);
-      set
-      {
-        SourceFormes.CollectionChanged -= CollectionChanged;
-        value.CollectionChanged += CollectionChanged;
-        SetValue(SourceFormesProperty, value);
-      }
-    }
-
-    public ObservableCollection<MeshElement3D> SelectedItems
-    {
-      get => (ObservableCollection<MeshElement3D>)GetValue(SelectedItemsProperty);
-      set
-      {
-        SelectedItems.CollectionChanged -= SelectedItemsChanged;
-        value.CollectionChanged += SelectedItemsChanged;
-        SetValue(SelectedItemsProperty, value);
-      }
-    }
-
-    #endregion
-
     public Editeur()
     {
       InitializeComponent();
     }
-
-    #region Methods
-
-    private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
-    {
-      throw new System.NotImplementedException();
-    }
-
-    private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
-    {
-      throw new System.NotImplementedException();
-    }
-
-    #endregion
   }
 }
