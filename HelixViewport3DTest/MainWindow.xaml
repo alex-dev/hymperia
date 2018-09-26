@@ -16,6 +16,7 @@
       <Button Click="DeplacementForme_Click" Content="Deplacement forme" />
       <Button Click="RotationForme_Click" Content="Rotation forme" />
       <Button Click="DataBinding_Click" Content="DataBinding Forme" />
+      <Button Click="ModificationTailleForme_Click" Content="Modification taille forme" />
     </StackPanel>
   </Grid>
 </Window>
