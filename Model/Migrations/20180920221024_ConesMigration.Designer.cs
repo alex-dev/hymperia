@@ -21,16 +21,16 @@ namespace Hymperia.Model.Migrations
 
             modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
                 {
-                    b.Property<int>("idProjet");
+                    b.Property<int>("IdProjet");
 
-                    b.Property<int>("idUtilisateur");
+                    b.Property<int>("IdUtilisateur");
 
                     b.Property<string>("DroitDAcces")
                         .IsRequired();
 
-                    b.HasKey("idProjet", "idUtilisateur");
+                    b.HasKey("IdProjet", "IdUtilisateur");
 
-                    b.HasIndex("idUtilisateur");
+                    b.HasIndex("IdUtilisateur");
 
                     b.ToTable("Acces");
                 });
@@ -43,15 +43,15 @@ namespace Hymperia.Model.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<int>("MateriauId");
+                    b.Property<int>("IdMateriau");
 
-                    b.Property<int?>("ProjetId");
+                    b.Property<int?>("IdProjet");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MateriauId");
+                    b.HasIndex("IdMateriau");
 
-                    b.HasIndex("ProjetId");
+                    b.HasIndex("IdProjet");
 
                     b.ToTable("Formes");
 
@@ -184,12 +184,12 @@ namespace Hymperia.Model.Migrations
                 {
                     b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
                         .WithMany()
-                        .HasForeignKey("idProjet")
+                        .HasForeignKey("IdProjet")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Hymperia.Model.Modeles.Utilisateur", "Utilisateur")
                         .WithMany("_Acces")
-                        .HasForeignKey("idUtilisateur")
+                        .HasForeignKey("IdUtilisateur")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -197,12 +197,12 @@ namespace Hymperia.Model.Migrations
                 {
                     b.HasOne("Hymperia.Model.Modeles.Materiau", "Materiau")
                         .WithMany()
-                        .HasForeignKey("MateriauId")
+                        .HasForeignKey("IdMateriau")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Hymperia.Model.Modeles.Projet")
                         .WithMany("_Formes")
-                        .HasForeignKey("ProjetId");
+                        .HasForeignKey("IdProjet");
                 });
 #pragma warning restore 612, 618
         }
