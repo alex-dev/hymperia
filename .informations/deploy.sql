@@ -1,47 +1,24 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
---
--- Client :  127.0.0.1
--- Généré le :  Mar 25 Septembre 2018 à 17:41
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- Base de données :  `hymperia_test_deploy`
---
-CREATE DATABASE IF NOT EXISTS `hymperia_test_deploy` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `hymperia_test_deploy`;
+CREATE DATABASE IF NOT EXISTS hymperia DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE hymperia;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `acces`
---
-
-DROP TABLE IF EXISTS `acces`;
-CREATE TABLE IF NOT EXISTS `acces` (
-  `idProjet` int(11) NOT NULL,
-  `idUtilisateur` int(11) NOT NULL,
-  `DroitDAcces` longtext NOT NULL,
-  PRIMARY KEY (`idProjet`,`idUtilisateur`),
-  KEY `IX_Acces_idUtilisateur` (`idUtilisateur`)
+DROP TABLE IF EXISTS Acces;
+CREATE TABLE IF NOT EXISTS Acces(
+  IdProjet INT(11) NOT NULL,
+  IdUtilisateur INT(11) NOT NULL,
+  DroitDAcces LONGTEXT NOT NULL,
+  PRIMARY KEY (IdProjet, idUtilisateur),
+  KEY IX_Acces_IdUtilisateur (IdUtilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Contenu de la table `acces`
---
-
-INSERT INTO `acces` VALUES
+INSERT INTO Acces VALUES
 (1, 1, 'Possession'),
 (1, 3, 'Lecture'),
 (2, 2, 'Possession'),
@@ -50,48 +27,38 @@ INSERT INTO `acces` VALUES
 (3, 2, 'Lecture'),
 (3, 3, 'Possession');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `formes`
---
-
-DROP TABLE IF EXISTS `formes`;
-CREATE TABLE IF NOT EXISTS `formes` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `MateriauId` int(11) NOT NULL,
-  `Discriminator` longtext NOT NULL,
-  `ProjetId` int(11) DEFAULT NULL,
-  `Point1` longtext,
-  `Point2` longtext,
-  `Diametre` double DEFAULT NULL,
-  `InnerDiametre` double DEFAULT NULL,
-  `ThetaDiv` int(11) DEFAULT NULL,
-  `Centre` longtext,
-  `RayonX` double DEFAULT NULL,
-  `RayonY` double DEFAULT NULL,
-  `RayonZ` double DEFAULT NULL,
-  `PhiDiv` int(11) DEFAULT NULL,
-  `Ellipsoide_ThetaDiv` int(11) DEFAULT NULL,
-  `PrismeRectangulaire_Centre` longtext,
-  `Hauteur` double DEFAULT NULL,
-  `Largeur` double DEFAULT NULL,
-  `Longueur` double DEFAULT NULL,
-  `Origine` longtext,
-  `RayonBase` double DEFAULT NULL,
-  `RayonTop` double DEFAULT NULL,
-  `Cylindre_ThetaDiv` int(11) DEFAULT NULL,
-  `PrismeRectangulaire_Hauteur` double DEFAULT NULL,
+DROP TABLE IF EXISTS Formes;
+CREATE TABLE IF NOT EXISTS Formes (
+  Id INT(11) NOT NULL AUTO_INCREMENT,
+  IdMateriau INT(11) NOT NULL,
+  IdProjet INT(11) DEFAULT NULL,
+  Discriminator LONGTEXT NOT NULL,
+  Point1 LONGTEXT,
+  Point2 LONGTEXT,
+  Diametre DOUBLE DEFAULT NULL,
+  InnerDiametre DOUBLE DEFAULT NULL,
+  ThetaDiv INT(11) DEFAULT NULL,
+  Centre LONGTEXT,
+  RayonX DOUBLE DEFAULT NULL,
+  RayonY DOUBLE DEFAULT NULL,
+  RayonZ DOUBLE DEFAULT NULL,
+  PhiDiv INT(11) DEFAULT NULL,
+  Ellipsoide_ThetaDiv INT(11) DEFAULT NULL,
+  PrismeRectangulaire_Centre LONGTEXT,
+  Hauteur DOUBLE DEFAULT NULL,
+  Largeur DOUBLE DEFAULT NULL,
+  Longueur DOUBLE DEFAULT NULL,
+  Origine LONGTEXT,
+  RayonBase DOUBLE DEFAULT NULL,
+  RayonTop DOUBLE DEFAULT NULL,
+  Cylindre_ThetaDiv INT(11) DEFAULT NULL,
+  PrismeRectangulaire_Hauteur DOUBLE DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  KEY `IX_Formes_MateriauId` (`MateriauId`),
-  KEY `IX_Formes_ProjetId` (`ProjetId`)
+  KEY `IX_Formes_MateriauId` (`IdMateriau`),
+  KEY `IX_Formes_ProjetId` (`IdProjet`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=94 ;
 
---
--- Contenu de la table `formes`
---
-
-INSERT INTO `formes` VALUES
+INSERT INTO Formes VALUES
 (1, 1, 'Ellipsoide', 1, NULL, NULL, NULL, NULL, NULL, '{"X":50.0,"Y":27.0,"Z":25.0}', 3, 9, 12, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 1, 'PrismeRectangulaire', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{"X":40.0,"Y":52.0,"Z":22.0}', NULL, 2, 1, NULL, NULL, NULL, NULL, 14),
 (3, 1, 'Ellipsoide', 3, NULL, NULL, NULL, NULL, NULL, '{"X":50.0,"Y":0.0,"Z":24.0}', 8, 1, 5, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -186,114 +153,64 @@ INSERT INTO `formes` VALUES
 (92, 1, 'Cylindre', 1, '{"X":34.0,"Y":9.0,"Z":48.0}', '{"X":38.0,"Y":91.0,"Z":40.0}', 12, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 60, NULL),
 (93, 2, 'PrismeRectangulaire', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{"X":79.0,"Y":7.0,"Z":32.0}', NULL, 10, 12, NULL, NULL, NULL, NULL, 13);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `materiaux`
---
-
-DROP TABLE IF EXISTS `materiaux`;
-CREATE TABLE IF NOT EXISTS `materiaux` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom` varchar(255) NOT NULL,
-  `Prix` double NOT NULL,
+DROP TABLE IF EXISTS Materiaux;
+CREATE TABLE IF NOT EXISTS Materiaux (
+  Id INT(11) NOT NULL AUTO_INCREMENT,
+  Nom VARCHAR(255) NOT NULL,
+  Prix DOUBLE NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `AK_Materiaux_Nom` (`Nom`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Contenu de la table `materiaux`
---
-
-INSERT INTO `materiaux` VALUES
+INSERT INTO Materiaux VALUES
 (1, 'Bois', 1.55),
 (2, 'Acier', 2.55);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `projets`
---
-
-DROP TABLE IF EXISTS `projets`;
-CREATE TABLE IF NOT EXISTS `projets` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom` varchar(255) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `AK_Projets_Nom` (`Nom`)
+DROP TABLE IF EXISTS Projets;
+CREATE TABLE IF NOT EXISTS Projets (
+  Id INT(11) NOT NULL AUTO_INCREMENT,
+  Nom VARCHAR(255) NOT NULL,
+  PRIMARY KEY (Id),
+  UNIQUE KEY AK_Projets_Nom (Nom)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
---
--- Contenu de la table `projets`
---
-
-INSERT INTO `projets` VALUES
+INSERT INTO Projets VALUES
 (1, 'Projet 1'),
 (2, 'Projet 2'),
 (3, 'Projet 3');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `utilisateurs`
---
-
-DROP TABLE IF EXISTS `utilisateurs`;
-CREATE TABLE IF NOT EXISTS `utilisateurs` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom` varchar(255) NOT NULL,
-  `MotDePasse` longtext NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `AK_Utilisateurs_Nom` (`Nom`)
+DROP TABLE IF EXISTS Utilisateurs;
+CREATE TABLE IF NOT EXISTS Utilisateurs (
+  Id INT(11) NOT NULL AUTO_INCREMENT,
+  Nom VARCHAR(255) NOT NULL,
+  MotDePasse LONGTEXT NOT NULL,
+  PRIMARY KEY (Id),
+  UNIQUE KEY AK_Utilisateurs_Nom (Nom)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
---
--- Contenu de la table `utilisateurs`
---
-
-INSERT INTO `utilisateurs` VALUES
+INSERT INTO Utilisateurs VALUES
 (1, 'Alexandre', '$2y$15$eiI786bZMg0HrJP4BphbveEXb1UHmkkd5p8feoUpDqYwuvgHjik2q'),
 (2, 'Guillaume', '$2y$15$eiI786bZMg0HrJP4BphbveEXb1UHmkkd5p8feoUpDqYwuvgHjik2q'),
 (3, 'Antoine', '$2y$15$eiI786bZMg0HrJP4BphbveEXb1UHmkkd5p8feoUpDqYwuvgHjik2q');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `__efmigrationshistory`
---
-
-DROP TABLE IF EXISTS `__efmigrationshistory`;
-CREATE TABLE IF NOT EXISTS `__efmigrationshistory` (
-  `MigrationId` varchar(95) NOT NULL,
-  `ProductVersion` varchar(32) NOT NULL,
-  PRIMARY KEY (`MigrationId`)
+DROP TABLE IF EXISTS __efmigrationshistory;
+CREATE TABLE IF NOT EXISTS __efmigrationshistory (
+  MigrationId VARCHAR(95) NOT NULL,
+  ProductVersion VARCHAR(32) NOT NULL,
+  PRIMARY KEY (MigrationId)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Contenu de la table `__efmigrationshistory`
---
-
-INSERT INTO `__efmigrationshistory` VALUES
+INSERT INTO __efmigrationshistory VALUES
 ('20180920181807_InitialDatabase', '2.2.0-preview1-35029'),
 ('20180920221024_ConesMigration', '2.2.0-preview1-35029');
 
---
--- Contraintes pour les tables exportées
---
+ALTER TABLE Acces
+  ADD CONSTRAINT FK_Acces_Projets_idProjet FOREIGN KEY (IdProjet) REFERENCES Projets (Id) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Acces_Utilisateurs_idUtilisateur FOREIGN KEY (IdUtilisateur) REFERENCES Utilisateurs (Id) ON DELETE CASCADE;
 
---
--- Contraintes pour la table `acces`
---
-ALTER TABLE `acces`
-  ADD CONSTRAINT `FK_Acces_Projets_idProjet` FOREIGN KEY (`idProjet`) REFERENCES `projets` (`Id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_Acces_Utilisateurs_idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`Id`) ON DELETE CASCADE;
-
---
--- Contraintes pour la table `formes`
---
-ALTER TABLE `formes`
-  ADD CONSTRAINT `FK_Formes_Materiaux_MateriauId` FOREIGN KEY (`MateriauId`) REFERENCES `materiaux` (`Id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_Formes_Projets_ProjetId` FOREIGN KEY (`ProjetId`) REFERENCES `projets` (`Id`) ON DELETE NO ACTION;
+ALTER TABLE Formes
+  ADD CONSTRAINT FK_Formes_Materiaux_MateriauId FOREIGN KEY (MateriauId) REFERENCES Materiaux (Id) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Formes_Projets_ProjetId FOREIGN KEY (ProjetId) REFERENCES Projets (Id) ON DELETE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
