@@ -163,10 +163,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DependancyObject\Viewport.cs" />
-    <Compile Include="PointExtension.cs" />
+    <Compile Include="GeometryExtension.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\PointValueConverter.cs" />
+    <Compile Include="Services\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="Views\Editeur\Editeur.xaml.cs">
       <DependentUpon>Editeur.xaml</DependentUpon>

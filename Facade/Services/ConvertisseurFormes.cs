@@ -46,7 +46,7 @@ namespace Hymperia.Facade.Services
     {
       var final = new TruncatedConeVisual3D
       {
-        Origin = forme.Origine.Object.Convert(),
+        Origin = forme.Origine.Convert(),
         Height = forme.Hauteur,
         BaseRadius = forme.RayonBase,
         TopRadius = forme.RayonTop,
@@ -60,8 +60,8 @@ namespace Hymperia.Facade.Services
     {
       var final = new PipeVisual3D
       {
-        Point1 = forme.Point1.Object.Convert(),
-        Point2 = forme.Point2.Object.Convert(),
+        Point1 = forme.Origine.Convert(),
+        Point2 = forme.Point.Convert(),
         Diameter = forme.Diametre,
         InnerDiameter = forme.InnerDiametre,
         ThetaDiv = forme.ThetaDiv
@@ -74,7 +74,7 @@ namespace Hymperia.Facade.Services
     {
       var final = new EllipsoidVisual3D
       {
-        Center = forme.Centre.Object.Convert(),
+        Center = forme.Origine.Convert(),
         RadiusX = forme.RayonX,
         RadiusY = forme.RayonY,
         RadiusZ = forme.RayonZ,
@@ -89,7 +89,7 @@ namespace Hymperia.Facade.Services
     {
       var final = new BoxVisual3D
       {
-        Center = forme.Centre.Object.Convert(),
+        Center = forme.Origine.Convert(),
         Height = forme.Hauteur,
         Length = forme.Longueur,
         Width = forme.Largeur,
@@ -110,71 +110,66 @@ namespace Hymperia.Facade.Services
     #region Lier
 
     /// <summary>DataBind <paramref name="forme"/> selon <paramref name="path"/>.</summary>
-    /// <exception cref="ArgumentNullException"><paramref name="path"/> était <see cref="null"/> ou whitespace.</exception>
+    /// <exception cref="InvalidCastException"><paramref name="source"/> était une <see cref="Forme"/> incompatible avec <paramref name="forme"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="forme"/> était un <see cref="MeshElement3D"/> inconnu.</exception>
     [NotNull]
-    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] string path)
+    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] Forme source)
     {
-      if (string.IsNullOrWhiteSpace(path))
-      {
-        throw new ArgumentNullException("path");
-      }
-
       switch (forme)
       {
         case TruncatedConeVisual3D cone:
-          return Lier(cone, path);
+          return Lier(cone, (Cone)source);
         case PipeVisual3D cylindre:
-          return Lier(cylindre, path);
+          return Lier(cylindre, (Cylindre)source);
         case EllipsoidVisual3D ellipsoide:
-          return Lier(ellipsoide, path);
+          return Lier(ellipsoide, (Ellipsoide)source);
         case BoxVisual3D prisme:
-          return Lier(prisme, path);
+          return Lier(prisme, (PrismeRectangulaire)source);
         default:
           throw new ArgumentException("Unknown child of MeshElement3D.", "forme");
       }
     }
 
-    private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, string path)
+    private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, Cone source)
     {
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding($"{ path }.Origine") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding($"{ path }.Hauteur"));
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding($"{ path }.RayonBase"));
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding($"{ path }.RayonTop"));
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding($"{ path }.ThetaDiv"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
 
       return forme;
     }
 
-    private PipeVisual3D Lier(PipeVisual3D forme, string path)
+    private PipeVisual3D Lier(PipeVisual3D forme, Cylindre source)
     {
-      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding($"{ path }.Point1") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding($"{ path }.Point2") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding($"{ path }.Diametre"));
-      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding($"{ path }.InnerDiametre"));
-      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding($"{ path }.ThetaDiv"));
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre"));
+      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre"));
+      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
 
       return forme;
     }
 
-    private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, string path)
+    private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, Ellipsoide source)
     {
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding($"{ path }.Centre") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding($"{ path }.RayonX"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding($"{ path }.RayonY"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding($"{ path }.RayonZ"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding($"{ path }.PhiDiv"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding($"{ path }.ThetaDiv"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding("PhiDiv"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
 
       return forme;
     }
 
-    private BoxVisual3D Lier(BoxVisual3D forme, string path)
+    private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaire source)
     {
-      BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding($"{ path }.Centre") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding($"{ path }.Hauteur"));
-      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding($"{ path }.Longueur"));
-      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding($"{ path }.Largeur"));
+      BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur"));
+      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur"));
+      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur"));
 
       return forme;
     }

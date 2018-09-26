@@ -22,6 +22,10 @@ namespace Hymperia.Model.Modeles
     [Required]
     internal JsonObject<Point> _Origine { get; set; }
 
+    [NotNull]
+    [Required]
+    internal JsonObject<Quaternion> _Rotation { get; set; }
+
     #endregion
 
     #region Not Mapped Properties
@@ -32,6 +36,14 @@ namespace Hymperia.Model.Modeles
     {
       get => _Origine.Object;
       set => _Origine.Object = value;
+    }
+
+    [NotNull]
+    [NotMapped]
+    public Quaternion Rotation
+    {
+      get => _Rotation.Object;
+      set => _Rotation.Object = value;
     }
 
     /// <summary>Le prix de la forme selon son <see cref="Materiau"/>.</summary>

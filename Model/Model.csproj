@@ -51,6 +51,8 @@
     <Compile Include="Modeles\Cylindre.cs" />
     <Compile Include="Modeles\Ellipsoide.cs" />
     <Compile Include="Modeles\Forme.cs" />
+    <Compile Include="Modeles\JsonObject\Quaternion.cs" />
+    <Compile Include="Modeles\JsonObject\Vector.cs" />
     <Compile Include="Modeles\Materiau.cs" />
     <Compile Include="Modeles\JsonObject\Point.cs" />
     <Compile Include="Modeles\PrismeRectangulaire.cs" />
