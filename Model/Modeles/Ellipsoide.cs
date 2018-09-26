@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
-using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Modeles
 {
@@ -9,7 +8,6 @@ namespace Hymperia.Model.Modeles
   {
     #region Attributes
 
-    public JsonObject<Point> Centre { get; set; }
     public double RayonX { get; set; }
     public double RayonY { get; set; }
     public double RayonZ { get; set; }
@@ -46,7 +44,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => $"Ellipsoïde { Id }: { Centre } - { Materiau }";
+    public override string ToString() => $"Ellipsoïde { Id }: { Origine } - { Materiau }";
 
     #endregion
   }

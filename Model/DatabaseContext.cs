@@ -120,10 +120,13 @@ namespace Hymperia.Model
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
 
       builder.Entity<Forme>().ToTable("Formes");
-      builder.Entity<Forme>().HasMany(forme => forme.Materiau).WithOne()
+      builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
         .HasForeignKey("IdMateriau");
-      builder.Entity<Cone>().HasBaseType<Forme>();
-      builder.Entity<Cylindre>().HasBaseType<Forme>();
+      builder.Entity<Forme>().Property(forme => forme._Origine).HasColumnName("Origine");
+      builder.Entity<ThetaDivForme>().HasBaseType<Forme>();
+      builder.Entity<Cone>().HasBaseType<ThetaDivForme>();
+      builder.Entity<Cylindre>().HasBaseType<ThetaDivForme>();
+      builder.Entity<Cylindre>().Property(forme => forme._Point).HasColumnName("Point");
       builder.Entity<Ellipsoide>().HasBaseType<Forme>();
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
 

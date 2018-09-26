@@ -18,22 +18,22 @@ namespace Hymperia.Model.Migrations
       {
         materiaux => new PrismeRectangulaire(materiaux[Random.Next(materiaux.Length)])
         {
-          Centre = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Origine = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
           Hauteur = Random.Next(1, 15),
           Largeur = Random.Next(1, 15),
           Longueur = Random.Next(1, 15)
         },
         materiaux => new Ellipsoide(materiaux[Random.Next(materiaux.Length)])
         {
-          Centre = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Origine = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
           RayonX = Random.Next(1, 15),
           RayonY = Random.Next(1, 15),
           RayonZ = Random.Next(1, 15)
         },
         materiaux => new Cylindre(materiaux[Random.Next(materiaux.Length)])
         {
-          Point1 = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
-          Point2 = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Origine = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
+          Point = new Point { X = Random.Next(100), Y = Random.Next(100), Z = Random.Next(100) },
           Diametre = Random.Next(1, 15)
         },
         materiaux => new Cone(materiaux[Random.Next(materiaux.Length)])
@@ -42,7 +42,6 @@ namespace Hymperia.Model.Migrations
           Hauteur = Random.Next(1, 15),
           RayonBase = Random.Next(1, 15)
         }
-
       };
     }
 

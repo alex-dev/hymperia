@@ -45,6 +45,10 @@ namespace Hymperia.Model.Migrations
 
                     b.Property<int?>("IdProjet");
 
+                    b.Property<string>("_Origine")
+                        .IsRequired()
+                        .HasColumnName("Origine");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdMateriau");
@@ -106,46 +110,9 @@ namespace Hymperia.Model.Migrations
                     b.ToTable("Utilisateurs");
                 });
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Cone", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
-
-                    b.Property<double>("Hauteur");
-
-                    b.Property<string>("Origine");
-
-                    b.Property<double>("RayonBase");
-
-                    b.Property<double>("RayonTop");
-
-                    b.Property<int>("ThetaDiv");
-
-                    b.HasDiscriminator().HasValue("Cone");
-                });
-
-            modelBuilder.Entity("Hymperia.Model.Modeles.Cylindre", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
-
-                    b.Property<double>("Diametre");
-
-                    b.Property<double>("InnerDiametre");
-
-                    b.Property<string>("Point1");
-
-                    b.Property<string>("Point2");
-
-                    b.Property<int>("ThetaDiv")
-                        .HasColumnName("Cylindre_ThetaDiv");
-
-                    b.HasDiscriminator().HasValue("Cylindre");
-                });
-
             modelBuilder.Entity("Hymperia.Model.Modeles.Ellipsoide", b =>
                 {
                     b.HasBaseType("Hymperia.Model.Modeles.Forme");
-
-                    b.Property<string>("Centre");
 
                     b.Property<int>("PhiDiv");
 
@@ -155,8 +122,7 @@ namespace Hymperia.Model.Migrations
 
                     b.Property<double>("RayonZ");
 
-                    b.Property<int>("ThetaDiv")
-                        .HasColumnName("Ellipsoide_ThetaDiv");
+                    b.Property<int>("ThetaDiv");
 
                     b.HasDiscriminator().HasValue("Ellipsoide");
                 });
@@ -164,9 +130,6 @@ namespace Hymperia.Model.Migrations
             modelBuilder.Entity("Hymperia.Model.Modeles.PrismeRectangulaire", b =>
                 {
                     b.HasBaseType("Hymperia.Model.Modeles.Forme");
-
-                    b.Property<string>("Centre")
-                        .HasColumnName("PrismeRectangulaire_Centre");
 
                     b.Property<double>("Hauteur")
                         .HasColumnName("PrismeRectangulaire_Hauteur");
@@ -176,6 +139,43 @@ namespace Hymperia.Model.Migrations
                     b.Property<double>("Longueur");
 
                     b.HasDiscriminator().HasValue("PrismeRectangulaire");
+                });
+
+            modelBuilder.Entity("Hymperia.Model.Modeles.ThetaDivForme", b =>
+                {
+                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
+
+                    b.Property<int>("ThetaDiv")
+                        .HasColumnName("ThetaDivForme_ThetaDiv");
+
+                    b.HasDiscriminator().HasValue("ThetaDivForme");
+                });
+
+            modelBuilder.Entity("Hymperia.Model.Modeles.Cone", b =>
+                {
+                    b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
+
+                    b.Property<double>("Hauteur");
+
+                    b.Property<double>("RayonBase");
+
+                    b.Property<double>("RayonTop");
+
+                    b.HasDiscriminator().HasValue("Cone");
+                });
+
+            modelBuilder.Entity("Hymperia.Model.Modeles.Cylindre", b =>
+                {
+                    b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
+
+                    b.Property<double>("Diametre");
+
+                    b.Property<double>("InnerDiametre");
+
+                    b.Property<string>("_Point")
+                        .HasColumnName("Point");
+
+                    b.HasDiscriminator().HasValue("Cylindre");
                 });
 
             modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
