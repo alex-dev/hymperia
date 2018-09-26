@@ -1,5 +1,0 @@
-﻿<Window x:Class="Hymperia.Facade.Views.FenetrePrincipale" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    prism:ViewModelLocator.AutoWireViewModel="True" Title="{Binding Title}">
-  <ContentControl Name="control" prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" />
-</Window>
