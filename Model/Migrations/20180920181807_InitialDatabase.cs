@@ -57,9 +57,9 @@ namespace Hymperia.Model.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    MateriauId = table.Column<int>(nullable: false),
+                    IdMateriau = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
-                    ProjetId = table.Column<int>(nullable: true),
+                    IdProjet = table.Column<int>(nullable: true),
                     Point1 = table.Column<string>(nullable: true),
                     Point2 = table.Column<string>(nullable: true),
                     Diametre = table.Column<double>(nullable: true),
@@ -80,14 +80,14 @@ namespace Hymperia.Model.Migrations
                 {
                     table.PrimaryKey("PK_Formes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Formes_Materiaux_MateriauId",
-                        column: x => x.MateriauId,
+                        name: "FK_Formes_Materiaux_IdMateriau",
+                        column: x => x.IdMateriau,
                         principalTable: "Materiaux",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Formes_Projets_ProjetId",
-                        column: x => x.ProjetId,
+                        name: "FK_Formes_Projets_IdProjet",
+                        column: x => x.IdProjet,
                         principalTable: "Projets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -97,41 +97,41 @@ namespace Hymperia.Model.Migrations
                 name: "Acces",
                 columns: table => new
                 {
-                    idProjet = table.Column<int>(nullable: false),
-                    idUtilisateur = table.Column<int>(nullable: false),
+                    IdProjet = table.Column<int>(nullable: false),
+                    IdUtilisateur = table.Column<int>(nullable: false),
                     DroitDAcces = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Acces", x => new { x.idProjet, x.idUtilisateur });
+                    table.PrimaryKey("PK_Acces", x => new { x.IdProjet, x.IdUtilisateur });
                     table.ForeignKey(
-                        name: "FK_Acces_Projets_idProjet",
-                        column: x => x.idProjet,
+                        name: "FK_Acces_Projets_IdProjet",
+                        column: x => x.IdProjet,
                         principalTable: "Projets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Acces_Utilisateurs_idUtilisateur",
-                        column: x => x.idUtilisateur,
+                        name: "FK_Acces_Utilisateurs_IdUtilisateur",
+                        column: x => x.IdUtilisateur,
                         principalTable: "Utilisateurs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Acces_idUtilisateur",
+                name: "IX_Acces_IdUtilisateur",
                 table: "Acces",
-                column: "idUtilisateur");
+                column: "IdUtilisateur");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Formes_MateriauId",
+                name: "IX_Formes_IdMateriau",
                 table: "Formes",
-                column: "MateriauId");
+                column: "IdMateriau");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Formes_ProjetId",
+                name: "IX_Formes_IdProjet",
                 table: "Formes",
-                column: "ProjetId");
+                column: "IdProjet");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
