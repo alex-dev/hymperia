@@ -113,6 +113,9 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
+      builder.Entity<Utilisateur>().ToTable("Utilisateurs");
+      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+    
       builder.Entity<Materiau>().ToTable("Materiaux");
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
 
@@ -128,9 +131,6 @@ namespace Hymperia.Model
       builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
       builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne()
         .HasForeignKey("IdProjet");
-
-      builder.Entity<Utilisateur>().ToTable("Utilisateurs");
-      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
 
       builder.Entity<Acces>().ToTable("Acces");
       builder.Entity<Acces>().Property<int>("IdProjet");
