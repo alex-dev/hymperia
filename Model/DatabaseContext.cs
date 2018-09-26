@@ -119,14 +119,14 @@ namespace Hymperia.Model
       builder.Entity<Ellipsoide>().HasBaseType<Forme>();
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
 
-      builder.Entity<Acces>().Property<int>("idProjet");
-      builder.Entity<Acces>().Property<int>("idUtilisateur");
+      builder.Entity<Acces>().Property<int>("IdProjet");
+      builder.Entity<Acces>().Property<int>("IdUtilisateur");
       builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
         .HasConversion(new EnumToStringConverter<Acces.Droit>());
-      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany().HasForeignKey("idProjet");
+      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany().HasForeignKey("IdProjet");
       builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
-        .HasForeignKey("idUtilisateur");
-      builder.Entity<Acces>().HasKey("idProjet", "idUtilisateur");
+        .HasForeignKey("IdUtilisateur");
+      builder.Entity<Acces>().HasKey("IdProjet", "IdUtilisateur");
 
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
 
