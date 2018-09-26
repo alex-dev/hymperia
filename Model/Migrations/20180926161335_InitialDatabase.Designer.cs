@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hymperia.Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180920181807_InitialDatabase")]
+    [Migration("20180926161335_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,16 +21,16 @@ namespace Hymperia.Model.Migrations
 
             modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
                 {
-                    b.Property<int>("idProjet");
+                    b.Property<int>("IdProjet");
 
-                    b.Property<int>("idUtilisateur");
+                    b.Property<int>("IdUtilisateur");
 
                     b.Property<string>("DroitDAcces")
                         .IsRequired();
 
-                    b.HasKey("idProjet", "idUtilisateur");
+                    b.HasKey("IdProjet", "IdUtilisateur");
 
-                    b.HasIndex("idUtilisateur");
+                    b.HasIndex("IdUtilisateur");
 
                     b.ToTable("Acces");
                 });
@@ -43,15 +43,19 @@ namespace Hymperia.Model.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<int>("MateriauId");
+                    b.Property<int>("IdMateriau");
 
-                    b.Property<int?>("ProjetId");
+                    b.Property<int?>("IdProjet");
+
+                    b.Property<string>("_Origine")
+                        .IsRequired()
+                        .HasColumnName("Origine");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MateriauId");
+                    b.HasIndex("IdMateriau");
 
-                    b.HasIndex("ProjetId");
+                    b.HasIndex("IdProjet");
 
                     b.ToTable("Formes");
 
@@ -108,28 +112,9 @@ namespace Hymperia.Model.Migrations
                     b.ToTable("Utilisateurs");
                 });
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Cylindre", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
-
-                    b.Property<double>("Diametre");
-
-                    b.Property<double>("InnerDiametre");
-
-                    b.Property<string>("Point1");
-
-                    b.Property<string>("Point2");
-
-                    b.Property<int>("ThetaDiv");
-
-                    b.HasDiscriminator().HasValue("Cylindre");
-                });
-
             modelBuilder.Entity("Hymperia.Model.Modeles.Ellipsoide", b =>
                 {
                     b.HasBaseType("Hymperia.Model.Modeles.Forme");
-
-                    b.Property<string>("Centre");
 
                     b.Property<int>("PhiDiv");
 
@@ -139,8 +124,7 @@ namespace Hymperia.Model.Migrations
 
                     b.Property<double>("RayonZ");
 
-                    b.Property<int>("ThetaDiv")
-                        .HasColumnName("Ellipsoide_ThetaDiv");
+                    b.Property<int>("ThetaDiv");
 
                     b.HasDiscriminator().HasValue("Ellipsoide");
                 });
@@ -149,10 +133,8 @@ namespace Hymperia.Model.Migrations
                 {
                     b.HasBaseType("Hymperia.Model.Modeles.Forme");
 
-                    b.Property<string>("Centre")
-                        .HasColumnName("PrismeRectangulaire_Centre");
-
-                    b.Property<double>("Hauteur");
+                    b.Property<double>("Hauteur")
+                        .HasColumnName("PrismeRectangulaire_Hauteur");
 
                     b.Property<double>("Largeur");
 
@@ -161,16 +143,53 @@ namespace Hymperia.Model.Migrations
                     b.HasDiscriminator().HasValue("PrismeRectangulaire");
                 });
 
+            modelBuilder.Entity("Hymperia.Model.Modeles.ThetaDivForme", b =>
+                {
+                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
+
+                    b.Property<int>("ThetaDiv")
+                        .HasColumnName("ThetaDivForme_ThetaDiv");
+
+                    b.HasDiscriminator().HasValue("ThetaDivForme");
+                });
+
+            modelBuilder.Entity("Hymperia.Model.Modeles.Cone", b =>
+                {
+                    b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
+
+                    b.Property<double>("Hauteur");
+
+                    b.Property<double>("RayonBase");
+
+                    b.Property<double>("RayonTop");
+
+                    b.HasDiscriminator().HasValue("Cone");
+                });
+
+            modelBuilder.Entity("Hymperia.Model.Modeles.Cylindre", b =>
+                {
+                    b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
+
+                    b.Property<double>("Diametre");
+
+                    b.Property<double>("InnerDiametre");
+
+                    b.Property<string>("_Point")
+                        .HasColumnName("Point");
+
+                    b.HasDiscriminator().HasValue("Cylindre");
+                });
+
             modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
                 {
                     b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
                         .WithMany()
-                        .HasForeignKey("idProjet")
+                        .HasForeignKey("IdProjet")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Hymperia.Model.Modeles.Utilisateur", "Utilisateur")
                         .WithMany("_Acces")
-                        .HasForeignKey("idUtilisateur")
+                        .HasForeignKey("IdUtilisateur")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -178,12 +197,12 @@ namespace Hymperia.Model.Migrations
                 {
                     b.HasOne("Hymperia.Model.Modeles.Materiau", "Materiau")
                         .WithMany()
-                        .HasForeignKey("MateriauId")
+                        .HasForeignKey("IdMateriau")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Hymperia.Model.Modeles.Projet")
                         .WithMany("_Formes")
-                        .HasForeignKey("ProjetId");
+                        .HasForeignKey("IdProjet");
                 });
 #pragma warning restore 612, 618
         }

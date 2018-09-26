@@ -33,6 +33,8 @@ namespace Hymperia.HelixViewport3DTest
       
       Cylindre.Point2 = new Point3D(0, 0, -10);
 
+      
+
       // Translate X
       TranslateManipulator translateManipulatorX = new TranslateManipulator();
       translateManipulatorX.Visibility = Visibility.Visible;
@@ -57,10 +59,20 @@ namespace Hymperia.HelixViewport3DTest
       translateManipulatorZ.Direction = new Vector3D(0,0,-1);
       viewport.Children.Add(translateManipulatorZ);
 
+      //translateManipulatorX.MouseUp += MouseUpHandler;
+      //translateManipulatorY.MouseUp += MouseUpHandler;
+      //translateManipulatorZ.MouseUp += MouseUpHandler;
 
-      viewport.Visibility = Visibility.Visible;
-      
     }
+
+    //private void MouseUpHandler(object sender, MouseButtonEventArgs e)
+    //{
+    //  Cylindre.BeginEdit();
+    //  Cylindre.Point1 = Cylindre.Transform.Transform(Cylindre.Point1);
+    //  Cylindre.Point2 = Cylindre.Transform.Transform(Cylindre.Point2);
+    //  Cylindre.Transform = default;
+    //  Cylindre.EndEdit();      
+    //}
 
     public void Pause(object sender, RoutedEventArgs e)
     {

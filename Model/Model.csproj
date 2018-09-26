@@ -40,13 +40,9 @@
     <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="DoubleExtension.cs" />
     <Compile Include="IIdentity.cs" />
-    <Compile Include="Migrations\20180920181807_InitialDatabase.cs" />
-    <Compile Include="Migrations\20180920181807_InitialDatabase.designer.cs">
-      <DependentUpon>20180920181807_InitialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180920221024_ConesMigration.cs" />
-    <Compile Include="Migrations\20180920221024_ConesMigration.designer.cs">
-      <DependentUpon>20180920221024_ConesMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20180926161335_InitialDatabase.cs" />
+    <Compile Include="Migrations\20180926161335_InitialDatabase.designer.cs">
+      <DependentUpon>20180926161335_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
-using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Modeles
 {
@@ -9,7 +8,6 @@ namespace Hymperia.Model.Modeles
   {
     #region Attributes
 
-    public JsonObject<Point> Origine { get; set; }
     public double Hauteur { get; set; }
     public double RayonBase { get; set; }
     public double RayonTop { get; set; }

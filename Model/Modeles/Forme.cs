@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
+using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Modeles
 {
@@ -16,9 +18,21 @@ namespace Hymperia.Model.Modeles
     [Required]
     public Materiau Materiau { get; set; }
 
+    [NotNull]
+    [Required]
+    internal JsonObject<Point> _Origine { get; set; }
+
     #endregion
 
     #region Not Mapped Properties
+
+    [NotNull]
+    [NotMapped]
+    public Point Origine
+    {
+      get => _Origine.Object;
+      set => _Origine.Object = value;
+    }
 
     /// <summary>Le prix de la forme selon son <see cref="Materiau"/>.</summary>
     [NotMapped]
@@ -40,6 +54,7 @@ namespace Hymperia.Model.Modeles
     {
       Id = default;
       Materiau = materiau;
+      _Origine = new JsonObject<Point>();
     }
 
     #endregion

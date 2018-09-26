@@ -112,28 +112,38 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
+      builder.Entity<Utilisateur>().ToTable("Utilisateurs");
+      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+    
+      builder.Entity<Materiau>().ToTable("Materiaux");
+      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+
       builder.Entity<Forme>().ToTable("Formes");
-      builder.Entity<Cone>().HasBaseType<Forme>();
-      builder.Entity<Cylindre>().HasBaseType<Forme>();
+      builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
+        .HasForeignKey("IdMateriau");
+      builder.Entity<Forme>().Property(forme => forme._Origine).HasColumnName("Origine");
+      builder.Entity<ThetaDivForme>().HasBaseType<Forme>();
+      builder.Entity<Cone>().HasBaseType<ThetaDivForme>();
+      builder.Entity<Cylindre>().HasBaseType<ThetaDivForme>();
+      builder.Entity<Cylindre>().Property(forme => forme._Point).HasColumnName("Point");
       builder.Entity<Ellipsoide>().HasBaseType<Forme>();
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
 
-      builder.Entity<Acces>().Property<int>("idProjet");
-      builder.Entity<Acces>().Property<int>("idUtilisateur");
-      builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
-        .HasConversion(new EnumToStringConverter<Acces.Droit>());
-      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany().HasForeignKey("idProjet");
-      builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
-        .HasForeignKey("idUtilisateur");
-      builder.Entity<Acces>().HasKey("idProjet", "idUtilisateur");
-
-      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
-
       builder.Entity<Projet>().ToTable("Projets");
       builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
-      builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne();
+      builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne()
+        .HasForeignKey("IdProjet");
 
-      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+      builder.Entity<Acces>().ToTable("Acces");
+      builder.Entity<Acces>().Property<int>("IdProjet");
+      builder.Entity<Acces>().Property<int>("IdUtilisateur");
+      builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
+        .HasConversion(new EnumToStringConverter<Acces.Droit>());
+      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany()
+        .HasForeignKey("IdProjet");
+      builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
+        .HasForeignKey("IdUtilisateur");
+      builder.Entity<Acces>().HasKey("IdProjet", "IdUtilisateur");
 
       base.OnModelCreating(builder);
     }

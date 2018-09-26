@@ -55,5 +55,15 @@ namespace Hymperia.HelixViewport3DTest
     {
       PlaceUserControl(new RotationForme());
     }
+
+    private void DataBinding_Click(object sender, RoutedEventArgs e)
+    {
+      PlaceUserControl(new DataBindingFormes());
+    }
+
+    private void ModificationTailleForme_Click(object sender, RoutedEventArgs e)
+    {
+      PlaceUserControl(new ModificationTailleForme());
+    }
   }
 }

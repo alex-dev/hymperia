@@ -82,11 +82,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataBindingFormes.xaml.cs">
+      <DependentUpon>DataBindingFormes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeplacementForme.xaml.cs">
       <DependentUpon>DeplacementForme.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManipulatorExploration.xaml.cs">
       <DependentUpon>ManipulatorExploration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModificationTailleForme.xaml.cs">
+      <DependentUpon>ModificationTailleForme.xaml</DependentUpon>
     </Compile>
     <Compile Include="RotationForme.xaml.cs">
       <DependentUpon>RotationForme.xaml</DependentUpon>
@@ -97,6 +103,10 @@
     <Compile Include="SpherePhiThetaExploration.xaml.cs">
       <DependentUpon>SpherePhiThetaExploration.xaml</DependentUpon>
     </Compile>
+    <Page Include="DataBindingFormes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DeplacementForme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormBrushesExploration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ModificationTailleForme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

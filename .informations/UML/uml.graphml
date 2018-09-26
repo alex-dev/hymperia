@@ -22,7 +22,7 @@
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="57.349609375" x="101.86773801520275" y="4.0">Utilisateur</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="140.0" modelName="custom" textColor="#000000" visible="true" width="254.0" x="2.0" y="30.701171875">&lt;html&gt;
-&lt;p&gt;-Id: uint&lt;/p&gt;
+&lt;p&gt;-Id: int&lt;/p&gt;
 &lt;p&gt;-Nom: string { !IsEmpty() }&lt;/p&gt;
 &lt;p&gt;-MotDePasse: string { !IsEmpty() }&lt;/p&gt;
 &lt;hr /&gt;
@@ -52,7 +52,7 @@
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="35.34765625" x="95.19566042505392" y="4.0">Projet</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="100.0" modelName="custom" textColor="#000000" visible="true" width="212.0" x="2.0" y="30.701171875">&lt;html&gt;
-&lt;p&gt;-Id: uint&lt;/p&gt;
+&lt;p&gt;-Id: int&lt;/p&gt;
 &lt;p&gt;-Nom: string { !IsEmpty() }&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;+&amp;lt;&amp;lt;get&amp;gt;&amp;gt; Prix: money&lt;/p&gt;
@@ -127,7 +127,7 @@
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="38.669921875" x="78.1650390625" y="4.0">Forme</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="60.0" modelName="custom" textColor="#000000" visible="true" width="192.0" x="2.0" y="30.701171875">&lt;html&gt;
-&lt;p&gt;-Id: uint&lt;/p&gt;
+&lt;p&gt;-Id: int&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;+&amp;lt;&amp;lt;get&amp;gt;&amp;gt; Prix: money&lt;/p&gt;
 &lt;p&gt;#&lt;i&gt;abstract&lt;/i&gt; &amp;lt;&amp;lt;get&amp;gt;&amp;gt; Volume: double&lt;/p&gt;
@@ -152,7 +152,7 @@
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="50.6875" x="72.15625" y="4.0">Materiau</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="52.0" modelName="custom" textColor="#000000" visible="true" width="144.0" x="2.0" y="30.701171875">&lt;html&gt;
-&lt;p&gt;-Id: uint&lt;/p&gt;
+&lt;p&gt;-Id: int&lt;/p&gt;
 &lt;p&gt;-Nom: string { !IsEmpty() }&lt;/p&gt;
 &lt;p&gt;-Prix: money { &gt;= 0 }&lt;/p&gt;
 &lt;/html&gt;<y:LabelModel>

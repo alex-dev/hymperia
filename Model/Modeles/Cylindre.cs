@@ -9,8 +9,7 @@ namespace Hymperia.Model.Modeles
   {
     #region Attributes
 
-    public JsonObject<Point> Point1 { get; set; }
-    public JsonObject<Point> Point2 { get; set; }
+    internal JsonObject<Point> _Point { get; set; }
     public double Diametre { get; set; }
     public double InnerDiametre { get; set; }
 
@@ -18,22 +17,31 @@ namespace Hymperia.Model.Modeles
 
     #region Not Mapped Properties
 
+    [NotNull]
     [NotMapped]
-    public JsonObject<Point> Centre
+    public Point Point
+    {
+      get => _Point.Object;
+      set => _Point.Object = value;
+    }
+
+    [NotNull]
+    [NotMapped]
+    public Point Centre
     {
       get => new Point(
-        (Point1.Object.X + Point2.Object.X) / 2,
-        (Point1.Object.Y + Point2.Object.Y) / 2,
-        (Point1.Object.Z + Point2.Object.Z) / 2);
+        (Origine.X + Point.X) / 2,
+        (Origine.Y + Point.Y) / 2,
+        (Origine.Z + Point.Z) / 2);
     }
 
     [NotMapped]
     public double Hauteur
     {
       get => Math.Sqrt(
-        Math.Pow(Point1.Object.X - Point2.Object.X, 2)
-        + Math.Pow(Point1.Object.Y - Point2.Object.Y, 2)
-        + Math.Pow(Point1.Object.Z - Point2.Object.Z, 2));
+        Math.Pow(Origine.X - Point.X, 2)
+        + Math.Pow(Origine.Y - Point.Y, 2)
+        + Math.Pow(Origine.Z - Point.Z, 2));
     }
 
     /// <inheritdoc />
@@ -60,6 +68,7 @@ namespace Hymperia.Model.Modeles
     /// <inheritdoc />
     public Cylindre([NotNull] Materiau materiau) : base(materiau)
     {
+      _Point = new JsonObject<Point>();
       Diametre = 1;
       InnerDiametre = 0;
     }
