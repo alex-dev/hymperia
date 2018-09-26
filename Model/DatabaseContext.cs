@@ -113,28 +113,35 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnModelCreating([NotNull] ModelBuilder builder)
     {
+      builder.Entity<Materiau>().ToTable("Materiaux");
+      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+
       builder.Entity<Forme>().ToTable("Formes");
+      builder.Entity<Forme>().HasMany(forme => forme.Materiau).WithOne()
+        .HasForeignKey("IdMateriau");
       builder.Entity<Cone>().HasBaseType<Forme>();
       builder.Entity<Cylindre>().HasBaseType<Forme>();
       builder.Entity<Ellipsoide>().HasBaseType<Forme>();
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
 
+      builder.Entity<Projet>().ToTable("Projets");
+      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
+      builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne()
+        .HasForeignKey("IdProjet");
+
+      builder.Entity<Utilisateur>().ToTable("Utilisateurs");
+      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+
+      builder.Entity<Acces>().ToTable("Acces");
       builder.Entity<Acces>().Property<int>("IdProjet");
       builder.Entity<Acces>().Property<int>("IdUtilisateur");
       builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
         .HasConversion(new EnumToStringConverter<Acces.Droit>());
-      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany().HasForeignKey("IdProjet");
+      builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany()
+        .HasForeignKey("IdProjet");
       builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
         .HasForeignKey("IdUtilisateur");
       builder.Entity<Acces>().HasKey("IdProjet", "IdUtilisateur");
-
-      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
-
-      builder.Entity<Projet>().ToTable("Projets");
-      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
-      builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne();
-
-      builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
 
       base.OnModelCreating(builder);
     }
