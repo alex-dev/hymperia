@@ -12,13 +12,13 @@ namespace Hymperia.Facade.Services
     #region Services
 
     [NotNull]
-    private readonly PointValueConverter PointValueConverter;
+    private readonly TransformConverter Converter;
 
     #endregion
 
-    public ConvertisseurWrappers([NotNull] PointValueConverter point)
+    public ConvertisseurWrappers([NotNull] TransformConverter converter)
     {
-      PointValueConverter = point;
+      Converter = converter;
     }
 
     #region Convertir
@@ -135,7 +135,7 @@ namespace Hymperia.Facade.Services
 
     private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, Cone source)
     {
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding("Origine") { Converter = PointValueConverter });
+      //BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding("Origine") { Converter = PointValueConverter });
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur"));
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase"));
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop"));
@@ -146,8 +146,8 @@ namespace Hymperia.Facade.Services
 
     private PipeVisual3D Lier(PipeVisual3D forme, Cylindre source)
     {
-      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
+      //BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
+      //BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
       BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre"));
       BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre"));
       BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
@@ -157,7 +157,7 @@ namespace Hymperia.Facade.Services
 
     private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, Ellipsoide source)
     {
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      //BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX"));
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY"));
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ"));
@@ -169,7 +169,7 @@ namespace Hymperia.Facade.Services
 
     private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaire source)
     {
-      BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      //BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
       BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur"));
       BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur"));
       BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur"));
