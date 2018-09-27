@@ -13,14 +13,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using HelixToolkit.Wpf;
+
+
 namespace Hymperia.HelixViewport3DTest
 {
   // Ref: https://github.com/helix-toolkit/helix-toolkit/tree/develop/Source/Examples/WPF/ExampleBrowser/Examples/Manipulator
   public partial class ManipulatorExploration : UserControl
+  {
+
+    public CombinedManipulator manipulator = new CombinedManipulator();
+
+    public ManipulatorExploration()
     {
-        public ManipulatorExploration()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
+      viewport.Children.Add(AddManipulator());
     }
+
+    private CombinedManipulator AddManipulator()
+    {
+      return new CombinedManipulator
+      {
+        Pivot = box1.Center,
+        Diameter = (box1.Length + (box1.Length / 10)),
+
+      };
+    }
+  }
 }
