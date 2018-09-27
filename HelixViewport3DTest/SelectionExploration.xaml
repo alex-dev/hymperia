@@ -10,11 +10,11 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0">
-      <ComboBox SelectedValue="{Binding SelectionMode}" ItemsSource="{Binding SelectionModes}"/>
+      <ComboBox SelectedValue="{Binding SelectionMode}" ItemsSource="{Binding SelectionModes}" />
       <TextBlock Text="SelectedVisuals:" />
       <TextBlock Text="{Binding SelectedVisuals}" />
     </StackPanel>
-    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True" Grid.Column="1" >
+    <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True" Grid.Column="1">
       <Helix:DefaultLights />
       <Helix:GridLinesVisual3D Width="15" Length="15" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
 

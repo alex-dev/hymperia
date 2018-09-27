@@ -91,6 +91,7 @@ namespace Hymperia.HelixViewport3DTest
       selectedVisuals = args.SelectedVisuals;
       RaisePropertyChanged(nameof(SelectedVisuals));
     }
+
     private void HandleSelectionModelsEvent(object sender, ModelsSelectedEventArgs args)
     {
 
