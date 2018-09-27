@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
 using JetBrains.Annotations;
@@ -32,7 +33,7 @@ namespace Hymperia.Facade.Services
       /*switch (forme)
       {
         case Cone cone:
-          return Convertir(cone);
+          return new ConeWrapper(forme);
         case Cylindre cylindre:
           return Convertir(cylindre);
         case Ellipsoide ellipsoide:
@@ -121,11 +122,11 @@ namespace Hymperia.Facade.Services
       /*switch (forme)
       {
         case TruncatedConeVisual3D cone:
-          return Lier(cone, (Cone)source);
-        case PipeVisual3D cylindre:
-          return Lier(cylindre, (Cylindre)source);
+          return Lier(cone, (ConeWrapper)source);
+        // case PipeVisual3D cylindre:
+        //   return Lier(cylindre, (CylindreWrapper)source);
         case EllipsoidVisual3D ellipsoide:
-          return Lier(ellipsoide, (Ellipsoide)source);
+          return Lier(ellipsoide, (EllipsoideWrapper)source);
         case BoxVisual3D prisme:
           return Lier(prisme, (PrismeRectangulaire)source);
         default:
@@ -135,11 +136,19 @@ namespace Hymperia.Facade.Services
 
     private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, Cone source)
     {
+      var multi = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      multi.Bindings.AddRange(new Binding[]
+      {
+        new Binding("Origine") { Source = source },
+        new Binding("Quaternion") { Source = source }
+      });
+
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TransformProperty, multi);
       //BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding("Origine") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur"));
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase"));
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop"));
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
 
       return forme;
     }
@@ -148,9 +157,9 @@ namespace Hymperia.Facade.Services
     {
       //BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
       //BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre"));
-      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre"));
-      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
+      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
 
       return forme;
     }
@@ -158,11 +167,11 @@ namespace Hymperia.Facade.Services
     private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, Ellipsoide source)
     {
       //BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding("PhiDiv"));
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding("PhiDiv") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
 
       return forme;
     }
@@ -170,9 +179,9 @@ namespace Hymperia.Facade.Services
     private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaire source)
     {
       //BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
-      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur"));
-      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur"));
-      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur"));
+      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur") { Source = source, Mode = BindingMode.TwoWay });
 
       return forme;
     }

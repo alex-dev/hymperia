@@ -31,7 +31,7 @@ namespace UnitTests.ModelIntegrationTests
     }
 
     [TestMethod]
-    public async Task ShouldGenerateInMemoryContext()
+    public async Task ShouldGenerateTemporaryContext()
     {
       using (var context = new MockedContext(DatabaseString))
       {

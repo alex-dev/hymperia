@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -14,6 +15,7 @@ namespace Hymperia.Model
     #region Constants
 
     private const string ConfigurationName = "MainDatabase";
+    protected readonly string Connection;
 
     #endregion
 
@@ -87,12 +89,23 @@ namespace Hymperia.Model
     #region Constructors
 
     /// <summary>Initialise le contexte selon les options par défaut.</summary>
-    public DatabaseContext() : base() { }
+    public DatabaseContext() : base()
+    {
+      Connection = GetConnectionString();
+    }
 
     /// <summary>Initialise le contexte selon les options passées.</summary>
     /// <param name="options">Les options préconfigurées passées au contexte.</param>
     public DatabaseContext([NotNull] DbContextOptions<DatabaseContext> options)
-      : base(options) { }
+      : base(options)
+    {
+      Connection = GetConnectionString();
+    }
+
+    protected DatabaseContext(string connection) : base()
+    {
+      Connection = connection;
+    }
 
     #endregion
 
@@ -155,17 +168,12 @@ namespace Hymperia.Model
       builder.UseMySql(GetConnectionString());
       builder.EnableRichDataErrorHandling();
       builder.EnableSensitiveDataLogging();
-      BaseOnConfiguring(builder);
-    }
-
-    protected void BaseOnConfiguring([NotNull] DbContextOptionsBuilder builder)
-    {
       base.OnConfiguring(builder);
     }
 
     private string GetConnectionString()
     {
-      const string connection = "Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;";
+      string connection = $"Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_{ new Guid() }; Username=Hymperia; Password=infoH25978;";
 
       try
       {

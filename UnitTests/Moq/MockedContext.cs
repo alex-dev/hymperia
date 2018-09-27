@@ -6,25 +6,10 @@ namespace UnitTests.Moq
 {
   public class MockedContext : DatabaseContext
   {
-    public readonly string DatabaseString;
+    public string DatabaseString => Connection;
 
-    public MockedContext()
-    {
-      DatabaseString = new Guid().ToString();
-    }
+    public MockedContext() : base() { }
 
-    public MockedContext(string database)
-    {
-      DatabaseString = database;
-    }
-
-    /// <inheritdoc/>
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
-    {
-      builder.UseInMemoryDatabase(DatabaseString);
-      builder.EnableRichDataErrorHandling();
-      builder.EnableSensitiveDataLogging();
-      BaseOnConfiguring(builder);
-    }
+    public MockedContext(string database) : base(database) { }
   }
 }

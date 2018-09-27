@@ -12,16 +12,22 @@ namespace UnitTests.ServiceTests
   public class TransformConverterTest
   {
     private readonly Random Random;
+    private TransformConverter Converter { get; set; }
 
     public TransformConverterTest()
     {
       Random = new Random();
     }
 
-    [TestMethod]
-    public void ShouldConvertQuaternionAndPointsToMatrixTransform3D()
+    [TestInitialize]
+    public void Initialize()
     {
-      var service = new TransformConverter();
+      Converter = new TransformConverter();
+    }
+
+    [TestMethod]
+    public void ShouldConvertQuaternionAndPointToMatrixTransform3D()
+    {
       var quaternion = new Quaternion(Random.Next(), Random.Next(), Random.Next(), Random.Next());
       var point = new Point3D(Random.Next(), Random.Next(), Random.Next());
 
@@ -42,7 +48,7 @@ namespace UnitTests.ServiceTests
           new RotateTransform3D(new QuaternionRotation3D(quaternion), point)
         }
       };
-      var test = service.Convert(
+      var test = Converter.Convert(
         new object[] { point.Convert(), quaternion.Convert() },
         typeof(MatrixTransform3D)) as MatrixTransform3D;
 
@@ -54,9 +60,8 @@ namespace UnitTests.ServiceTests
     }
 
     [TestMethod]
-    public void ShouldConvertMatrixTransform3DToQuaternionAndPoints()
+    public void ShouldConvertMatrixTransform3DToQuaternionAndPoint()
     {
-      var service = new TransformConverter();
       var quaternion = new Quaternion(Random.Next(), Random.Next(), Random.Next(), Random.Next());
       var point = new Point3D(Random.Next(), Random.Next(), Random.Next());
 
@@ -69,7 +74,7 @@ namespace UnitTests.ServiceTests
         }
       };
 
-      var (point_test, (quaternion_test, rest)) = service.ConvertBack(new MatrixTransform3D(transforms.Value), service.Types);
+      var (point_test, (quaternion_test, rest)) = Converter.ConvertBack(new MatrixTransform3D(transforms.Value), Converter.Types);
 
       Assert.AreEqual(quaternion, ((Hymperia.Model.Modeles.JsonObject.Quaternion)quaternion_test).Convert());
       Assert.AreEqual(point, ((Hymperia.Model.Modeles.JsonObject.Point)point_test).Convert());
