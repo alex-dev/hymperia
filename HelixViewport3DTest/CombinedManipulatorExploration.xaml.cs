@@ -12,7 +12,7 @@ namespace Hymperia.HelixViewport3DTest
     public CombinedManipulatorExploration()
     {
       var manipulator = new CombinedManipulator();
-      Sphere = new SphereVisual3D();
+      Sphere = new SphereVisual3D() { Radius = 1 };
       manipulator.Bind(Sphere);
       InitializeComponent();
 

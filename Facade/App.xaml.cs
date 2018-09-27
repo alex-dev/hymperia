@@ -14,7 +14,7 @@ namespace Hymperia.Facade
     {
       registry.Register<ContextFactory>();
       registry.Register<PointValueConverter>();
-      registry.Register<ConvertisseurFormes>();
+      registry.Register<ConvertisseurWrappers>();
       registry.RegisterForNavigation<Editeur>("Editeur");
     }
 

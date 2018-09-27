@@ -1,0 +1,182 @@
+﻿using System;
+using System.Windows.Data;
+using HelixToolkit.Wpf;
+using JetBrains.Annotations;
+using Hymperia.Model.Modeles;
+using Hymperia.Facade.ModelWrappers;
+
+namespace Hymperia.Facade.Services
+{
+  public class ConvertisseurWrappers
+  {
+    #region Services
+
+    [NotNull]
+    private readonly PointValueConverter PointValueConverter;
+
+    #endregion
+
+    public ConvertisseurWrappers([NotNull] PointValueConverter point)
+    {
+      PointValueConverter = point;
+    }
+
+    #region Convertir
+
+    /// <summary>Convertit <paramref name="forme"/> en <see cref="MeshElement3D"/>.</summary>
+    /// <exception cref="ArgumentException"><paramref name="forme"/> n'était pas une <see cref="Forme"/> connue.</exception>
+    [NotNull]
+    public MeshElement3D Convertir([NotNull] FormeWrapper<Forme> forme)
+    {
+      throw new NotImplementedException();
+      /*switch (forme)
+      {
+        case Cone cone:
+          return Convertir(cone);
+        case Cylindre cylindre:
+          return Convertir(cylindre);
+        case Ellipsoide ellipsoide:
+          return Convertir(ellipsoide);
+        case PrismeRectangulaire prisme:
+          return Convertir(prisme);
+        default:
+          throw new ArgumentException("Unknown child of Form.", nameof(forme));
+      }*/
+    }
+
+    private TruncatedConeVisual3D Convertir(Cone forme)
+    {
+      var final = new TruncatedConeVisual3D
+      {
+        Origin = forme.Origine.Convert(),
+        Height = forme.Hauteur,
+        BaseRadius = forme.RayonBase,
+        TopRadius = forme.RayonTop,
+        ThetaDiv = forme.ThetaDiv
+      };
+
+      return Materialize(final, forme);
+    }
+
+    private PipeVisual3D Convertir(Cylindre forme)
+    {
+      var final = new PipeVisual3D
+      {
+        Point1 = forme.Origine.Convert(),
+        Point2 = forme.Point.Convert(),
+        Diameter = forme.Diametre,
+        InnerDiameter = forme.InnerDiametre,
+        ThetaDiv = forme.ThetaDiv
+      };
+
+      return Materialize(final, forme);
+    }
+
+    private EllipsoidVisual3D Convertir(Ellipsoide forme)
+    {
+      var final = new EllipsoidVisual3D
+      {
+        Center = forme.Origine.Convert(),
+        RadiusX = forme.RayonX,
+        RadiusY = forme.RayonY,
+        RadiusZ = forme.RayonZ,
+        PhiDiv = forme.PhiDiv,
+        ThetaDiv = forme.ThetaDiv
+      };
+
+      return Materialize(final, forme);
+    }
+
+    private BoxVisual3D Convertir(PrismeRectangulaire forme)
+    {
+      var final = new BoxVisual3D
+      {
+        Center = forme.Origine.Convert(),
+        Height = forme.Hauteur,
+        Length = forme.Longueur,
+        Width = forme.Largeur,
+      };
+
+      return Materialize(final, forme);
+    }
+
+    private TFinal Materialize<TFinal, TInitial>(TFinal final, TInitial initial )
+      where TFinal : MeshElement3D
+      where TInitial : Forme
+    {
+      return final;
+    }
+
+    #endregion
+
+    #region Lier
+
+    /// <summary>DataBind <paramref name="forme"/> selon <paramref name="path"/>.</summary>
+    /// <exception cref="InvalidCastException"><paramref name="source"/> était une <see cref="Forme"/> incompatible avec <paramref name="forme"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="forme"/> était un <see cref="MeshElement3D"/> inconnu.</exception>
+    [NotNull]
+    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper<Forme> source)
+    {
+      throw new NotImplementedException();
+      /*switch (forme)
+      {
+        case TruncatedConeVisual3D cone:
+          return Lier(cone, (Cone)source);
+        case PipeVisual3D cylindre:
+          return Lier(cylindre, (Cylindre)source);
+        case EllipsoidVisual3D ellipsoide:
+          return Lier(ellipsoide, (Ellipsoide)source);
+        case BoxVisual3D prisme:
+          return Lier(prisme, (PrismeRectangulaire)source);
+        default:
+          throw new ArgumentException("Unknown child of MeshElement3D.", nameof(forme));
+      }*/
+    }
+
+    private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, Cone source)
+    {
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop"));
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
+
+      return forme;
+    }
+
+    private PipeVisual3D Lier(PipeVisual3D forme, Cylindre source)
+    {
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre"));
+      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre"));
+      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
+
+      return forme;
+    }
+
+    private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, Ellipsoide source)
+    {
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding("PhiDiv"));
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding("ThetaDiv"));
+
+      return forme;
+    }
+
+    private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaire source)
+    {
+      BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur"));
+      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur"));
+      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur"));
+
+      return forme;
+    }
+
+    #endregion
+  }
+}
