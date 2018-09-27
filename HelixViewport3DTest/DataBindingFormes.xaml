@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hymperia.HelixViewport3DTest.DataBindingFormes"
+﻿<UserControl x:Class="HelixViewport3DTest.DataBindingFormes"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"

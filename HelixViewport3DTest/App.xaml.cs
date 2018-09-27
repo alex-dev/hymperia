@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Hymperia.HelixViewport3DTest
+namespace HelixViewport3DTest
 {
   public partial class App : Application
   {

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0093D812-BAD7-45F0-A313-ED9343DF2652}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Hymperia.HelixViewport3DTest</RootNamespace>
+    <RootNamespace>HelixViewport3DTest</RootNamespace>
     <AssemblyName>HelixViewport3DTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,7 +51,7 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Hymperia.HelixViewport3DTest.App</StartupObject>
+    <StartupObject>HelixViewport3DTest.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HelixToolkit, Version=2.4.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">

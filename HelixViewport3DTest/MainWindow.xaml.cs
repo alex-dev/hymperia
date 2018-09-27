@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
 
-namespace Hymperia.HelixViewport3DTest
+namespace HelixViewport3DTest
 {
   public partial class MainWindow : Window
   {

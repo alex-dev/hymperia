@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "Facade\Facade.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelixViewport3DTest", "HelixViewport3DTest\HelixViewport3DTest.csproj", "{0093D812-BAD7-45F0-A313-ED9343DF2652}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelIntegrationTests", "ModelIntegrationTests\ModelIntegrationTests.csproj", "{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
