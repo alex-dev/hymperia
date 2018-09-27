@@ -12,6 +12,7 @@
       <Button Click="SpherePhiThetaExploration_Click" Content="Sphere Phi Theta" />
       <Button Click="MaterialExploration_Click" Content="Material Exploration" />
       <Button Click="ManipulatorExploration_Click" Content="Manipulator Exploration" />
+      <Button Click="CombinedManipulatorExploration_Click" Content="Combined Manipulator Exploration" />
       <Button Click="SelectionExploration_Click" Content="Selection Exploration" />
       <Button Click="DeplacementForme_Click" Content="Deplacement forme" />
       <Button Click="RotationForme_Click" Content="Rotation forme" />

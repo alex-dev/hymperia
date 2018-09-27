@@ -99,10 +99,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Services
 
     [NotNull]
-    private ContextFactory ContextFactory { get; set; }
+    private readonly ContextFactory ContextFactory;
 
     [NotNull]
-    private ConvertisseurFormes Convertisseur { get; set; }
+    private readonly ConvertisseurFormes Convertisseur;
 
     #endregion
 
@@ -154,16 +154,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
     [ItemNotNull]
     private IEnumerable<MeshElement3D> CreeFormes([ItemNotNull] IEnumerable<Forme> formes)
     {
-      int index = -1;
-
       return from forme in formes
-             select CreeForme(forme, ref index);
+             select CreeForme(forme);
     }
 
     [NotNull]
-    private MeshElement3D CreeForme([NotNull] Forme forme, ref int index)
+    private MeshElement3D CreeForme([NotNull] Forme forme)
     {
-      var x = Convertisseur.Lier(Convertisseur.Convertir(forme), $"Formes[{ ++index }]");
+      var x = Convertisseur.Lier(Convertisseur.Convertir(forme), forme);
 
       return x;
     }

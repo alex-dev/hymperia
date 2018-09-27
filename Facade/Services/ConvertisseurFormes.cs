@@ -11,7 +11,7 @@ namespace Hymperia.Facade.Services
     #region Services
 
     [NotNull]
-    private PointValueConverter PointValueConverter { get; set; }
+    private readonly PointValueConverter PointValueConverter;
 
     #endregion
 
@@ -38,7 +38,7 @@ namespace Hymperia.Facade.Services
         case PrismeRectangulaire prisme:
           return Convertir(prisme);
         default:
-          throw new ArgumentException("Unknown child of Form.", "forme");
+          throw new ArgumentException("Unknown child of Form.", nameof(forme));
       }
     }
 
@@ -126,7 +126,7 @@ namespace Hymperia.Facade.Services
         case BoxVisual3D prisme:
           return Lier(prisme, (PrismeRectangulaire)source);
         default:
-          throw new ArgumentException("Unknown child of MeshElement3D.", "forme");
+          throw new ArgumentException("Unknown child of MeshElement3D.", nameof(forme));
       }
     }
 

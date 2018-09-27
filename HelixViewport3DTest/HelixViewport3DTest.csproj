@@ -82,6 +82,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CombinedManipulatorExploration.xaml.cs">
+      <DependentUpon>CombinedManipulatorExploration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataBindingFormes.xaml.cs">
       <DependentUpon>DataBindingFormes.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
     <Compile Include="SpherePhiThetaExploration.xaml.cs">
       <DependentUpon>SpherePhiThetaExploration.xaml</DependentUpon>
     </Compile>
+    <Page Include="CombinedManipulatorExploration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataBindingFormes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
