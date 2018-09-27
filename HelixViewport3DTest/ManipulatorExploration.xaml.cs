@@ -10,11 +10,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using H = Hymperia.HelixViewport3DTest.Manipulators;
 using HelixToolkit.Wpf;
-
 
 namespace Hymperia.HelixViewport3DTest
 {
@@ -23,22 +23,26 @@ namespace Hymperia.HelixViewport3DTest
   public partial class ManipulatorExploration : UserControl
   {
 
-    public CombinedManipulator manipulator = new CombinedManipulator();
+    //public CombinedManipulator manipulator = new CombinedManipulator();
 
     public ManipulatorExploration()
     {
       InitializeComponent();
-      viewport.Children.Add(AddManipulator());
+      var b = new CubeVisual3D { Center = new Point3D(0, 0, 0), SideLength = 3 };
+      viewport.Children.Add(b);
+      AddManipulator(b);
     }
 
-    private CombinedManipulator AddManipulator()
+    private void AddManipulator(CubeVisual3D source)
     {
-      return new CombinedManipulator
+      var m = new H.MovementManipulator
       {
-        Pivot = box1.Center,
-        Diameter = (box1.Length + (box1.Length / 10)),
-
+        Diameter = source.SideLength * 1.1
+       
       };
+
+      m.Bind(source);
+      viewport.Children.Add(m);
     }
   }
 }

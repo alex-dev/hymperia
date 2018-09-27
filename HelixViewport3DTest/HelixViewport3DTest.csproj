@@ -91,6 +91,7 @@
     <Compile Include="ManipulatorExploration.xaml.cs">
       <DependentUpon>ManipulatorExploration.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Manipulators\CombinedManipulators.cs" />
     <Compile Include="ModificationTailleForme.xaml.cs">
       <DependentUpon>ModificationTailleForme.xaml</DependentUpon>
     </Compile>
