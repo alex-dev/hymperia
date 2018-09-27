@@ -13,7 +13,7 @@ namespace Hymperia.Facade
     protected override void RegisterTypes(IContainerRegistry registry)
     {
       registry.Register<ContextFactory>();
-      registry.Register<PointValueConverter>();
+      registry.Register<ConvertisseurFormes>();
       registry.Register<ConvertisseurWrappers>();
       registry.RegisterForNavigation<Editeur>("Editeur");
     }
