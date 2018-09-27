@@ -155,6 +155,11 @@ namespace Hymperia.Model
       builder.UseMySql(GetConnectionString());
       builder.EnableRichDataErrorHandling();
       builder.EnableSensitiveDataLogging();
+      BaseOnConfiguring(builder);
+    }
+
+    protected void BaseOnConfiguring([NotNull] DbContextOptionsBuilder builder)
+    {
       base.OnConfiguring(builder);
     }
 

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview1-35029\build\net461\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview1-35029\build\net461\Microsoft.EntityFrameworkCore.Design.props')" />
+  <Import Project="..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview2-35157\build\net461\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview2-35157\build\net461\Microsoft.EntityFrameworkCore.Design.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,49 +74,49 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Design, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview1-35029\lib\net461\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview2-35157\lib\net461\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0-preview1-35029\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0-preview2-35157\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -263,6 +263,6 @@
       <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview1-35029\build\net461\Microsoft.EntityFrameworkCore.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview1-35029\build\net461\Microsoft.EntityFrameworkCore.Design.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview2-35157\build\net461\Microsoft.EntityFrameworkCore.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.EntityFrameworkCore.Design.2.2.0-preview2-35157\build\net461\Microsoft.EntityFrameworkCore.Design.props'))" />
   </Target>
 </Project>

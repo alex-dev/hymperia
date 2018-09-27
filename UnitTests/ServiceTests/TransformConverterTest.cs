@@ -6,7 +6,7 @@ using SuccincT.Functional;
 using Hymperia.Facade;
 using Hymperia.Facade.Services;
 
-namespace UnitTests
+namespace UnitTests.ServiceTests
 {
   [TestClass]
   public class TransformConverterTest
