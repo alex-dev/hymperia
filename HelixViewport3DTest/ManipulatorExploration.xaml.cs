@@ -19,6 +19,7 @@ using HelixToolkit.Wpf;
 namespace Hymperia.HelixViewport3DTest
 {
   // Ref: https://github.com/helix-toolkit/helix-toolkit/tree/develop/Source/Examples/WPF/ExampleBrowser/Examples/Manipulator
+  // Ref2: https://helixtoolkit.userecho.com/communities/1/topics/394-manipulator-scale-problem
   public partial class ManipulatorExploration : UserControl
   {
 
