@@ -48,10 +48,7 @@ namespace Hymperia.Model.Modeles
 
     /// <summary>Le prix de la forme selon son <see cref="Materiau"/>.</summary>
     [NotMapped]
-    public double Prix
-    {
-      get => Materiau.Prix * Volume;
-    }
+    public double Prix => Materiau.Prix * Volume;
 
     /// <summary>Le volume de la forme.</summary>
     [NotMapped]
