@@ -87,8 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeometryAssert.cs" />
+    <Compile Include="BindingTests\PrismeBindingTests.cs" />
     <Compile Include="GeometryExtensionTests\TransformationMatrixTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceTests\ConvertisseurFormesTests.cs" />
     <Compile Include="ServiceTests\TransformConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
