@@ -29,17 +29,11 @@ namespace Hymperia.Model.Modeles
 
     /// <summary>Indique si l'<see cref="Utilisateur"/> est le propriétaire du <see cref="Projet"/>.</summary>
     [NotMapped]
-    public bool EstPropriétaire
-    {
-      get => DroitDAcces >= Droit.Possession;
-    }
+    public bool EstPropriétaire => DroitDAcces >= Droit.Possession;
 
     /// <summary>Indique si l'<see cref="Utilisateur"/> peut modifier le <see cref="Projet"/>.</summary>
     [NotMapped]
-    public bool PeutModifier
-    {
-      get => DroitDAcces >= Droit.LectureEcriture;
-    }
+    public bool PeutModifier => DroitDAcces >= Droit.LectureEcriture;
 
     #endregion
 

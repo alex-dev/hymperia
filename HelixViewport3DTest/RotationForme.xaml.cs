@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HelixToolkit.Wpf;
 
-namespace Hymperia.HelixViewport3DTest
+namespace HelixViewport3DTest
 {
   /// <summary>
   /// Logique d'interaction pour RotationForme.xaml

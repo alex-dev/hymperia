@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using HelixToolkit.Wpf;
 
-namespace Hymperia.HelixViewport3DTest
+namespace HelixViewport3DTest
 {
   public partial class MainWindow : Window
   {
@@ -39,6 +39,11 @@ namespace Hymperia.HelixViewport3DTest
     private void ManipulatorExploration_Click(object sender, RoutedEventArgs e)
     {
       PlaceUserControl(new ManipulatorExploration());
+    }
+
+    private void CombinedManipulatorExploration_Click(object sender, RoutedEventArgs e)
+    {
+      PlaceUserControl(new CombinedManipulatorExploration());
     }
 
     private void SelectionExploration_Click(object sender, RoutedEventArgs e)

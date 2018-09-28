@@ -7,202 +7,206 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hymperia.Model.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+  [DbContext(typeof(DatabaseContext))]
+  partial class DatabaseContextModelSnapshot : ModelSnapshot
+  {
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-preview1-35029")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "2.2.0-preview2-35157")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
-                {
-                    b.Property<int>("IdProjet");
+      modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
+          {
+            b.Property<int>("IdProjet");
 
-                    b.Property<int>("IdUtilisateur");
+            b.Property<int>("IdUtilisateur");
 
-                    b.Property<string>("DroitDAcces")
-                        .IsRequired();
+            b.Property<string>("DroitDAcces")
+                      .IsRequired();
 
-                    b.HasKey("IdProjet", "IdUtilisateur");
+            b.HasKey("IdProjet", "IdUtilisateur");
 
-                    b.HasIndex("IdUtilisateur");
+            b.HasIndex("IdUtilisateur");
 
-                    b.ToTable("Acces");
-                });
+            b.ToTable("Acces");
+          });
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Forme", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("Hymperia.Model.Modeles.Forme", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
+            b.Property<string>("Discriminator")
+                      .IsRequired();
 
-                    b.Property<int>("IdMateriau");
+            b.Property<int>("IdMateriau");
 
-                    b.Property<int?>("IdProjet");
+            b.Property<int?>("IdProjet");
 
-                    b.Property<string>("_Origine")
-                        .IsRequired()
-                        .HasColumnName("Origine");
+            b.Property<string>("_Origine")
+                      .IsRequired()
+                      .HasColumnName("Origine");
 
-                    b.HasKey("Id");
+            b.Property<string>("_Rotation")
+                      .IsRequired()
+                      .HasColumnName("Rotation");
 
-                    b.HasIndex("IdMateriau");
+            b.HasKey("Id");
 
-                    b.HasIndex("IdProjet");
+            b.HasIndex("IdMateriau");
 
-                    b.ToTable("Formes");
+            b.HasIndex("IdProjet");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Forme");
-                });
+            b.ToTable("Formes");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Materiau", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            b.HasDiscriminator<string>("Discriminator").HasValue("Forme");
+          });
 
-                    b.Property<string>("Nom")
-                        .IsRequired();
+      modelBuilder.Entity("Hymperia.Model.Modeles.Materiau", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<double>("Prix");
+            b.Property<string>("Nom")
+                      .IsRequired();
 
-                    b.HasKey("Id");
+            b.Property<double>("Prix");
 
-                    b.HasAlternateKey("Nom");
+            b.HasKey("Id");
 
-                    b.ToTable("Materiaux");
-                });
+            b.HasAlternateKey("Nom");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Projet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            b.ToTable("Materiaux");
+          });
 
-                    b.Property<string>("Nom")
-                        .IsRequired();
+      modelBuilder.Entity("Hymperia.Model.Modeles.Projet", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.HasKey("Id");
+            b.Property<string>("Nom")
+                      .IsRequired();
 
-                    b.HasAlternateKey("Nom");
+            b.HasKey("Id");
 
-                    b.ToTable("Projets");
-                });
+            b.HasAlternateKey("Nom");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Utilisateur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            b.ToTable("Projets");
+          });
 
-                    b.Property<string>("MotDePasse")
-                        .IsRequired();
+      modelBuilder.Entity("Hymperia.Model.Modeles.Utilisateur", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Nom")
-                        .IsRequired();
+            b.Property<string>("MotDePasse")
+                      .IsRequired();
 
-                    b.HasKey("Id");
+            b.Property<string>("Nom")
+                      .IsRequired();
 
-                    b.HasAlternateKey("Nom");
+            b.HasKey("Id");
 
-                    b.ToTable("Utilisateurs");
-                });
+            b.HasAlternateKey("Nom");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Ellipsoide", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
+            b.ToTable("Utilisateurs");
+          });
 
-                    b.Property<int>("PhiDiv");
+      modelBuilder.Entity("Hymperia.Model.Modeles.Ellipsoide", b =>
+          {
+            b.HasBaseType("Hymperia.Model.Modeles.Forme");
 
-                    b.Property<double>("RayonX");
+            b.Property<int>("PhiDiv");
 
-                    b.Property<double>("RayonY");
+            b.Property<double>("RayonX");
 
-                    b.Property<double>("RayonZ");
+            b.Property<double>("RayonY");
 
-                    b.Property<int>("ThetaDiv");
+            b.Property<double>("RayonZ");
 
-                    b.HasDiscriminator().HasValue("Ellipsoide");
-                });
+            b.Property<int>("ThetaDiv");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.PrismeRectangulaire", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
+            b.HasDiscriminator().HasValue("Ellipsoide");
+          });
 
-                    b.Property<double>("Hauteur")
-                        .HasColumnName("PrismeRectangulaire_Hauteur");
+      modelBuilder.Entity("Hymperia.Model.Modeles.PrismeRectangulaire", b =>
+          {
+            b.HasBaseType("Hymperia.Model.Modeles.Forme");
 
-                    b.Property<double>("Largeur");
+            b.Property<double>("Hauteur")
+                      .HasColumnName("PrismeRectangulaire_Hauteur");
 
-                    b.Property<double>("Longueur");
+            b.Property<double>("Largeur");
 
-                    b.HasDiscriminator().HasValue("PrismeRectangulaire");
-                });
+            b.Property<double>("Longueur");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.ThetaDivForme", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.Forme");
+            b.HasDiscriminator().HasValue("PrismeRectangulaire");
+          });
 
-                    b.Property<int>("ThetaDiv")
-                        .HasColumnName("ThetaDivForme_ThetaDiv");
+      modelBuilder.Entity("Hymperia.Model.Modeles.ThetaDivForme", b =>
+          {
+            b.HasBaseType("Hymperia.Model.Modeles.Forme");
 
-                    b.HasDiscriminator().HasValue("ThetaDivForme");
-                });
+            b.Property<int>("ThetaDiv")
+                      .HasColumnName("ThetaDivForme_ThetaDiv");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Cone", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
+            b.HasDiscriminator().HasValue("ThetaDivForme");
+          });
 
-                    b.Property<double>("Hauteur");
+      modelBuilder.Entity("Hymperia.Model.Modeles.Cone", b =>
+          {
+            b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
 
-                    b.Property<double>("RayonBase");
+            b.Property<double>("Hauteur");
 
-                    b.Property<double>("RayonTop");
+            b.Property<double>("RayonBase");
 
-                    b.HasDiscriminator().HasValue("Cone");
-                });
+            b.Property<double>("RayonTop");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Cylindre", b =>
-                {
-                    b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
+            b.HasDiscriminator().HasValue("Cone");
+          });
 
-                    b.Property<double>("Diametre");
+      modelBuilder.Entity("Hymperia.Model.Modeles.Cylindre", b =>
+          {
+            b.HasBaseType("Hymperia.Model.Modeles.ThetaDivForme");
 
-                    b.Property<double>("InnerDiametre");
+            b.Property<double>("Diametre");
 
-                    b.Property<string>("_Point")
-                        .HasColumnName("Point");
+            b.Property<double>("InnerDiametre");
 
-                    b.HasDiscriminator().HasValue("Cylindre");
-                });
+            b.Property<string>("_Point")
+                      .HasColumnName("Point");
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
-                {
-                    b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
-                        .WithMany()
-                        .HasForeignKey("IdProjet")
-                        .OnDelete(DeleteBehavior.Cascade);
+            b.HasDiscriminator().HasValue("Cylindre");
+          });
 
-                    b.HasOne("Hymperia.Model.Modeles.Utilisateur", "Utilisateur")
-                        .WithMany("_Acces")
-                        .HasForeignKey("IdUtilisateur")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+      modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
+          {
+            b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
+                      .WithMany()
+                      .HasForeignKey("IdProjet")
+                      .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity("Hymperia.Model.Modeles.Forme", b =>
-                {
-                    b.HasOne("Hymperia.Model.Modeles.Materiau", "Materiau")
-                        .WithMany()
-                        .HasForeignKey("IdMateriau")
-                        .OnDelete(DeleteBehavior.Cascade);
+            b.HasOne("Hymperia.Model.Modeles.Utilisateur", "Utilisateur")
+                      .WithMany("_Acces")
+                      .HasForeignKey("IdUtilisateur")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-                    b.HasOne("Hymperia.Model.Modeles.Projet")
-                        .WithMany("_Formes")
-                        .HasForeignKey("IdProjet");
-                });
+      modelBuilder.Entity("Hymperia.Model.Modeles.Forme", b =>
+          {
+            b.HasOne("Hymperia.Model.Modeles.Materiau", "Materiau")
+                      .WithMany()
+                      .HasForeignKey("IdMateriau")
+                      .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne("Hymperia.Model.Modeles.Projet")
+                      .WithMany("_Formes")
+                      .HasForeignKey("IdProjet");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

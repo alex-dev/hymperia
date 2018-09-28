@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using System.Windows.Media;
 
-namespace Hymperia.HelixViewport3DTest
+namespace HelixViewport3DTest
 {
   public partial class PlaceRandomShapes : UserControl
   {

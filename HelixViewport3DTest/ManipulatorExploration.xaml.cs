@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using H = Hymperia.HelixViewport3DTest.Manipulators;
 using HelixToolkit.Wpf;
 
-namespace Hymperia.HelixViewport3DTest
+namespace HelixViewport3DTest
 {
   // Ref: https://github.com/helix-toolkit/helix-toolkit/tree/develop/Source/Examples/WPF/ExampleBrowser/Examples/Manipulator
   // Ref2: https://helixtoolkit.userecho.com/communities/1/topics/394-manipulator-scale-problem

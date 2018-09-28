@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hymperia.HelixViewport3DTest.MainWindow"
+﻿<Window x:Class="HelixViewport3DTest.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Helix Toolkit Test">
@@ -12,6 +12,7 @@
       <Button Click="SpherePhiThetaExploration_Click" Content="Sphere Phi Theta" />
       <Button Click="MaterialExploration_Click" Content="Material Exploration" />
       <Button Click="ManipulatorExploration_Click" Content="Manipulator Exploration" />
+      <Button Click="CombinedManipulatorExploration_Click" Content="Combined Manipulator Exploration" />
       <Button Click="SelectionExploration_Click" Content="Selection Exploration" />
       <Button Click="DeplacementForme_Click" Content="Deplacement forme" />
       <Button Click="RotationForme_Click" Content="Rotation forme" />

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -14,6 +15,7 @@ namespace Hymperia.Model
     #region Constants
 
     private const string ConfigurationName = "MainDatabase";
+    private readonly string Connection;
 
     #endregion
 
@@ -94,15 +96,24 @@ namespace Hymperia.Model
     public DatabaseContext([NotNull] DbContextOptions<DatabaseContext> options)
       : base(options) { }
 
+    public DatabaseContext(string connection) : base()
+    {
+      Connection = connection;
+    }
+
     #endregion
 
     #region Methods
 
-    public async Task Migrate([NotNull] CancellationToken token = default)
+    public async Task Migrate(bool initialize = false, [NotNull] CancellationToken token = default)
     {
-      await Database.EnsureDeletedAsync(token);
+      if (initialize)
+        await Database.EnsureDeletedAsync(token);
+
       await Database.MigrateAsync(token);
-      await new Initializer().Initialize(this);
+
+      if (initialize)
+        await new Initializer().Initialize(this, token);
     }
 
     #endregion
@@ -122,6 +133,7 @@ namespace Hymperia.Model
       builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
         .HasForeignKey("IdMateriau");
       builder.Entity<Forme>().Property(forme => forme._Origine).HasColumnName("Origine");
+      builder.Entity<Forme>().Property(forme => forme._Rotation).HasColumnName("Rotation");
       builder.Entity<ThetaDivForme>().HasBaseType<Forme>();
       builder.Entity<Cone>().HasBaseType<ThetaDivForme>();
       builder.Entity<Cylindre>().HasBaseType<ThetaDivForme>();
@@ -151,15 +163,15 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
-      builder.UseMySql(GetConnectionString());
+      builder.UseMySql(string.IsNullOrWhiteSpace(Connection) ? GetConnectionString() : Connection);
       builder.EnableRichDataErrorHandling();
       builder.EnableSensitiveDataLogging();
       base.OnConfiguring(builder);
     }
 
-    private string GetConnectionString()
+    protected static string GetConnectionString()
     {
-      const string connection = "Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;";
+      string connection = $"Server=localhost; SslMode=Preferred; Database=hymperia_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";
 
       try
       {

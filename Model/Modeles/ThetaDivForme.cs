@@ -18,22 +18,13 @@ namespace Hymperia.Model.Modeles
     protected abstract double Aire { get; }
 
     [NotMapped]
-    private double Tan180N
-    {
-      get => Math.Tan(Math.PI / Cotes);
-    }
+    private double Tan180N => Math.Tan(Math.PI / Cotes);
 
     [NotMapped]
-    private double AngleBaseInterne
-    {
-      get => ((double)(2 - Cotes) / (2 * Cotes)).ConvertToRadian();
-    }
+    private double AngleBaseInterne => ((double)(2 - Cotes) / (2 * Cotes)).ConvertToRadian();
 
     [NotMapped]
-    private int Cotes
-    {
-      get => ThetaDiv - 1;
-    }
+    private int Cotes => ThetaDiv - 1;
 
     #endregion
 

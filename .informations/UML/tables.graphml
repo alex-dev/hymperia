@@ -69,17 +69,18 @@
     <node id="n2">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="546.7046862460542" width="524.9622745945949" x="666.7212968475676" y="-77.13395020108112"/>
+          <y:Geometry height="565.0716484082163" width="524.9622745945949" x="666.7212968475676" y="-77.13395020108112"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="44.669921875" x="240.14617635979744" y="4.0">Formes</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="510.0" modelName="custom" textColor="#000000" visible="true" width="515.0" x="2.0" y="30.701171875">&lt;html&gt;
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="534.0" modelName="custom" textColor="#000000" visible="true" width="515.0" x="2.0" y="30.701171875">&lt;html&gt;
 &lt;table&gt;
 &lt;tr&gt;&lt;td&gt;Id&lt;/td&gt;&lt;td&gt;INT&lt;/td&gt;&lt;td&gt;NOT NULL PRIMARY KEY AUTO_INCREMENT&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;IdProjet&lt;/td&gt;&lt;td&gt;INT&lt;/td&gt;&lt;td&gt;NOT NULL FOREIGN KEY&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;IdMateriau&lt;/td&gt;&lt;td&gt;INT&lt;/td&gt;&lt;td&gt;NOT NULL FOREIGN KEY&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Discriminator&lt;/td&gt;&lt;td&gt;LONGTEXT&lt;/td&gt;&lt;td&gt;NOT NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Point&lt;/td&gt;&lt;td&gt;LONGTEXT&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Rotation&lt;/td&gt;&lt;td&gt;LONGTEXT&lt;/td&gt;&lt;td&gt;NOT NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Diametre&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;InnerDiametre&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ThetaDiv&lt;/td&gt;&lt;td&gt;INT&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
@@ -91,7 +92,7 @@
 &lt;tr&gt;&lt;td&gt;Hauteur&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Largeur&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Longueur&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Origine&lt;/td&gt;&lt;td&gt;LONGTEXT&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Origine&lt;/td&gt;&lt;td&gt;LONGTEXT&lt;/td&gt;&lt;td&gt;NOT NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;RayonBase&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;RayonTop&lt;/td&gt;&lt;td&gt;DOUBLE&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;ThetaDivForme_ThetaDiv&lt;/td&gt;&lt;td&gt;INT&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;/tr&gt;

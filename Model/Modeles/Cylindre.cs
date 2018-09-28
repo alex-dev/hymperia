@@ -36,27 +36,18 @@ namespace Hymperia.Model.Modeles
     }
 
     [NotMapped]
-    public double Hauteur
-    {
-      get => Math.Sqrt(
+    public double Hauteur => Math.Sqrt(
         Math.Pow(Origine.X - Point.X, 2)
         + Math.Pow(Origine.Y - Point.Y, 2)
         + Math.Pow(Origine.Z - Point.Z, 2));
-    }
 
     /// <inheritdoc />
     [NotMapped]
-    public override double Volume
-    {
-      get => Aire * Hauteur;
-    }
+    public override double Volume => Aire * Hauteur;
 
     [NotMapped]
-    protected override double Aire
-    {
-      get => CalculeAire(Diametre / 2)
+    protected override double Aire => CalculeAire(Diametre / 2)
         - (InnerDiametre == 0 ? 0 : CalculeAire(InnerDiametre / 2));
-    }
 
     #endregion
 

@@ -40,10 +40,7 @@ namespace Hymperia.Model.Modeles
     /// <remarks>Utilise une <see cref="ReadOnlyCollection{Acces}"/> pour éviter les modifications non contrôlées.</remarks>
     [NotMapped]
     [ItemNotNull]
-    public IReadOnlyCollection<Acces> Acces
-    {
-      get => new ReadOnlyCollection<Acces>(_Acces);
-    }
+    public IReadOnlyCollection<Acces> Acces => new ReadOnlyCollection<Acces>(_Acces);
 
     #endregion
 
@@ -88,18 +85,14 @@ namespace Hymperia.Model.Modeles
     /// <summary></summary>
     /// <param name="projet"></param>
     /// <returns></returns>
-    public bool EstPropietaireDe([NotNull] Projet projet)
-    {
-      throw new System.NotImplementedException();
-    }
+    [Pure]
+    public bool EstPropietaireDe([NotNull] Projet projet) => throw new System.NotImplementedException();
 
     /// <summary></summary>
     /// <param name="projet"></param>
     /// <returns></returns>
-    public bool PeutModifier([NotNull] Projet projet)
-    {
-      throw new System.NotImplementedException();
-    }
+    [Pure]
+    public bool PeutModifier([NotNull] Projet projet) => throw new System.NotImplementedException();
 
     #endregion
 

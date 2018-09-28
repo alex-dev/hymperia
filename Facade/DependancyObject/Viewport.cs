@@ -12,8 +12,8 @@ namespace Hymperia.Facade.DependancyObjects
   {
     #region Dependancy Properties
 
-    public static DependencyProperty SourceFormesProperty;
-    public static DependencyProperty SelectedItemsProperty;
+    public static readonly DependencyProperty SourceFormesProperty;
+    public static readonly DependencyProperty SelectedItemsProperty;
 
     #endregion
 

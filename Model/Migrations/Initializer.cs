@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Hymperia.Model.Modeles;
@@ -19,6 +20,7 @@ namespace Hymperia.Model.Migrations
         materiaux => new PrismeRectangulaire(materiaux[Random.Next(materiaux.Length)])
         {
           Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           Largeur = Random.Next(1, 15),
           Longueur = Random.Next(1, 15)
@@ -26,6 +28,7 @@ namespace Hymperia.Model.Migrations
         materiaux => new Ellipsoide(materiaux[Random.Next(materiaux.Length)])
         {
           Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           RayonX = Random.Next(1, 15),
           RayonY = Random.Next(1, 15),
           RayonZ = Random.Next(1, 15)
@@ -33,12 +36,14 @@ namespace Hymperia.Model.Migrations
         materiaux => new Cylindre(materiaux[Random.Next(materiaux.Length)])
         {
           Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Point = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
           Diametre = Random.Next(1, 15)
         },
         materiaux => new Cone(materiaux[Random.Next(materiaux.Length)])
         {
           Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           RayonBase = Random.Next(1, 15)
         }
@@ -50,21 +55,16 @@ namespace Hymperia.Model.Migrations
       Random = new Random();
     }
 
-    public async Task Initialize(DatabaseContext context)
+    public async Task Initialize(DatabaseContext context, CancellationToken token = default)
     {
-      await context.Materiaux.AddRangeAsync(InitializeMateriaux());
-      await context.SaveChangesAsync();
+      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token);
+      await context.SaveChangesAsync(token);
 
-      #if DEBUG
-      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs());
-      await context.SaveChangesAsync();
+      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token)), token);
+      await context.SaveChangesAsync(token);
 
-      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync()));
-      await context.SaveChangesAsync();
-
-      InitializeAcces(await context.Utilisateurs.ToArrayAsync(), await context.Projets.ToArrayAsync());
-      await context.SaveChangesAsync();
-      #endif
+      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token));
+      await context.SaveChangesAsync(token);
     }
 
     private Acces[] InitializeAcces(Utilisateur[] utilisateurs, Projet[] projets)
@@ -99,15 +99,6 @@ namespace Hymperia.Model.Migrations
       {
         yield return creators[Random.Next(creators.Length)](materiaux);
       }
-    }
-
-    private Materiau[] InitializeMateriaux()
-    {
-      return new Materiau[]
-      {
-        new Materiau("Bois", 1.55),
-        new Materiau("Acier", 2.55)
-      };
     }
 
     private Projet[] InitializeProjets(Materiau[] materiaux)

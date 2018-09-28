@@ -18,10 +18,7 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     [NotMapped]
-    public override double Volume
-    {
-      get => Hauteur * Largeur * Longueur;
-    }
+    public override double Volume => Hauteur * Largeur * Longueur;
 
     #endregion
 

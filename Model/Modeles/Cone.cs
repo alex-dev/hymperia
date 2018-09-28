@@ -18,16 +18,10 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     [NotMapped]
-    public override double Volume
-    {
-      get => RayonTop == 0 ? FullVolume : PartialVolume;
-    }
+    public override double Volume => RayonTop == 0 ? FullVolume : PartialVolume;
 
     [NotMapped]
-    private double FullVolume
-    {
-      get => Aire * Hauteur / 3;
-    }
+    private double FullVolume => Aire * Hauteur / 3;
 
     [NotMapped]
     private double PartialVolume
@@ -40,28 +34,16 @@ namespace Hymperia.Model.Modeles
     }
 
     [NotMapped]
-    private double FullHauteur
-    {
-      get => Hauteur / (RayonBase - RayonTop) * RayonBase;
-    }
+    private double FullHauteur => Hauteur / (RayonBase - RayonTop) * RayonBase;
 
     [NotMapped]
-    private double AngleBase
-    {
-      get => Math.Atan(Hauteur / (RayonBase - RayonTop));
-    }
+    private double AngleBase => Math.Atan(Hauteur / (RayonBase - RayonTop));
 
     [NotMapped]
-    protected override double Aire
-    {
-      get => CalculeAire(RayonBase / 2);
-    }
+    protected override double Aire => CalculeAire(RayonBase / 2);
 
     [NotMapped]
-    protected double AireTop
-    {
-      get => CalculeAire(RayonTop / 2);
-    }
+    protected double AireTop => CalculeAire(RayonTop / 2);
 
     #endregion
 

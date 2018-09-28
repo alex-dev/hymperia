@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS Formes (
   Point LONGTEXT,
   Diametre DOUBLE DEFAULT NULL,
   InnerDiametre DOUBLE DEFAULT NULL,
+  Rotation LONGTEXT NOT NULL,
   PRIMARY KEY (Id),
   KEY IX_Formes_IdMateriau (IdMateriau),
   KEY IX_Formes_IdProjet (IdProjet)
