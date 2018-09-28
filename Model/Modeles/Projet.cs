@@ -75,7 +75,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => $"{ Id } - { Nom }: { Formes.Count } pièces";
+    public override string ToString() => $"{ Id } - { Nom }";
 
     #endregion
   }

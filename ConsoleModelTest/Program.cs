@@ -1,35 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
-using Hymperia.Model;
+﻿using Microsoft.Extensions.CommandLineUtils;
 
 namespace Hymperia.ConsoleModelTest
 {
   static class Program
   {
-    /// <summary>Conteneur associatif entre les arguments possibles et des fonctions exécutant la tâche.</summary>
-    /// <remarks>
-    ///   Cette approche a été choisie pour éviter de jouer avec les types et plus de code complexe.
-    ///   <list type="bullet">
-    ///     <item>La clé n'est que l'argument passé par la console. Choisir quelque chose de simple et court.</item>
-    ///     <item>
-    ///       L'<see cref="Func{Task}<"/> devrait appelé <see cref="Print{T}"/> avec un callback prenant en paramètre
-    ///       le contexte de la DB et retournant le DBSet correspondant à la clé.
-    ///     </item>
-    ///   </list>
-    /// </remarks>
-    [ItemNotNull]
-    private static IDictionary<string, Func<Task>> Types
-    {
-      get => new Dictionary<string, Func<Task>>
-      {
-        { "utilisateurs", async () => await Print(context => context.Utilisateurs) },
-        { "projets", async () => await Print(context => context.Projets) },
-        { "materiaux", async () => await Print(context => context.Materiaux) }
-      };
-    }
 
     /// <summary>Affiche l'ensemble de la collection demandée</summary>
     /// <param name="args">
@@ -37,35 +11,91 @@ namespace Hymperia.ConsoleModelTest
     ///     <item>Le type de la collection à afficher.</item>
     ///   </list>
     /// </param>
-    public static async Task Main(string[] args)
+    public static int Main(string[] args)
     {
-      await Migrate();
-      await Types[args[0].ToLowerInvariant()]();
-      Console.ReadKey(true);
+      return CreateApp().Execute(args);
     }
 
-    private static async Task Migrate()
+    private static CommandLineApplication CreateApp()
     {
-      using (var context = new DatabaseContext())
+      var app = new CommandLineApplication(true);
+      app.HelpOption("-h|--help");
+      app.Command("deployer", Migrate, true);
+      app.Command("materiaux", Materiaux, true);
+      app.Command("projets", Projets, true);
+      app.Command("utilisateurs", Utilisateurs, true);
+
+      app.OnExecute(() =>
       {
-        await context.Migrate(true);
-      }
+        app.ShowHelp();
+        return 0;
+      });
+
+      return app;
     }
 
-    private static async Task Print<T>([NotNull] Func<DatabaseContext, DbSet<T>> callable) where T : class
+    private static void Migrate(CommandLineApplication command)
     {
-      foreach (var item in await Query(callable))
+      CommandOption option = command.Option("-i|--initialisation", "Initialise ou réinitialise la base de données.", CommandOptionType.NoValue);
+      option.ShowInHelpText = true;
+      command.Description = $"Déploie ou met à jour la base de données ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
+      command.ShowInHelpText = true;
+      command.HelpOption("-h|--help");
+
+      command.OnExecute(async () =>
       {
-        Console.WriteLine(item);
-      }
+
+        await Deploy.Migrate(option.HasValue());
+        return 0;
+      });
     }
 
-    private static async Task<IEnumerable<T>> Query<T>([NotNull] Func<DatabaseContext, DbSet<T>> callable) where T : class
+    private static void Materiaux(CommandLineApplication command)
     {
-      using (var context = new DatabaseContext())
+      CommandOption option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
+      option.ShowInHelpText = true;
+      command.Description = $"Retourne les objets de la table 'Materiaux' la base de donnée ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
+      command.ShowInHelpText = true;
+      command.HelpOption("-h|--help");
+
+      command.OnExecute(async () =>
       {
-        return await callable(context).ToListAsync();
-      }
+        await Deploy.Migrate(option.HasValue());
+        Printer.Print(await Query.QueryMateriaux());
+        return 0;
+      });
+    }
+
+    private static void Projets(CommandLineApplication command)
+    {
+      CommandOption option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
+      option.ShowInHelpText = true;
+      command.Description = $"Retourne les objets de la table 'Projets' la base de donnée ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
+      command.ShowInHelpText = true;
+      command.HelpOption("-h|--help");
+
+      command.OnExecute(async () =>
+      {
+        await Deploy.Migrate(option.HasValue());
+        Printer.Print(await Query.QueryProjets());
+        return 0;
+      });
+    }
+
+    private static void Utilisateurs(CommandLineApplication command)
+    {
+      CommandOption option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
+      option.ShowInHelpText = true;
+      command.Description = $"Retourne les objets de la table 'Utilisateurs' la base de donnée ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
+      command.ShowInHelpText = true;
+      command.HelpOption("-h|--help");
+
+      command.OnExecute(async () =>
+      {
+        await Deploy.Migrate(option.HasValue());
+        Printer.Print(await Query.QueryUtilisateurs());
+        return 0;
+      });
     }
   }
 }

@@ -59,5 +59,10 @@ namespace Hymperia.Model
     {
       return projets.Include(projet => projet._Formes).ThenInclude(forme => forme.Materiau);
     }
+
+    public static IQueryable<Utilisateur> IncludeAcces(this IQueryable<Utilisateur> projets)
+    {
+      return projets.Include(utilisateur => utilisateur._Acces).ThenInclude(acces => acces.Projet);
+    }
   }
 }
