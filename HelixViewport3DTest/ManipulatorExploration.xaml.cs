@@ -18,27 +18,41 @@ using HelixToolkit.Wpf;
 
 namespace HelixViewport3DTest
 {
-  // Ref: https://github.com/helix-toolkit/helix-toolkit/tree/develop/Source/Examples/WPF/ExampleBrowser/Examples/Manipulator
-  // Ref2: https://helixtoolkit.userecho.com/communities/1/topics/394-manipulator-scale-problem
+  /* 
+   * Ref: https://github.com/helix-toolkit/helix-toolkit/tree/develop/Source/Examples/WPF/ExampleBrowser/Examples/Manipulator
+   * Ref: https://helixtoolkit.userecho.com/communities/1/topics/394-manipulator-scale-problem
+   */
   public partial class ManipulatorExploration : UserControl
   {
-
-    //public CombinedManipulator manipulator = new CombinedManipulator();
 
     public ManipulatorExploration()
     {
       InitializeComponent();
-      var b = new CubeVisual3D { Center = new Point3D(0, 0, 0), SideLength = 3 };
+      //var b = new CubeVisual3D { Center = new Point3D(0, 0, 0), SideLength = 3 };
+      //var b = new SphereVisual3D { Center = new Point3D(0, 0, 0), Radius = 1 };
+      var b = new BoxVisual3D { Center = new Point3D(0, 0, 0), Height = 1 };
+
       viewport.Children.Add(b);
-      AddManipulator(b);
+      AddResize(b);
     }
 
-    private void AddManipulator(CubeVisual3D source)
+    private void AddManipulator(SphereVisual3D source)
     {
       var m = new H.MovementManipulator
       {
-        Diameter = source.SideLength * 1.1
-       
+        Diameter = (source.Radius * 2.2)
+        //Diameter = source.SideLength * 1.1
+      };
+
+      m.Bind(source);
+      viewport.Children.Add(m);
+    }
+
+    private void AddResize(BoxVisual3D source)
+    {
+      var m = new H.ResizeManipulator
+      {
+        Height = (source.Height * 1.1)
       };
 
       m.Bind(source);
