@@ -7,21 +7,22 @@ using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  public class ThetaDivFormeWrapper<T> : FormeWrapper<T> where T : ThetaDivForme
+  public class ThetaDivFormeWrapper : FormeWrapper
   {
+    
     #region Attributs
 
     public int ThetaDiv
     {
-      get => Forme.ThetaDiv;
+      get => ((ThetaDivForme)Forme).ThetaDiv;
       set
       {
-        Forme.ThetaDiv = value;
+        ((ThetaDivForme)Forme).ThetaDiv = value;
         OnPropertyChanged();
       }
     }
     #endregion
 
-    public ThetaDivFormeWrapper(T forme) : base(forme) { }
+    public ThetaDivFormeWrapper(Forme forme) : base (forme) {}
   }
 }

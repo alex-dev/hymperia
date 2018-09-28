@@ -6,11 +6,11 @@ using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  public abstract class FormeWrapper<T> : INotifyPropertyChanged where T : Forme
+  public abstract class FormeWrapper
   {
     #region Attributs
 
-    protected T Forme { get; private set; }
+    protected Forme Forme { get; private set; }
 
     public int Id => Forme.Id;
 
@@ -53,7 +53,7 @@ namespace Hymperia.Facade.ModelWrappers
 
     #endregion
 
-    public FormeWrapper(T forme)
+    protected FormeWrapper(Forme forme)
     {
       Forme = forme;
     }

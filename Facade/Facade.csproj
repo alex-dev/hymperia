@@ -178,7 +178,11 @@
     </Compile>
     <Compile Include="DependancyObject\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
+    <Compile Include="ModelWrappers\ConeWrapper.cs" />
+    <Compile Include="ModelWrappers\CylindreWrapper.cs" />
+    <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
     <Compile Include="ModelWrappers\FormeWrapper.cs" />
+    <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />

@@ -27,7 +27,7 @@ namespace Hymperia.Facade.Services
     /// <summary>Convertit <paramref name="forme"/> en <see cref="MeshElement3D"/>.</summary>
     /// <exception cref="ArgumentException"><paramref name="forme"/> n'était pas une <see cref="Forme"/> connue.</exception>
     [NotNull]
-    public MeshElement3D Convertir([NotNull] FormeWrapper<Forme> forme)
+    public MeshElement3D Convertir([NotNull] FormeWrapper forme)
     {
       throw new NotImplementedException();
       /*switch (forme)
@@ -116,7 +116,7 @@ namespace Hymperia.Facade.Services
     /// <exception cref="InvalidCastException"><paramref name="source"/> était une <see cref="Forme"/> incompatible avec <paramref name="forme"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="forme"/> était un <see cref="MeshElement3D"/> inconnu.</exception>
     [NotNull]
-    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper<Forme> source)
+    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper source)
     {
       throw new NotImplementedException();
       /*switch (forme)

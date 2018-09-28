@@ -22,7 +22,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private int id;
     private Projet projet;
-    private ICollection<FormeWrapper<Forme>> changeables;
+    private ICollection<FormeWrapper> changeables;
     private ObservableCollection<MeshElement3D> formes;
     private ObservableCollection<MeshElement3D> selected;
 
@@ -45,14 +45,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
         }
 
         projet = value;
-        Changeables = new Collection<FormeWrapper<Forme>>();
+        Changeables = new Collection<FormeWrapper>();
       }
     }
 
     /// <summary>Les formes éditables.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
-    private ICollection<FormeWrapper<Forme>> Changeables
+    private ICollection<FormeWrapper> Changeables
     {
       get => changeables;
       set
@@ -178,14 +178,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Intialize Formes
 
     [ItemNotNull]
-    private IEnumerable<FormeWrapper<Forme>> CreeFormes([ItemNotNull] IEnumerable<Forme> formes)
+    private IEnumerable<FormeWrapper> CreeFormes([ItemNotNull] IEnumerable<Forme> formes)
     {
       return from forme in formes
              select ConvertisseurFormes.Convertir(forme);
     }
 
     [ItemNotNull]
-    private IEnumerable<MeshElement3D> CreeFormes([ItemNotNull] IEnumerable<FormeWrapper<Forme>> formes)
+    private IEnumerable<MeshElement3D> CreeFormes([ItemNotNull] IEnumerable<FormeWrapper> formes)
     {
       return from forme in formes
              select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
