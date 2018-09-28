@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="DependancyObject\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
+    <Compile Include="MatrixExtension.cs" />
     <Compile Include="ModelWrappers\FormeWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
     <Compile Include="Services\ContextFactory.cs" />

@@ -1,0 +1,4 @@
+https://docs.microsoft.com/en-us/windows/desktop/direct3d10/d3d10-d3dxmatrixdecompose
+https://docs.microsoft.com/en-us/windows/desktop/dxmath/ovw-xnamath-progguide
+https://docs.microsoft.com/en-us/cpp/dotnet/pure-and-verifiable-code-cpp-cli?view=vs-2017
+https://docs.microsoft.com/en-us/cpp/dotnet/how-to-create-clr-empty-projects?view=vs-2017
