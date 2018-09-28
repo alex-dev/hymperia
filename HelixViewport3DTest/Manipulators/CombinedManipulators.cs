@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -8,13 +9,9 @@ namespace Hymperia.HelixViewport3DTest.Manipulators
 {
   public class MovementManipulator : ModelVisual3D
   {
-    #region Dependancy
+    #region Dependancy Properties
 
     public static readonly DependencyProperty DiameterProperty;
-
-    /// <summary>
-    /// The target transform property.
-    /// </summary>
     public static readonly DependencyProperty TargetTransformProperty;
 
     static MovementManipulator()
@@ -24,226 +21,134 @@ namespace Hymperia.HelixViewport3DTest.Manipulators
         DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator), metadata);
       }
       {
-      var metadata = new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault);
-      TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(MovementManipulator), metadata);
+        var metadata = new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault);
+        TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(MovementManipulator), metadata);
       }
     }
 
-    /// <summary>
-    /// The rotate x manipulator.
-    /// </summary>
-    private readonly RotateManipulator RotateXManipulator;
+    #endregion
 
-    /// <summary>
-    /// The rotate y manipulator.
-    /// </summary>
-    private readonly RotateManipulator RotateYManipulator;
+    #region Properties
 
-    /// <summary>
-    /// The rotate z manipulator.
-    /// </summary>
-    private readonly RotateManipulator RotateZManipulator;
+    public double Diameter
+    {
+      get => (double)GetValue(DiameterProperty);
 
-    /// <summary>
-    /// The translate x manipulator.
-    /// </summary>
-    private readonly TranslateManipulator TranslateXManipulator;
+      set => SetValue(DiameterProperty, value);
 
-    /// <summary>
-    /// The translate y manipulator.
-    /// </summary>
-    private readonly TranslateManipulator TranslateYManipulator;
+    }
 
-    /// <summary>
-    /// The translate z manipulator.
-    /// </summary>
-    private readonly TranslateManipulator TranslateZManipulator;
+    public Transform3D TargetTransform
+    {
+      get => (Transform3D)GetValue(TargetTransformProperty);
+
+      set => SetValue(TargetTransformProperty, value);
+    }
+
+    public Vector3D Offset
+    {
+      get => Children.OfType<Manipulator>().First().Offset;
+      set
+      {
+        foreach (var manipulator in Children.OfType<Manipulator>())
+        {
+          manipulator.Offset = value;
+        }
+      }
+    }
+
+    public Point3D Position
+    {
+      get => Children.OfType<Manipulator>().First().Position;
+      set
+      {
+        foreach (var manipulator in Children.OfType<Manipulator>())
+        {
+          manipulator.Position = value;
+        }
+      }
+    }
+
+    public Point3D Pivot
+    {
+      get => Children.OfType<RotateManipulator>().First().Pivot;
+      set
+      {
+        foreach (var manipulator in Children.OfType<TranslateManipulator>())
+        {
+          manipulator.Position = value;
+        }
+
+        foreach (var manipulator in Children.OfType<RotateManipulator>())
+        {
+          manipulator.Pivot = value;
+        }
+      }
+    }
 
     #endregion
 
     #region Constructors and Destructors
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref = "CombinedManipulator" /> class.
-    /// </summary>
     public MovementManipulator()
     {
-      TranslateXManipulator = new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
-      this.TranslateYManipulator = new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green };
-      this.TranslateZManipulator = new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue };
-      this.RotateXManipulator = new RotateManipulator { Axis = new Vector3D(1, 0, 0), Color = Colors.Red };
-      this.RotateYManipulator = new RotateManipulator { Axis = new Vector3D(0, 1, 0), Color = Colors.Green };
-      this.RotateZManipulator = new RotateManipulator { Axis = new Vector3D(0, 0, 1), Color = Colors.Blue };
+      var binding = new Binding("TargetTransform") { Source = this };
 
-      Children.Add(TranslateXManipulator);
+      Children.Add(new RotateManipulator { Axis = new Vector3D(1, 0, 0), Color = Colors.Red });
+      Children.Add(new RotateManipulator { Axis = new Vector3D(0, 1, 0), Color = Colors.Green });
+      Children.Add(new RotateManipulator { Axis = new Vector3D(0, 0, 1), Color = Colors.Blue });
 
+      Children.Add(new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red });
+      Children.Add(new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green });
+      Children.Add(new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue });
 
-      BindingOperations.SetBinding(
-          this,
-          TransformProperty,
-          new Binding("TargetTransform") { Source = this });
-
-      BindingOperations.SetBinding(
-          this.TranslateXManipulator,
-          Manipulator.TargetTransformProperty,
-          new Binding("TargetTransform") { Source = this });
-      BindingOperations.SetBinding(
-          this.TranslateYManipulator,
-          Manipulator.TargetTransformProperty,
-          new Binding("TargetTransform") { Source = this });
-      BindingOperations.SetBinding(
-          this.TranslateZManipulator,
-          Manipulator.TargetTransformProperty,
-          new Binding("TargetTransform") { Source = this });
-      BindingOperations.SetBinding(
-          this.RotateXManipulator,
-          Manipulator.TargetTransformProperty,
-          new Binding("TargetTransform") { Source = this });
-      BindingOperations.SetBinding(
-          this.RotateYManipulator,
-          Manipulator.TargetTransformProperty,
-          new Binding("TargetTransform") { Source = this });
-      BindingOperations.SetBinding(
-          this.RotateZManipulator,
-          Manipulator.TargetTransformProperty,
-          new Binding("TargetTransform") { Source = this });
+      foreach (var manipulator in Children.OfType<Manipulator>())
+      {
+        BindingOperations.SetBinding(manipulator, Manipulator.TargetTransformProperty, binding);
+      }
     }
 
     #endregion
 
-    #region Public Properties
-    /// <summary>
-    ///   Gets or sets the diameter.
-    /// </summary>
-    /// <value>The diameter.</value>
-    public double Diameter
-    {
-      get
-      {
-        return (double)this.GetValue(DiameterProperty);
-      }
+    #region Binding Methods
 
-      set
-      {
-        this.SetValue(DiameterProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the target transform.
-    /// </summary>
-    /// <value>The target transform.</value>
-    public Transform3D TargetTransform
-    {
-      get
-      {
-        return (Transform3D)this.GetValue(TargetTransformProperty);
-      }
-
-      set
-      {
-        this.SetValue(TargetTransformProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the offset of the visual (this vector is added to the Position point).
-    /// </summary>
-    /// <value>The offset.</value>
-    public Vector3D Offset
-    {
-      get { return TranslateXManipulator.Offset; }
-      set
-      {
-        TranslateXManipulator.Offset = value;
-        TranslateYManipulator.Offset = value;
-        TranslateZManipulator.Offset = value;
-        RotateXManipulator.Offset = value;
-        RotateYManipulator.Offset = value;
-        RotateZManipulator.Offset = value;
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the position of the manipulator.
-    /// </summary>
-    /// <value>The position.</value>
-    public Point3D Position
-    {
-      get { return TranslateXManipulator.Position; }
-      set
-      {
-        TranslateXManipulator.Position = value;
-        TranslateYManipulator.Position = value;
-        TranslateZManipulator.Position = value;
-        RotateXManipulator.Position = value;
-        RotateYManipulator.Position = value;
-        RotateZManipulator.Position = value;
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the pivot point of the manipulator.
-    /// </summary>
-    /// <value>The position.</value>
-    public Point3D Pivot
-    {
-      get { return TranslateXManipulator.Position; }
-      set
-      {
-        TranslateXManipulator.Position = value;
-        TranslateYManipulator.Position = value;
-        TranslateZManipulator.Position = value;
-        RotateXManipulator.Pivot = value;
-        RotateYManipulator.Pivot = value;
-        RotateZManipulator.Pivot = value;
-      }
-    }
-    #endregion
-
-    #region Methods
-    protected virtual void OnDiameterChanged()
-    {
-      TranslateXManipulator.Length = 
-        TranslateYManipulator.Length =
-        TranslateZManipulator.Length = Diameter * 0.75;
-      TranslateXManipulator.Diameter =
-        TranslateYManipulator.Diameter =
-        TranslateZManipulator.Diameter = Diameter * 0.2;
-
-      RotateXManipulator.Diameter =
-        RotateYManipulator.Diameter =
-        RotateZManipulator.Diameter = Diameter * 0.6;
-      RotateXManipulator.InnerDiameter =
-        RotateYManipulator.InnerDiameter =
-        RotateZManipulator.InnerDiameter = Diameter * 0.55;
-      RotateXManipulator.Length =
-        RotateYManipulator.Length =
-        RotateZManipulator.Length = Diameter * 0.1;
-
-    }
-    #endregion
-
-    #region Public Bindig Methods
-
-    /// <summary>
-    /// Binds this manipulator to a given Visual3D.
-    /// </summary>
-    /// <param name="source">Source Visual3D which receives the manipulator transforms.</param>
     public virtual void Bind(ModelVisual3D source)
     {
-      
-      BindingOperations.SetBinding(this, TargetTransformProperty, new Binding("Transform") { Source = source });
-      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source });
+      var binding = new Binding("Transform") { Source = source };
+      BindingOperations.SetBinding(this, TargetTransformProperty, binding);
+      BindingOperations.SetBinding(this, TransformProperty, binding);
     }
 
-    /// <summary>
-    /// Releases the binding of this manipulator.
-    /// </summary>
-    public virtual void UnBind()
+    public virtual void Unbind()
     {
       BindingOperations.ClearBinding(this, TargetTransformProperty);
       BindingOperations.ClearBinding(this, TransformProperty);
+    }
+
+    #endregion
+
+    #region Events Handlers
+
+    protected virtual void OnDiameterChanged()
+    {
+      var length = Diameter * 1.25;
+      var width = Diameter * 0.12;
+      var diameter = Diameter * 1.65;
+      var innerDiameter = Diameter * 1.5;
+      var rotateLength = Diameter * 0.1;
+
+      foreach (var translateManipulator in Children.OfType<TranslateManipulator>())
+      {
+        translateManipulator.Length = length;
+        translateManipulator.Diameter = width;
+      }
+
+      foreach (var rotateManipulator in Children.OfType<RotateManipulator>())
+      {
+        rotateManipulator.Diameter = diameter;
+        rotateManipulator.InnerDiameter = innerDiameter;
+        rotateManipulator.Length = rotateLength;
+      }
     }
 
     #endregion
