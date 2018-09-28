@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hymperia.Model.Migrations
 {
   [DbContext(typeof(DatabaseContext))]
-  [Migration("20180926161335_InitialDatabase")]
-  partial class InitialDatabase
+  [Migration("20180927194038_Rotation")]
+  partial class Rotation
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
       modelBuilder
-          .HasAnnotation("ProductVersion", "2.2.0-preview1-35029")
+          .HasAnnotation("ProductVersion", "2.2.0-preview2-35157")
           .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
@@ -50,6 +50,10 @@ namespace Hymperia.Model.Migrations
             b.Property<string>("_Origine")
                       .IsRequired()
                       .HasColumnName("Origine");
+
+            b.Property<string>("_Rotation")
+                      .IsRequired()
+                      .HasColumnName("Rotation");
 
             b.HasKey("Id");
 

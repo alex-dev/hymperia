@@ -20,10 +20,7 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     [NotMapped]
-    public override double Volume
-    {
-      get => (4.0 * Math.PI * RayonX * RayonY * RayonZ) / 3.0;
-    }
+    public override double Volume => (4.0 * Math.PI * RayonX * RayonY * RayonZ) / 3.0;
 
     #endregion
 

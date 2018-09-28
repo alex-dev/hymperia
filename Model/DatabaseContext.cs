@@ -15,7 +15,7 @@ namespace Hymperia.Model
     #region Constants
 
     private const string ConfigurationName = "MainDatabase";
-    protected readonly string Connection;
+    private readonly string Connection;
 
     #endregion
 
@@ -89,20 +89,14 @@ namespace Hymperia.Model
     #region Constructors
 
     /// <summary>Initialise le contexte selon les options par défaut.</summary>
-    public DatabaseContext() : base()
-    {
-      Connection = GetConnectionString();
-    }
+    public DatabaseContext() : base() { }
 
     /// <summary>Initialise le contexte selon les options passées.</summary>
     /// <param name="options">Les options préconfigurées passées au contexte.</param>
     public DatabaseContext([NotNull] DbContextOptions<DatabaseContext> options)
-      : base(options)
-    {
-      Connection = GetConnectionString();
-    }
+      : base(options) { }
 
-    protected DatabaseContext(string connection) : base()
+    public DatabaseContext(string connection) : base()
     {
       Connection = connection;
     }
@@ -111,11 +105,15 @@ namespace Hymperia.Model
 
     #region Methods
 
-    public async Task Migrate([NotNull] CancellationToken token = default)
+    public async Task Migrate(bool initialize = false, [NotNull] CancellationToken token = default)
     {
-      await Database.EnsureDeletedAsync(token);
+      if (initialize)
+        await Database.EnsureDeletedAsync(token);
+
       await Database.MigrateAsync(token);
-      await new Initializer().Initialize(this);
+
+      if (initialize)
+        await new Initializer().Initialize(this, token);
     }
 
     #endregion
@@ -165,15 +163,15 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
-      builder.UseMySql(GetConnectionString());
+      builder.UseMySql(string.IsNullOrWhiteSpace(Connection) ? GetConnectionString() : Connection);
       builder.EnableRichDataErrorHandling();
       builder.EnableSensitiveDataLogging();
       base.OnConfiguring(builder);
     }
 
-    private string GetConnectionString()
+    protected static string GetConnectionString()
     {
-      string connection = $"Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_{ new Guid() }; Username=Hymperia; Password=infoH25978;";
+      string connection = $"Server=localhost; SslMode=Preferred; Database=hymperia_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";
 
       try
       {

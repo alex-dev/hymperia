@@ -34,17 +34,11 @@ namespace Hymperia.Model.Modeles
     /// <remarks>Utilise une <see cref="ReadOnlyCollection{Forme}"/> pour éviter les modifications non contrôlées.</remarks>
     [NotMapped]
     [ItemNotNull]
-    public IReadOnlyCollection<Forme> Formes
-    {
-      get => new ReadOnlyCollection<Forme>(_Formes);
-    }
+    public IReadOnlyCollection<Forme> Formes => new ReadOnlyCollection<Forme>(_Formes);
 
     /// <summary>Le prix du plan.</summary>
     [NotMapped]
-    public double Prix
-    {
-      get => Formes.Sum(forme => forme.Prix);
-    }
+    public double Prix => Formes.Sum(forme => forme.Prix);
 
     #endregion
 
@@ -74,7 +68,6 @@ namespace Hymperia.Model.Modeles
     {
       throw new System.NotImplementedException();
     }
-
 
     #endregion
 

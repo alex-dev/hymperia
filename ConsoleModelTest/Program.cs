@@ -48,7 +48,7 @@ namespace Hymperia.ConsoleModelTest
     {
       using (var context = new DatabaseContext())
       {
-        await context.Migrate();
+        await context.Migrate(true);
       }
     }
 
