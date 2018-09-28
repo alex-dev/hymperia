@@ -55,12 +55,10 @@ namespace Hymperia.Model.Modeles
 
     #region Methods
 
-    public IEnumerable<KeyValuePair<Materiau, double>> CalculePrixMateriaux()
-    {
-      return from forme in Formes
-             group forme.Prix by forme.Materiau into pair
-             select new KeyValuePair<Materiau, double>(pair.Key, pair.Sum());
-    }
+    public IEnumerable<KeyValuePair<Materiau, double>> CalculePrixMateriaux() =>
+     from forme in Formes
+     group forme.Prix by forme.Materiau into pair
+     select new KeyValuePair<Materiau, double>(pair.Key, pair.Sum());
 
     /// <summary></summary>
     /// <param name="forme"></param>
