@@ -29,20 +29,14 @@ namespace Hymperia.Facade.Services
     [NotNull]
     public MeshElement3D Convertir([NotNull] FormeWrapper forme)
     {
-      throw new NotImplementedException();
-      /*switch (forme)
+      switch (forme)
       {
-        case Cone cone:
-          return new ConeWrapper(forme);
-        case Cylindre cylindre:
-          return Convertir(cylindre);
-        case Ellipsoide ellipsoide:
-          return Convertir(ellipsoide);
-        case PrismeRectangulaire prisme:
-          return Convertir(prisme);
-        default:
-          throw new ArgumentException("Unknown child of Form.", nameof(forme));
-      }*/
+        case ConeWrapper cone:{ return (MeshElement3D)Convertir(cone); }
+        case CylindreWrapper cylindre: { return (MeshElement3D)Convertir(cylindre); }
+        case EllipsoideWrapper ellipsoide: { return (MeshElement3D)Convertir(ellipsoide); }
+        case PrismeRectangulaireWrapper prisme: { return (MeshElement3D)Convertir(prisme); }
+        default: { throw new ArgumentException("Unknown child of Form.", nameof(forme)); }
+      }
     }
 
     private TruncatedConeVisual3D Convertir(Cone forme)
