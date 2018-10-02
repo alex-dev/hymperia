@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hymperia.Model.Modeles;
+using Hymperia.Facade.Services;
+using Hymperia.Facade.ModelWrappers;
 
 namespace UnitTests.ServiceTests
 {
@@ -59,13 +59,34 @@ namespace UnitTests.ServiceTests
     #endregion
 
     [TestMethod]
-    public void TestMethod1()
+    public void ConeWrapperAMeshElement3D()
     {
-      //Assert.IsInstanceOfType(, )
+      //Materiau materiau = new Materiau("Bois", 1.15);
+      //Forme cone = new Cone(materiau);
+      //ConvertisseurFormes convertisseurFormes = null;
+      //ConvertisseurWrappers convertisseurWrappers = null;
 
-
-      // TODO: ajoutez ici la logique du test
-      //
+      //FormeWrapper fw = convertisseurFormes.Convertir(cone);
+      //Assert.IsInstanceOfType(convertisseurWrappers.Convertir(fw),typeof(Cone));
     }
+
+    [TestMethod]
+    public void CylindreWrapperAMeshElement3D()
+    {
+
+    }
+
+    [TestMethod]
+    public void EllipsoideWrapperAMeshElement3D()
+    {
+
+    }
+
+    [TestMethod]
+    public void PrismeRectangulaireWrapperAMeshElement3D()
+    {
+
+    }
+
   }
 }

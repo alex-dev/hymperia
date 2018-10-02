@@ -6,6 +6,11 @@ namespace Hymperia.Facade.Services
 {
   public class ConvertisseurFormes
   {
+    /// <summary>
+    /// Permet de convertir une Forme en FormeWrapper.
+    /// </summary>
+    /// <param name="forme">Une forme.</param>
+    /// <returns>La forme en FormeWrapper</returns>
     public FormeWrapper Convertir(Forme forme)
     {
       switch (forme)

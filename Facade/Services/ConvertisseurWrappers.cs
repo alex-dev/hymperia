@@ -35,8 +35,7 @@ namespace Hymperia.Facade.Services
     [NotNull]
     public MeshElement3D Convertir([NotNull] FormeWrapper forme)
     {
-      throw new NotImplementedException();
-      /*switch (forme)
+      switch (forme)
       {
         case Cone cone:
           return new ConeWrapper(forme);
@@ -49,6 +48,7 @@ namespace Hymperia.Facade.Services
         default:
           throw new ArgumentException($"Unknown child of { nameof(FormeWrapper) }.", nameof(forme));
       }*/
+      }
     }
 
     private TruncatedConeVisual3D Convertir(Cone forme)
