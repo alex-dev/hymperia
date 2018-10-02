@@ -1,4 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
+using Hymperia.Facade.Services;
+using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.ViewModels
 {
@@ -8,21 +15,42 @@ namespace Hymperia.Facade.ViewModels
 
     #region Fields
 
-    private string title;
+    private Projet projet;
 
     #endregion
 
-    public string Title
+    public Projet Projet
     {
-      get => title;
-      private set => SetProperty(ref title, value);
+      get => projet;
+      set => SetProperty(ref projet, value);
     }
 
+    public ReadOnlyObservableCollection<Projet> Projets { get; private set; }
+
+    public ICommand Navigate { get; private set; }
+
+    private readonly IRegionManager Manager;
+
     #endregion
 
-    public FenetrePrincipaleViewModel()
+    public FenetrePrincipaleViewModel(ContextFactory factory, IRegionManager manager)
     {
-      Title = "Hymperia";
+      Manager = manager;
+      Navigate = new DelegateCommand(NavigateToViewport, () => Projet is Projet);
+
+      using (var context = factory.GetContext())
+      {
+        Projets = new ReadOnlyObservableCollection<Projet>(
+          new ObservableCollection<Projet>(context.Projets.ToList()));
+      }
+    }
+
+    private void NavigateToViewport()
+    {
+      Manager.RequestNavigate("ContentRegion", "EditeurRegion", new NavigationParameters
+      {
+        { "Projet", Projet }
+      });
     }
   }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using HelixToolkit.Wpf;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Prism.Mvvm;
 using Hymperia.Model;
 using Hymperia.Facade.Services;
@@ -20,11 +20,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Fields
 
-    private int id;
     private Projet projet;
     private ICollection<FormeWrapper<Forme>> changeables;
-    private ObservableCollection<MeshElement3D> formes;
-    private ObservableCollection<MeshElement3D> selected;
+    private ObservableCollection<FormeWrapper<Forme>> selected;
 
     #endregion
 
@@ -34,7 +32,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
     [CanBeNull]
-    private Projet Projet
+    public Projet Projet
     {
       get => projet;
       set
@@ -44,36 +42,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
           throw new ArgumentNullException();
         }
 
-        projet = value;
-        Changeables = new Collection<FormeWrapper<Forme>>();
+        QueryProjet(value);
       }
     }
 
     /// <summary>Les formes éditables.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
-    private ICollection<FormeWrapper<Forme>> Changeables
-    {
-      get => changeables;
-      set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        changeables = value;
-        Formes = new ObservableCollection<MeshElement3D>(CreeFormes(Changeables));
-      }
-    }
-
-    /// <summary>Les formes affichables.</summary>
-    /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     [CanBeNull]
     [ItemNotNull]
-    public ObservableCollection<MeshElement3D> Formes
+    public ICollection<FormeWrapper<Forme>> Changeables
     {
-      get => formes;
+      get => changeables;
       private set
       {
         if (value is null)
@@ -81,14 +61,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
           throw new ArgumentNullException();
         }
 
-        SetProperty(ref formes, value);
+        changeables = value;
       }
     }
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [NotNull]
     [ItemNotNull]
-    public ObservableCollection<MeshElement3D> Selected
+    public ObservableCollection<FormeWrapper<Forme>> FormesSelectionnees
     {
       get => selected;
       private set
@@ -100,13 +80,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
         SetProperty(ref selected, value);
       }
-    }
-
-    /// <summary>La clé unique du projet à éditer.</summary>
-    public int ProjetId
-    {
-      get => id;
-      set => SetProperty(ref id, value, () => QueryProjet()); // Laisse la query se poursuivre async.
     }
 
     #endregion
@@ -123,59 +96,32 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private readonly ContextFactory ContextFactory;
 
     [NotNull]
-    private readonly ConvertisseurWrappers ConvertisseurWrappers;
-
-    [NotNull]
     private readonly ConvertisseurFormes ConvertisseurFormes;
 
     #endregion
 
-    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurWrappers wrappers, [NotNull] ConvertisseurFormes formes)
+    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes)
     {
-      new System.Windows.Threading.DispatcherTimer(new TimeSpan(5000), System.Windows.Threading.DispatcherPriority.Normal, (sender, args) =>
-      {
-        if (Projet is null)
-          return;
-
-        var r = new Random();
-        var x = r.Next(100, 150);
-
-        System.Diagnostics.Debug.Assert(!Projet.Formes.OfType<Ellipsoide>().Any(forme => forme.RayonX == x), "Invalid Test");
-        Projet.Formes.OfType<Ellipsoide>().First(forme => forme.RayonX < 100).RayonX = x;
-        System.Diagnostics.Debug.Assert(Formes.OfType<EllipsoidVisual3D>().Any(forme => forme.RadiusX == x), "Failed");
-
-        //System.Diagnostics.Debug.Assert(!Projet.Formes.OfType<PrismeRectangulaire>().Any(forme => forme.Hauteur == x), "Invalid Test");
-        //Formes.OfType<BoxVisual3D>().First(forme => forme.Height < 100).Height = x;
-        //System.Diagnostics.Debug.Assert(Projet.Formes.OfType<PrismeRectangulaire>().Any(forme => forme.Hauteur == x), "Failed");
-      }, System.Windows.Threading.Dispatcher.CurrentDispatcher);
-
       ContextFactory = factory;
-      ConvertisseurWrappers = wrappers;
       ConvertisseurFormes = formes;
-
-      ProjetId = 1;
     }
 
     #region Methods
 
-    #region Query Projet
-
-    private async Task QueryProjet()
+    private async Task QueryProjet(Projet _projet)
     {
       // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
-      projet = null;
-      formes = null;
-      SetProperty(ref formes, null, "Formes");
+      SetProperty(ref projet, null, "Projet");
+      SetProperty(ref changeables, null, "Changeables");
 
       using (var context = ContextFactory.GetContext())
       {
-        Projet = await context.Projets.IncludeFormes().FindByIdAsync(ProjetId);
+        context.Attach(_projet);
+        await context.Entry(_projet).CollectionFormes().LoadAsync();
       }
+
+      SetProperty(ref projet, _projet, "Projet");
     }
-
-    #endregion
-
-    #region Intialize Formes
 
     [ItemNotNull]
     private IEnumerable<FormeWrapper<Forme>> CreeFormes([ItemNotNull] IEnumerable<Forme> formes)
@@ -183,15 +129,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
       return from forme in formes
              select ConvertisseurFormes.Convertir(forme);
     }
-
-    [ItemNotNull]
-    private IEnumerable<MeshElement3D> CreeFormes([ItemNotNull] IEnumerable<FormeWrapper<Forme>> formes)
-    {
-      return from forme in formes
-             select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
-    }
-
-    #endregion
 
     #endregion
   }
