@@ -9,7 +9,7 @@ namespace MatrixMathTime
 {
   public static class Program
   {
-    private const int Count = 1000000;
+    private const int Count = 10000;
 
     private static IEnumerable<Quaternion> Quaternions
     {
@@ -45,6 +45,7 @@ namespace MatrixMathTime
       var directx_stopwatch = new Stopwatch();
       var quaternions = Quaternions.ToArray();
       var vectors = Vectors.ToArray();
+      AppDomain.CurrentDomain.Load("DirectXOperations");
 
       {
         managed_stopwatch.Start();
