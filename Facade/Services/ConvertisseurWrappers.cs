@@ -136,15 +136,14 @@ namespace Hymperia.Facade.Services
 
     private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, Cone source)
     {
-      var multi = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
-      multi.Bindings.AddRange(new Binding[]
+      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },
         new Binding("Quaternion") { Source = source }
       });
 
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TransformProperty, multi);
-      //BindingOperations.SetBinding(forme, TruncatedConeVisual3D.OriginProperty, new Binding("Origine") { Converter = PointValueConverter });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TransformProperty, bindings);
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop") { Source = source, Mode = BindingMode.TwoWay });
@@ -166,7 +165,14 @@ namespace Hymperia.Facade.Services
 
     private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, Ellipsoide source)
     {
-      //BindingOperations.SetBinding(forme, EllipsoidVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      bindings.Bindings.AddRange(new Binding[]
+      {
+        new Binding("Origine") { Source = source },
+        new Binding("Quaternion") { Source = source }
+      });
+
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.TransformProperty, bindings);
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ") { Source = source, Mode = BindingMode.TwoWay });
@@ -178,7 +184,14 @@ namespace Hymperia.Facade.Services
 
     private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaire source)
     {
-      //BindingOperations.SetBinding(forme, BoxVisual3D.CenterProperty, new Binding("Origine") { Converter = PointValueConverter });
+      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      bindings.Bindings.AddRange(new Binding[]
+      {
+        new Binding("Origine") { Source = source },
+        new Binding("Quaternion") { Source = source }
+      });
+
+      BindingOperations.SetBinding(forme, BoxVisual3D.TransformProperty, bindings);
       BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur") { Source = source, Mode = BindingMode.TwoWay });
