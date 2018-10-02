@@ -28,42 +28,32 @@ namespace UnitTests.ServiceTests
     [TestMethod]
     public void ShouldConvertQuaternionAndPointToMatrixTransform3D()
     {
-      var quaternion = new Quaternion(Random.Next(), Random.Next(), Random.Next(), Random.Next());
-      var point = new Point3D(Random.Next(), Random.Next(), Random.Next());
+      var point = new Point3D(Random.Next(1000), Random.Next(1000), Random.Next(1000));
+      var quaternion = new Quaternion(Random.Next(1000), Random.Next(1000), Random.Next(1000), Random.Next(1000));
+      quaternion.Normalize();
 
-      var subject = new Point3D(Random.Next(), Random.Next(), Random.Next());
-      var subjects_expected = new Point3D[]
-      {
-        new Point3D(Random.Next(), Random.Next(), Random.Next()),
-        new Point3D(Random.Next(), Random.Next(), Random.Next())
-      };
-      var subjects_tested = new Point3D[2];
-      subjects_expected.CopyTo(subjects_tested, 0);
-
-      var transforms = new Transform3DGroup
+      var expected = new Transform3DGroup
       {
         Children = new Transform3DCollection
         {
           new TranslateTransform3D(point.X, point.Y, point.Z),
           new RotateTransform3D(new QuaternionRotation3D(quaternion), point)
         }
-      };
+      }.Value;
       var test = Converter.Convert(
         new object[] { point.Convert(), quaternion.Convert() },
         typeof(MatrixTransform3D)) as MatrixTransform3D;
 
       Assert.IsNotNull(test);
-      Assert.AreEqual(transforms.Transform(subject), test.Transform(subject));
-      transforms.Transform(subjects_expected);
-      test.Transform(subjects_tested);
-      Assert.IsTrue(Enumerable.SequenceEqual(subjects_expected, subjects_tested));
+      GeometryAssert.AreEqual(expected, test.Value);
     }
 
     [TestMethod]
     public void ShouldConvertMatrixTransform3DToQuaternionAndPoint()
     {
-      var quaternion = new Quaternion(Random.Next(), Random.Next(), Random.Next(), Random.Next());
-      var point = new Point3D(Random.Next(), Random.Next(), Random.Next());
+      var point = new Point3D(Random.Next(1000), Random.Next(1000), Random.Next(1000));
+      var quaternion = new Quaternion(Random.Next(1000), Random.Next(1000), Random.Next(1000), Random.Next(1000));
+      quaternion.Normalize();
 
       var transforms = new Transform3DGroup
       {
@@ -76,8 +66,8 @@ namespace UnitTests.ServiceTests
 
       var (point_test, (quaternion_test, rest)) = Converter.ConvertBack(new MatrixTransform3D(transforms.Value), Converter.Types);
 
-      Assert.AreEqual(quaternion, ((Hymperia.Model.Modeles.JsonObject.Quaternion)quaternion_test).Convert());
-      Assert.AreEqual(point, ((Hymperia.Model.Modeles.JsonObject.Point)point_test).Convert());
+      GeometryAssert.AreEqual(quaternion, ((Hymperia.Model.Modeles.JsonObject.Quaternion)quaternion_test).Convert());
+      GeometryAssert.AreEqual(point, ((Hymperia.Model.Modeles.JsonObject.Point)point_test).Convert());
     }
   }
 }
