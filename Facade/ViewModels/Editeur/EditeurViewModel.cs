@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using HelixToolkit.Wpf;
 using JetBrains.Annotations;
 using Prism.Mvvm;
 using Hymperia.Model;
@@ -21,7 +20,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Fields
 
     private Projet projet;
-    private ICollection<FormeWrapper<Forme>> changeables;
+    private ObservableCollection<FormeWrapper<Forme>> formes;
     private ObservableCollection<FormeWrapper<Forme>> selected;
 
     #endregion
@@ -42,7 +41,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
           throw new ArgumentNullException();
         }
 
-        QueryProjet(value);
+        QueryProjet(value, UpdateFormes);
       }
     }
 
@@ -51,18 +50,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
     [CanBeNull]
     [ItemNotNull]
-    public ICollection<FormeWrapper<Forme>> Changeables
+    public ObservableCollection<FormeWrapper<Forme>> Formes
     {
-      get => changeables;
-      private set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        changeables = value;
-      }
+      get => formes;
+      private set => SetProperty(ref formes, value);
     }
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
@@ -78,7 +69,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
           throw new ArgumentNullException();
         }
 
-        SetProperty(ref selected, value);
+        SetProperty(ref selected, value, () => FormesSelectionnees.Clear());
       }
     }
 
@@ -104,15 +95,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       ContextFactory = factory;
       ConvertisseurFormes = formes;
+      FormesSelectionnees = new ObservableCollection<FormeWrapper<Forme>>();
     }
 
     #region Methods
 
-    private async Task QueryProjet(Projet _projet)
+    private async Task QueryProjet(Projet _projet, Action onChanged)
     {
       // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
-      SetProperty(ref projet, null, "Projet");
-      SetProperty(ref changeables, null, "Changeables");
+      SetProperty(ref projet, null, onChanged, "Projet");
 
       using (var context = ContextFactory.GetContext())
       {
@@ -120,14 +111,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
         await context.Entry(_projet).CollectionFormes().LoadAsync();
       }
 
-      SetProperty(ref projet, _projet, "Projet");
+      SetProperty(ref projet, _projet, onChanged, "Projet");
     }
 
-    [ItemNotNull]
-    private IEnumerable<FormeWrapper<Forme>> CreeFormes([ItemNotNull] IEnumerable<Forme> formes)
+    private void UpdateFormes()
     {
-      return from forme in formes
-             select ConvertisseurFormes.Convertir(forme);
+      Formes = Projet is null
+        ? null
+        : new ObservableCollection<FormeWrapper<Forme>>(from forme in Projet.Formes
+                                                        select ConvertisseurFormes.Convertir(forme));
     }
 
     #endregion

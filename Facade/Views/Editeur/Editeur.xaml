@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.Editeur"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    prism:RegionManager.RegionName="EditeurRegion"
+    prism:RegionManager.RegionName="EditeurRegion" prism:RegionManager.RegionContext="{Binding}"
     prism:ViewModelLocator.AutoWireViewModel="True">
   <Grid>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion" />

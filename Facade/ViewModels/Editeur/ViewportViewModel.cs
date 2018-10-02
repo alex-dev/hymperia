@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Data;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
-using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class ViewportViewModel : BindableBase
+  public class ViewportViewModel : RegionContextBase
   {
     #region Attributes
 
@@ -30,21 +32,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public ObservableCollection<MeshElement3D> Formes
     {
       get => formes;
-      private set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        SetProperty(ref formes, value);
-      }
+      private set => SetProperty(ref formes, value);
     }
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [NotNull]
     [ItemNotNull]
-    public ObservableCollection<MeshElement3D> Selected
+    public ObservableCollection<MeshElement3D> FormesSelectionnees
     {
       get => selected;
       private set
@@ -56,13 +50,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
         SetProperty(ref selected, value);
       }
-    }
-
-    /// <summary>La clé unique du projet à éditer.</summary>
-    public int ProjetId
-    {
-      get => id;
-      set => SetProperty(ref id, value, () => QueryProjet()); // Laisse la query se poursuivre async.
     }
 
     #endregion
@@ -83,17 +70,71 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public ViewportViewModel([NotNull] ConvertisseurWrappers wrappers)
     {
       ConvertisseurWrappers = wrappers;
-
-      ProjetId = 1;
     }
 
     #region Methods
 
-    [ItemNotNull]
-    private IEnumerable<MeshElement3D> CreeFormes([ItemNotNull] IEnumerable<FormeWrapper<Forme>> formes)
+    protected override void OnRegionContextChanged()
     {
-      return from forme in formes
-             select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
+      if (!(RegionContext is EditeurViewModel context))
+      {
+        throw new InvalidCastException("RegionContext is not EditeurViewModel.");
+      }
+
+      context.PropertyChanged += (sender, args) =>
+      {
+        switch (args.PropertyName)
+        {
+          case nameof(context.Formes):
+            UpdateFormes();
+            break;
+          case nameof(context.FormesSelectionnees):
+            UpdateFormesSelectionnees();
+            break;
+        }
+      };
+
+      UpdateFormes();
+      UpdateFormesSelectionnees();
+
+      base.OnRegionContextChanged();
+    }
+
+    private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      throw new NotImplementedException();
+    }
+
+    private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      throw new NotImplementedException();
+    }
+
+    private void UpdateFormes()
+    {
+      if (!(RegionContext is EditeurViewModel context))
+      {
+        throw new InvalidCastException("RegionContext is not EditeurViewModel.");
+      }
+
+      context.Formes.CollectionChanged += OnFormesChanged;
+      Formes = new ObservableCollection<MeshElement3D>(from forme in context.Formes
+                                                       select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme));
+    }
+
+    private void UpdateFormesSelectionnees()
+    {
+      if (!(RegionContext is EditeurViewModel context))
+      {
+        throw new InvalidCastException("RegionContext is not EditeurViewModel.");
+      }
+
+      context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
+      FormesSelectionnees = new ObservableCollection<MeshElement3D>(context.FormesSelectionnees.Join(
+        Formes,
+        wrapper => wrapper,
+        mesh => BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source,
+        (wrapper, mesh) => mesh));
     }
 
     #endregion

@@ -4,5 +4,5 @@
     xmlns:local="clr-namespace:Hymperia.Facade.DependancyObjects"
     prism:RegionManager.RegionName="ViewportRegion"
     prism:ViewModelLocator.AutoWireViewModel="True">
-  <local:Viewport SourceFormes="{Binding Formes}" />
+  <local:Viewport SourceFormes="{Binding Formes}" SelectedItems="{Binding FormesSelectionnees}" />
 </UserControl>
