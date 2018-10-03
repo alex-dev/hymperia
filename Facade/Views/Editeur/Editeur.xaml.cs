@@ -21,20 +21,15 @@ namespace Hymperia.Facade.Views.Editeur
       ProjetProperty = DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
     }
 
-    private IRegionManager manager;
-
     public Editeur(IRegionManager manager)
     {
-      this.manager = manager;
       manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
       InitializeComponent();
       BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     public bool IsNavigationTarget(NavigationContext context) => true;
-
     public void OnNavigatedTo(NavigationContext context) => Projet = (context.Parameters["Projet"] as Projet);
-
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
   }
 }
