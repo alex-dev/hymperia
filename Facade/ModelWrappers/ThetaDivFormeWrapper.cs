@@ -1,4 +1,4 @@
-﻿using Hymperia.Model.Modeles;
+using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.ModelWrappers
 {
