@@ -2,6 +2,7 @@ using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Input;
 using JetBrains.Annotations;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
@@ -85,7 +86,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (!(RegionContext is EditeurViewModel context))
       {
-        throw new InvalidCastException("RegionContext is not EditeurViewModel.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
       }
 
       context.PropertyChanged += (sender, args) =>
@@ -113,7 +114,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (!(RegionContext is EditeurViewModel context))
       {
-        throw new InvalidCastException("RegionContext is not EditeurViewModel.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
       }
 
       if (context.Formes is null)
@@ -134,15 +135,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (!(RegionContext is EditeurViewModel context))
       {
-        throw new InvalidCastException("RegionContext is not EditeurViewModel.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
       }
 
-      var enumerable = from FormeWrapper<Forme> wrapper in context.FormesSelectionnees
-                       join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
-                       select mesh;
+      if (Formes is null && context.FormesSelectionnees.Count > 0)
+      {
+        throw new InvalidOperationException($"Cannot use an empty { nameof(Formes) } list with a non-empty { nameof(context.FormesSelectionnees) }.");
+      }
 
-      context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
-      FormesSelectionnees = new BulkObservableCollection<MeshElement3D>(enumerable);
+      if (Formes is null)
+      {
+        FormesSelectionnees = new BulkObservableCollection<MeshElement3D>();
+      }
+      else
+      {
+        var enumerable = from FormeWrapper<Forme> wrapper in context.FormesSelectionnees
+                         join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                         select mesh;
+
+        context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
+        FormesSelectionnees = new BulkObservableCollection<MeshElement3D>(enumerable);
+      }
     }
 
     private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)

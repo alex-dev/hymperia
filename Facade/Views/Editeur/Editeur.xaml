@@ -4,6 +4,6 @@
     prism:ViewModelLocator.AutoWireViewModel="True">
   <Grid>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion"
-        prism:RegionManager.RegionContext="{Binding DataContext, Source={RelativeSource Self}, Mode=OneWay}" />
+        prism:RegionManager.RegionContext="{Binding Path=., Mode=OneWay}" />
   </Grid>
 </UserControl>

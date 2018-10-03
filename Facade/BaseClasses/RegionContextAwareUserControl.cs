@@ -23,23 +23,7 @@ namespace Hymperia.Facade.BaseClasses
 
     protected RegionContextAwareUserControl()
     {
-      Load += BindRegionContext; // Attends jusqu'à ce que tous les bindings de RegionContext soient résolus pour connecter le RegionContext
-                                 // de la vue parente au RegionContext de la vue enfant.
-    }
-    
-    private void BindRegionContext()
-    {
-      var test = R.RegionContext.GetObservableContext(this);
-      if (BindingOperations.GetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty) is null)
-      {
-        BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = BindingMode.OneWayToSource });
-      }
-      
-      /*R.RegionContext.GetObservableContext(this).PropertyChanged += (sender, args) =>
-      {
-        RegionContext = ((ObservableObject<object>)sender).Value;
-      };
-      RegionContext = R.RegionContext.GetObservableContext(this).Value;*/
+      BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = BindingMode.OneWayToSource });
     }
   }
 }

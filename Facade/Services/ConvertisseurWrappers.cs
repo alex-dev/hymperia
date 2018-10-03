@@ -47,7 +47,7 @@ namespace Hymperia.Facade.Services
         case PrismeRectangulaire prisme:
           return Convertir(prisme);
         default:
-          throw new ArgumentException("Unknown child of Form.", nameof(forme));
+          throw new ArgumentException($"Unknown child of { nameof(FormeWrapper) }.", nameof(forme));
       }*/
     }
 
@@ -136,7 +136,7 @@ namespace Hymperia.Facade.Services
         case BoxVisual3D prisme:
           return Lier(prisme, (PrismeRectangulaire)source);
         default:
-          throw new ArgumentException("Unknown child of MeshElement3D.", nameof(forme));
+          throw new ArgumentException($"Unknown child of { nameof(MeshElement3D) }.", nameof(forme));
       }*/
     }
 
