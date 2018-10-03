@@ -19,8 +19,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private BulkObservableCollection<MeshElement3D> formes;
     private BulkObservableCollection<MeshElement3D> selected;
-    public ICommand ajouter;
-    public ICommand supprimer;
+    private ICommand ajouter;
+    private ICommand supprimer;
 
     #endregion
 
