@@ -21,7 +21,6 @@ namespace Hymperia.Facade.DependancyObjects
       get => (ObservableCollection<MeshElement3D>)GetValue(SourceFormesProperty);
       set
       {
-        SourceFormes.CollectionChanged -= CollectionChanged;
         value.CollectionChanged += CollectionChanged;
         SetValue(SourceFormesProperty, value);
       }
@@ -32,7 +31,6 @@ namespace Hymperia.Facade.DependancyObjects
       get => (ObservableCollection<MeshElement3D>)GetValue(SelectedItemsProperty);
       set
       {
-        SelectedItems.CollectionChanged -= SelectedItemsChanged;
         value.CollectionChanged += SelectedItemsChanged;
         SetValue(SelectedItemsProperty, value);
       }
