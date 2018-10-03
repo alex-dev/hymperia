@@ -21,14 +21,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Fields
 
     private Projet projet;
-<<<<<<< HEAD
-    private BulkObservableCollection<FormeWrapper<Forme>> formes;
-    private BulkObservableCollection<FormeWrapper<Forme>> selected;
-=======
-    private ICollection<FormeWrapper> changeables;
-    private ObservableCollection<MeshElement3D> formes;
-    private ObservableCollection<MeshElement3D> selected;
->>>>>>> Avancement T6.3
+    private BulkObservableCollection<FormeWrapper> formes;
+    private BulkObservableCollection<FormeWrapper> selected;
 
     #endregion
 
@@ -41,48 +35,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public Projet Projet
     {
       get => projet;
-<<<<<<< HEAD
       set => QueryProjet(value, UpdateFormes);
-=======
-      set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        projet = value;
-        Changeables = new Collection<FormeWrapper>();
-      }
->>>>>>> Avancement T6.3
     }
 
     /// <summary>Les formes éditables.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
-<<<<<<< HEAD
-=======
-    private ICollection<FormeWrapper> Changeables
-    {
-      get => changeables;
-      set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        changeables = value;
-        Formes = new ObservableCollection<MeshElement3D>(CreeFormes(Changeables));
-      }
-    }
-
-    /// <summary>Les formes affichables.</summary>
-    /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
->>>>>>> Avancement T6.3
     [CanBeNull]
     [ItemNotNull]
-    public BulkObservableCollection<FormeWrapper<Forme>> Formes
+    public BulkObservableCollection<FormeWrapper> Formes
     {
       get => formes;
       private set => SetProperty(ref formes, value, () => FormesSelectionnees.Clear());
@@ -91,7 +52,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [NotNull]
     [ItemNotNull]
-    public BulkObservableCollection<FormeWrapper<Forme>> FormesSelectionnees
+    public BulkObservableCollection<FormeWrapper> FormesSelectionnees
     {
       get => selected;
       private set => SetProperty(ref selected, value);
@@ -124,7 +85,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       ConvertisseurFormes = formes;
       AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme);
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme).ObservesProperty(() => FormesSelectionnees);
-      FormesSelectionnees = new BulkObservableCollection<FormeWrapper<Forme>>();
+      FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
     }
 
     #region Methods
@@ -170,12 +131,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Inner Events Handler
 
-<<<<<<< HEAD
     private async Task QueryProjet(Projet _projet, Action onChanged)
-=======
-    [ItemNotNull]
-    private IEnumerable<FormeWrapper> CreeFormes([ItemNotNull] IEnumerable<Forme> formes)
->>>>>>> Avancement T6.3
     {
       // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
       SetProperty(ref projet, null, onChanged, "Projet");
@@ -192,12 +148,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-<<<<<<< HEAD
     private void UpdateFormes()
-=======
-    [ItemNotNull]
-    private IEnumerable<MeshElement3D> CreeFormes([ItemNotNull] IEnumerable<FormeWrapper> formes)
->>>>>>> Avancement T6.3
     {
       if (Projet is null)
       {
@@ -207,7 +158,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         var enumerable = from forme in Projet.Formes
                          select ConvertisseurFormes.Convertir(forme);
-        Formes = new BulkObservableCollection<FormeWrapper<Forme>>(enumerable);
+        Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
       }
     }
 

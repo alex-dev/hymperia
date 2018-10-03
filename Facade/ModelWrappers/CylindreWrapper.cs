@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  public class CylindreWrapper : FormeWrapper
+  public class CylindreWrapper : ThetaDivFormeWrapper
   {
     #region Attributs
     public double Diametre

@@ -2,7 +2,7 @@
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  public class ConeWrapper : FormeWrapper
+  public class ConeWrapper : ThetaDivFormeWrapper
   {
     #region Attributs
     public double Hauteur
