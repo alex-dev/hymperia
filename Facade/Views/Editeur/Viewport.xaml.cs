@@ -7,7 +7,6 @@ namespace Hymperia.Facade.Views.Editeur
     public Viewport() : base()
     {
       InitializeComponent();
-      BindRegionContext();
     }
   }
 }
