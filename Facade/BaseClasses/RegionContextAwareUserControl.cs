@@ -21,14 +21,19 @@ namespace Hymperia.Facade.BaseClasses
       RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl));
     }
 
-    public void BindRegionContext()
+    protected RegionContextAwareUserControl()
     {
-      //BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = BindingMode.OneWayToSource });
-      R.RegionContext.GetObservableContext(this).PropertyChanged += (sender, args) =>
+      Load += BindRegionContext;
+    }
+    
+    private void BindRegionContext()
+    {
+      BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = BindingMode.OneWayToSource });
+      /*R.RegionContext.GetObservableContext(this).PropertyChanged += (sender, args) =>
       {
         RegionContext = ((ObservableObject<object>)sender).Value;
       };
-      RegionContext = R.RegionContext.GetObservableContext(this).Value;
+      RegionContext = R.RegionContext.GetObservableContext(this).Value;*/
     }
   }
 }
