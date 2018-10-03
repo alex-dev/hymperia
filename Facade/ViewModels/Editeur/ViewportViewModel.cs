@@ -137,11 +137,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
         throw new InvalidCastException("RegionContext is not EditeurViewModel.");
       }
 
-      var enumerable = context.FormesSelectionnees.Join(
-        Formes,
-        wrapper => wrapper,
-        mesh => BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source,
-        (wrapper, mesh) => mesh);
+      var enumerable = from FormeWrapper<Forme> wrapper in context.FormesSelectionnees
+                       join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                       select mesh;
 
       context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
       FormesSelectionnees = new BulkObservableCollection<MeshElement3D>(enumerable);
@@ -149,51 +147,57 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      var newitems = from FormeWrapper<Forme> forme in args.NewItems
-                     select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
-      var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
-                     join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
-                     select mesh;
-
-      switch (args.Action)
+      if (sender == Formes)
       {
-        case NotifyCollectionChangedAction.Add:
-          FormesSelectionnees.AddRange(newitems);
-          break;
-        case NotifyCollectionChangedAction.Remove:
-          FormesSelectionnees.RemoveRange(olditems);
-          break;
-        case NotifyCollectionChangedAction.Replace:
-          FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
-          break;
-        case NotifyCollectionChangedAction.Reset:
-          FormesSelectionnees.Clear();
-          break;
+        var newitems = from FormeWrapper<Forme> forme in args.NewItems
+                       select ConvertisseurWrappers.ConvertirLier(forme);
+        var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
+                       join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                       select mesh;
+
+        switch (args.Action)
+        {
+          case NotifyCollectionChangedAction.Add:
+            Formes.AddRange(newitems);
+            break;
+          case NotifyCollectionChangedAction.Remove:
+            Formes.RemoveRange(olditems);
+            break;
+          case NotifyCollectionChangedAction.Replace:
+            Formes[Formes.IndexOf(olditems.Single())] = newitems.Single();
+            break;
+          case NotifyCollectionChangedAction.Reset:
+            Formes.Clear();
+            break;
+        }
       }
     }
 
     private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      var newitems = from FormeWrapper<Forme> forme in args.NewItems
-                     select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
-      var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
-                     join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
-                     select mesh;
-
-      switch (args.Action)
+      if (sender == FormesSelectionnees)
       {
-        case NotifyCollectionChangedAction.Add:
-          FormesSelectionnees.AddRange(newitems);
-          break;
-        case NotifyCollectionChangedAction.Remove:
-          FormesSelectionnees.RemoveRange(olditems);
-          break;
-        case NotifyCollectionChangedAction.Replace:
-          FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
-          break;
-        case NotifyCollectionChangedAction.Reset:
-          FormesSelectionnees.Clear();
-          break;
+        var newitems = from FormeWrapper<Forme> forme in args.NewItems
+                       select ConvertisseurWrappers.ConvertirLier(forme);
+        var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
+                       join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                       select mesh;
+
+        switch (args.Action)
+        {
+          case NotifyCollectionChangedAction.Add:
+            FormesSelectionnees.AddRange(newitems);
+            break;
+          case NotifyCollectionChangedAction.Remove:
+            FormesSelectionnees.RemoveRange(olditems);
+            break;
+          case NotifyCollectionChangedAction.Replace:
+            FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+            break;
+          case NotifyCollectionChangedAction.Reset:
+            FormesSelectionnees.Clear();
+            break;
+        }
       }
     }
 
