@@ -37,7 +37,7 @@ namespace Hymperia.Model.Migrations
         {
           Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
           Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
-          Point = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Hauteur = Random.Next(1, 15),
           Diametre = Random.Next(1, 15)
         },
         materiaux => new Cone(materiaux[Random.Next(materiaux.Length)])

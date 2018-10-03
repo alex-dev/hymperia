@@ -125,8 +125,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
       else
       {
-        var enumerable = (from forme in context.Formes //Remove null check when Cylindre is fixed
-                          select ConvertisseurWrappers.Convertir(forme)).OfType<MeshElement3D>();
+        var enumerable = from forme in context.Formes
+                         select ConvertisseurWrappers.Convertir(forme);
 
         context.Formes.CollectionChanged += OnFormesChanged;
         Formes = new BulkObservableCollection<MeshElement3D>(enumerable);

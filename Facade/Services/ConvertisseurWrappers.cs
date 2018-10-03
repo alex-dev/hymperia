@@ -12,13 +12,16 @@ namespace Hymperia.Facade.Services
     #region Services
 
     [NotNull]
-    private readonly TransformConverter Converter;
+    private readonly TransformConverter TransformConverter;
+    [NotNull]
+    private readonly PointToHauteurConverter PointToHauteurConverter;
 
     #endregion
 
-    public ConvertisseurWrappers([NotNull] TransformConverter converter)
+    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] PointToHauteurConverter pointToHauteur)
     {
-      Converter = converter;
+      TransformConverter = transform;
+      PointToHauteurConverter = pointToHauteur;
     }
 
     #region Convertir
@@ -33,7 +36,6 @@ namespace Hymperia.Facade.Services
         case ConeWrapper cone:
           return Convertir(cone);
         case CylindreWrapper cylindre:
-          return null;
           return Convertir(cylindre);
         case EllipsoideWrapper ellipsoide:
           return Convertir(ellipsoide);
@@ -76,7 +78,7 @@ namespace Hymperia.Facade.Services
 
     private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, ConeWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },
@@ -94,8 +96,30 @@ namespace Hymperia.Facade.Services
 
     private PipeVisual3D Lier(PipeVisual3D forme, CylindreWrapper source)
     {
-      //BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
-      //BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
+      bindings.Bindings.AddRange(new Binding[]
+      {
+        new Binding("Origine") { Source = source },
+        new Binding("Rotation") { Source = source }
+      });
+      var hauteur_binding_top = new Binding("Hauteur")
+      {
+        Source = source,
+        Converter = PointToHauteurConverter,
+        ConverterParameter = PointOrientation.Top,
+        Mode = BindingMode.TwoWay
+      };
+      var hauteur_binding_bottom = new Binding("Hauteur")
+      {
+        Source = source,
+        Converter = PointToHauteurConverter,
+        ConverterParameter = PointOrientation.Bottom,
+        Mode = BindingMode.TwoWay
+      };
+
+      BindingOperations.SetBinding(forme, PipeVisual3D.TransformProperty, bindings);
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, hauteur_binding_top);
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, hauteur_binding_bottom);
       BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
@@ -105,7 +129,7 @@ namespace Hymperia.Facade.Services
 
     private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, EllipsoideWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },
@@ -124,7 +148,7 @@ namespace Hymperia.Facade.Services
 
     private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaireWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },

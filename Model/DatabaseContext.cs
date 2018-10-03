@@ -137,7 +137,6 @@ namespace Hymperia.Model
       builder.Entity<ThetaDivForme>().HasBaseType<Forme>();
       builder.Entity<Cone>().HasBaseType<ThetaDivForme>();
       builder.Entity<Cylindre>().HasBaseType<ThetaDivForme>();
-      builder.Entity<Cylindre>().Property(forme => forme._Point).HasColumnName("Point");
       builder.Entity<Ellipsoide>().HasBaseType<Forme>();
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
 

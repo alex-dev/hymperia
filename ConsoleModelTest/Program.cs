@@ -13,7 +13,16 @@ namespace Hymperia.ConsoleModelTest
     /// </param>
     public static int Main(string[] args)
     {
-      return CreateApp().Execute(args);
+      var app = CreateApp();
+      try
+      {
+        return app.Execute(args);
+      }
+      catch (CommandParsingException)
+      {
+        app.ShowHelp();
+        return 0;
+      }
     }
 
     private static CommandLineApplication CreateApp()

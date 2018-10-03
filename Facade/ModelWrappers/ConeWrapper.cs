@@ -7,7 +7,7 @@ namespace Hymperia.Facade.ModelWrappers
     #region Attributs
     public double Hauteur
     {
-      get => ((Cone)((Cone)Forme)).Hauteur;
+      get => ((Cone)Forme).Hauteur;
       set
       {
         ((Cone)Forme).Hauteur = value;

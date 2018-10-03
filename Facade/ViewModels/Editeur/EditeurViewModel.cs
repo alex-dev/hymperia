@@ -131,7 +131,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Inner Events Handler
 
-    private async Task QueryProjet(Projet _projet, Action onChanged)
+    private void/*async Task*/ QueryProjet(Projet _projet, Action onChanged)
     {
       // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
       SetProperty(ref projet, null, onChanged, "Projet");
@@ -141,7 +141,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         using (var context = ContextFactory.GetContext())
         {
           context.Attach(_projet);
-          await context.Entry(_projet).CollectionFormes().LoadAsync();
+          context.Entry(_projet).CollectionFormes().Load();
         }
 
         SetProperty(ref projet, _projet, onChanged, "Projet");

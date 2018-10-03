@@ -7,9 +7,10 @@ namespace Hymperia.Facade.ModelWrappers
   public class CylindreWrapper : ThetaDivFormeWrapper
   {
     #region Attributs
+
     public double Diametre
     {
-      get => ((Cylindre)((Cylindre)Forme)).Diametre;
+      get => ((Cylindre)Forme).Diametre;
       set
       {
         ((Cylindre)Forme).Diametre = value;
@@ -25,23 +26,17 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
-    #endregion
 
-    #region Proprietees
-    [NotNull]
-    public Point Point
+    public double Hauteur
     {
-      get => ((Cylindre)Forme).Point;
+      get => ((Cylindre)Forme).Hauteur;
       set
       {
-        ((Cylindre)Forme).Point = value;
+        ((Cylindre)Forme).Hauteur = value;
         OnPropertyChanged();
       }
     }
 
-    public Point Centre { get => ((Cylindre)Forme).Centre; }
-
-    public double Hauteur => ((Cylindre)Forme).Hauteur;
     #endregion
 
     public CylindreWrapper(Cylindre forme) : base(forme) { }

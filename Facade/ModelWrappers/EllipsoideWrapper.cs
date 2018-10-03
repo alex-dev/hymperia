@@ -7,16 +7,16 @@ namespace Hymperia.Facade.ModelWrappers
     #region Attributs
     public double RayonX
     {
-      get => ((Ellipsoide)((Ellipsoide)Forme)).RayonX;
+      get => ((Ellipsoide)Forme).RayonX;
       set
       {
-        ((Ellipsoide)((Ellipsoide)Forme)).RayonX = value;
+        ((Ellipsoide)Forme).RayonX = value;
         OnPropertyChanged();
       }
     }
     public double RayonY
     {
-      get => ((Ellipsoide)((Ellipsoide)Forme)).RayonY;
+      get => ((Ellipsoide)Forme).RayonY;
       set
       {
         ((Ellipsoide)Forme).RayonY = value;
