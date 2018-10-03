@@ -53,6 +53,5 @@ namespace Hymperia.Facade.BaseClasses
       OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
     }
-
   }
 }
