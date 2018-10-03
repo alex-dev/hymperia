@@ -21,7 +21,7 @@ namespace Hymperia.Facade.DependancyObjects
       get => (ObservableCollection<MeshElement3D>)GetValue(SourceFormesProperty);
       set
       {
-        value.CollectionChanged += CollectionChanged;
+        value.CollectionChanged += SourceFormesChanged;
         SetValue(SourceFormesProperty, value);
       }
     }
@@ -48,14 +48,20 @@ namespace Hymperia.Facade.DependancyObjects
 
     #region Methods
 
-    private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    private void SourceFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      throw new System.NotImplementedException();
+      if (sender == SourceFormes)
+      {
+        throw new System.NotImplementedException();
+      }
     }
 
     private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      throw new System.NotImplementedException();
+      if (sender == SelectedItems)
+      {
+        throw new System.NotImplementedException();
+      }
     }
 
     #endregion
