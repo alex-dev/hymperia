@@ -5,5 +5,5 @@
     xmlns:local="clr-namespace:Hymperia.Facade.DependancyObjects"
     prism:ViewModelLocator.AutoWireViewModel="True"
     RegionContext="{Binding RegionContext, Mode=OneWayToSource}">
-  <local:Viewport SourceFormes="{Binding Formes}" SelectedItems="{Binding FormesSelectionnees}" />
+  <local:Viewport SourceFormes="{Binding Formes, Mode=OneWay}" SelectedItems="{Binding FormesSelectionnees, Mode=OneWay}" />
 </base:RegionContextAwareUserControl>
