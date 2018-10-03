@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
@@ -19,6 +19,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private BulkObservableCollection<MeshElement3D> formes;
     private BulkObservableCollection<MeshElement3D> selected;
+    public ICommand ajouter;
+    public ICommand supprimer;
 
     #endregion
 
@@ -46,6 +48,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #endregion
 
     #region Commands
+
+    public ICommand AjouterForme
+    {
+      get => ajouter;
+      private set => SetProperty(ref ajouter, value);
+    }
+    
+    public ICommand SupprimerForme
+    {
+      get => supprimer;
+      set => SetProperty(ref supprimer, value);
+    }
 
     #endregion
 
@@ -89,6 +103,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       UpdateFormes();
       UpdateFormesSelectionnees();
+      AjouterForme = context.AjouterForme;
+      SupprimerForme = context.SupprimerForme;
 
       base.OnRegionContextChanged();
     }
