@@ -28,7 +28,7 @@ namespace Hymperia.Facade.Services
     {
       if (target != typeof(MatrixTransform3D))
       {
-        throw new InvalidOperationException("Target is not a MatrixTransform3D.");
+        throw new ArgumentException($"Can only convert to { nameof(MatrixTransform3D) }.", nameof(target));
       }
 
       var vector = ((Object.Point)values[0]).ConvertToVector();
@@ -43,11 +43,11 @@ namespace Hymperia.Facade.Services
     {
       if (!(value is MatrixTransform3D transform))
       {
-        throw new InvalidOperationException("Value to convert is not a MatrixTransform3D.");
+        throw new ArgumentException($"Can only convert from { nameof(MatrixTransform3D) }.", nameof(value));
       }
       if (!Enumerable.SequenceEqual(targets, Types))
       {
-        throw new InvalidOperationException("Could not cast values into proper return type.");
+        throw new ArgumentException("Could not cast values into proper return type.", nameof(targets));
       }
 
       var matrix = transform.Matrix;

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Hymperia.Model.Modeles;
 
 namespace Hymperia.Model
@@ -58,6 +59,11 @@ namespace Hymperia.Model
     public static IQueryable<Projet> IncludeFormes(this IQueryable<Projet> projets)
     {
       return projets.Include(projet => projet._Formes).ThenInclude(forme => forme.Materiau);
+    }
+
+    public static IQueryable<Forme> CollectionFormes(this EntityEntry<Projet> projet)
+    {
+      return projet.Collection(_projet => _projet._Formes).Query().Include(forme => forme.Materiau);
     }
 
     public static IQueryable<Utilisateur> IncludeAcces(this IQueryable<Utilisateur> projets)

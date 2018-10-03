@@ -1,13 +1,10 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using HelixToolkit.Wpf;
 
 namespace Hymperia.Facade.DependancyObjects
 {
-  /// <summary>
-  /// Logique d'interaction pour Viewport.xaml
-  /// </summary>
   public class Viewport : HelixViewport3D
   {
     #region Dependancy Properties
@@ -24,8 +21,7 @@ namespace Hymperia.Facade.DependancyObjects
       get => (ObservableCollection<MeshElement3D>)GetValue(SourceFormesProperty);
       set
       {
-        SourceFormes.CollectionChanged -= CollectionChanged;
-        value.CollectionChanged += CollectionChanged;
+        value.CollectionChanged += SourceFormesChanged;
         SetValue(SourceFormesProperty, value);
       }
     }
@@ -35,7 +31,6 @@ namespace Hymperia.Facade.DependancyObjects
       get => (ObservableCollection<MeshElement3D>)GetValue(SelectedItemsProperty);
       set
       {
-        SelectedItems.CollectionChanged -= SelectedItemsChanged;
         value.CollectionChanged += SelectedItemsChanged;
         SetValue(SelectedItemsProperty, value);
       }
@@ -53,14 +48,20 @@ namespace Hymperia.Facade.DependancyObjects
 
     #region Methods
 
-    private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    private void SourceFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      throw new System.NotImplementedException();
+      if (sender == SourceFormes)
+      {
+        throw new System.NotImplementedException();
+      }
     }
 
     private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      throw new System.NotImplementedException();
+      if (sender == SelectedItems)
+      {
+        throw new System.NotImplementedException();
+      }
     }
 
     #endregion

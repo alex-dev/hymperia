@@ -201,7 +201,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DependancyObject\Viewport.cs" />
+    <Compile Include="BaseClasses\BulkObservableCollection.cs" />
+    <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
+    <Compile Include="DependancyObjects\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="ModelWrappers\FormeWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
@@ -210,11 +212,13 @@
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Services\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
+    <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
+    <Compile Include="Views\Editeur\Viewport.xaml.cs">
+      <DependentUpon>Viewport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editeur\Editeur.xaml.cs">
       <DependentUpon>Editeur.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\ProjetEditeur.xaml.cs">
-      <DependentUpon>ProjetEditeur.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +243,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="connections.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -251,11 +258,11 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Editeur\Editeur.xaml">
+    <Page Include="Views\Editeur\Viewport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\ProjetEditeur.xaml">
+    <Page Include="Views\Editeur\Editeur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

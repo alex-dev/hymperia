@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Prism.Regions;
+using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.Views.Editeur
 {
-  /// <summary>
-  /// Logique d'interaction pour Editeur.xaml
-  /// </summary>
-  public partial class Editeur : UserControl
+  public partial class Editeur : UserControl, INavigationAware
   {
-    public Editeur()
+    public static readonly DependencyProperty ProjetProperty;
+
+    public Projet Projet
     {
-      InitializeComponent();
+      get => (Projet)GetValue(ProjetProperty);
+      set => SetValue(ProjetProperty, value);
     }
+
+    static Editeur()
+    {
+      ProjetProperty = DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
+    }
+
+    public Editeur(IRegionManager manager)
+    {
+      manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
+      InitializeComponent();
+      BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
+    }
+
+    public bool IsNavigationTarget(NavigationContext context) => true;
+    public void OnNavigatedTo(NavigationContext context) => Projet = (context.Parameters["Projet"] as Projet);
+    public void OnNavigatedFrom(NavigationContext context) => Projet = null;
   }
 }
