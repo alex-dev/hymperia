@@ -1,8 +1,8 @@
 ﻿using Prism.Mvvm;
 
-namespace Hymperia.Facade.ViewModels
+namespace Hymperia.Facade.BaseClasses
 {
-  public abstract class RegionContextBase : BindableBase
+  public abstract class RegionContextAwareViewModel : BindableBase
   {
     private object context;
 

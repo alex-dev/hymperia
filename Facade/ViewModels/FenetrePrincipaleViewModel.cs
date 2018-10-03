@@ -36,7 +36,7 @@ namespace Hymperia.Facade.ViewModels
     public FenetrePrincipaleViewModel(ContextFactory factory, IRegionManager manager)
     {
       Manager = manager;
-      Navigate = new DelegateCommand(NavigateToViewport, () => Projet is Projet);
+      Navigate = new DelegateCommand(NavigateToViewport, () => Projet is Projet).ObservesProperty(() => Projet);
 
       using (var context = factory.GetContext())
       {
@@ -47,7 +47,7 @@ namespace Hymperia.Facade.ViewModels
 
     private void NavigateToViewport()
     {
-      Manager.RequestNavigate("ContentRegion", "EditeurRegion", new NavigationParameters
+      Manager.RequestNavigate("ContentRegion", "Editeur", new NavigationParameters
       {
         { "Projet", Projet }
       });

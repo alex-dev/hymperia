@@ -22,6 +22,12 @@ namespace Hymperia.Facade.Services
       Converter = converter;
     }
 
+    public MeshElement3D ConvertirLier(FormeWrapper<Forme> wrapper)
+    {
+      var forme = Convertir(wrapper);
+      return Lier(forme, wrapper);
+    }
+
     #region Convertir
 
     /// <summary>Convertit <paramref name="forme"/> en <see cref="MeshElement3D"/>.</summary>

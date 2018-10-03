@@ -9,7 +9,7 @@ namespace Hymperia.Facade.ModelWrappers
   {
     #region Attribute
 
-    private T Forme { get; set; } 
+    public readonly T Forme;
 
     public int Id => Forme.Id;
 

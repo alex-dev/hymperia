@@ -3,12 +3,12 @@
     prism:ViewModelLocator.AutoWireViewModel="True" Title="Hymperia">
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="50" />
+      <RowDefinition Height="25" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <StackPanel Orientation="Horizontal" Grid.Row="0">
-      <ComboBox ItemsSource="{Binding Projets}" SelectedItem="{Binding Projet}" />
-      <Button Command="{Binding Navigate}" Content="Ouvrir" />
+      <ComboBox ItemsSource="{Binding Projets}" SelectedItem="{Binding Projet, Mode=TwoWay}" />
+      <Button Name="t" Command="{Binding Navigate}" Content="Ouvrir" />
     </StackPanel>
     <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1" />
   </Grid>

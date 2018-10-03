@@ -201,7 +201,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DependancyObject\Viewport.cs" />
+    <Compile Include="BaseClasses\BulkObservableCollection.cs" />
+    <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
+    <Compile Include="DependancyObjects\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="ModelWrappers\FormeWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
@@ -211,7 +213,7 @@
     <Compile Include="Services\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
-    <Compile Include="ViewModels\RegionContextBase.cs" />
+    <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
     </Compile>
@@ -241,6 +243,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="connections.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
+using JetBrains.Annotations;
 using HelixToolkit.Wpf;
+using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
-using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class ViewportViewModel : RegionContextBase
+  public class ViewportViewModel : RegionContextAwareViewModel
   {
     #region Attributes
 
     #region Fields
 
-    private ObservableCollection<MeshElement3D> formes;
-    private ObservableCollection<MeshElement3D> selected;
+    private BulkObservableCollection<MeshElement3D> formes;
+    private BulkObservableCollection<MeshElement3D> selected;
 
     #endregion
 
@@ -29,7 +28,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     [CanBeNull]
     [ItemNotNull]
-    public ObservableCollection<MeshElement3D> Formes
+    public BulkObservableCollection<MeshElement3D> Formes
     {
       get => formes;
       private set => SetProperty(ref formes, value);
@@ -38,18 +37,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [NotNull]
     [ItemNotNull]
-    public ObservableCollection<MeshElement3D> FormesSelectionnees
+    public BulkObservableCollection<MeshElement3D> FormesSelectionnees
     {
       get => selected;
-      private set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        SetProperty(ref selected, value);
-      }
+      private set => SetProperty(ref selected, value);
     }
 
     #endregion
@@ -73,6 +64,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     #region Methods
+
+    #region Region Interactions
 
     protected override void OnRegionContextChanged()
     {
@@ -100,16 +93,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
       base.OnRegionContextChanged();
     }
 
-    private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-      throw new NotImplementedException();
-    }
-
-    private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-      throw new NotImplementedException();
-    }
-
     private void UpdateFormes()
     {
       if (!(RegionContext is EditeurViewModel context))
@@ -117,9 +100,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
         throw new InvalidCastException("RegionContext is not EditeurViewModel.");
       }
 
-      context.Formes.CollectionChanged += OnFormesChanged;
-      Formes = new ObservableCollection<MeshElement3D>(from forme in context.Formes
-                                                       select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme));
+      if (context.Formes is null)
+      {
+        Formes = null;
+      }
+      else
+      {
+        var enumerable = from forme in context.Formes
+                         select ConvertisseurWrappers.ConvertirLier(forme);
+
+        context.Formes.CollectionChanged += OnFormesChanged;
+        Formes = new BulkObservableCollection<MeshElement3D>(enumerable);
+      }
     }
 
     private void UpdateFormesSelectionnees()
@@ -129,13 +121,67 @@ namespace Hymperia.Facade.ViewModels.Editeur
         throw new InvalidCastException("RegionContext is not EditeurViewModel.");
       }
 
-      context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
-      FormesSelectionnees = new ObservableCollection<MeshElement3D>(context.FormesSelectionnees.Join(
+      var enumerable = context.FormesSelectionnees.Join(
         Formes,
         wrapper => wrapper,
         mesh => BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source,
-        (wrapper, mesh) => mesh));
+        (wrapper, mesh) => mesh);
+
+      context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
+      FormesSelectionnees = new BulkObservableCollection<MeshElement3D>(enumerable);
     }
+
+    private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+      var newitems = from FormeWrapper<Forme> forme in args.NewItems
+                     select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
+      var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
+                     join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                     select mesh;
+
+      switch (args.Action)
+      {
+        case NotifyCollectionChangedAction.Add:
+          FormesSelectionnees.AddRange(newitems);
+          break;
+        case NotifyCollectionChangedAction.Remove:
+          FormesSelectionnees.RemoveRange(olditems);
+          break;
+        case NotifyCollectionChangedAction.Replace:
+          FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+          break;
+        case NotifyCollectionChangedAction.Reset:
+          FormesSelectionnees.Clear();
+          break;
+      }
+    }
+
+    private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+      var newitems = from FormeWrapper<Forme> forme in args.NewItems
+                     select ConvertisseurWrappers.Lier(ConvertisseurWrappers.Convertir(forme), forme);
+      var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
+                     join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                     select mesh;
+
+      switch (args.Action)
+      {
+        case NotifyCollectionChangedAction.Add:
+          FormesSelectionnees.AddRange(newitems);
+          break;
+        case NotifyCollectionChangedAction.Remove:
+          FormesSelectionnees.RemoveRange(olditems);
+          break;
+        case NotifyCollectionChangedAction.Replace:
+          FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+          break;
+        case NotifyCollectionChangedAction.Reset:
+          FormesSelectionnees.Clear();
+          break;
+      }
+    }
+
+    #endregion
 
     #endregion
   }

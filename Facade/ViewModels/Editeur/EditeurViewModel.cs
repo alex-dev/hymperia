@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using JetBrains.Annotations;
+using Prism.Commands;
 using Prism.Mvvm;
 using Hymperia.Model;
+using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
-using Hymperia.Facade.ModelWrappers;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -20,8 +21,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Fields
 
     private Projet projet;
-    private ObservableCollection<FormeWrapper<Forme>> formes;
-    private ObservableCollection<FormeWrapper<Forme>> selected;
+    private BulkObservableCollection<FormeWrapper<Forme>> formes;
+    private BulkObservableCollection<FormeWrapper<Forme>> selected;
 
     #endregion
 
@@ -34,15 +35,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public Projet Projet
     {
       get => projet;
-      set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        QueryProjet(value, UpdateFormes);
-      }
+      set => QueryProjet(value, UpdateFormes);
     }
 
     /// <summary>Les formes éditables.</summary>
@@ -50,32 +43,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
     [CanBeNull]
     [ItemNotNull]
-    public ObservableCollection<FormeWrapper<Forme>> Formes
+    public BulkObservableCollection<FormeWrapper<Forme>> Formes
     {
       get => formes;
-      private set => SetProperty(ref formes, value);
+      private set => SetProperty(ref formes, value, () => FormesSelectionnees.Clear());
     }
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [NotNull]
     [ItemNotNull]
-    public ObservableCollection<FormeWrapper<Forme>> FormesSelectionnees
+    public BulkObservableCollection<FormeWrapper<Forme>> FormesSelectionnees
     {
       get => selected;
-      private set
-      {
-        if (value is null)
-        {
-          throw new ArgumentNullException();
-        }
-
-        SetProperty(ref selected, value, () => FormesSelectionnees.Clear());
-      }
+      private set => SetProperty(ref selected, value);
     }
 
     #endregion
 
     #region Commands
+
+    public readonly ICommand AjouterForme;
+    public readonly ICommand SupprimerForme;
 
     #endregion
 
@@ -95,32 +83,86 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       ContextFactory = factory;
       ConvertisseurFormes = formes;
-      FormesSelectionnees = new ObservableCollection<FormeWrapper<Forme>>();
+      AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme);
+      SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme).ObservesProperty(() => FormesSelectionnees);
+      FormesSelectionnees = new BulkObservableCollection<FormeWrapper<Forme>>();
     }
 
     #region Methods
+
+    #region Command AjouterForme
+
+    private Forme CreerForme()
+    {
+      throw new NotImplementedException();
+    }
+
+    private void _AjouterForme()
+    {
+      var forme = CreerForme();
+      Projet.AjouterForme(forme);
+      Formes.Add(ConvertisseurFormes.Convertir(forme));
+    }
+
+    // TODO: Add Check
+    private bool PeutAjouterForme() => true;
+
+    #endregion
+
+    #region Command SupprimerForme
+
+    private void _SupprimerForme()
+    {
+      var formes = (from forme in FormesSelectionnees
+                    select forme.Forme).ToArray();
+
+      foreach (var forme in formes)
+      {
+        Projet.SupprimerForme(forme);
+      }
+
+      Formes.RemoveRange(FormesSelectionnees);
+      FormesSelectionnees.Clear();
+    }
+
+    private bool PeutSupprimerForme() => FormesSelectionnees.Count > 0;
+
+    #endregion
+
+    #region Inner Events Handler
 
     private async Task QueryProjet(Projet _projet, Action onChanged)
     {
       // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
       SetProperty(ref projet, null, onChanged, "Projet");
 
-      using (var context = ContextFactory.GetContext())
+      if (_projet is Projet)
       {
-        context.Attach(_projet);
-        await context.Entry(_projet).CollectionFormes().LoadAsync();
-      }
+        using (var context = ContextFactory.GetContext())
+        {
+          context.Attach(_projet);
+          await context.Entry(_projet).CollectionFormes().LoadAsync();
+        }
 
-      SetProperty(ref projet, _projet, onChanged, "Projet");
+        SetProperty(ref projet, _projet, onChanged, "Projet");
+      }
     }
 
     private void UpdateFormes()
     {
-      Formes = Projet is null
-        ? null
-        : new ObservableCollection<FormeWrapper<Forme>>(from forme in Projet.Formes
-                                                        select ConvertisseurFormes.Convertir(forme));
+      if (Projet is null)
+      {
+        Formes = null;
+      }
+      else
+      {
+        var enumerable = from forme in Projet.Formes
+                         select ConvertisseurFormes.Convertir(forme);
+        Formes = new BulkObservableCollection<FormeWrapper<Forme>>(enumerable);
+      }
     }
+
+    #endregion
 
     #endregion
   }

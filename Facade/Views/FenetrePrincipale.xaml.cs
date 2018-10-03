@@ -2,5 +2,11 @@
 
 namespace Hymperia.Facade.Views
 {
-  public partial class FenetrePrincipale : Window { }
+  public partial class FenetrePrincipale : Window
+  {
+    public FenetrePrincipale()
+    {
+      InitializeComponent();
+    }
+  }
 }
