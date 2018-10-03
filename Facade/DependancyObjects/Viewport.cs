@@ -5,9 +5,6 @@ using HelixToolkit.Wpf;
 
 namespace Hymperia.Facade.DependancyObjects
 {
-  /// <summary>
-  /// Logique d'interaction pour Viewport.xaml
-  /// </summary>
   public class Viewport : HelixViewport3D
   {
     #region Dependancy Properties
