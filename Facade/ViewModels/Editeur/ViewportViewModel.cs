@@ -8,7 +8,6 @@ using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
-using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -91,14 +90,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       context.PropertyChanged += (sender, args) =>
       {
-        switch (args.PropertyName)
+        if (sender == RegionContext)
         {
-          case nameof(context.Formes):
-            UpdateFormes();
-            break;
-          case nameof(context.FormesSelectionnees):
-            UpdateFormesSelectionnees();
-            break;
+          switch (args.PropertyName)
+          {
+            case nameof(context.Formes):
+              UpdateFormes();
+              break;
+            case nameof(context.FormesSelectionnees):
+              UpdateFormesSelectionnees();
+              break;
+          }
         }
       };
 
@@ -124,7 +126,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       else
       {
         var enumerable = from forme in context.Formes
-                         select ConvertisseurWrappers.ConvertirLier(forme);
+                         select ConvertisseurWrappers.Convertir(forme);
 
         context.Formes.CollectionChanged += OnFormesChanged;
         Formes = new BulkObservableCollection<MeshElement3D>(enumerable);
@@ -149,8 +151,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
       else
       {
-        var enumerable = from FormeWrapper<Forme> wrapper in context.FormesSelectionnees
-                         join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+        var enumerable = from FormeWrapper wrapper in context.FormesSelectionnees
+                         join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty)?.Source
                          select mesh;
 
         context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
@@ -162,9 +164,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == Formes)
       {
-        var newitems = from FormeWrapper<Forme> forme in args.NewItems
-                       select ConvertisseurWrappers.ConvertirLier(forme);
-        var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
+        var newitems = from FormeWrapper forme in args.NewItems
+                       select ConvertisseurWrappers.Convertir(forme);
+        var olditems = from FormeWrapper wrapper in args.OldItems
                        join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
                        select mesh;
 
@@ -190,9 +192,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == FormesSelectionnees)
       {
-        var newitems = from FormeWrapper<Forme> forme in args.NewItems
-                       select ConvertisseurWrappers.ConvertirLier(forme);
-        var olditems = from FormeWrapper<Forme> wrapper in args.OldItems
+        var newitems = from FormeWrapper forme in args.NewItems
+                       select ConvertisseurWrappers.Convertir(forme);
+        var olditems = from FormeWrapper wrapper in args.OldItems
                        join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
                        select mesh;
 

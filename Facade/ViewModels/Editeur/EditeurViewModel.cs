@@ -21,8 +21,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Fields
 
     private Projet projet;
-    private BulkObservableCollection<FormeWrapper<Forme>> formes;
-    private BulkObservableCollection<FormeWrapper<Forme>> selected;
+    private BulkObservableCollection<FormeWrapper> formes;
+    private BulkObservableCollection<FormeWrapper> selected;
 
     #endregion
 
@@ -43,7 +43,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
     [CanBeNull]
     [ItemNotNull]
-    public BulkObservableCollection<FormeWrapper<Forme>> Formes
+    public BulkObservableCollection<FormeWrapper> Formes
     {
       get => formes;
       private set => SetProperty(ref formes, value, () => FormesSelectionnees.Clear());
@@ -52,7 +52,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [NotNull]
     [ItemNotNull]
-    public BulkObservableCollection<FormeWrapper<Forme>> FormesSelectionnees
+    public BulkObservableCollection<FormeWrapper> FormesSelectionnees
     {
       get => selected;
       private set => SetProperty(ref selected, value);
@@ -85,7 +85,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       ConvertisseurFormes = formes;
       AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme);
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme).ObservesProperty(() => FormesSelectionnees);
-      FormesSelectionnees = new BulkObservableCollection<FormeWrapper<Forme>>();
+      FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
     }
 
     #region Methods
@@ -131,7 +131,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Inner Events Handler
 
-    private async Task QueryProjet(Projet _projet, Action onChanged)
+    private void/*async Task*/ QueryProjet(Projet _projet, Action onChanged)
     {
       // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
       SetProperty(ref projet, null, onChanged, "Projet");
@@ -141,7 +141,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         using (var context = ContextFactory.GetContext())
         {
           context.Attach(_projet);
-          await context.Entry(_projet).CollectionFormes().LoadAsync();
+          context.Entry(_projet).CollectionFormes().Load();
         }
 
         SetProperty(ref projet, _projet, onChanged, "Projet");
@@ -158,7 +158,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         var enumerable = from forme in Projet.Formes
                          select ConvertisseurFormes.Convertir(forme);
-        Formes = new BulkObservableCollection<FormeWrapper<Forme>>(enumerable);
+        Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
       }
     }
 

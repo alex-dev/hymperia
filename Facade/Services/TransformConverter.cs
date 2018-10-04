@@ -26,7 +26,7 @@ namespace Hymperia.Facade.Services
     /// <remarks>Vers la vue.</remarks>
     public object Convert(object[] values, Type target, object parameter = null, CultureInfo culture = default)
     {
-      if (target != typeof(MatrixTransform3D))
+      if (!typeof(MatrixTransform3D).IsSubclassOf(target) && typeof(MatrixTransform3D) != target)
       {
         throw new ArgumentException($"Can only convert to { nameof(MatrixTransform3D) }.", nameof(target));
       }

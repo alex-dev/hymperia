@@ -25,6 +25,7 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -61,13 +62,9 @@
     <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="DoubleExtension.cs" />
     <Compile Include="IIdentity.cs" />
-    <Compile Include="Migrations\20180926161335_InitialDatabase.cs" />
-    <Compile Include="Migrations\20180926161335_InitialDatabase.designer.cs">
-      <DependentUpon>20180926161335_InitialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180927194038_Rotation.cs" />
-    <Compile Include="Migrations\20180927194038_Rotation.designer.cs">
-      <DependentUpon>20180927194038_Rotation.cs</DependentUpon>
+    <Compile Include="Migrations\20181003212404_InitialDatabase.cs" />
+    <Compile Include="Migrations\20181003212404_InitialDatabase.designer.cs">
+      <DependentUpon>20181003212404_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />

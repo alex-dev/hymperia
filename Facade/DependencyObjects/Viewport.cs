@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Windows;
 using HelixToolkit.Wpf;
 
-namespace Hymperia.Facade.DependancyObjects
+namespace Hymperia.Facade.DependencyObjects
 {
   public class Viewport : HelixViewport3D
   {

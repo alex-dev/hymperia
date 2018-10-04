@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
 using JetBrains.Annotations;
-using Hymperia.Model.Modeles;
 using Hymperia.Facade.ModelWrappers;
 
 namespace Hymperia.Facade.Services
@@ -13,19 +12,16 @@ namespace Hymperia.Facade.Services
     #region Services
 
     [NotNull]
-    private readonly TransformConverter Converter;
+    private readonly TransformConverter TransformConverter;
+    [NotNull]
+    private readonly PointToHauteurConverter PointToHauteurConverter;
 
     #endregion
 
-    public ConvertisseurWrappers([NotNull] TransformConverter converter)
+    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] PointToHauteurConverter pointToHauteur)
     {
-      Converter = converter;
-    }
-
-    public MeshElement3D ConvertirLier(FormeWrapper<Forme> wrapper)
-    {
-      var forme = Convertir(wrapper);
-      return Lier(forme, wrapper);
+      TransformConverter = transform;
+      PointToHauteurConverter = pointToHauteur;
     }
 
     #region Convertir
@@ -33,86 +29,27 @@ namespace Hymperia.Facade.Services
     /// <summary>Convertit <paramref name="forme"/> en <see cref="MeshElement3D"/>.</summary>
     /// <exception cref="ArgumentException"><paramref name="forme"/> n'était pas une <see cref="Forme"/> connue.</exception>
     [NotNull]
-    public MeshElement3D Convertir([NotNull] FormeWrapper<Forme> forme)
+    public MeshElement3D Convertir([NotNull] FormeWrapper forme)
     {
-      throw new NotImplementedException();
-      /*switch (forme)
+      switch (forme)
       {
-        case Cone cone:
-          return new ConeWrapper(forme);
-        case Cylindre cylindre:
+        case ConeWrapper cone:
+          return Convertir(cone);
+        case CylindreWrapper cylindre:
           return Convertir(cylindre);
-        case Ellipsoide ellipsoide:
+        case EllipsoideWrapper ellipsoide:
           return Convertir(ellipsoide);
-        case PrismeRectangulaire prisme:
+        case PrismeRectangulaireWrapper prisme:
           return Convertir(prisme);
         default:
           throw new ArgumentException($"Unknown child of { nameof(FormeWrapper) }.", nameof(forme));
-      }*/
+      }
     }
 
-    private TruncatedConeVisual3D Convertir(Cone forme)
-    {
-      var final = new TruncatedConeVisual3D
-      {
-        Origin = forme.Origine.Convert(),
-        Height = forme.Hauteur,
-        BaseRadius = forme.RayonBase,
-        TopRadius = forme.RayonTop,
-        ThetaDiv = forme.ThetaDiv
-      };
-
-      return Materialize(final, forme);
-    }
-
-    private PipeVisual3D Convertir(Cylindre forme)
-    {
-      var final = new PipeVisual3D
-      {
-        Point1 = forme.Origine.Convert(),
-        Point2 = forme.Point.Convert(),
-        Diameter = forme.Diametre,
-        InnerDiameter = forme.InnerDiametre,
-        ThetaDiv = forme.ThetaDiv
-      };
-
-      return Materialize(final, forme);
-    }
-
-    private EllipsoidVisual3D Convertir(Ellipsoide forme)
-    {
-      var final = new EllipsoidVisual3D
-      {
-        Center = forme.Origine.Convert(),
-        RadiusX = forme.RayonX,
-        RadiusY = forme.RayonY,
-        RadiusZ = forme.RayonZ,
-        PhiDiv = forme.PhiDiv,
-        ThetaDiv = forme.ThetaDiv
-      };
-
-      return Materialize(final, forme);
-    }
-
-    private BoxVisual3D Convertir(PrismeRectangulaire forme)
-    {
-      var final = new BoxVisual3D
-      {
-        Center = forme.Origine.Convert(),
-        Height = forme.Hauteur,
-        Length = forme.Longueur,
-        Width = forme.Largeur,
-      };
-
-      return Materialize(final, forme);
-    }
-
-    private TFinal Materialize<TFinal, TInitial>(TFinal final, TInitial initial )
-      where TFinal : MeshElement3D
-      where TInitial : Forme
-    {
-      return final;
-    }
+    private TruncatedConeVisual3D Convertir(ConeWrapper forme) => Lier(new TruncatedConeVisual3D(), forme);
+    private PipeVisual3D Convertir(CylindreWrapper forme) => Lier(new PipeVisual3D(), forme);
+    private EllipsoidVisual3D Convertir(EllipsoideWrapper forme) => Lier(new EllipsoidVisual3D(), forme);
+    private BoxVisual3D Convertir(PrismeRectangulaireWrapper forme) => Lier(new BoxVisual3D(), forme);
 
     #endregion
 
@@ -122,31 +59,30 @@ namespace Hymperia.Facade.Services
     /// <exception cref="InvalidCastException"><paramref name="source"/> était une <see cref="Forme"/> incompatible avec <paramref name="forme"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="forme"/> était un <see cref="MeshElement3D"/> inconnu.</exception>
     [NotNull]
-    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper<Forme> source)
+    public MeshElement3D Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper source)
     {
-      throw new NotImplementedException();
-      /*switch (forme)
+      switch (forme)
       {
         case TruncatedConeVisual3D cone:
           return Lier(cone, (ConeWrapper)source);
-        // case PipeVisual3D cylindre:
-        //   return Lier(cylindre, (CylindreWrapper)source);
+         case PipeVisual3D cylindre:
+           return Lier(cylindre, (CylindreWrapper)source);
         case EllipsoidVisual3D ellipsoide:
           return Lier(ellipsoide, (EllipsoideWrapper)source);
         case BoxVisual3D prisme:
-          return Lier(prisme, (PrismeRectangulaire)source);
+          return Lier(prisme, (PrismeRectangulaireWrapper)source);
         default:
           throw new ArgumentException($"Unknown child of { nameof(MeshElement3D) }.", nameof(forme));
-      }*/
+      }
     }
 
-    private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, Cone source)
+    private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, ConeWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },
-        new Binding("Quaternion") { Source = source }
+        new Binding("Rotation") { Source = source }
       });
 
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TransformProperty, bindings);
@@ -158,10 +94,32 @@ namespace Hymperia.Facade.Services
       return forme;
     }
 
-    private PipeVisual3D Lier(PipeVisual3D forme, Cylindre source)
+    private PipeVisual3D Lier(PipeVisual3D forme, CylindreWrapper source)
     {
-      //BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, new Binding("Origine") { Converter = PointValueConverter });
-      //BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, new Binding("Point") { Converter = PointValueConverter });
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
+      bindings.Bindings.AddRange(new Binding[]
+      {
+        new Binding("Origine") { Source = source },
+        new Binding("Rotation") { Source = source }
+      });
+      var hauteur_binding_top = new Binding("Hauteur")
+      {
+        Source = source,
+        Converter = PointToHauteurConverter,
+        ConverterParameter = PointOrientation.Top,
+        Mode = BindingMode.TwoWay
+      };
+      var hauteur_binding_bottom = new Binding("Hauteur")
+      {
+        Source = source,
+        Converter = PointToHauteurConverter,
+        ConverterParameter = PointOrientation.Bottom,
+        Mode = BindingMode.TwoWay
+      };
+
+      BindingOperations.SetBinding(forme, PipeVisual3D.TransformProperty, bindings);
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, hauteur_binding_top);
+      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, hauteur_binding_bottom);
       BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
@@ -169,13 +127,13 @@ namespace Hymperia.Facade.Services
       return forme;
     }
 
-    private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, Ellipsoide source)
+    private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, EllipsoideWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },
-        new Binding("Quaternion") { Source = source }
+        new Binding("Rotation") { Source = source }
       });
 
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.TransformProperty, bindings);
@@ -188,13 +146,13 @@ namespace Hymperia.Facade.Services
       return forme;
     }
 
-    private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaire source)
+    private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaireWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = Converter, Mode = BindingMode.TwoWay };
+      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
         new Binding("Origine") { Source = source },
-        new Binding("Quaternion") { Source = source }
+        new Binding("Rotation") { Source = source }
       });
 
       BindingOperations.SetBinding(forme, BoxVisual3D.TransformProperty, bindings);

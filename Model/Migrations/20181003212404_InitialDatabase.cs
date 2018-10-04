@@ -59,6 +59,7 @@ namespace Hymperia.Model.Migrations
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             IdMateriau = table.Column<int>(nullable: false),
             Origine = table.Column<string>(nullable: false),
+            Rotation = table.Column<string>(nullable: false),
             Discriminator = table.Column<string>(nullable: false),
             IdProjet = table.Column<int>(nullable: true),
             RayonX = table.Column<double>(nullable: true),
@@ -73,7 +74,7 @@ namespace Hymperia.Model.Migrations
             Hauteur = table.Column<double>(nullable: true),
             RayonBase = table.Column<double>(nullable: true),
             RayonTop = table.Column<double>(nullable: true),
-            Point = table.Column<string>(nullable: true),
+            Cylindre_Hauteur = table.Column<double>(nullable: true),
             Diametre = table.Column<double>(nullable: true),
             InnerDiametre = table.Column<double>(nullable: true)
           },

@@ -1,15 +1,16 @@
-using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Hymperia.Model.Modeles;
+using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  public abstract class FormeWrapper<T> : INotifyPropertyChanged where T : Forme
+  public abstract class FormeWrapper
   {
-    #region Attribute
+    #region Attributs
 
-    public readonly T Forme;
+    public readonly Forme Forme;
 
     public int Id => Forme.Id;
 
@@ -23,12 +24,47 @@ namespace Hymperia.Facade.ModelWrappers
       }
     }
 
+    [NotNull]
+    public Point Origine
+    {
+      get => Forme.Origine;
+      set
+      {
+        Forme.Origine = value;
+        OnPropertyChanged();
+      }
+    }
+
+    [NotNull]
+    public Quaternion Rotation
+    {
+      get => Forme.Rotation;
+      set
+      {
+        Forme.Rotation = value;
+        OnPropertyChanged();
+      }
+    }
+
+    [NotNull]
+    public double Prix => Forme.Prix;
+
+    public double Volume => Forme.Volume;
+
     #endregion
 
-    public FormeWrapper(T forme)
+    protected FormeWrapper(Forme forme)
     {
       Forme = forme;
     }
+
+    #region ToString
+
+    [Pure]
+    [NotNull]
+    public override string ToString() => Forme.ToString();
+
+    #endregion
 
     #region INotifyPropertyChanged
 
