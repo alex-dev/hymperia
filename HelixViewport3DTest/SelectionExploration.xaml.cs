@@ -29,9 +29,9 @@ namespace HelixViewport3DTest
 
       var vm = new MainWindowViewModel(viewport.Viewport);
       DataContext = vm;
-      viewport.InputBindings.Add(new MouseBinding(vm.RectangleSelectionCommand, new MouseGesture(MouseAction.LeftClick)));
-      viewport.InputBindings.Add(new MouseBinding(vm.PointSelectionCommand, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
-      viewport.InputBindings.Add(new MouseBinding(vm.PointSelectionCommand2, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
+      viewport.InputBindings.Add(new MouseBinding(vm.RectangleSelectionCommand, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
+      viewport.InputBindings.Add(new MouseBinding(vm.PointSelectionCommand, new MouseGesture(MouseAction.LeftClick)));
+      viewport.InputBindings.Add(new MouseBinding(vm.PointSelectionCommand2, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
 
     }
   }
@@ -48,9 +48,9 @@ namespace HelixViewport3DTest
     }
     public MainWindowViewModel(Viewport3D viewport)
     {
-      RectangleSelectionCommand = new RectangleSelectionCommand(viewport, HandleSelectionModelsEvent, HandleSelectionVisualsEvent);
-      PointSelectionCommand = new PointSelectionCommand(viewport, HandleSelectionModelsEvent, HandleSelectionVisualsEvent);
-      PointSelectionCommand2 = new PointSelectionCommand(viewport, HandleSelectionModelsEvent, HandleSelectionVisualsEvent);
+      RectangleSelectionCommand = new RectangleSelectionCommand(viewport, (sender, args) => { selectedVisuals.Clear(); HandleSelectionVisualsEvent(sender, args); });
+      PointSelectionCommand = new PointSelectionCommand(viewport, (sender, args) => { selectedVisuals.Clear(); HandleSelectionVisualsEvent(sender, args); });
+      PointSelectionCommand2 = new PointSelectionCommand(viewport, (sender, args) => { HandleSelectionVisualsEvent(sender, args); });
     }
 
     public RectangleSelectionCommand RectangleSelectionCommand { get; private set; }
@@ -88,44 +88,36 @@ namespace HelixViewport3DTest
 
     private void HandleSelectionVisualsEvent(object sender, VisualsSelectedEventArgs args)
     {
-      selectedVisuals = args.SelectedVisuals;
+      ChangeMaterial(args.SelectedVisuals, Materials.Blue);
+
+      if (args is VisualsSelectedByRectangleEventArgs rectangleSelectionArgs)
+      {
+        ChangeMaterial(
+            args.SelectedVisuals,
+            rectangleSelectionArgs.Rectangle.Size != default ? Materials.Red : Materials.Green);
+      }
+      else
+      {
+        ChangeMaterial(args.SelectedVisuals, Materials.Orange);
+      }
       RaisePropertyChanged(nameof(SelectedVisuals));
     }
 
     private void HandleSelectionModelsEvent(object sender, ModelsSelectedEventArgs args)
     {
 
-      ChangeMaterial(selectedModels, Materials.Gray);
-
-      selectedModels = args.SelectedModels;
-      var rectangleSelectionArgs = args as ModelsSelectedByRectangleEventArgs;
-      if (rectangleSelectionArgs != null)
-      {
-        ChangeMaterial(
-            selectedModels,
-            rectangleSelectionArgs.Rectangle.Size != default ? Materials.Red : Materials.Green);
-      }
-      else
-      {
-        ChangeMaterial(selectedModels, Materials.Orange);
-      }
     }
 
-    private void ChangeMaterial(IEnumerable<Model3D> models, Material material)
+    private void ChangeMaterial(IEnumerable<Visual3D> models, Material material)
     {
       if (models == null)
       {
         return;
       }
 
-      foreach (var model in models)
+      foreach (MeshElement3D model in models)
       {
-        var geometryModel = model as GeometryModel3D;
-        if (geometryModel != null)
-        {
-          geometryModel.Material = geometryModel.BackMaterial = material;
-        }
-
+        model.Material = model.BackMaterial = material;
       }
     }
   }
