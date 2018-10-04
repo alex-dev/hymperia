@@ -28,7 +28,7 @@ namespace Hymperia.Facade.DependencyObjects
     public BulkObservableCollection<MeshElement3D> SelectedItems
     {
       get => (BulkObservableCollection<MeshElement3D>)GetValue(SelectedItemsProperty);
-      set =>  SetValue(SelectedItemsProperty, value);
+      set => SetValue(SelectedItemsProperty, value);
     }
 
     #endregion
@@ -36,7 +36,9 @@ namespace Hymperia.Facade.DependencyObjects
     #region Private Defaults
 
     private readonly SunLight Sunlight;
-    private readonly Material SelectedMaterial;
+    private readonly GridLinesVisual3D GridLines;
+    private readonly MaterialGroup SelectedMaterial;
+    private readonly Brush Specular = Brushes.Red;
 
     #endregion
 
@@ -49,6 +51,11 @@ namespace Hymperia.Facade.DependencyObjects
     public Viewport() : base()
     {
       Sunlight = new SunLight();
+      GridLines = new GridLinesVisual3D { Width = 1000, Length = 1000, MinorDistance = 0.1, MajorDistance = 1, Thickness = 0.01 };
+      SelectedMaterial = new MaterialGroup();
+      Specular = Specular.Clone();
+      Specular.Opacity = 0.5;
+      SelectedMaterial.Children.Add(new SpecularMaterial(Specular, 85));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, ClearSelectionHandler), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, ClearSelectionHandler), new MouseGesture(MouseAction.LeftClick)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, SelectionHandler), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
@@ -70,9 +77,9 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        //TODO A changé!!!
+        //TODO A changé!!! 
         model.Fill = Brushes.Red;
-        //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial);
+        //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial.Children.First());
       }
     }
 
@@ -82,7 +89,8 @@ namespace Hymperia.Facade.DependencyObjects
       {
         //TODO A changé!!!
         model.Fill = Brushes.Blue;
-        //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial);
+        //var b = model.Material.IsFrozen;
+        //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial.Children.First());
       }
     }
 
@@ -108,6 +116,7 @@ namespace Hymperia.Facade.DependencyObjects
       }
 
       Children.Add(Sunlight);
+      Children.Add(GridLines);
     }
 
     private void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
