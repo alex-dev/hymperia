@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using HelixToolkit.Wpf;
+using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.DependencyObjects
 {
@@ -40,8 +41,8 @@ namespace Hymperia.Facade.DependencyObjects
 
     static Viewport()
     {
-      SourceFormesProperty = DependencyProperty.Register("SourceFormes", typeof(ObservableCollection<MeshElement3D>), typeof(Viewport));
-      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(ObservableCollection<MeshElement3D>), typeof(Viewport));
+      SourceFormesProperty = DependencyProperty.Register("SourceFormes", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport));
+      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport));
     }
 
     public Viewport() : base() { }

@@ -42,7 +42,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public BulkObservableCollection<MeshElement3D> FormesSelectionnees
     {
       get => selected;
-      private set => SetProperty(ref selected, value);
+      private set
+      {
+        value.CollectionChanged += FormesSelectionneesChanged;
+        SetProperty(ref selected, value);
+      }
     }
 
     #endregion
@@ -54,7 +58,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       get => ajouter;
       private set => SetProperty(ref ajouter, value);
     }
-    
+
     public ICommand SupprimerForme
     {
       get => supprimer;
@@ -162,7 +166,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == Formes)
+      if (sender == ((EditeurViewModel)RegionContext).Formes)
       {
         var newitems = from FormeWrapper forme in args.NewItems
                        select ConvertisseurWrappers.Convertir(forme);
@@ -190,7 +194,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == FormesSelectionnees)
+      if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
       {
         var newitems = from FormeWrapper forme in args.NewItems
                        select ConvertisseurWrappers.Convertir(forme);
@@ -211,6 +215,35 @@ namespace Hymperia.Facade.ViewModels.Editeur
             break;
           case NotifyCollectionChangedAction.Reset:
             FormesSelectionnees.Clear();
+            break;
+        }
+      }
+    }
+
+    private void FormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+      if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
+      {
+        var newitems = from MeshElement3D mesh in args.NewItems
+                       join wrapper in ((EditeurViewModel)RegionContext).Formes on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
+                       select wrapper;
+        var olditems = from MeshElement3D mesh in args.NewItems
+                       join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
+                       select wrapper;
+
+        switch (args.Action)
+        {
+          case NotifyCollectionChangedAction.Add:
+            ((EditeurViewModel)RegionContext).FormesSelectionnees.AddRange(newitems);
+            break;
+          case NotifyCollectionChangedAction.Remove:
+            ((EditeurViewModel)RegionContext).FormesSelectionnees.RemoveRange(olditems);
+            break;
+          case NotifyCollectionChangedAction.Replace:
+            ((EditeurViewModel)RegionContext).FormesSelectionnees[((EditeurViewModel)RegionContext).FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+            break;
+          case NotifyCollectionChangedAction.Reset:
+            ((EditeurViewModel)RegionContext).FormesSelectionnees.Clear();
             break;
         }
       }
