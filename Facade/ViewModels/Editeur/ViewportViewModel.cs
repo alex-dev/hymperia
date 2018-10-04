@@ -8,6 +8,7 @@ using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
+using System.Collections.Generic;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -156,7 +157,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       else
       {
         var enumerable = from FormeWrapper wrapper in context.FormesSelectionnees
-                         join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty)?.Source
+                         join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
+                           on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty)?.Source
                          select mesh;
 
         context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
@@ -168,10 +170,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == ((EditeurViewModel)RegionContext).Formes)
       {
-        var newitems = from FormeWrapper forme in args.NewItems
+        var newitems = from FormeWrapper forme in args.NewItems ?? new List<FormeWrapper> { }
                        select ConvertisseurWrappers.Convertir(forme);
-        var olditems = from FormeWrapper wrapper in args.OldItems
-                       join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+        var olditems = from FormeWrapper wrapper in args.OldItems ?? new List<FormeWrapper> { }
+                       join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
+                         on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
                        select mesh;
 
         switch (args.Action)
@@ -196,10 +199,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
       {
-        var newitems = from FormeWrapper forme in args.NewItems
+        var newitems = from FormeWrapper forme in args.NewItems ?? new List<FormeWrapper> { }
                        select ConvertisseurWrappers.Convertir(forme);
-        var olditems = from FormeWrapper wrapper in args.OldItems
-                       join mesh in Formes on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+        var olditems = from FormeWrapper wrapper in args.OldItems ?? new List<FormeWrapper> { }
+                       join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
+                         on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
                        select mesh;
 
         switch (args.Action)
@@ -224,11 +228,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
       {
-        var newitems = from MeshElement3D mesh in args.NewItems
-                       join wrapper in ((EditeurViewModel)RegionContext).Formes on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
+        var newitems = from MeshElement3D mesh in args.NewItems ?? new List<MeshElement3D> { }
+                       join wrapper in ((EditeurViewModel)RegionContext).Formes ?? new BulkObservableCollection<FormeWrapper> { }
+                         on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
                        select wrapper;
-        var olditems = from MeshElement3D mesh in args.NewItems
-                       join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
+        var olditems = from MeshElement3D mesh in args.NewItems ?? new List<MeshElement3D> { }
+                       join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees ?? new BulkObservableCollection<FormeWrapper> { }
+                         on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
                        select wrapper;
 
         switch (args.Action)

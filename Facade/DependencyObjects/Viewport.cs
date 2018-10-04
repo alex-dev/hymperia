@@ -45,7 +45,14 @@ namespace Hymperia.Facade.DependencyObjects
       SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport));
     }
 
-    public Viewport() : base() { }
+    public Viewport() : base()
+    {
+      MouseDoubleClick += (sender, args) =>
+      {
+        var x = SelectedItems;
+        var y = SourceFormes;
+      };
+    }
 
     #region Methods
 
