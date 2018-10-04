@@ -18,11 +18,30 @@ namespace Hymperia.Facade.ViewModels.Editeur
   {
     #region Attributes
 
+    #region Private Fields
+
+    private Materiau DefaultMateriau;
+
+    #endregion
+
     #region Fields
 
     private Projet projet;
     private BulkObservableCollection<FormeWrapper> formes;
     private BulkObservableCollection<FormeWrapper> selected;
+    private SelectionMode selection;
+    private Type forme;
+    private Materiau materiau;
+
+    #endregion
+
+    #region Private Wrappers
+
+    [NotNull]
+    private Type Forme => forme ?? typeof(PrismeRectangulaire);
+
+    [CanBeNull]
+    private Materiau Materiau => materiau ?? DefaultMateriau;
 
     #endregion
 
@@ -58,12 +77,33 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref selected, value);
     }
 
+    public SelectionMode SelectedSelectionMode
+    {
+      get => selection;
+      set => SetProperty(ref selection, value);
+    }
+
+    [CanBeNull]
+    public Type SelectedForme
+    {
+      get => forme;
+      set => SetProperty(ref forme, value);
+    }
+
+    [CanBeNull]
+    public Materiau SelectedMateriau
+    {
+      get => materiau;
+      set => SetProperty(ref materiau, value);
+    }
+
     #endregion
 
     #region Commands
 
     public readonly ICommand AjouterForme;
     public readonly ICommand SupprimerForme;
+    public readonly ICommand Sauvegarder;
 
     #endregion
 
@@ -86,6 +126,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme);
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme).ObservesProperty(() => FormesSelectionnees);
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
+      QueryDefaultMateriau();
     }
 
     #region Methods
@@ -105,7 +146,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     // TODO: Add Check
-    private bool PeutAjouterForme() => true;
+    private bool PeutAjouterForme() => Projet is Projet && Materiau is Materiau;
 
     #endregion
 
@@ -125,15 +166,22 @@ namespace Hymperia.Facade.ViewModels.Editeur
       FormesSelectionnees.Clear();
     }
 
-    private bool PeutSupprimerForme() => FormesSelectionnees.Count > 0;
+    private bool PeutSupprimerForme() => Projet is Projet && FormesSelectionnees.Count > 0;
 
     #endregion
 
     #region Inner Events Handler
 
-    private void/*async Task*/ QueryProjet(Projet _projet, Action onChanged)
+    private async Task QueryDefaultMateriau()
     {
-      // Met le projet à null pour que l'on puisse valider si le projet a été loadé.
+      using (var context = ContextFactory.GetContext())
+      {
+        DefaultMateriau = await context.Materiaux.FirstAsync();
+      }
+    }
+
+    private async Task QueryProjet(Projet _projet, Action onChanged)
+    {
       SetProperty(ref projet, null, onChanged, "Projet");
 
       if (_projet is Projet)
@@ -141,7 +189,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         using (var context = ContextFactory.GetContext())
         {
           context.Attach(_projet);
-          context.Entry(_projet).CollectionFormes().Load();
+          await context.Entry(_projet).CollectionFormes().LoadAsync();
         }
 
         SetProperty(ref projet, _projet, onChanged, "Projet");

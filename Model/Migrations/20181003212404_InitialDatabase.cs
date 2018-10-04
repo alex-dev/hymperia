@@ -140,8 +140,10 @@ namespace Hymperia.Model.Migrations
         new string[] { "Id", "Nom", "Prix" },
         new object[,]
         {
-          { 1, "Bois", 1.55 },
-          { 2, "Acier", 2.55 }
+          { 1, "Bois", 15.85 }, // SaddleBrown
+          { 2, "Acier", 53.56 }, // Gray
+          { 3, "Cuivre", 505.53 }, // DarkOrange
+          { 4, "Or", 10485.68 } // Gold
         });
     }
 
