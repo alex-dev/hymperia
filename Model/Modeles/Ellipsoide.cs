@@ -33,6 +33,8 @@ namespace Hymperia.Model.Modeles
     public Ellipsoide([NotNull] Materiau materiau): base(materiau)
     {
       RayonX = RayonY = RayonZ = 1;
+      PhiDiv = 30;
+      ThetaDiv = 60;
     }
 
     #endregion
