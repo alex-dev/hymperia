@@ -205,7 +205,7 @@
     </Compile>
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
     <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
-    <Compile Include="DependancyObjects\Viewport.cs" />
+    <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
