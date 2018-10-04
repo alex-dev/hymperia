@@ -37,7 +37,8 @@ namespace Hymperia.Facade.DependencyObjects
     #region Private Defaults
 
     private readonly SunLight Sunlight;
-    private readonly Material SelectedMaterial;
+    private readonly GridLinesVisual3D GridLines;
+    private readonly MaterialGroup SelectedMaterial;
 
     #endregion
 
@@ -50,6 +51,11 @@ namespace Hymperia.Facade.DependencyObjects
     public Viewport() : base()
     {
       Sunlight = new SunLight();
+      GridLines = new GridLinesVisual3D { Width = 1000, Length = 1000, MinorDistance = 0.1, MajorDistance = 1, Thickness = 0.01 };
+      SelectedMaterial = new MaterialGroup();
+      var Specular = Brushes.Red.Clone();
+      Specular.Opacity = 0.5;
+      SelectedMaterial.Children.Add(new SpecularMaterial(Specular, 85));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
@@ -88,9 +94,9 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        //TODO A changé!!!
+        //TODO A changé!!! 
         //model.Fill = Brushes.Red;
-        //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial);
+        //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial.Children.First());
       }
     }
 
@@ -100,7 +106,8 @@ namespace Hymperia.Facade.DependencyObjects
       {
         //TODO A changé!!!
         //model.Fill = Brushes.Blue;
-        //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial);
+        //var b = model.Material.IsFrozen;
+        //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial.Children.First());
       }
     }
 
@@ -121,6 +128,7 @@ namespace Hymperia.Facade.DependencyObjects
     {
       base.OnItemsSourceChanged(oldValue, newValue);
       Children.Add(Sunlight);
+      Children.Add(GridLines);
     }
 
     private void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
