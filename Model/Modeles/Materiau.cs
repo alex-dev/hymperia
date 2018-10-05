@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using JetBrains.Annotations;
@@ -23,37 +22,52 @@ namespace Hymperia.Model.Modeles
     /// <summary>Le prix du matériaux par volume.</summary>
     public double Prix { get; private set; }
 
-    /// <summary>La <see cref="Brush"/> utilisée pour représenter ce <see cref="Materiau"/>.</summary>
+    /// <summary>Le <see cref="Color.Name"/> utilisée pour représenter cette <see cref="Color"/>.</summary>
     [NotNull]
     [Required]
-    protected internal JsonObject<Brush> _Fill { get; set; }
+    [EnumDataType(typeof(KnownColor))]
+    protected internal KnownColor Color { get; private set; }
 
     #endregion
 
     #region Not Mapped Properties
 
-    /// <summary>La <see cref="Brush"/> utilisée pour représenter ce <see cref="Materiau"/>.</summary>
+    [CanBeNull]
     [NotMapped]
-    public Brush Fill
+    private SolidBrush CachedBrush { get; set; }
+
+    /// <summary>La <see cref="SolidBrush"/> utilisée pour représenter ce <see cref="Materiau"/>.</summary>
+    [NotNull]
+    [NotMapped]
+    public SolidBrush Fill
     {
-      get => _Fill.Object;
-      private set => _Fill.Object = value;
+      get => CachedBrush ?? (CachedBrush = new SolidBrush(System.Drawing.Color.FromKnownColor(Color)));
+      private set
+      {
+        Color = value.Color.ToKnownColor();
+        CachedBrush = value;
+      }
     }
 
     #endregion
 
     #region Constructors
 
-    /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
-    internal Materiau() : this(null, "") { }
-
-    /// <param name="fill">La <see cref="Brush"/> utilisée pour représenter ce <see cref="Materiau"/>.</param>
+    /// <param name="color">Le nom de la couleur.</param>
     /// <param name="nom">Le nom du matériau.</param>
-    /// <param name="prix">Le prix du matériaux par volume.</param>
-    public Materiau([NotNull] Brush fill, [NotNull] string nom)
+    public Materiau(KnownColor color, [NotNull] string nom)
     {
       Id = default;
-      _Fill = new JsonObject<Brush>(fill);
+      Color = color;
+      Nom = nom;
+    }
+
+    /// <param name="fill">La <see cref="SolidBrush"/> utilisée pour représenter ce <see cref="Materiau"/>.</param>
+    /// <param name="nom">Le nom du matériau.</param>
+    public Materiau([NotNull] SolidBrush fill, [NotNull] string nom)
+    {
+      Id = default;
+      Fill = fill;
       Nom = nom;
     }
 

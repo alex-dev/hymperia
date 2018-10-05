@@ -62,13 +62,9 @@
     <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="DoubleExtension.cs" />
     <Compile Include="IIdentity.cs" />
-    <Compile Include="Migrations\20181003212404_InitialDatabase.cs" />
-    <Compile Include="Migrations\20181003212404_InitialDatabase.designer.cs">
-      <DependentUpon>20181003212404_InitialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20181005124152_MateriauFill.cs" />
-    <Compile Include="Migrations\20181005124152_MateriauFill.designer.cs">
-      <DependentUpon>20181005124152_MateriauFill.cs</DependentUpon>
+    <Compile Include="Migrations\20181005150541_InitialDatabase.cs" />
+    <Compile Include="Migrations\20181005150541_InitialDatabase.designer.cs">
+      <DependentUpon>20181005150541_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />
