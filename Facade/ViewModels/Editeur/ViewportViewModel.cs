@@ -158,7 +158,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         var enumerable = from FormeWrapper wrapper in context.FormesSelectionnees
                          join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
-                           on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty)?.Source
+                           on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                          select mesh;
 
         context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
@@ -174,7 +174,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
                        select ConvertisseurWrappers.Convertir(forme);
         var olditems = from FormeWrapper wrapper in args.OldItems ?? new List<FormeWrapper> { }
                        join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
-                         on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                         on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                        select mesh;
 
         switch (args.Action)
@@ -203,38 +203,42 @@ namespace Hymperia.Facade.ViewModels.Editeur
                        select ConvertisseurWrappers.Convertir(forme);
         var olditems = from FormeWrapper wrapper in args.OldItems ?? new List<FormeWrapper> { }
                        join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
-                         on wrapper equals BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source
+                         on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                        select mesh;
 
-        switch (args.Action)
+        try
         {
-          case NotifyCollectionChangedAction.Add:
-            FormesSelectionnees.AddRange(newitems);
-            break;
-          case NotifyCollectionChangedAction.Remove:
-            FormesSelectionnees.RemoveRange(olditems);
-            break;
-          case NotifyCollectionChangedAction.Replace:
-            FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
-            break;
-          case NotifyCollectionChangedAction.Reset:
-            FormesSelectionnees.Clear();
-            break;
+          switch (args.Action)
+          {
+            case NotifyCollectionChangedAction.Add:
+              FormesSelectionnees.AddRange(newitems);
+              break;
+            case NotifyCollectionChangedAction.Remove:
+              FormesSelectionnees.RemoveRange(olditems);
+              break;
+            case NotifyCollectionChangedAction.Replace:
+              FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+              break;
+            case NotifyCollectionChangedAction.Reset:
+              FormesSelectionnees.Clear();
+              break;
+          }
         }
+        catch (InvalidOperationException) { /* Reentrant. Donc, on catch et on oublie. */ }
       }
     }
 
     private void FormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
+      if (sender == FormesSelectionnees)
       {
-        var newitems = from MeshElement3D mesh in args.NewItems ?? new List<MeshElement3D> { }
+        var newitems = from MeshElement3D mesh in args.NewItems?.OfType<MeshElement3D>()?.Distinct() ?? new List<MeshElement3D> { }
                        join wrapper in ((EditeurViewModel)RegionContext).Formes ?? new BulkObservableCollection<FormeWrapper> { }
-                         on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
+                         on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
-        var olditems = from MeshElement3D mesh in args.NewItems ?? new List<MeshElement3D> { }
+        var olditems = from MeshElement3D mesh in args.OldItems?.OfType<MeshElement3D>()?.Distinct() ?? new List<MeshElement3D> { }
                        join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees ?? new BulkObservableCollection<FormeWrapper> { }
-                         on BindingOperations.GetBinding(mesh, MeshElement3D.TransformProperty).Source equals wrapper
+                         on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
 
         switch (args.Action)
