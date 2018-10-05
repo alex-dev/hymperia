@@ -127,8 +127,10 @@ namespace Hymperia.Model
     
       builder.Entity<Materiau>().ToTable("Materiaux");
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
-      builder.Entity<Materiau>().Property(materiau => materiau.Color)
-        .HasConversion<string>();
+      builder.Entity<Materiau>().Property(materiau => materiau.R).HasConversion<int>();
+      builder.Entity<Materiau>().Property(materiau => materiau.G).HasConversion<int>();
+      builder.Entity<Materiau>().Property(materiau => materiau.B).HasConversion<int>();
+      builder.Entity<Materiau>().Property(materiau => materiau.A).HasConversion<int>();
 
       builder.Entity<Forme>().ToTable("Formes");
       builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
