@@ -53,7 +53,6 @@ namespace Hymperia.ConsoleModelTest
 
       command.OnExecute(async () =>
       {
-
         await Deploy.Migrate(option.HasValue());
         return 0;
       });

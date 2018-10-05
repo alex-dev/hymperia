@@ -21,6 +21,7 @@ namespace Hymperia.Model.Modeles
     public Utilisateur Utilisateur { get; private set; }
 
     /// <summary>Le droit d'accès de l'<see cref="Utilisateur"/> sur le <see cref="Projet"/>.</summary>
+    [EnumDataType(typeof(Droit))]
     public Droit DroitDAcces { get; set; }
 
     #endregion

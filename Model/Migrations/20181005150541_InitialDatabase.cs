@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System.Drawing;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hymperia.Model.Migrations
@@ -14,7 +15,8 @@ namespace Hymperia.Model.Migrations
             Id = table.Column<int>(nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             Nom = table.Column<string>(nullable: false),
-            Prix = table.Column<double>(nullable: false)
+            Prix = table.Column<double>(nullable: false),
+            Color = table.Column<string>(nullable: false)
           },
           constraints: table =>
           {
@@ -136,15 +138,15 @@ namespace Hymperia.Model.Migrations
           column: "IdProjet");
 
       migrationBuilder.InsertData(
-        "Materiaux",
-        new string[] { "Id", "Nom", "Prix" },
-        new object[,]
-        {
-          { 1, "Bois", 1.55 },
-          { 2, "Acier", 2.55 },
-          { 3, "Cuivre", 505.53 },
-          { 4, "Or", 10485.68 }
-        });
+          "Materiaux",
+          new string[] { "Id", "Nom", "Prix", "Color" },
+          new object[,]
+          {
+                  { 1, "Bois", 10.55, KnownColor.SaddleBrown.ToString() },
+                  { 2, "Acier", 50.55, KnownColor.Gray.ToString() },
+                  { 3, "Cuivre", 505.53, KnownColor.DarkOrange.ToString() },
+                  { 4, "Or", 10485.68, KnownColor.Gold.ToString() }
+          });
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
