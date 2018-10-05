@@ -141,7 +141,9 @@ namespace Hymperia.Model.Migrations
         new object[,]
         {
           { 1, "Bois", 1.55 },
-          { 2, "Acier", 2.55 }
+          { 2, "Acier", 2.55 },
+          { 3, "Cuivre", 505.53 },
+          { 4, "Or", 10485.68 }
         });
     }
 

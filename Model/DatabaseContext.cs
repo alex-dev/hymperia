@@ -128,6 +128,7 @@ namespace Hymperia.Model
     
       builder.Entity<Materiau>().ToTable("Materiaux");
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+      builder.Entity<Materiau>().Property(materiau => materiau._Fill).HasColumnName("Fill");
 
       builder.Entity<Forme>().ToTable("Formes");
       builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
