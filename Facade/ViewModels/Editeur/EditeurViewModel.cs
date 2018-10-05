@@ -99,9 +99,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public readonly ICommand AjouterForme;
-    public readonly ICommand SupprimerForme;
-    public readonly ICommand Sauvegarder;
+    public ICommand AjouterForme { get; private set; }
+    public ICommand SupprimerForme { get; private set; }
+    public ICommand Sauvegarder { get; private set; }
 
     #endregion
 

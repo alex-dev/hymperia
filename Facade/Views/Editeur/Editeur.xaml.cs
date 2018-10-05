@@ -24,6 +24,8 @@ namespace Hymperia.Facade.Views.Editeur
     public Editeur(IRegionManager manager)
     {
       manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
+      manager.RegisterViewWithRegion("FormesSelectionRegion", typeof(FormesSelection));
+      manager.RegisterViewWithRegion("MateriauxSelectionRegion", typeof(MateriauxSelection));
       InitializeComponent();
       BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
