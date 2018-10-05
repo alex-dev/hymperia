@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
+using System.Windows.Media;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -22,11 +22,10 @@ namespace Hymperia.Model.Modeles
     /// <summary>Le prix du matériaux par volume.</summary>
     public double Prix { get; private set; }
 
-    /// <summary>Le <see cref="Color.Name"/> utilisée pour représenter cette <see cref="Color"/>.</summary>
-    [NotNull]
-    [Required]
-    [EnumDataType(typeof(KnownColor))]
-    protected internal KnownColor Color { get; private set; }
+    protected internal byte R { get; private set; }
+    protected internal byte G { get; private set; }
+    protected internal byte B { get; private set; }
+    protected internal byte A { get; private set; }
 
     #endregion
 
@@ -34,18 +33,32 @@ namespace Hymperia.Model.Modeles
 
     [CanBeNull]
     [NotMapped]
-    private SolidBrush CachedBrush { get; set; }
+    private SolidColorBrush CachedBrush { get; set; }
+
+    [NotNull]
+    [NotMapped]
+    protected Color ColorData
+    {
+      get => Color.FromArgb(A, R, G, B);
+      set
+      {
+        R = value.R;
+        G = value.G;
+        B = value.B;
+        A = value.A;
+      }
+    }
 
     /// <summary>La <see cref="SolidBrush"/> utilisée pour représenter ce <see cref="Materiau"/>.</summary>
     [NotNull]
     [NotMapped]
-    public SolidBrush Fill
+    public SolidColorBrush Fill
     {
-      get => CachedBrush ?? (CachedBrush = new SolidBrush(System.Drawing.Color.FromKnownColor(Color)));
+      get => CachedBrush ?? (CachedBrush = new SolidColorBrush(ColorData));
       private set
       {
-        Color = value.Color.ToKnownColor();
         CachedBrush = value;
+        ColorData = value.Color;
       }
     }
 
@@ -55,16 +68,19 @@ namespace Hymperia.Model.Modeles
 
     /// <param name="color">Le nom de la couleur.</param>
     /// <param name="nom">Le nom du matériau.</param>
-    public Materiau(KnownColor color, [NotNull] string nom)
+    public Materiau([NotNull] string nom, byte r, byte g, byte b, byte a)
     {
       Id = default;
-      Color = color;
       Nom = nom;
+      R = r;
+      G = g;
+      B = b;
+      A = a;
     }
 
     /// <param name="fill">La <see cref="SolidBrush"/> utilisée pour représenter ce <see cref="Materiau"/>.</param>
     /// <param name="nom">Le nom du matériau.</param>
-    public Materiau([NotNull] SolidBrush fill, [NotNull] string nom)
+    public Materiau([NotNull] SolidColorBrush fill, [NotNull] string nom)
     {
       Id = default;
       Fill = fill;

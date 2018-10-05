@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hymperia.Model.Migrations
 {
   [DbContext(typeof(DatabaseContext))]
-  [Migration("20181005150541_InitialDatabase")]
+  [Migration("20181005183822_InitialDatabase")]
   partial class InitialDatabase
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,13 +71,18 @@ namespace Hymperia.Model.Migrations
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd();
 
-            b.Property<string>("Color")
-                      .IsRequired();
+            b.Property<int>("A");
+
+            b.Property<int>("B");
+
+            b.Property<int>("G");
 
             b.Property<string>("Nom")
                       .IsRequired();
 
             b.Property<double>("Prix");
+
+            b.Property<int>("R");
 
             b.HasKey("Id");
 

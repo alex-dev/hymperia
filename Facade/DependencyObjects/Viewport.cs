@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -65,14 +66,19 @@ namespace Hymperia.Facade.DependencyObjects
         SelectedItems.Clear();
       }
 
-      if (single && args.SelectedVisuals.Count > 0)
+      if (args.SelectedVisuals.Count > 0)
       {
-        args = args.AreSortedByDistanceAscending
-          ? new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.First() }, true)
-          : new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.Last() }, false);
-      }
+        var test = BindingOperations.GetBinding(args.SelectedVisuals.OfType<MeshElement3D>().First(), MeshElement3D.FillProperty);
 
-      SelectionHandler(sender, args);
+        if (single)
+        {
+          args = args.AreSortedByDistanceAscending
+            ? new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.First() }, true)
+            : new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.Last() }, false);
+        }
+
+        SelectionHandler(sender, args);
+      }
     };
 
     private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
@@ -83,7 +89,7 @@ namespace Hymperia.Facade.DependencyObjects
       foreach (MeshElement3D model in models)
       {
         //TODO A changé!!!
-        model.Fill = Brushes.Red;
+        //model.Fill = Brushes.Red;
         //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial);
       }
     }
@@ -93,7 +99,7 @@ namespace Hymperia.Facade.DependencyObjects
       foreach (MeshElement3D model in models)
       {
         //TODO A changé!!!
-        model.Fill = Brushes.Blue;
+        //model.Fill = Brushes.Blue;
         //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial);
       }
     }

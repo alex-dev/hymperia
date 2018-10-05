@@ -69,13 +69,18 @@ namespace Hymperia.Model.Migrations
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd();
 
-            b.Property<string>("Color")
-                      .IsRequired();
+            b.Property<int>("A");
+
+            b.Property<int>("B");
+
+            b.Property<int>("G");
 
             b.Property<string>("Nom")
                       .IsRequired();
 
             b.Property<double>("Prix");
+
+            b.Property<int>("R");
 
             b.HasKey("Id");
 

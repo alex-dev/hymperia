@@ -8,6 +8,11 @@ namespace Hymperia.Model.Migrations
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
+      var wood = Color.FromKnownColor(KnownColor.SaddleBrown);
+      var steel = Color.FromKnownColor(KnownColor.Gray);
+      var copper = Color.FromKnownColor(KnownColor.DarkOrange);
+      var gold = Color.FromKnownColor(KnownColor.Gold);
+
       migrationBuilder.CreateTable(
           name: "Materiaux",
           columns: table => new
@@ -16,7 +21,10 @@ namespace Hymperia.Model.Migrations
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             Nom = table.Column<string>(nullable: false),
             Prix = table.Column<double>(nullable: false),
-            Color = table.Column<string>(nullable: false)
+            R = table.Column<int>(nullable: false),
+            G = table.Column<int>(nullable: false),
+            B = table.Column<int>(nullable: false),
+            A = table.Column<int>(nullable: false)
           },
           constraints: table =>
           {
@@ -138,15 +146,15 @@ namespace Hymperia.Model.Migrations
           column: "IdProjet");
 
       migrationBuilder.InsertData(
-          "Materiaux",
-          new string[] { "Id", "Nom", "Prix", "Color" },
-          new object[,]
-          {
-                  { 1, "Bois", 10.55, KnownColor.SaddleBrown.ToString() },
-                  { 2, "Acier", 50.55, KnownColor.Gray.ToString() },
-                  { 3, "Cuivre", 505.53, KnownColor.DarkOrange.ToString() },
-                  { 4, "Or", 10485.68, KnownColor.Gold.ToString() }
-          });
+        "Materiaux",
+        new string[] { "Id", "Nom", "Prix", "R", "G", "B", "A" },
+        new object[,]
+        {
+          { 1, "Bois", 10.55, wood.R, wood.G, wood.B, wood.A },
+          { 2, "Acier", 50.55, steel.R, steel.G, steel.B, steel.A },
+          { 3, "Cuivre", 505.53, copper.R, copper.G, copper.B, copper.A },
+          { 4, "Or", 10485.68, gold.R, gold.G, gold.B, gold.A }
+        });
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)

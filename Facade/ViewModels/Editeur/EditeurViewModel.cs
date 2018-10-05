@@ -49,7 +49,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
-    /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
     [CanBeNull]
     public Projet Projet
     {
@@ -59,7 +58,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     /// <summary>Les formes éditables.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
-    /// <remarks>Should never invoke <see cref="PropertyChanged"/> because its changes are propagated to public <see cref="Formes"/>.</remarks>
     [CanBeNull]
     [ItemNotNull]
     public BulkObservableCollection<FormeWrapper> Formes

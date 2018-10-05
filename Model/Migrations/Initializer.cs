@@ -19,7 +19,7 @@ namespace Hymperia.Model.Migrations
       {
         materiaux => new PrismeRectangulaire(materiaux[Random.Next(materiaux.Length)])
         {
-          Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
           Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           Largeur = Random.Next(1, 15),
@@ -27,7 +27,7 @@ namespace Hymperia.Model.Migrations
         },
         materiaux => new Ellipsoide(materiaux[Random.Next(materiaux.Length)])
         {
-          Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
           Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           RayonX = Random.Next(1, 15),
           RayonY = Random.Next(1, 15),
@@ -35,14 +35,14 @@ namespace Hymperia.Model.Migrations
         },
         materiaux => new Cylindre(materiaux[Random.Next(materiaux.Length)])
         {
-          Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
           Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           Diametre = Random.Next(1, 15)
         },
         materiaux => new Cone(materiaux[Random.Next(materiaux.Length)])
         {
-          Origine = new Point(Random.Next(100), Random.Next(100), Random.Next(100)),
+          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
           Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           RayonBase = Random.Next(1, 15)
@@ -93,7 +93,7 @@ namespace Hymperia.Model.Migrations
     private IEnumerable<Forme> InitializeFormes(Materiau[] materiaux)
     {
       var creators = FormeCreators;
-      int count = Random.Next(10, 50);
+      int count = Random.Next(50, 250);
 
       for (int i = 0; i < count; ++i)
       {
