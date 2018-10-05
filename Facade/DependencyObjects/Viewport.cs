@@ -38,7 +38,7 @@ namespace Hymperia.Facade.DependencyObjects
 
     private readonly SunLight Sunlight;
     private readonly GridLinesVisual3D GridLines;
-    private readonly MaterialGroup SelectedMaterial;
+    private readonly Material SelectedMaterial;
 
     #endregion
 
@@ -50,12 +50,12 @@ namespace Hymperia.Facade.DependencyObjects
 
     public Viewport() : base()
     {
+      var specular = Brushes.Red.Clone();
+      specular.Opacity = 1;
+
       Sunlight = new SunLight();
-      GridLines = new GridLinesVisual3D { Width = 1000, Length = 1000, MinorDistance = 0.1, MajorDistance = 1, Thickness = 0.01 };
-      SelectedMaterial = new MaterialGroup();
-      var Specular = Brushes.Red.Clone();
-      Specular.Opacity = 0.5;
-      SelectedMaterial.Children.Add(new SpecularMaterial(Specular, 85));
+      GridLines = new GridLinesVisual3D { Width = 1000, Length = 1000, /*MinorDistance = 0.1,*/ MajorDistance = 1, Thickness = 0.01 };
+      SelectedMaterial = new SpecularMaterial(specular, 100);
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
@@ -94,9 +94,11 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        //TODO A changé!!! 
-        //model.Fill = Brushes.Red;
-        //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial.Children.First());
+        MaterialGroup material = (SelectedMaterial as MaterialGroup).Clone();
+        material?.Children?.Add(SelectedMaterial);
+        material.Freeze();
+
+        model.Material = material;
       }
     }
 
@@ -104,10 +106,11 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        //TODO A changé!!!
-        //model.Fill = Brushes.Blue;
-        //var b = model.Material.IsFrozen;
-        //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial.Children.First());
+        MaterialGroup material = (model.Material as MaterialGroup).Clone();
+        material?.Children?.Remove(SelectedMaterial);
+        material.Freeze();
+
+        model.Material = material;
       }
     }
 
