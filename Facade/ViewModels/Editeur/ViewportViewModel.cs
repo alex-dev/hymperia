@@ -232,11 +232,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == FormesSelectionnees)
       {
-        var newitems = from MeshElement3D mesh in args.NewItems?.OfType<MeshElement3D>()?.Distinct() ?? new List<MeshElement3D> { }
+        var newitems = from MeshElement3D mesh in args.NewItems?.OfType<MeshElement3D>() ?? new List<MeshElement3D> { }
                        join wrapper in ((EditeurViewModel)RegionContext).Formes ?? new BulkObservableCollection<FormeWrapper> { }
                          on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
-        var olditems = from MeshElement3D mesh in args.OldItems?.OfType<MeshElement3D>()?.Distinct() ?? new List<MeshElement3D> { }
+        var olditems = from MeshElement3D mesh in args.OldItems?.OfType<MeshElement3D>() ?? new List<MeshElement3D> { }
                        join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees ?? new BulkObservableCollection<FormeWrapper> { }
                          on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;

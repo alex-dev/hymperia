@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Hymperia.Model.Migrations;
 using Hymperia.Model.Modeles;
 
@@ -128,6 +127,10 @@ namespace Hymperia.Model
     
       builder.Entity<Materiau>().ToTable("Materiaux");
       builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+      builder.Entity<Materiau>().Property(materiau => materiau.R).HasConversion<int>();
+      builder.Entity<Materiau>().Property(materiau => materiau.G).HasConversion<int>();
+      builder.Entity<Materiau>().Property(materiau => materiau.B).HasConversion<int>();
+      builder.Entity<Materiau>().Property(materiau => materiau.A).HasConversion<int>();
 
       builder.Entity<Forme>().ToTable("Formes");
       builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
@@ -149,7 +152,7 @@ namespace Hymperia.Model
       builder.Entity<Acces>().Property<int>("IdProjet");
       builder.Entity<Acces>().Property<int>("IdUtilisateur");
       builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
-        .HasConversion(new EnumToStringConverter<Acces.Droit>());
+        .HasConversion<string>();
       builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany()
         .HasForeignKey("IdProjet");
       builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)

@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -28,7 +29,7 @@ namespace Hymperia.Facade.DependencyObjects
     public BulkObservableCollection<MeshElement3D> SelectedItems
     {
       get => (BulkObservableCollection<MeshElement3D>)GetValue(SelectedItemsProperty);
-      set =>  SetValue(SelectedItemsProperty, value);
+      set => SetValue(SelectedItemsProperty, value);
     }
 
     #endregion
@@ -49,29 +50,46 @@ namespace Hymperia.Facade.DependencyObjects
     public Viewport() : base()
     {
       Sunlight = new SunLight();
-      InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, ClearSelectionHandler), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, ClearSelectionHandler), new MouseGesture(MouseAction.LeftClick)));
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, SelectionHandler), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
+      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick)));
+      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
+      InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
     }
 
     #region Methods
 
     #region Selection Handlers
 
-    private void ClearSelectionHandler(object sender, VisualsSelectedEventArgs args)
+    private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
     {
-      SelectedItems.Clear();
-      SelectionHandler(sender, args);
-    }
+      if (clear)
+      {
+        SelectedItems.Clear();
+      }
 
-    private void SelectionHandler(object sender, VisualsSelectedEventArgs args) => SelectedItems.AddRange(args.SelectedVisuals.OfType<MeshElement3D>());
+      if (args.SelectedVisuals.Count > 0)
+      {
+        var test = BindingOperations.GetBinding(args.SelectedVisuals.OfType<MeshElement3D>().First(), MeshElement3D.FillProperty);
+
+        if (single)
+        {
+          args = args.AreSortedByDistanceAscending
+            ? new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.First() }, true)
+            : new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.Last() }, false);
+        }
+
+        SelectionHandler(sender, args);
+      }
+    };
+
+    private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
+      SelectedItems.AddRange(args.SelectedVisuals.OfType<MeshElement3D>().Distinct());
 
     private void SelectMaterial(IEnumerable<MeshElement3D> models)
     {
       foreach (MeshElement3D model in models)
       {
         //TODO A changé!!!
-        model.Fill = Brushes.Red;
+        //model.Fill = Brushes.Red;
         //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial);
       }
     }
@@ -81,7 +99,7 @@ namespace Hymperia.Facade.DependencyObjects
       foreach (MeshElement3D model in models)
       {
         //TODO A changé!!!
-        model.Fill = Brushes.Blue;
+        //model.Fill = Brushes.Blue;
         //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial);
       }
     }
@@ -92,21 +110,16 @@ namespace Hymperia.Facade.DependencyObjects
     {
       if (sender == SelectedItems)
       {
-        SelectMaterial(args.NewItems?.OfType<MeshElement3D>()?.Distinct() ?? Enumerable.Empty<MeshElement3D>());
+        SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
         UnselectMaterial(args.Action == NotifyCollectionChangedAction.Reset
           ? Children.OfType<MeshElement3D>()
-          : args.OldItems?.OfType<MeshElement3D>()?.Distinct() ?? Enumerable.Empty<MeshElement3D>());
+          : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
       }
     }
 
     protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
     {
       base.OnItemsSourceChanged(oldValue, newValue);
-      foreach (MeshElement3D value in newValue)
-      {
-        value.Fill = Brushes.Blue;
-      }
-
       Children.Add(Sunlight);
     }
 
