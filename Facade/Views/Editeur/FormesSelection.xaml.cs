@@ -1,4 +1,6 @@
-﻿using Hymperia.Facade.BaseClasses;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
+using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.Views.Editeur
 {
@@ -7,6 +9,7 @@ namespace Hymperia.Facade.Views.Editeur
     public FormesSelection()
     {
       InitializeComponent();
+      
     }
   }
 }

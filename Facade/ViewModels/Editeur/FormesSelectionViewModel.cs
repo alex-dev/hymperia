@@ -23,10 +23,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       Formes = new Dictionary<Type, string>
       {
-        { typeof(PrismeRectangulaire), "pack://application:,,,/Images/PrismeRectangulaire.jpg" },
-        { typeof(Cone), "pack://application:,,,/Images/PrismeRectangulaire.jpg" },
-        { typeof(Cylindre), "pack://application:,,,/Images/PrismeRectangulaire.jpg" },
-        { typeof(Ellipsoide), "pack://application:,,,/Images/PrismeRectangulaire.jpg" }
+        { typeof(PrismeRectangulaire), "pack://application:,,,/Images/PrismeRectangulaire.png" },
+        { typeof(Cone), "pack://application:,,,/Images/Cone.png" },
+        { typeof(Cylindre), "pack://application:,,,/Images/Cylindre.png" },
+        { typeof(Ellipsoide), "pack://application:,,,/Images/Ellipsoide.png" }
       };
     }
 
