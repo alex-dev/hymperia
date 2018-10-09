@@ -8,7 +8,16 @@ namespace Hymperia.Facade.Views.Editeur
   {
     public FormesSelection()
     {
-      InitializeComponent();
+      try
+      {
+        InitializeComponent();
+      }
+      catch (System.Exception e)
+      {
+
+        throw;
+      }
+      
     }
   }
 }

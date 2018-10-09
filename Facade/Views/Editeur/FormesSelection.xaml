@@ -2,9 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
-  <ListBox Name="FormesSelectionListeBox" ItemsSource="{Binding Formes, Mode=OneWay}" SelectedValuePath="Key" 
-      SelectedValue="{Binding RegionContext, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
-      SelectionMode="Single" BorderBrush="Black" >
+  <ListBox Name="FormesSelectionListeBox"
+           ItemsSource="{Binding Formes, Mode=OneWay}"
+           SelectedValuePath="Key"
+           SelectedValue="{Binding RegionContext, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
+           SelectionMode="Single"
+           BorderBrush="Black" 
+           IsSynchronizedWithCurrentItem="True">
+    <!--ItemContainerStyle="{StaticResource ListBox}"-->
 
     <ListBox.ItemsPanel>
       <ItemsPanelTemplate>
