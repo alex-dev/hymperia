@@ -10,6 +10,10 @@ namespace Hymperia.Facade.Views.Editeur
   {
     public static readonly DependencyProperty ProjetProperty;
 
+    public string EditeurMaterieauxChoisieTextBox { get; set; }
+    public string EditeurFormeChoisieTextBox { get; set; }
+    
+
     public Projet Projet
     {
       get => (Projet)GetValue(ProjetProperty);

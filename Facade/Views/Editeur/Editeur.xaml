@@ -15,7 +15,21 @@
       <RowDefinition Height="10*" />
     </Grid.RowDefinitions>
     <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
-      <MenuItem Command="{Binding Sauvegarder}" Header="Sauvegarder" />
+      <MenuItem Command="{Binding Sauvegarder}" Header="Sauvegarder" Grid.Row="0" Grid.Column="0" />
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="20" />
+          <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <TextBox Text="Forme sélectionné     :"  Grid.Row="0" />
+        <!--="Forme sélectionné     :"--><!-- Text="{Binding EditeurFormeChoisieTextBox}"-->
+        <TextBox Text="Matériau séléctionné :"  Grid.Row="1" />
+        <!--Text="Matériau séléctionné :"--><!-- Text="{Binding EditeurMaterieauxChoisieTextBox}"-->
+      </Grid>
     </Menu>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion"
         prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" />

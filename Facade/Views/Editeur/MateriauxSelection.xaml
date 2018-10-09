@@ -8,8 +8,8 @@
       <i:InvokeCommandAction Command="{Binding RefreshItems}" />
     </i:EventTrigger>
   </i:Interaction.Triggers>
-  <ListBox Name="listbox" ItemsSource="{Binding Materiaux, Mode=OneWay}" 
-      SelectedItem="{Binding RegionContext, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}">
+  <ListBox Name="MateriauxSelectionListeBox" ItemsSource="{Binding Materiaux, Mode=OneWay}" 
+      SelectedItem="{Binding RegionContext, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" SelectionMode="Single">
     <ListBox.ItemsPanel>
       <ItemsPanelTemplate>
         <WrapPanel Orientation="Vertical" />

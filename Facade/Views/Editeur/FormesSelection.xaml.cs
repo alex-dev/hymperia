@@ -9,7 +9,6 @@ namespace Hymperia.Facade.Views.Editeur
     public FormesSelection()
     {
       InitializeComponent();
-      
     }
   }
 }
