@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +13,7 @@ using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
+using System.ComponentModel;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -35,13 +38,21 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region Private Wrappers
+    #region Private Properties
 
     [NotNull]
-    private Type Forme => forme ?? typeof(PrismeRectangulaire);
+    private Type Forme => SelectedForme ?? typeof(PrismeRectangulaire);
 
     [CanBeNull]
-    private Materiau Materiau => materiau ?? DefaultMateriau;
+    private Materiau Materiau => SelectedMateriau ?? DefaultMateriau;
+
+    [CanBeNull]
+    [ItemNotNull]
+    private ICollection<FormeWrapper> FormesChanged { get; set; }
+
+    [CanBeNull]
+    [ItemNotNull]
+    private ICollection<FormeWrapper> FormesDeleted { get; set; }
 
     #endregion
 
@@ -99,9 +110,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public readonly ICommand AjouterForme;
-    public readonly ICommand SupprimerForme;
-    public readonly ICommand Sauvegarder;
+    public ICommand AjouterForme { get; private set; }
+    public ICommand SupprimerForme { get; private set; }
+    public ICommand Sauvegarder { get; private set; }
 
     #endregion
 
@@ -121,8 +132,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       ContextFactory = factory;
       ConvertisseurFormes = formes;
-      AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme);
+      AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme).ObservesProperty(() => Projet)
+        .ObservesProperty(() => SelectedForme).ObservesProperty(() => SelectedMateriau);
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme).ObservesProperty(() => FormesSelectionnees);
+      Sauvegarder = new DelegateCommand(_Sauvegarder, PeutSauvegarder).ObservesProperty(() => Projet);
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
       QueryDefaultMateriau();
     }
@@ -161,10 +174,58 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
 
       Formes.RemoveRange(FormesSelectionnees);
+      FormesDeleted = FormesDeleted.Concat(FormesSelectionnees).ToArray();
       FormesSelectionnees.Clear();
     }
 
     private bool PeutSupprimerForme() => Projet is Projet && FormesSelectionnees.Count > 0;
+
+    #endregion
+
+    #region Command Sauvegarder
+
+    private async void _Sauvegarder()
+    {
+      using (var context = ContextFactory.GetContext())
+      {
+        ConstructEntriesState(context);
+
+        FormesChanged = new Collection<FormeWrapper> { };
+        FormesDeleted = new Collection<FormeWrapper> { };
+
+        await context.SaveChangesAsync();
+      }
+    }
+
+    private void ConstructEntriesState(DatabaseContext context)
+    {
+      var changed = FormesChanged;
+      var deleted = FormesDeleted;
+
+      context.Attach(Projet);
+
+      // On charge les changements potentiels dans l'objet pour sauvegarder.
+      // Les nouveaux objets (id == default) sont déjà marqué pour ajout.
+      // Les objets connus (id != default) doivent être marqué pour changement
+      // s'ils ont été modifiés.
+      // Les objets supprimés doivent être retirés.
+      foreach (var forme in changed)
+      {
+        context.Entry(forme.Forme).Reference(f => f.Materiau).IsModified = true;
+
+        foreach (var property in context.Entry(forme.Forme).Properties)
+        {
+          property.IsModified = true;
+        }
+      }
+
+      foreach (var forme in deleted)
+      {
+        context.Remove(forme.Forme);
+      }
+    }
+
+    private bool PeutSauvegarder() => Projet is Projet;
 
     #endregion
 
@@ -199,12 +260,31 @@ namespace Hymperia.Facade.ViewModels.Editeur
       if (Projet is null)
       {
         Formes = null;
+        FormesChanged = null;
+        FormesDeleted = null;
       }
       else
       {
+        FormeWrapper Attach(FormeWrapper forme)
+        {
+          forme.PropertyChanged += FormeHasChanged;
+          return forme;
+        }
+
         var enumerable = from forme in Projet.Formes
-                         select ConvertisseurFormes.Convertir(forme);
+                         select Attach(ConvertisseurFormes.Convertir(forme));
+
         Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
+        FormesChanged = new Collection<FormeWrapper> { };
+        FormesDeleted = new Collection<FormeWrapper> { };
+      }
+    }
+
+    private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
+    {
+      if (sender is FormeWrapper forme && !FormesChanged.Contains(forme) && Formes.Contains(forme))
+      {
+        FormesChanged.Add(forme);
       }
     }
 
