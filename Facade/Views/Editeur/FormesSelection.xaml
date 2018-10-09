@@ -29,7 +29,7 @@
           <TextBlock Text="{Binding Key.Name}"
                  Foreground="DarkCyan"
                  FontSize="20"
-                 HorizontalAlignment="Center"
+                 TextAlignment="Center"
                  VerticalAlignment="Top"
                  MaxHeight="1000"
                  Height="100"

@@ -32,7 +32,7 @@
             <TextBlock Text="{Binding Nom}"
                    Foreground="DarkCyan"
                    FontSize="25"
-                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
                    VerticalAlignment="Top"
                    MaxHeight="1000"
                    Height="50"

@@ -221,15 +221,23 @@
     <Compile Include="Services\PointToHauteurConverter.cs" />
     <Compile Include="Services\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PrixAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
+    <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
+      <DependentUpon>FormesProperties.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
       <DependentUpon>FormesSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
       <DependentUpon>MateriauxSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PrixAnalyse.xaml.cs">
+      <DependentUpon>PrixAnalyse.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
@@ -275,11 +283,19 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Editeur\FormesProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editeur\FormesSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Editeur\MateriauxSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PrixAnalyse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

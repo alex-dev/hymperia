@@ -4,15 +4,16 @@
     prism:ViewModelLocator.AutoWireViewModel="True">
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*"/>
+      <ColumnDefinition Width="3.2*"/>
       <ColumnDefinition Width="13*"/>
       <ColumnDefinition Width="4*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="50" />
-      <RowDefinition Height="3*" />
+      <RowDefinition Height="5*" />
       <RowDefinition Height="7*" />
       <RowDefinition Height="10*" />
+      <RowDefinition Height="200" />
     </Grid.RowDefinitions>
     <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
       <MenuItem Command="{Binding Sauvegarder}" Header="Sauvegarder" Grid.Row="0" Grid.Column="0" />
@@ -32,13 +33,13 @@
       </Grid>
     </Menu>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion"
-        prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" />
+        prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" />
     <ContentControl prism:RegionManager.RegionName="SelectionModeRegion"
         prism:RegionManager.RegionContext="{Binding SelectedSelectionMode, Mode=OneWayToSource}" Grid.Column="0"
         Grid.Row="1" />
     <ContentControl prism:RegionManager.RegionName="MateriauxSelectionRegion"
         prism:RegionManager.RegionContext="{Binding SelectedMateriau, Mode=OneWayToSource}" Grid.Column="0"
-        Grid.Row="2" Grid.RowSpan="2" />
+        Grid.Row="2" Grid.RowSpan="3" />
     <ContentControl prism:RegionManager.RegionName="FormesSelectionRegion"
         prism:RegionManager.RegionContext="{Binding SelectedForme, Mode=OneWayToSource}" Grid.Column="1"
         Grid.ColumnSpan="2" Grid.Row="1" />
@@ -46,6 +47,6 @@
         prism:RegionManager.RegionContext="{Binding Projet, Mode=OneWay}" Grid.Column="2" Grid.Row="2"
         Grid.RowSpan="2" />
     <ContentControl prism:RegionManager.RegionName="FormesPropertiesRegion"
-        prism:RegionManager.RegionContext="{Binding FormesSelectionnees, Mode=OneWay}" Grid.Column="2" Grid.Row="3" />
+        prism:RegionManager.RegionContext="{Binding FormesSelectionnees, Mode=OneWay}" Grid.Column="2" Grid.Row="4" />
   </Grid>
 </UserControl>
