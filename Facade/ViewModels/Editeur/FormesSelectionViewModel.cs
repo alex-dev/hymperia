@@ -17,6 +17,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref formes, value);
     }
 
+    public Type DefaultForme => typeof(PrismeRectangulaire);
+
     #endregion
 
     public FormesSelectionViewModel()

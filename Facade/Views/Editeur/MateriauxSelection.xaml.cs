@@ -19,8 +19,8 @@ namespace Hymperia.Facade.Views.Editeur
     {
       if (args.TargetObject == ListBox && args.Property == ItemsControl.ItemsSourceProperty)
       {
-        //RegionContext = ListBox.ItemsSource?.OfType<Materiau>()
-        //  ?.First(materiau => materiau.Nom == (DataContext as MateriauxSelectionViewModel)?.DefaultName);
+        ListBox.SelectedItem = ListBox.ItemsSource?.OfType<Materiau>()
+          ?.First(materiau => materiau.Nom == (DataContext as MateriauxSelectionViewModel)?.DefaultName);
       }
     }
   }

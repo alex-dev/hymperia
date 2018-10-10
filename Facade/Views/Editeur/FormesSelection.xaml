@@ -2,12 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
-  <StackPanel>
-    <TextBlock
-        Text="{Binding RegionContext, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
-
-    <ListBox Name="FormesSelectionListeBox" SelectionMode="Single" BorderBrush="Black"
-      IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Formes, Mode=OneWay}" SelectedValuePath="Key"
+  <ListBox Name="ListBox" SelectionMode="Single" BorderBrush="Black"
+      ItemsSource="{Binding Formes, Mode=OneWay,NotifyOnTargetUpdated=True}" SelectedValuePath="Key"
       SelectedValue="{Binding RegionContext, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}">
     <ListBox.ItemsPanel>
       <ItemsPanelTemplate>
@@ -39,5 +35,4 @@
       </DataTemplate>
     </ListBox.ItemTemplate>
   </ListBox>
-  </StackPanel>
 </base:RegionContextAwareUserControl>
