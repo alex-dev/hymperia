@@ -30,6 +30,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     public ICommand RefreshItems { get; private set; }
 
+    public string DefaultName => "Bois";
+
     #endregion
 
     #region Services
@@ -44,6 +46,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         TaskStatus.Canceled,
         TaskStatus.Faulted,
+        TaskStatus.RanToCompletion
       };
     }
 
@@ -56,7 +59,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task RefreshMateriaux()
     {
-      if (!TaskStatusToAccept.Contains(Loading?.Status ?? TaskStatus.RanToCompletion))
+      if (TaskStatusToAccept.Contains(Loading?.Status ?? TaskStatus.RanToCompletion))
       {
         using (var context = Factory.GetContext())
         {

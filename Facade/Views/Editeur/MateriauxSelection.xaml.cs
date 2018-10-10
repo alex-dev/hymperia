@@ -1,23 +1,27 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Data;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.ViewModels.Editeur;
 using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.Views.Editeur
 {
   public partial class MateriauxSelection : RegionContextAwareUserControl
   {
-    public string FormeChoisie { get; set; }
-
-    public MateriauxSelection()
+    public MateriauxSelection() : base(BindingMode.OneWay)
     {
       InitializeComponent();
-      MateriauxSelectionListeBox.SelectionChanged += MateriauxSelectionListeBox_SelectionChanged;
+      Binding.AddTargetUpdatedHandler(ListBox, ListBoxUpdated);
     }
 
-    private void MateriauxSelectionListeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void ListBoxUpdated(object sender, DataTransferEventArgs args)
     {
-      //Materiau materiau = ((ListBox)e.Source).SelectedValue ;
-      //TEXTBOXMATERIAUCHOISI.Text = materiau.Nom;
+      if (args.TargetObject == ListBox && args.Property == ItemsControl.ItemsSourceProperty)
+      {
+        //RegionContext = ListBox.ItemsSource?.OfType<Materiau>()
+        //  ?.First(materiau => materiau.Nom == (DataContext as MateriauxSelectionViewModel)?.DefaultName);
+      }
     }
   }
 }

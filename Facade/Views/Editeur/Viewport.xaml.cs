@@ -1,10 +1,11 @@
-﻿using Hymperia.Facade.BaseClasses;
+﻿using System.Windows.Data;
+using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.Views.Editeur
 {
   public partial class Viewport : RegionContextAwareUserControl 
   {
-    public Viewport() : base()
+    public Viewport() : base(BindingMode.OneWayToSource)
     {
       InitializeComponent();
     }

@@ -21,9 +21,9 @@ namespace Hymperia.Facade.BaseClasses
       RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl));
     }
 
-    protected RegionContextAwareUserControl()
+    protected RegionContextAwareUserControl(BindingMode mode = BindingMode.OneTime)
     {
-      BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = BindingMode.OneWayToSource });
+      BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = mode });
     }
   }
 }

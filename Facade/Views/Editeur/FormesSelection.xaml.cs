@@ -1,23 +1,13 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Data;
 using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.Views.Editeur
 {
   public partial class FormesSelection : RegionContextAwareUserControl
   {
-    public FormesSelection()
+    public FormesSelection() : base(BindingMode.OneWay)
     {
-      try
-      {
-        InitializeComponent();
-      }
-      catch (System.Exception e)
-      {
-
-        throw;
-      }
-      
+      InitializeComponent();
     }
   }
 }
