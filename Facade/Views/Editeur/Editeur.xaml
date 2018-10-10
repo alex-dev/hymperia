@@ -18,25 +18,12 @@
     <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
       <MenuItem Command="{Binding Sauvegarder}" Header="Sauvegarder" Grid.Row="0" Grid.Column="0" />
       <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-          <RowDefinition Height="20" />
-          <RowDefinition Height="20" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBox Name="EditeurLabelSelectedForme" Text="{Binding SelectedForme, TargetNullValue=NULL, Mode=TwoWay}" Foreground="Transparent" TextChanged="EditeurTextboxSelectedForme_TextChanged" />
-        
-        <!--="Forme sélectionné     :"--><!-- Text="{Binding EditeurFormeChoisieTextBox}"-->
-        <!--Text="Matériau séléctionné :"--><!-- Text="{Binding EditeurMaterieauxChoisieTextBox}"-->
-        
-        
-        <!--<TextBlock Text="{Binding SelectedForme, TargetNullValue=NULL}" Grid.Row="1" />-->
-        <TextBlock Name="EditeurTextBlockSelectedForme" Text="PrismeRectangulaire" Grid.Row="1" />
         <TextBlock Text="{Binding SelectedMateriau, TargetNullValue=NULL}" Grid.Row="0" />
-        
-        
+        <TextBlock Text="{Binding SelectedForme, TargetNullValue=NULL}" Grid.Row="1" />
       </Grid>
     </Menu>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion"

@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ViewModels.Editeur;
-using Hymperia.Facade.Views.Editeur;
 
 namespace Hymperia.Facade.Views.Editeur
 {
@@ -24,18 +23,6 @@ namespace Hymperia.Facade.Views.Editeur
         ListBox.SelectedItem = ListBox.ItemsSource?.OfType<KeyValuePair<Type, string>>()
           ?.First(forme => forme.Key == (DataContext as FormesSelectionViewModel)?.DefaultForme);
       }
-
-      //if (args.TargetObject == ListBox && args.Property == ItemsControl.ItemsSourceProperty)
-      //{
-      //  ListBox.SelectedItem = ListBox.ItemsSource?.OfType<KeyValuePair<Type, string>>()
-      //  ?.First(forme => forme.Key == (DataContext as FormesSelectionViewModel)?.DefaultForme);
-
-      //  var formeMessage = ListBox.ItemsSource?.OfType<KeyValuePair<Type, string>>()
-      //    ?.First(forme => forme.Key == (DataContext as FormesSelectionViewModel)?.DefaultForme);
-
-      //  string nomForme = formeMessage?.Key.Name;
-      //  ListBox.SelectedItem = nomForme;
-      //}
     }
   }
 }
