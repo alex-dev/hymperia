@@ -3,9 +3,9 @@ using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.Views.Editeur
 {
-  public partial class Viewport : RegionContextAwareUserControl 
+  public partial class PrixAnalyse : RegionContextAwareUserControl
   {
-    public Viewport() : base()
+    public PrixAnalyse() : base()
     {
       InitializeComponent();
     }
