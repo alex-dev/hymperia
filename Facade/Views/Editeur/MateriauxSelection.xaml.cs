@@ -9,7 +9,7 @@ namespace Hymperia.Facade.Views.Editeur
 {
   public partial class MateriauxSelection : RegionContextAwareUserControl
   {
-    public MateriauxSelection() : base(BindingMode.OneWay)
+    public MateriauxSelection() : base()
     {
       InitializeComponent();
       Binding.AddTargetUpdatedHandler(ListBox, ListBoxUpdated);

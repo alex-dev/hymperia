@@ -5,7 +5,7 @@ namespace Hymperia.Facade.Views.Editeur
 {
   public partial class FormesProperties : RegionContextAwareUserControl
   {
-    public FormesProperties() : base(BindingMode.OneWayToSource)
+    public FormesProperties() : base()
     {
       InitializeComponent();
     }

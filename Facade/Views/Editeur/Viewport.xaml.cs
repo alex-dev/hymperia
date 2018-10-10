@@ -5,7 +5,7 @@ namespace Hymperia.Facade.Views.Editeur
 {
   public partial class Viewport : RegionContextAwareUserControl 
   {
-    public Viewport() : base(BindingMode.OneWayToSource)
+    public Viewport() : base()
     {
       InitializeComponent();
     }

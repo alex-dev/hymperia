@@ -1,8 +1,10 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using Prism.Common;
 using R = Prism.Regions;
-using System.Windows;
 
 namespace Hymperia.Facade.BaseClasses
 {
@@ -18,12 +20,54 @@ namespace Hymperia.Facade.BaseClasses
 
     static RegionContextAwareUserControl()
     {
-      RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl));
+      RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
     }
 
-    protected RegionContextAwareUserControl(BindingMode mode = BindingMode.OneTime)
+    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
     {
-      BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = mode });
+      if (!((RegionContextAwareUserControl)sender).Monitor.Busy)
+      {
+        using (var monitor = ((RegionContextAwareUserControl)sender).Monitor.Enter())
+        {
+          R.RegionContext.GetObservableContext(sender).Value = sender.GetValue(RegionContextProperty);
+        }
+      }
     }
+
+    protected RegionContextAwareUserControl()
+    {
+      Monitor = new Monitor_();
+      RegionContext = R.RegionContext.GetObservableContext(this).Value;
+      R.RegionContext.GetObservableContext(this).PropertyChanged += RegionContextChanged;
+    }
+
+    private void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    {
+      if (!Monitor.Busy)
+      {
+        using (var monitor = Monitor.Enter())
+        {
+          RegionContext = R.RegionContext.GetObservableContext(this).Value;
+        }
+      }
+    }
+
+    #region Block Reentrancy
+
+    private class Monitor_ : IDisposable
+    {
+      public Monitor_ Enter()
+      {
+        Busy = true;
+        return this;
+      }
+      public void Dispose() => Busy = false;
+
+      public bool Busy { get; private set; }
+    }
+
+    private readonly Monitor_ Monitor;
+
+    #endregion
   }
 }
