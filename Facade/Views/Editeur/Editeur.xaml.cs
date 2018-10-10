@@ -34,10 +34,23 @@ namespace Hymperia.Facade.Views.Editeur
       manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
       InitializeComponent();
       BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
+
     }
 
     public bool IsNavigationTarget(NavigationContext context) => true;
     public void OnNavigatedTo(NavigationContext context) => Projet = (context.Parameters["Projet"] as Projet);
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
+
+    private void EditeurTextboxSelectedForme_TextChanged(object sender, TextChangedEventArgs e)
+    {
+      //if (sender != null && (sender as TextBox)?.Text != "NULL")
+      //EditeurTextBlockSelectedForme.Text = ((TextBox)e.Source)?.Text;
+      //else
+      //{
+      //  (((TextBox)sender).DataContext as ViewModels.Editeur.EditeurViewModel).SelectedForme =
+      //   typeof(ViewModels.Editeur.FormesSelectionViewModel.DefaultForme);
+      //}
+      
+    }
   }
 }
