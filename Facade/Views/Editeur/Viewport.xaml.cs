@@ -1,4 +1,5 @@
-﻿using Hymperia.Facade.BaseClasses;
+﻿using System.Windows.Data;
+using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.Views.Editeur
 {

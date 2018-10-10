@@ -29,6 +29,5 @@ namespace Hymperia.Facade.ViewModels.Editeur
         { typeof(Ellipsoide), "pack://application:,,,/Images/Ellipsoide.png" }
       };
     }
-
   }
 }

@@ -26,10 +26,10 @@
           <RowDefinition Height="20" />
           <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <TextBox Text="Forme sélectionné     :"  Grid.Row="0" />
         <!--="Forme sélectionné     :"--><!-- Text="{Binding EditeurFormeChoisieTextBox}"-->
-        <TextBox Text="Matériau séléctionné :"  Grid.Row="1" />
+        <TextBlock Text="{Binding SelectedForme, TargetNullValue=NULL}" Grid.Row="1" />
         <!--Text="Matériau séléctionné :"--><!-- Text="{Binding EditeurMaterieauxChoisieTextBox}"-->
+        <TextBlock Text="{Binding SelectedMateriau, TargetNullValue=NULL}" Grid.Row="0" />
       </Grid>
     </Menu>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion"
