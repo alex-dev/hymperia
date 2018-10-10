@@ -29,7 +29,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task QueryFormes()
     {
-      await new Task(() => Formes = new Dictionary<Type, string>
+      await Task.Run(() => Formes = new Dictionary<Type, string>
       {
         { typeof(PrismeRectangulaire), "pack://application:,,,/Images/PrismeRectangulaire.png" },
         { typeof(Cone), "pack://application:,,,/Images/Cone.png" },
