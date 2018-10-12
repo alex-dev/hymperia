@@ -41,7 +41,6 @@ namespace Hymperia.Model.Modeles
     public double Prix => Formes.Sum(forme => forme.Prix);
 
     /// <summary>Le prix du plan séparé par matériaux.</summary>
-    [Pure]
     [NotMapped]
     public IEnumerable<KeyValuePair<Materiau, double>> PrixMateriaux =>
      from forme in Formes
