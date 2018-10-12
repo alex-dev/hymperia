@@ -54,7 +54,8 @@ namespace Hymperia.Model.Modeles
     #endregion
 
     #region Methods
-
+    
+    [Pure]
     public IEnumerable<KeyValuePair<Materiau, double>> CalculePrixMateriaux() =>
      from forme in Formes
      group forme.Prix by forme.Materiau into pair
