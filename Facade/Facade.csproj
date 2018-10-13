@@ -223,8 +223,9 @@
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\PrixAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
     <Compile Include="Views\Editeur\FormesProperties.xaml.cs">

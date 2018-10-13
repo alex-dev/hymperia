@@ -1,6 +1,7 @@
 ﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.PrixAnalyse"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
+    xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
   <Grid>
     <Grid.RowDefinitions>
@@ -9,18 +10,16 @@
       <RowDefinition Height="50" />
       <RowDefinition Height="50" />
     </Grid.RowDefinitions>
-
     <StackPanel>
       <Label Content="Matériaux , Prix courant, Prix total pour ce matériau" />
     </StackPanel>
-    <ItemsControl Name="MateriauxSelectionListeBox"
-        ItemsSource="{Binding RegionContext.PrixMateriaux, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
+    <ItemsControl Name="MateriauxPrix"
+        ItemsSource="{Binding Projet.PrixMateriaux, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
         BorderBrush="Black" Background="AliceBlue" Grid.Row="1">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
           <StackPanel>
-
-            <TextBlock Text="{Binding  }"  Margin="20" FontSize="15" />
+            <TextBlock Text="{Binding  }" Margin="20" FontSize="15" />
           </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
@@ -31,11 +30,9 @@
     </Grid>
     <Grid Grid.Row="3">
       <Border BorderBrush="Black" BorderThickness="1" />
-      <Label Name="PrixAnalysePrixTotal"
-          Content="{Binding RegionContext.Prix, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
-          FontSize="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" />
+      <TextBlock Name="PrixTotal"
+          Text="{Binding Projet.Prix, StringFormat={}{0:c}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
+          FontSize="25" TextAlignment="Center" Grid.Row="1" />
     </Grid>
   </Grid>
-
 </base:RegionContextAwareUserControl>
-

@@ -2,8 +2,6 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using Prism.Common;
 using R = Prism.Regions;
 
 namespace Hymperia.Facade.BaseClasses
@@ -23,17 +21,6 @@ namespace Hymperia.Facade.BaseClasses
       RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
     }
 
-    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-    {
-      if (!((RegionContextAwareUserControl)sender).Monitor.Busy)
-      {
-        using (var monitor = ((RegionContextAwareUserControl)sender).Monitor.Enter())
-        {
-          R.RegionContext.GetObservableContext(sender).Value = sender.GetValue(RegionContextProperty);
-        }
-      }
-    }
-
     protected RegionContextAwareUserControl()
     {
       Monitor = new Monitor_();
@@ -41,9 +28,12 @@ namespace Hymperia.Facade.BaseClasses
       R.RegionContext.GetObservableContext(this).PropertyChanged += RegionContextChanged;
     }
 
-    private void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
+      ((RegionContextAwareUserControl)sender).RegionContextChanged(args);
+
+    protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs args)
     {
-      if (!Monitor.Busy)
+      if (!IsBusy())
       {
         using (var monitor = Monitor.Enter())
         {
@@ -52,7 +42,20 @@ namespace Hymperia.Facade.BaseClasses
       }
     }
 
+    protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs args)
+    {
+      if (!IsBusy())
+      {
+        using (var monitor = Monitor.Enter())
+        {
+          R.RegionContext.GetObservableContext(this).Value = RegionContext;
+        }
+      }
+    }
+
     #region Block Reentrancy
+
+    protected bool IsBusy() => Monitor.Busy;
 
     private class Monitor_ : IDisposable
     {

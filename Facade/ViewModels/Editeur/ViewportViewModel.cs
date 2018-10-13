@@ -88,9 +88,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     protected override void OnRegionContextChanged()
     {
-      if (!(RegionContext is EditeurViewModel context))
+      if (!(RegionContext is IEditeurViewModel context))
       {
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
       }
 
       context.PropertyChanged += (sender, args) =>
@@ -119,9 +119,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void UpdateFormes()
     {
-      if (!(RegionContext is EditeurViewModel context))
+      if (!(RegionContext is IEditeurViewModel context))
       {
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
       }
 
       if (context.Formes is null)
@@ -140,9 +140,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void UpdateFormesSelectionnees()
     {
-      if (!(RegionContext is EditeurViewModel context))
+      if (!(RegionContext is IEditeurViewModel context))
       {
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
       }
 
       if (Formes is null && context.FormesSelectionnees.Count > 0)
@@ -168,7 +168,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == ((EditeurViewModel)RegionContext).Formes)
+      if (sender == ((IEditeurViewModel)RegionContext).Formes)
       {
         var newitems = from FormeWrapper forme in args.NewItems ?? new List<FormeWrapper> { }
                        select ConvertisseurWrappers.Convertir(forme);
@@ -197,7 +197,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
+      if (sender == ((IEditeurViewModel)RegionContext).FormesSelectionnees)
       {
         var newitems = from FormeWrapper forme in args.NewItems ?? new List<FormeWrapper> { }
                        select ConvertisseurWrappers.Convertir(forme);
@@ -233,27 +233,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
       if (sender == FormesSelectionnees)
       {
         var newitems = from MeshElement3D mesh in args.NewItems?.OfType<MeshElement3D>() ?? new List<MeshElement3D> { }
-                       join wrapper in ((EditeurViewModel)RegionContext).Formes ?? new BulkObservableCollection<FormeWrapper> { }
+                       join wrapper in ((IEditeurViewModel)RegionContext).Formes ?? new BulkObservableCollection<FormeWrapper> { }
                          on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
         var olditems = from MeshElement3D mesh in args.OldItems?.OfType<MeshElement3D>() ?? new List<MeshElement3D> { }
-                       join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees ?? new BulkObservableCollection<FormeWrapper> { }
+                       join wrapper in ((IEditeurViewModel)RegionContext).FormesSelectionnees ?? new BulkObservableCollection<FormeWrapper> { }
                          on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
 
         switch (args.Action)
         {
           case NotifyCollectionChangedAction.Add:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees.AddRange(newitems);
+            ((IEditeurViewModel)RegionContext).FormesSelectionnees.AddRange(newitems);
             break;
           case NotifyCollectionChangedAction.Remove:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees.RemoveRange(olditems);
+            ((IEditeurViewModel)RegionContext).FormesSelectionnees.RemoveRange(olditems);
             break;
           case NotifyCollectionChangedAction.Replace:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees[((EditeurViewModel)RegionContext).FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+            ((IEditeurViewModel)RegionContext).FormesSelectionnees[((IEditeurViewModel)RegionContext).FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
             break;
           case NotifyCollectionChangedAction.Reset:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees.Clear();
+            ((IEditeurViewModel)RegionContext).FormesSelectionnees.Clear();
             break;
         }
       }
