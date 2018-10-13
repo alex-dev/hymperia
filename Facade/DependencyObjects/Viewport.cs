@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -12,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.Manipulators;
 
 namespace Hymperia.Facade.DependencyObjects
 {
@@ -39,6 +39,8 @@ namespace Hymperia.Facade.DependencyObjects
     private readonly SunLight Sunlight;
     private readonly GridLinesVisual3D GridLines;
     private readonly Material SelectedMaterial;
+    private MovementManipulator MoveManipulator;
+    //private ResizeManipulator SizeManipulator;
 
     #endregion
 
@@ -50,13 +52,12 @@ namespace Hymperia.Facade.DependencyObjects
 
     public Viewport() : base()
     {
-      var specular = Brushes.Red.Clone();
-      specular.Opacity = 1;
+      var diffuse = Brushes.Red.Clone();
 
       Sunlight = new SunLight();
       GridLines = new GridLinesVisual3D { Width = 1000, Length = 1000, /*MinorDistance = 0.1,*/ MajorDistance = 1, Thickness = 0.01 };
-      SelectedMaterial = new SpecularMaterial(specular, 100);
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick)));
+      SelectedMaterial = new DiffuseMaterial(diffuse);
+      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftDoubleClick)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
     }
@@ -74,7 +75,7 @@ namespace Hymperia.Facade.DependencyObjects
 
       if (args.SelectedVisuals.Count > 0)
       {
-        var test = BindingOperations.GetBinding(args.SelectedVisuals.OfType<MeshElement3D>().First(), MeshElement3D.FillProperty);
+        //var test = BindingOperations.GetBinding(args.SelectedVisuals.OfType<MeshElement3D>().First(), MeshElement3D.FillProperty);
 
         if (single)
         {
@@ -94,7 +95,7 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        MaterialGroup material = (SelectedMaterial as MaterialGroup).Clone();
+        MaterialGroup material = (model.Material as MaterialGroup).Clone();
         material?.Children?.Add(SelectedMaterial);
         material.Freeze();
 
@@ -114,6 +115,25 @@ namespace Hymperia.Facade.DependencyObjects
       }
     }
 
+    private void AddPropertyManipulator(IEnumerable<MeshElement3D> models)
+    {
+      foreach (MeshElement3D model in models)
+      {
+        MoveManipulator = new MovementManipulator(model);
+        MoveManipulator.Bind(model);
+        this?.Children?.Add(MoveManipulator);
+      }
+    }
+
+    private void RemovePropertyManipulator(IEnumerable<MeshElement3D> models)
+    {
+      foreach (MeshElement3D model in models)
+      {
+        MoveManipulator.Unbind();
+        this?.Children?.Remove(MoveManipulator);
+      }
+    }
+
     #endregion
 
     private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -124,6 +144,14 @@ namespace Hymperia.Facade.DependencyObjects
         UnselectMaterial(args.Action == NotifyCollectionChangedAction.Reset
           ? Children.OfType<MeshElement3D>()
           : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+
+        if (SelectedItems.Distinct().Count() == 1)
+        {
+          AddPropertyManipulator(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+          RemovePropertyManipulator(args.Action == NotifyCollectionChangedAction.Reset
+            ? Children.OfType<MeshElement3D>()
+            : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+        }
       }
     }
 
