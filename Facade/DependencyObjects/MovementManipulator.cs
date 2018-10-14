@@ -64,7 +64,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       bindings.Bindings.AddRange(CreateBindings(source));
 
       BindingOperations.SetBinding(this, DiameterProperty, bindings);
-      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source });
+      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.TwoWay });
     }
 
     public override void Unbind()
