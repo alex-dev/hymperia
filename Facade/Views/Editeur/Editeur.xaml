@@ -38,7 +38,7 @@
         prism:RegionManager.RegionContext="{Binding SelectedForme, Mode=OneWayToSource}" Grid.Column="1"
         Grid.ColumnSpan="2" Grid.Row="1" />
     <ContentControl prism:RegionManager.RegionName="PrixAnalyseRegion"
-        prism:RegionManager.RegionContext="{Binding Projet, Mode=OneWay}" Grid.Column="2" Grid.Row="2"
+        prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="2" Grid.Row="2"
         Grid.RowSpan="2" />
     <ContentControl prism:RegionManager.RegionName="FormesPropertiesRegion"
         prism:RegionManager.RegionContext="{Binding FormesSelectionnees, Mode=OneWay}" Grid.Column="2" Grid.Row="4" />
