@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
-using JetBrains.Annotations;
 using Hymperia.Facade.ModelWrappers;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
 {

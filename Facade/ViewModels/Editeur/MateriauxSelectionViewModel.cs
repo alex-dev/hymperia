@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Hymperia.Facade.Services;
+using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
-using Hymperia.Facade.Services;
-using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -15,30 +15,22 @@ namespace Hymperia.Facade.ViewModels.Editeur
   {
     #region Attributes
 
-    private static readonly TaskStatus[] TaskStatusToAccept;
-
-    private Task Loading;
-
-    private ICollection<Materiau> materiaux;
-
     [CanBeNull]
+    [ItemNotNull]
     public ICollection<Materiau> Materiaux
     {
       get => materiaux;
       private set => SetProperty(ref materiaux, value);
     }
 
-    public ICommand RefreshItems { get; private set; }
-
+    [NotNull]
     public string DefaultName => "Bois";
 
-    #endregion
-
-    #region Services
-
-    private readonly ContextFactory Factory;
+    public ICommand RefreshItems { get; private set; }
 
     #endregion
+
+    #region Constructors
 
     static MateriauxSelectionViewModel()
     {
@@ -57,6 +49,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Loading = RefreshMateriaux();
     }
 
+    #endregion
+
+    #region Queries
+
+    private static readonly TaskStatus[] TaskStatusToAccept;
+    private Task Loading;
+
     private async Task RefreshMateriaux()
     {
       if (TaskStatusToAccept.Contains(Loading?.Status ?? TaskStatus.RanToCompletion))
@@ -67,5 +66,20 @@ namespace Hymperia.Facade.ViewModels.Editeur
         }
       }
     }
+
+    #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly ContextFactory Factory;
+
+    #endregion
+
+    #region Private Fields
+
+    private ICollection<Materiau> materiaux;
+
+    #endregion
   }
 }

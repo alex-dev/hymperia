@@ -15,16 +15,9 @@
       <RowDefinition Height="10*" />
       <RowDefinition Height="200" />
     </Grid.RowDefinitions>
-    <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+    <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Center"
+        HorizontalContentAlignment="Center">
       <MenuItem Command="{Binding Sauvegarder}" Header="Sauvegarder" Grid.Row="0" Grid.Column="0" />
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding SelectedMateriau, TargetNullValue=NULL}" Grid.Row="0" />
-        <TextBlock Text="{Binding SelectedForme, TargetNullValue=NULL}" Grid.Row="1" />
-      </Grid>
     </Menu>
     <ContentControl prism:RegionManager.RegionName="ViewportRegion"
         prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" />

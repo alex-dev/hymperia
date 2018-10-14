@@ -1,29 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using JetBrains.Annotations;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
-using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class ViewportViewModel : RegionContextAwareViewModel
   {
     #region Attributes
-
-    #region Fields
-
-    private BulkObservableCollection<MeshElement3D> formes;
-    private BulkObservableCollection<MeshElement3D> selected;
-    private ICommand ajouter;
-    private ICommand supprimer;
-
-    #endregion
 
     #region Binding
 
@@ -54,35 +45,21 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public ICommand AjouterForme
-    {
-      get => ajouter;
-      private set => SetProperty(ref ajouter, value);
-    }
-
-    public ICommand SupprimerForme
-    {
-      get => supprimer;
-      set => SetProperty(ref supprimer, value);
-    }
+    public ICommand AjouterForme { get; private set; }
+    public ICommand SupprimerForme { get; private set; }
 
     #endregion
 
     #endregion
 
-    #region Services
-
-    [NotNull]
-    private readonly ConvertisseurWrappers ConvertisseurWrappers;
-
-    #endregion
+    #region Constructors
 
     public ViewportViewModel([NotNull] ConvertisseurWrappers wrappers)
     {
       ConvertisseurWrappers = wrappers;
     }
 
-    #region Methods
+    #endregion
 
     #region Region Interactions
 
@@ -260,6 +237,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly ConvertisseurWrappers ConvertisseurWrappers;
+
+    #endregion
+
+    #region Private Fields
+
+    private BulkObservableCollection<MeshElement3D> formes;
+    private BulkObservableCollection<MeshElement3D> selected;
 
     #endregion
   }

@@ -16,6 +16,7 @@ namespace Hymperia.Facade
       registry.Register<TransformConverter>();
       registry.Register<ConvertisseurFormes>();
       registry.Register<ConvertisseurWrappers>();
+
       registry.RegisterForNavigation<Editeur>("Editeur");
     }
 

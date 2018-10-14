@@ -1,9 +1,7 @@
 ﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.FormesProperties"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
-  <Grid>
-    <Border BorderBrush="Black" BorderThickness="1" />
-    <Label Content="Section propriétés :" HorizontalContentAlignment="Center" FontSize="25" />
-  </Grid>
+    xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True"
+    RegionContext="{Binding RegionContext, Mode=OneWayToSource}">
+  <Label Content="Section propriétés :" HorizontalContentAlignment="Center" />
 </base:RegionContextAwareUserControl>

@@ -2,19 +2,27 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using JetBrains.Annotations;
 using R = Prism.Regions;
 
 namespace Hymperia.Facade.BaseClasses
 {
   public abstract class RegionContextAwareUserControl : UserControl
   {
+    #region Dependency Properties
+
     public static readonly DependencyProperty RegionContextProperty;
 
+    #endregion
+
+    [CanBeNull]
     public object RegionContext
     {
       get => GetValue(RegionContextProperty);
       set => SetValue(RegionContextProperty, value);
     }
+
+    #region Constructors
 
     static RegionContextAwareUserControl()
     {
@@ -23,10 +31,14 @@ namespace Hymperia.Facade.BaseClasses
 
     protected RegionContextAwareUserControl()
     {
-      Monitor = new Monitor_();
+      Monitor = new SimpleMonitor();
       RegionContext = R.RegionContext.GetObservableContext(this).Value;
       R.RegionContext.GetObservableContext(this).PropertyChanged += RegionContextChanged;
     }
+
+    #endregion
+
+    #region Region Context Changes Handlers
 
     private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
       ((RegionContextAwareUserControl)sender).RegionContextChanged(args);
@@ -56,20 +68,22 @@ namespace Hymperia.Facade.BaseClasses
     #region Block Reentrancy
 
     protected bool IsBusy() => Monitor.Busy;
+    private readonly SimpleMonitor Monitor;
 
-    private class Monitor_ : IDisposable
+    private class SimpleMonitor : IDisposable
     {
-      public Monitor_ Enter()
+      [NotNull]
+      public SimpleMonitor Enter()
       {
         Busy = true;
         return this;
       }
-      public void Dispose() => Busy = false;
 
+      public void Dispose() => Busy = false;
       public bool Busy { get; private set; }
     }
 
-    private readonly Monitor_ Monitor;
+    #endregion
 
     #endregion
   }

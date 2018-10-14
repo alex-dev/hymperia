@@ -1,6 +1,4 @@
 ﻿using Hymperia.Model.Modeles;
-using Hymperia.Model.Modeles.JsonObject;
-using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
@@ -17,6 +15,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public double InnerDiametre
     {
       get => ((Cylindre)Forme).InnerDiametre;

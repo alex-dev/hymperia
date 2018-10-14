@@ -5,6 +5,7 @@ namespace Hymperia.Facade.ModelWrappers
   public class ConeWrapper : ThetaDivFormeWrapper
   {
     #region Attributs
+
     public double Hauteur
     {
       get => ((Cone)Forme).Hauteur;
@@ -14,6 +15,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public double RayonBase
     {
       get => ((Cone)Forme).RayonBase;
@@ -23,6 +25,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public double RayonTop
     {
       get => ((Cone)Forme).RayonTop;
@@ -32,6 +35,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     #endregion
 
     public ConeWrapper(Cone forme) : base(forme) { }

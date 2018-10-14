@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
@@ -46,7 +46,6 @@ namespace Hymperia.Facade.ModelWrappers
       }
     }
 
-    [NotNull]
     public double Prix => Forme.Prix;
 
     public double Volume => Forme.Volume;

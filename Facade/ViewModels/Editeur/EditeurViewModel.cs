@@ -1,60 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.EntityFrameworkCore;
-using JetBrains.Annotations;
-using Prism.Commands;
-using Prism.Mvvm;
-using Hymperia.Model;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
+using Hymperia.Model;
 using Hymperia.Model.Modeles;
-using System.ComponentModel;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
+using Prism.Commands;
+using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class EditeurViewModel : BindableBase, IProjetViewModel, IEditeurViewModel
   {
     #region Attributes
-
-    #region Private Fields
-
-    private Materiau DefaultMateriau;
-
-    #endregion
-
-    #region Fields
-
-    private Projet projet;
-    private BulkObservableCollection<FormeWrapper> formes;
-    private BulkObservableCollection<FormeWrapper> selected;
-    private SelectionMode selection;
-    private Type forme;
-    private Materiau materiau;
-
-    #endregion
-
-    #region Private Properties
-
-    [NotNull]
-    private Type Forme => SelectedForme ?? typeof(PrismeRectangulaire);
-
-    [CanBeNull]
-    private Materiau Materiau => SelectedMateriau ?? DefaultMateriau;
-
-    [CanBeNull]
-    [ItemNotNull]
-    private ICollection<FormeWrapper> FormesChanged { get; set; }
-
-    [CanBeNull]
-    [ItemNotNull]
-    private ICollection<FormeWrapper> FormesDeleted { get; set; }
-
-    #endregion
 
     #region Binding
 
@@ -118,15 +83,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region Services
-
-    [NotNull]
-    private readonly ContextFactory ContextFactory;
-
-    [NotNull]
-    private readonly ConvertisseurFormes ConvertisseurFormes;
-
-    #endregion
+    #region Constructors
 
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes)
     {
@@ -137,10 +94,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme).ObservesProperty(() => FormesSelectionnees);
       Sauvegarder = new DelegateCommand(_Sauvegarder, PeutSauvegarder).ObservesProperty(() => Projet);
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
-      QueryDefaultMateriau();
     }
 
-    #region Methods
+    #endregion
 
     #region Command AjouterForme
 
@@ -152,12 +108,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private void _AjouterForme()
     {
       var forme = CreerForme();
+      var wrapper = ConvertisseurFormes.Convertir(forme);
+
       Projet.AjouterForme(forme);
-      Formes.Add(ConvertisseurFormes.Convertir(forme));
+      FormesAdded.Add(wrapper);
+      Formes.Add(wrapper);
     }
 
     // TODO: Add Check
-    private bool PeutAjouterForme() => Projet is Projet && Materiau is Materiau;
+    private bool PeutAjouterForme() => Projet is Projet && SelectedMateriau is Materiau;
 
     #endregion
 
@@ -165,8 +124,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void _SupprimerForme()
     {
-      var formes = (from forme in FormesSelectionnees
-                    select forme.Forme).ToArray();
+      var formes = from forme in FormesSelectionnees
+                   select forme.Forme;
 
       foreach (var forme in formes)
       {
@@ -190,6 +149,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         ConstructEntriesState(context);
 
+        FormesAdded = new Collection<FormeWrapper> { };
         FormesChanged = new Collection<FormeWrapper> { };
         FormesDeleted = new Collection<FormeWrapper> { };
 
@@ -229,15 +189,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region Inner Events Handler
-
-    private async Task QueryDefaultMateriau()
-    {
-      using (var context = ContextFactory.GetContext())
-      {
-        DefaultMateriau = await context.Materiaux.FirstAsync();
-      }
-    }
+    #region Queries
 
     private async Task QueryProjet(Projet _projet, Action onChanged)
     {
@@ -255,11 +207,16 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
+    #endregion
+
+    #region Formes Changed Event Handlers
+
     private void UpdateFormes()
     {
       if (Projet is null)
       {
         Formes = null;
+        FormesAdded = null;
         FormesChanged = null;
         FormesDeleted = null;
       }
@@ -275,6 +232,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
                          select Attach(ConvertisseurFormes.Convertir(forme));
 
         Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
+        FormesAdded = new Collection<FormeWrapper> { };
         FormesChanged = new Collection<FormeWrapper> { };
         FormesDeleted = new Collection<FormeWrapper> { };
       }
@@ -289,6 +247,41 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     #endregion
+
+    #region Changes Tracking
+
+    [CanBeNull]
+    [ItemNotNull]
+    private ICollection<FormeWrapper> FormesAdded { get; set; }
+
+    [CanBeNull]
+    [ItemNotNull]
+    private ICollection<FormeWrapper> FormesChanged { get; set; }
+
+    [CanBeNull]
+    [ItemNotNull]
+    private ICollection<FormeWrapper> FormesDeleted { get; set; }
+
+    #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly ContextFactory ContextFactory;
+
+    [NotNull]
+    private readonly ConvertisseurFormes ConvertisseurFormes;
+
+    #endregion
+
+    #region Private Fields
+
+    private Projet projet;
+    private BulkObservableCollection<FormeWrapper> formes;
+    private BulkObservableCollection<FormeWrapper> selected;
+    private SelectionMode selection;
+    private Type forme;
+    private Materiau materiau;
 
     #endregion
   }

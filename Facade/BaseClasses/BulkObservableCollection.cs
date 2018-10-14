@@ -4,16 +4,21 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.BaseClasses
 {
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
-    public BulkObservableCollection() : base() { }
-    public BulkObservableCollection(List<T> list) : base(list) { }
-    public BulkObservableCollection(IEnumerable<T> collection) : base(collection) { }
+    #region Constructors
 
-    public void AddRange(IEnumerable<T> items)
+    public BulkObservableCollection() : base() { }
+    public BulkObservableCollection([NotNull] List<T> list) : base(list) { }
+    public BulkObservableCollection([NotNull] IEnumerable<T> collection) : base(collection) { }
+
+    #endregion
+
+    public void AddRange([NotNull] IEnumerable<T> items)
     {
       CheckReentrancy();
       var index = Items.Count;
@@ -27,7 +32,7 @@ namespace Hymperia.Facade.BaseClasses
       OnCollectionChanged_Add(_items, index);
     }
 
-    public void RemoveRange(IEnumerable<T> items)
+    public void RemoveRange([NotNull] IEnumerable<T> items)
     {
       CheckReentrancy();
       var _items = items.Intersect(Items).ToArray();
@@ -39,6 +44,8 @@ namespace Hymperia.Facade.BaseClasses
 
       OnCollectionChanged_Remove(_items);
     }
+
+    #region On Collection Changed Invokers
 
     private void OnCollectionChanged_Add(IList items, int index)
     {
@@ -53,5 +60,7 @@ namespace Hymperia.Facade.BaseClasses
       OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
     }
+
+    #endregion
   }
 }

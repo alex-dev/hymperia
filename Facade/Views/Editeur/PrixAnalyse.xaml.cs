@@ -17,6 +17,8 @@ namespace Hymperia.Facade.Views.Editeur
       InitializeComponent();
     }
 
+    #region Region Context Changed Handlers
+
     private void Update()
     {
       MateriauxPrix.GetBindingExpression(ItemsControl.ItemsSourceProperty).UpdateTarget();
@@ -70,5 +72,7 @@ namespace Hymperia.Facade.Views.Editeur
         Update();
       }
     }
+
+    #endregion
   }
 }

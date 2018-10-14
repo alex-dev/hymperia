@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Hymperia.Facade.BaseClasses;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-    class FormesPropertiesViewModel
-    {
-    }
+  public class FormesPropertiesViewModel : RegionContextAwareViewModel
+  {
+  }
 }

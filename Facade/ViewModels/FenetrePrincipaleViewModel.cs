@@ -13,12 +13,6 @@ namespace Hymperia.Facade.ViewModels
   {
     #region Attributes
 
-    #region Fields
-
-    private Projet projet;
-
-    #endregion
-
     public Projet Projet
     {
       get => projet;
@@ -28,8 +22,6 @@ namespace Hymperia.Facade.ViewModels
     public ReadOnlyObservableCollection<Projet> Projets { get; private set; }
 
     public ICommand Navigate { get; private set; }
-
-    private readonly IRegionManager Manager;
 
     #endregion
 
@@ -52,5 +44,12 @@ namespace Hymperia.Facade.ViewModels
         { "Projet", Projet }
       });
     }
+
+    #region Private Fields
+
+    private readonly IRegionManager Manager;
+    private Projet projet;
+
+    #endregion
   }
 }
