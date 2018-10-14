@@ -90,15 +90,17 @@ namespace Hymperia.Facade.DependencyObjects
       {
         var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((ResizeManipulator)sender).OnDiameterChanged());
         WidthValueProperty = DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator), metadata);
+        HeightValueProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), metadata);
+        LengthValueProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), metadata);
       }
-      {
+      /*{
         var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((ResizeManipulator)sender).OnDiameterChanged());
         HeightValueProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), metadata);
       }
       {
         var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((ResizeManipulator)sender).OnDiameterChanged());
         LengthValueProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), metadata);
-      }
+      }*/
 
     }
 

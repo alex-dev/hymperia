@@ -112,18 +112,21 @@ namespace Hymperia.Facade.DependencyObjects
         var largest = GetLargestValue(sides);
         Diameter = largest * 1.1;
       }
+
       if (source is EllipsoidVisual3D)
       {
         double[] sides = { (source as EllipsoidVisual3D).RadiusX, (source as EllipsoidVisual3D).RadiusY, (source as EllipsoidVisual3D).RadiusZ };
         var largest = GetLargestValue(sides);
         Diameter = largest * 1.5;
       }
+
       if (source is TruncatedConeVisual3D)
       {
         double[] sides = { (source as TruncatedConeVisual3D).Height, (source as TruncatedConeVisual3D).BaseRadius };
         var largest = GetLargestValue(sides);
         Diameter = largest * 1.5;
       }
+
       if (source is PipeVisual3D)
       {
         double[] sides = { (source as PipeVisual3D).Diameter };
