@@ -113,18 +113,21 @@ namespace Hymperia.Facade.Manipulators
         var largest = GetLargestValue(sides);
         Diameter = largest * 1.1;
       }
+
       if (source is EllipsoidVisual3D)
       {
         double[] sides = { (source as EllipsoidVisual3D).RadiusX, (source as EllipsoidVisual3D).RadiusY, (source as EllipsoidVisual3D).RadiusZ };
         var largest = GetLargestValue(sides);
         Diameter = largest * 1.5;
       }
+
       if (source is TruncatedConeVisual3D)
       {
         double[] sides = { (source as TruncatedConeVisual3D).Height, (source as TruncatedConeVisual3D).BaseRadius };
         var largest = GetLargestValue(sides);
         Diameter = largest * 1.5;
       }
+
       if (source is PipeVisual3D)
       {
         double[] sides = { (source as PipeVisual3D).Diameter };
@@ -280,15 +283,17 @@ namespace Hymperia.Facade.Manipulators
       {
         var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((ResizeManipulator)sender).OnDiameterChanged());
         WidthValueProperty = DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator), metadata);
+        HeightValueProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), metadata);
+        LengthValueProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), metadata);
       }
-      {
+      /*{
         var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((ResizeManipulator)sender).OnDiameterChanged());
         HeightValueProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), metadata);
       }
       {
         var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((ResizeManipulator)sender).OnDiameterChanged());
         LengthValueProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), metadata);
-      }
+      }*/
 
     }
 
