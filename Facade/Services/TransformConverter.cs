@@ -45,24 +45,16 @@ namespace Hymperia.Facade.Services
       {
         throw new ArgumentException("Could not cast values into proper return type.", nameof(targets));
       }
+      
+      if (!(value is Transform3D transform))
+      {
+        throw new ArgumentException($"Can only convert from { nameof(Transform3D) }.", nameof(value));
+      }
 
-      var matrix = GetMatrix(value);
+      var matrix = transform.Value;
       var (vector, quaternion) = matrix.Decompose();
 
       return new object[] { vector.ConvertToPoint(), quaternion.Convert() };
-    }
-
-    private Matrix3D GetMatrix(object value)
-    {
-      switch (value)
-      {
-        case MatrixTransform3D matrixTransform:
-          return matrixTransform.Matrix;
-        case Transform3DGroup groupTransform:
-          return groupTransform.Value;
-        default:
-          throw new ArgumentException($"Can only convert from { nameof(MatrixTransform3D) } or { nameof(Transform3DGroup) }.", nameof(value));
-      }
     }
   }
 }
