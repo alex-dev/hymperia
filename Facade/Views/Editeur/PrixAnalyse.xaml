@@ -1,38 +1,40 @@
 ﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.PrixAnalyse"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="30" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="50" />
-      <RowDefinition Height="50" />
-    </Grid.RowDefinitions>
-    <StackPanel>
-      <Label Content="Matériaux , Prix courant, Prix total pour ce matériau" />
-    </StackPanel>
+  <StackPanel>
     <ItemsControl Name="MateriauxPrix"
-        ItemsSource="{Binding Projet.PrixMateriaux, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
-        BorderBrush="Black" Background="AliceBlue" Grid.Row="1">
+        ItemsSource="{Binding Projet.PrixMateriaux, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}">
+      <ItemsControl.Template>
+        <ControlTemplate>
+          <ScrollViewer Padding="{TemplateBinding Padding}">
+            <ItemsPresenter />
+          </ScrollViewer>
+        </ControlTemplate>
+      </ItemsControl.Template>
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          <StackPanel>
-            <TextBlock Text="{Binding  }" Margin="20" FontSize="15" />
+          <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Matériau :" />
+              <TextBlock Text="{Binding Key.Nom}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Prix courant :" />
+              <TextBlock Text="{Binding Key.Prix, StringFormat={}{0:c}}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Prix total pour ce matériau :" />
+              <TextBlock Text="{Binding Value, StringFormat={}{0:c}}" />
+            </StackPanel>
           </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-    <Grid Grid.Row="2">
-      <Border BorderBrush="Black" BorderThickness="1" />
-      <Label Content="Prix total :" FontSize="25" />
-    </Grid>
-    <Grid Grid.Row="3">
-      <Border BorderBrush="Black" BorderThickness="1" />
+    <StackPanel Orientation="Horizontal">
+      <TextBlock Text="Prix total :"  />
       <TextBlock Name="PrixTotal"
-          Text="{Binding Projet.Prix, StringFormat={}{0:c}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
-          FontSize="25" TextAlignment="Center" Grid.Row="1" />
-    </Grid>
-  </Grid>
+          Text="{Binding Projet.Prix, StringFormat={}{0:c}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
+    </StackPanel>
+  </StackPanel>
 </base:RegionContextAwareUserControl>
