@@ -70,10 +70,7 @@ namespace Hymperia.Facade.ModelWrappers
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string name = "")
-    {
-      PropertyChanged.Invoke(this, new PropertyChangedEventArgs(name));
-    }
+    protected void OnPropertyChanged([CallerMemberName] string name = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
     #endregion
   }

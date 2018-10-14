@@ -137,8 +137,8 @@ namespace Hymperia.Facade.Services
       var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
-        new Binding("Origine") { Source = source },
-        new Binding("Rotation") { Source = source }
+        new Binding("Origine") { Source = source, Mode = BindingMode.TwoWay },
+        new Binding("Rotation") { Source = source, Mode = BindingMode.TwoWay }
       });
 
       BindingOperations.SetBinding(forme, MeshElement3D.TransformProperty, bindings);

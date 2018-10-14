@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
-using Hymperia.Facade.Manipulators;
 
 namespace Hymperia.Facade.DependencyObjects
 {

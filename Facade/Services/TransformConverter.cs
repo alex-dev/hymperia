@@ -41,19 +41,28 @@ namespace Hymperia.Facade.Services
     /// <remarks>Vers le modèle.</remarks>
     public object[] ConvertBack(object value, Type[] targets, object parameter = null, CultureInfo culture = default)
     {
-      if (!(value is MatrixTransform3D transform))
-      {
-        throw new ArgumentException($"Can only convert from { nameof(MatrixTransform3D) }.", nameof(value));
-      }
       if (!Enumerable.SequenceEqual(targets, Types))
       {
         throw new ArgumentException("Could not cast values into proper return type.", nameof(targets));
       }
 
-      var matrix = transform.Matrix;
+      var matrix = GetMatrix(value);
       var (vector, quaternion) = matrix.Decompose();
 
       return new object[] { vector.ConvertToPoint(), quaternion.Convert() };
+    }
+
+    private Matrix3D GetMatrix(object value)
+    {
+      switch (value)
+      {
+        case MatrixTransform3D matrixTransform:
+          return matrixTransform.Matrix;
+        case Transform3DGroup groupTransform:
+          return groupTransform.Value;
+        default:
+          throw new ArgumentException($"Can only convert from { nameof(MatrixTransform3D) } or { nameof(Transform3DGroup) }.", nameof(value));
+      }
     }
   }
 }
