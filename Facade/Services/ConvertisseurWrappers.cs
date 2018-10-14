@@ -4,6 +4,7 @@ using System.Windows.Data;
 using HelixToolkit.Wpf;
 using JetBrains.Annotations;
 using Hymperia.Facade.ModelWrappers;
+using Hymperia.Facade.Services.PointsToHeightConverters;
 
 namespace Hymperia.Facade.Services
 {
@@ -14,11 +15,11 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private readonly TransformConverter TransformConverter;
     [NotNull]
-    private readonly PointToHauteurConverter PointToHauteurConverter;
+    private readonly HeightToPointsConverter PointToHauteurConverter;
 
     #endregion
 
-    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] PointToHauteurConverter pointToHauteur)
+    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] HeightToPointsConverter pointToHauteur)
     {
       TransformConverter = transform;
       PointToHauteurConverter = pointToHauteur;

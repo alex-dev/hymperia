@@ -9,6 +9,7 @@ using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -100,11 +101,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
           switch (args.PropertyName)
           {
             case nameof(context.Formes):
-              UpdateFormes();
-              break;
+              UpdateFormes(); break;
             case nameof(context.FormesSelectionnees):
-              UpdateFormesSelectionnees();
-              break;
+              UpdateFormesSelectionnees(); break;
           }
         }
       };
@@ -157,7 +156,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       else
       {
         var enumerable = from FormeWrapper wrapper in context.FormesSelectionnees
-                         join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
+                         join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
                            on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                          select mesh;
 
@@ -170,27 +169,23 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == ((EditeurViewModel)RegionContext).Formes)
       {
-        var newitems = from FormeWrapper forme in args.NewItems ?? new List<FormeWrapper> { }
+        var newitems = from FormeWrapper forme in (IEnumerable)args.NewItems ?? Enumerable.Empty<FormeWrapper>()
                        select ConvertisseurWrappers.Convertir(forme);
-        var olditems = from FormeWrapper wrapper in args.OldItems ?? new List<FormeWrapper> { }
-                       join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
+        var olditems = from FormeWrapper wrapper in (IEnumerable)args.OldItems ?? Enumerable.Empty<FormeWrapper>()
+                       join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
                          on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                        select mesh;
 
         switch (args.Action)
         {
           case NotifyCollectionChangedAction.Add:
-            Formes.AddRange(newitems);
-            break;
+            Formes.AddRange(newitems); break;
           case NotifyCollectionChangedAction.Remove:
-            Formes.RemoveRange(olditems);
-            break;
+            Formes.RemoveRange(olditems); break;
           case NotifyCollectionChangedAction.Replace:
-            Formes[Formes.IndexOf(olditems.Single())] = newitems.Single();
-            break;
+            Formes[Formes.IndexOf(olditems.Single())] = newitems.Single(); break;
           case NotifyCollectionChangedAction.Reset:
-            Formes.Clear();
-            break;
+            Formes.Clear(); break;
         }
       }
     }
@@ -199,10 +194,12 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
       {
-        var newitems = from FormeWrapper forme in args.NewItems ?? new List<FormeWrapper> { }
-                       select ConvertisseurWrappers.Convertir(forme);
-        var olditems = from FormeWrapper wrapper in args.OldItems ?? new List<FormeWrapper> { }
-                       join mesh in Formes ?? new BulkObservableCollection<MeshElement3D> { }
+        var newitems = from FormeWrapper wrapper in (IEnumerable)args.NewItems ?? Enumerable.Empty<MeshElement3D>()
+                       join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
+                         on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
+                       select mesh;
+        var olditems = from FormeWrapper wrapper in (IEnumerable)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+                       join MeshElement3D mesh in FormesSelectionnees ?? Enumerable.Empty<MeshElement3D>()
                          on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                        select mesh;
 
@@ -211,17 +208,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
           switch (args.Action)
           {
             case NotifyCollectionChangedAction.Add:
-              FormesSelectionnees.AddRange(newitems);
-              break;
+              FormesSelectionnees.AddRange(newitems); break;
             case NotifyCollectionChangedAction.Remove:
-              FormesSelectionnees.RemoveRange(olditems);
-              break;
+              FormesSelectionnees.RemoveRange(olditems); break;
             case NotifyCollectionChangedAction.Replace:
-              FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
-              break;
+              FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single(); break;
             case NotifyCollectionChangedAction.Reset:
-              FormesSelectionnees.Clear();
-              break;
+              FormesSelectionnees.Clear(); break;
           }
         }
         catch (InvalidOperationException) { /* Reentrant. Donc, on catch et on oublie. */ }
@@ -230,31 +223,30 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void FormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
+      var formes = ((EditeurViewModel)RegionContext).Formes;
+      var selection = ((EditeurViewModel)RegionContext).FormesSelectionnees;
+
       if (sender == FormesSelectionnees)
       {
-        var newitems = from MeshElement3D mesh in args.NewItems?.OfType<MeshElement3D>() ?? new List<MeshElement3D> { }
-                       join wrapper in ((EditeurViewModel)RegionContext).Formes ?? new BulkObservableCollection<FormeWrapper> { }
+        var newitems = from MeshElement3D mesh in (IEnumerable)args.NewItems ?? Enumerable.Empty<MeshElement3D>()
+                       join FormeWrapper wrapper in formes ?? Enumerable.Empty<FormeWrapper>()
                          on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
-        var olditems = from MeshElement3D mesh in args.OldItems?.OfType<MeshElement3D>() ?? new List<MeshElement3D> { }
-                       join wrapper in ((EditeurViewModel)RegionContext).FormesSelectionnees ?? new BulkObservableCollection<FormeWrapper> { }
+        var olditems = from MeshElement3D mesh in (IEnumerable)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+                       join FormeWrapper wrapper in selection ?? Enumerable.Empty<FormeWrapper>()
                          on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                        select wrapper;
 
         switch (args.Action)
         {
           case NotifyCollectionChangedAction.Add:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees.AddRange(newitems);
-            break;
+            selection.AddRange(newitems); break;
           case NotifyCollectionChangedAction.Remove:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees.RemoveRange(olditems);
-            break;
+            selection.RemoveRange(olditems); break;
           case NotifyCollectionChangedAction.Replace:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees[((EditeurViewModel)RegionContext).FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
-            break;
+            selection[selection.IndexOf(olditems.Single())] = newitems.Single(); break;
           case NotifyCollectionChangedAction.Reset:
-            ((EditeurViewModel)RegionContext).FormesSelectionnees.Clear();
-            break;
+            selection.Clear(); break;
         }
       }
     }

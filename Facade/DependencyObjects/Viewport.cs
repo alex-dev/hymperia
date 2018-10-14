@@ -5,12 +5,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.DependencyObjects.Manipulators;
 
 namespace Hymperia.Facade.DependencyObjects
 {
@@ -118,7 +118,7 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        MoveManipulator = new MovementManipulator(model);
+        MoveManipulator = new MovementManipulator();
         MoveManipulator.Bind(model);
         this?.Children?.Add(MoveManipulator);
       }

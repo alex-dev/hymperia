@@ -1,18 +1,23 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
+using Hymperia.Facade.Services.PointsToHeightConverters;
+using JetBrains.Annotations;
 
-namespace Hymperia.Facade.DependencyObjects
+namespace Hymperia.Facade.DependencyObjects.Manipulators
 {
-  public class MovementManipulator : ModelVisual3D
+  public class MovementManipulator : CombinedManipulator
   {
-    #region Dependancy Properties
+    #region Dependency Properties
 
     public static readonly DependencyProperty DiameterProperty;
-    public static readonly DependencyProperty TargetTransformProperty;
 
     #endregion
 
@@ -21,56 +26,7 @@ namespace Hymperia.Facade.DependencyObjects
     public double Diameter
     {
       get => (double)GetValue(DiameterProperty);
-
       set => SetValue(DiameterProperty, value);
-
-    }
-
-    public Transform3D TargetTransform
-    {
-      get => (Transform3D)GetValue(TargetTransformProperty);
-      set => SetValue(TargetTransformProperty, value);
-    }
-
-    public Vector3D Offset
-    {
-      get => Children.OfType<Manipulator>().First().Offset;
-      set
-      {
-        foreach (var manipulator in Children.OfType<Manipulator>())
-        {
-          manipulator.Offset = value;
-        }
-      }
-    }
-
-    public Point3D Position
-    {
-      get => Children.OfType<Manipulator>().First().Position;
-      set
-      {
-        foreach (var manipulator in Children.OfType<Manipulator>())
-        {
-          manipulator.Position = value;
-        }
-      }
-    }
-
-    public Point3D Pivot
-    {
-      get => Children.OfType<RotateManipulator>().First().Pivot;
-      set
-      {
-        foreach (var manipulator in Children.OfType<TranslateManipulator>())
-        {
-          manipulator.Position = value;
-        }
-
-        foreach (var manipulator in Children.OfType<RotateManipulator>())
-        {
-          manipulator.Pivot = value;
-        }
-      }
     }
 
     #endregion
@@ -79,121 +35,157 @@ namespace Hymperia.Facade.DependencyObjects
 
     static MovementManipulator()
     {
-      {
-        var metadata = new UIPropertyMetadata(2.0, (sender, args) => ((MovementManipulator)sender).OnDiameterChanged());
-        DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator), metadata);
-      }
-      {
-        var metadata = new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault);
-        TargetTransformProperty = DependencyProperty.Register("TargetTransform", typeof(Transform3D), typeof(MovementManipulator), metadata);
-      }
+      Converter = new DiameterConverter();
+      LinearConverter = new LinearConverter();
+      PointsToHeightConverter = new PointsToHeightConverter();
+      DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator),
+        new UIPropertyMetadata(2.0, (sender, args) => (sender as MovementManipulator).OnDiameterChanged(args)));
     }
 
-    public MovementManipulator(MeshElement3D source)
+    public MovementManipulator() : base() { }
+
+    protected override IEnumerable<Manipulator> GenerateManipulators()
     {
-      var binding = new Binding("TargetTransform") { Source = this };
-
-      Children.Add(new RotateManipulator { Axis = new Vector3D(1, 0, 0), Color = Colors.Red });
-      Children.Add(new RotateManipulator { Axis = new Vector3D(0, 1, 0), Color = Colors.Green });
-      Children.Add(new RotateManipulator { Axis = new Vector3D(0, 0, 1), Color = Colors.Blue });
-
-      Children.Add(new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red });
-      Children.Add(new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green });
-      Children.Add(new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue });
-
-      foreach (var manipulator in Children.OfType<Manipulator>())
-      {
-        BindingOperations.SetBinding(manipulator, Manipulator.TargetTransformProperty, binding);
-      }
-
-      if (source is BoxVisual3D)
-      {
-        double[] sides = { (source as BoxVisual3D).Length, (source as BoxVisual3D).Height, (source as BoxVisual3D).Width };
-        var largest = GetLargestValue(sides);
-        Diameter = largest * 1.1;
-      }
-
-      if (source is EllipsoidVisual3D)
-      {
-        double[] sides = { (source as EllipsoidVisual3D).RadiusX, (source as EllipsoidVisual3D).RadiusY, (source as EllipsoidVisual3D).RadiusZ };
-        var largest = GetLargestValue(sides);
-        Diameter = largest * 1.5;
-      }
-
-      if (source is TruncatedConeVisual3D)
-      {
-        double[] sides = { (source as TruncatedConeVisual3D).Height, (source as TruncatedConeVisual3D).BaseRadius };
-        var largest = GetLargestValue(sides);
-        Diameter = largest * 1.5;
-      }
-
-      if (source is PipeVisual3D)
-      {
-        double[] sides = { (source as PipeVisual3D).Diameter };
-        var largest = GetLargestValue(sides);
-        Diameter = largest * 1.1;
-      }
+      yield return new RotateManipulator { Axis = new Vector3D(1, 0, 0), Color = Colors.Red };
+      yield return new RotateManipulator { Axis = new Vector3D(0, 1, 0), Color = Colors.Green };
+      yield return new RotateManipulator { Axis = new Vector3D(0, 0, 1), Color = Colors.Blue };
+      yield return new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
+      yield return new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green };
+      yield return new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue };
     }
 
     #endregion
 
-    #region Binding Methods
+    #region Binding to Source
 
-    public virtual void Bind(ModelVisual3D source)
+    public override void Bind(ModelVisual3D source)
     {
-      var binding = new Binding("Transform") { Source = source };
-      BindingOperations.SetBinding(this, TargetTransformProperty, binding);
-      BindingOperations.SetBinding(this, TransformProperty, binding);
+      MultiBinding bindings = new MultiBinding() { Mode = BindingMode.OneWay, Converter = Converter };
+      bindings.Bindings.AddRange(CreateBindings(source));
+
+      BindingOperations.SetBinding(this, DiameterProperty, bindings);
+      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source });
     }
 
-    public virtual void Unbind()
+    public override void Unbind()
     {
-      BindingOperations.ClearBinding(this, TargetTransformProperty);
+      BindingOperations.ClearBinding(this, DiameterProperty);
       BindingOperations.ClearBinding(this, TransformProperty);
     }
 
-    #endregion
-
-    #region Events Handlers
-
-    protected virtual void OnDiameterChanged()
+    private IEnumerable<Binding> CreateBindings([NotNull] ModelVisual3D source)
     {
-      var length = Diameter * 1.25;
-      var width = Diameter * 0.12;
-      var diameter = Diameter * 1.65;
-      var innerDiameter = Diameter * 1.5;
-      var rotateLength = Diameter * 0.1;
-
-      foreach (var translateManipulator in Children.OfType<TranslateManipulator>())
+      switch (source)
       {
-        translateManipulator.Length = length;
-        translateManipulator.Diameter = width;
+        case BoxVisual3D box:
+          return CreateBindings(box);
+        case EllipsoidVisual3D ellipsoid:
+          return CreateBindings(ellipsoid);
+        case PipeVisual3D pipe:
+          return CreateBindings(pipe);
+        case TruncatedConeVisual3D cone:
+          return CreateBindings(cone);
+        default:
+          string err = $"This manipulator only support { nameof(BoxVisual3D) }, { nameof(EllipsoidVisual3D) }, { nameof(PipeVisual3D) } and { nameof(TruncatedConeVisual3D) }.";
+          throw new InvalidOperationException(err);
       }
+    }
 
-      foreach (var rotateManipulator in Children.OfType<RotateManipulator>())
+    private IEnumerable<Binding> CreateBindings([NotNull] BoxVisual3D source)
+    {
+      yield return new Binding("Height") { Source = source, Mode = BindingMode.OneWay };
+      yield return new Binding("Length") { Source = source, Mode = BindingMode.OneWay };
+      yield return new Binding("Width") { Source = source, Mode = BindingMode.OneWay };
+    }
+
+    private IEnumerable<Binding> CreateBindings([NotNull] EllipsoidVisual3D source)
+    {
+      yield return new Binding("RadiusX")
       {
-        rotateManipulator.Diameter = diameter;
-        rotateManipulator.InnerDiameter = innerDiameter;
-        rotateManipulator.Length = rotateLength;
-      }
+        Source = source,
+        Converter = LinearConverter,
+        ConverterParameter = 2,
+        Mode = BindingMode.OneWay
+      };
+      yield return new Binding("RadiusY")
+      {
+        Source = source,
+        Converter = LinearConverter,
+        ConverterParameter = 2,
+        Mode = BindingMode.OneWay
+      };
+      yield return new Binding("RadiusZ")
+      {
+        Source = source,
+        Converter = LinearConverter,
+        ConverterParameter = 2,
+        Mode = BindingMode.OneWay
+      };
+    }
+
+    private IEnumerable<Binding> CreateBindings([NotNull] PipeVisual3D source)
+    {
+      yield return new Binding("Diameter") { Source = source, Mode = BindingMode.OneWay };
+      yield return new Binding("Point2")
+      {
+        Source = source,
+        Converter = PointsToHeightConverter,
+        ConverterParameter = PointOrientation.Top,
+        Mode = BindingMode.TwoWay
+      };
+    }
+
+    private IEnumerable<Binding> CreateBindings([NotNull] TruncatedConeVisual3D source)
+    {
+      yield return new Binding("Height") { Source = source, Mode = BindingMode.OneWay };
+      yield return new Binding("BaseRadius")
+      {
+        Source = source,
+        Converter = LinearConverter,
+        ConverterParameter = 2,
+        Mode = BindingMode.OneWay
+      };
+      yield return new Binding("TopRadius")
+      {
+        Source = source,
+        Converter = LinearConverter,
+        ConverterParameter = 2,
+        Mode = BindingMode.OneWay
+      };
     }
 
     #endregion
 
-    #region Methods
+    #region Sizing
 
-    private double GetLargestValue(double[] source)
+    protected virtual void OnDiameterChanged(DependencyPropertyChangedEventArgs args)
     {
-      double largest = 0;
-      foreach (var value in source)
+      foreach (Manipulator manipulator in Children)
       {
-        if (value > largest)
-        {
-          largest = value;
-        }
+        Resize(manipulator, (double)args.NewValue);
       }
-      return largest;
     }
+
+    /// <remarks><see cref="ConvertBack(object, Type[], object, CultureInfo)"/> n'est pas implémenté parce que la transformation est un processus destructif.</remarks>
+    private class DiameterConverter : IMultiValueConverter
+    {
+      /// <inheritdoc />
+      public object Convert(object[] values, Type target, object parameter = null, CultureInfo culture = default) =>
+        ChangeType((from double value in values select Math.Abs(value)).Max(), target);
+
+      /// <inheritdoc />
+      public object[] ConvertBack(object value, Type[] targets, object parameter = null, CultureInfo culture = default) => throw new NotImplementedException();
+
+      private object ChangeType(object value, Type target) => System.Convert.ChangeType(value, target);
+    }
+
+    #endregion
+
+    #region Static Services
+
+    private static readonly DiameterConverter Converter;
+    private static readonly LinearConverter LinearConverter;
+    private static readonly PointsToHeightConverter PointsToHeightConverter;
 
     #endregion
   }

@@ -12,11 +12,11 @@ namespace Hymperia.Facade
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)
     {
-      registry.Register<ContextFactory>();
+/*      registry.Register<ContextFactory>();
       registry.Register<TransformConverter>();
       registry.Register<ConvertisseurFormes>();
       registry.Register<ConvertisseurWrappers>();
-      registry.RegisterForNavigation<Editeur>("Editeur");
+  */    registry.RegisterForNavigation<Editeur>("Editeur");
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>
