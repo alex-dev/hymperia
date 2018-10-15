@@ -207,6 +207,9 @@
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
     <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
+    <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
+    <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
+    <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
@@ -218,7 +221,9 @@
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
-    <Compile Include="Services\PointToHauteurConverter.cs" />
+    <Compile Include="Services\PointsToHeightConverters\HeightToPointsConverter.cs" />
+    <Compile Include="Services\PointsToHeightConverters\PointsToHeightStaticConverter.cs" />
+    <Compile Include="Services\PointsToHeightConverters\PointsToHeightConverter.cs" />
     <Compile Include="Services\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />

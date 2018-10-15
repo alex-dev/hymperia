@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.ModelWrappers;
+using Hymperia.Facade.Services.PointsToHeightConverters;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
@@ -14,11 +15,11 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private readonly TransformConverter TransformConverter;
     [NotNull]
-    private readonly PointToHauteurConverter PointToHauteurConverter;
+    private readonly HeightToPointsConverter PointToHauteurConverter;
 
     #endregion
 
-    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] PointToHauteurConverter pointToHauteur)
+    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] HeightToPointsConverter pointToHauteur)
     {
       TransformConverter = transform;
       PointToHauteurConverter = pointToHauteur;
@@ -137,8 +138,8 @@ namespace Hymperia.Facade.Services
       var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]
       {
-        new Binding("Origine") { Source = source },
-        new Binding("Rotation") { Source = source }
+        new Binding("Origine") { Source = source, Mode = BindingMode.TwoWay },
+        new Binding("Rotation") { Source = source, Mode = BindingMode.TwoWay }
       });
 
       BindingOperations.SetBinding(forme, MeshElement3D.TransformProperty, bindings);

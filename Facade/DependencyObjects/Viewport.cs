@@ -5,11 +5,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.DependencyObjects.Manipulators;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects
@@ -34,33 +34,38 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    #region Private Defaults
-
-    private readonly SunLight Sunlight;
-    private readonly Material SelectedMaterial;
-
-    #endregion
+    #region Constructors
 
     static Viewport()
     {
-      var metadata = new PropertyMetadata(new PropertyChangedCallback(BindToSelectedItem));
-      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport), metadata);
+      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport),
+        new PropertyMetadata(new PropertyChangedCallback(BindToSelectedItem)));
     }
 
     public Viewport() : base()
     {
       Sunlight = new SunLight();
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick)));
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
+      GridLines = new GridLinesVisual3D { Width = 100, Length = 100, MajorDistance = 1, Thickness = 0.01 };
+      SelectedMaterial = new DiffuseMaterial(Brushes.Red.Clone());
+      CachedMaterials = new Dictionary<MeshElement3D, MaterialGroup> { };
+
+      SelectedMaterial.Freeze();
+
+      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
+      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(false, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
     }
 
-    #region Methods
+    #endregion
 
     #region Selection Handlers
 
     private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
     {
+      args = new VisualsSelectedEventArgs(
+        args.SelectedVisuals.OfType<MeshElement3D>().ToList<Visual3D>(),
+        args.AreSortedByDistanceAscending);
+
       if (clear)
       {
         SelectedItems.Clear();
@@ -68,8 +73,6 @@ namespace Hymperia.Facade.DependencyObjects
 
       if (args.SelectedVisuals.Count > 0)
       {
-        var test = BindingOperations.GetBinding(args.SelectedVisuals.OfType<MeshElement3D>().First(), MeshElement3D.FillProperty);
-
         if (single)
         {
           args = args.AreSortedByDistanceAscending
@@ -82,15 +85,25 @@ namespace Hymperia.Facade.DependencyObjects
     };
 
     private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
-      SelectedItems.AddRange(args.SelectedVisuals.OfType<MeshElement3D>().Distinct());
+      SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>().Distinct());
+
+    #endregion
+
+    #region Selected Items Changed
+
+    #region Update Visual Elements
 
     private void SelectMaterial(IEnumerable<MeshElement3D> models)
     {
       foreach (MeshElement3D model in models)
       {
-        //TODO A changé!!!
-        //model.Fill = Brushes.Red;
-        //(model.Material as MaterialGroup)?.Children.Add(SelectedMaterial);
+        CachedMaterials[model] = (model.Material as MaterialGroup);
+
+        var material = CachedMaterials[model].Clone();
+        material?.Children?.Add(SelectedMaterial);
+        material.Freeze();
+
+        model.Material = material;
       }
     }
 
@@ -98,10 +111,21 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        //TODO A changé!!!
-        //model.Fill = Brushes.Blue;
-        //(model.Material as MaterialGroup)?.Children.Remove(SelectedMaterial);
+        model.Material = CachedMaterials[model];
       }
+    }
+
+    private void AddManipulator(MeshElement3D model)
+    {
+      Manipulator = new MovementManipulator();
+      Manipulator.Bind(model);
+      Children.Add(Manipulator);
+    }
+
+    private void RemoveManipulator()
+    {
+      Manipulator?.Unbind();
+      Children.Remove(Manipulator);
     }
 
     #endregion
@@ -111,9 +135,18 @@ namespace Hymperia.Facade.DependencyObjects
       if (sender == SelectedItems)
       {
         SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-        UnselectMaterial(args.Action == NotifyCollectionChangedAction.Reset
-          ? Children.OfType<MeshElement3D>()
-          : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+        UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
+          ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+          : from mesh in Children.OfType<MeshElement3D>()
+            where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
+            select mesh);
+
+        RemoveManipulator();
+
+        if (SelectedItems.Count == 1)
+        {
+          AddManipulator(SelectedItems.Single());
+        }
       }
     }
 
@@ -121,10 +154,13 @@ namespace Hymperia.Facade.DependencyObjects
     {
       base.OnItemsSourceChanged(oldValue, newValue);
       Children.Add(Sunlight);
+      Children.Add(GridLines);
     }
 
     private void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
     {
+      RemoveManipulator();
+      CachedMaterials.Clear();
       newvalue.CollectionChanged += SelectedItemsChanged;
     }
 
@@ -137,6 +173,16 @@ namespace Hymperia.Facade.DependencyObjects
           (ObservableCollection<MeshElement3D>)args.OldValue);
       }
     }
+
+    #endregion
+
+    #region Private Fields
+
+    private readonly IDictionary<MeshElement3D, MaterialGroup> CachedMaterials;
+    private readonly SunLight Sunlight;
+    private readonly GridLinesVisual3D GridLines;
+    private readonly Material SelectedMaterial;
+    private Manipulators.CombinedManipulator Manipulator;
 
     #endregion
   }
