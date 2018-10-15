@@ -1,9 +1,8 @@
 ﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.Viewport"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses"
-    xmlns:local="clr-namespace:Hymperia.Facade.DependencyObjects"
-    prism:ViewModelLocator.AutoWireViewModel="True"
-    RegionContext="{Binding RegionContext, Mode=OneWayToSource}">
-  <local:Viewport ItemsSource="{Binding Formes}" SelectedItems="{Binding FormesSelectionnees}" />
+    xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" xmlns:local="clr-namespace:Hymperia.Facade.DependencyObjects"
+    prism:ViewModelLocator.AutoWireViewModel="True" RegionContext="{Binding RegionContext, Mode=OneWayToSource}">
+  <local:Viewport ItemsSource="{Binding Formes}" SelectedItems="{Binding FormesSelectionnees}"
+      SelectionMode="{Binding RegionContext.SelectedSelectionMode, Mode=OneWay}" />
 </base:RegionContextAwareUserControl>

@@ -4,7 +4,7 @@
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
   <ListBox SelectedValuePath="Tag" Style="{StaticResource RadioButtonList}" 
       SelectedValue="{Binding RegionContext, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}">
-    <ListBoxItem FontSize="20"  Tag="{x:Static base:SelectionMode.Deplacement}">Déplacement</ListBoxItem>
+    <ListBoxItem FontSize="20"  Tag="{x:Static base:SelectionMode.Deplacement}" Selector.IsSelected="True">Déplacement</ListBoxItem>
     <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Transformation}">Transformation</ListBoxItem>
   </ListBox>
 </base:RegionContextAwareUserControl>
