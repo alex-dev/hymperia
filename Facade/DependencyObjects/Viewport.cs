@@ -33,15 +33,6 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    #region Private Defaults
-
-    private readonly SunLight Sunlight;
-    private readonly GridLinesVisual3D GridLines;
-    private readonly Material SelectedMaterial;
-    private Manipulators.CombinedManipulator Manipulator;
-
-    #endregion
-
     static Viewport()
     {
       var metadata = new PropertyMetadata(new PropertyChangedCallback(BindToSelectedItem));
@@ -53,10 +44,13 @@ namespace Hymperia.Facade.DependencyObjects
       Sunlight = new SunLight();
       GridLines = new GridLinesVisual3D { Width = 100, Length = 100, MajorDistance = 1, Thickness = 0.01 };
       SelectedMaterial = new DiffuseMaterial(Brushes.Red.Clone());
+      CachedMaterials = new Dictionary<MeshElement3D, MaterialGroup> { };
+
+      SelectedMaterial.Freeze();
+
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(false, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
-      
     }
 
     #region Methods
@@ -65,6 +59,10 @@ namespace Hymperia.Facade.DependencyObjects
 
     private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
     {
+      args = new VisualsSelectedEventArgs(
+        args.SelectedVisuals.OfType<MeshElement3D>().ToList<Visual3D>(),
+        args.AreSortedByDistanceAscending);
+
       if (clear)
       {
         SelectedItems.Clear();
@@ -72,8 +70,6 @@ namespace Hymperia.Facade.DependencyObjects
 
       if (args.SelectedVisuals.Count > 0)
       {
-        //var test = BindingOperations.GetBinding(args.SelectedVisuals.OfType<MeshElement3D>().First(), MeshElement3D.FillProperty);
-
         if (single)
         {
           args = args.AreSortedByDistanceAscending
@@ -86,13 +82,15 @@ namespace Hymperia.Facade.DependencyObjects
     };
 
     private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
-      SelectedItems.AddRange(args.SelectedVisuals.OfType<MeshElement3D>().Distinct());
+      SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>().Distinct());
 
     private void SelectMaterial(IEnumerable<MeshElement3D> models)
     {
       foreach (MeshElement3D model in models)
       {
-        MaterialGroup material = (model.Material as MaterialGroup).Clone();
+        CachedMaterials[model] = (model.Material as MaterialGroup);
+
+        var material = CachedMaterials[model].Clone();
         material?.Children?.Add(SelectedMaterial);
         material.Freeze();
 
@@ -104,50 +102,21 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        MaterialGroup material = (model.Material as MaterialGroup).Clone();
-        material?.Children?.Remove(SelectedMaterial);
-        material.Freeze();
-
-        model.Material = material;
+        model.Material = CachedMaterials[model];
       }
     }
 
-    private void AddMovementPropertyManipulator(IEnumerable<MeshElement3D> models)
+    private void AddManipulator(MeshElement3D model)
     {
-      foreach (MeshElement3D model in models)
-      {
-        Manipulator = new MovementManipulator();
-        Manipulator.Bind(model);
-        this?.Children?.Add(Manipulator);
-      }
+      Manipulator = new MovementManipulator();
+      Manipulator.Bind(model);
+      Children.Add(Manipulator);
     }
 
-    private void RemoveMovementPropertyManipulator(IEnumerable<MeshElement3D> models)
+    private void RemoveManipulator()
     {
-      foreach (MeshElement3D model in models)
-      {
-        Manipulator.Unbind();
-        this?.Children?.Remove(Manipulator);
-      }
-    }
-
-    private void AddSizePropertyManipulator(IEnumerable<MeshElement3D> models)
-    {
-      foreach (MeshElement3D model in models)
-      {
-        /*SizeManipulator = new ResizeManipulator(model);
-        SizeManipulator.Bind(model);
-        this?.Children?.Add(MoveManipulator);*/
-      }
-    }
-
-    private void RemoveSizePropertyManipulator(IEnumerable<MeshElement3D> models)
-    {
-      foreach (MeshElement3D model in models)
-      {
-        /*SizeManipulator.Unbind();
-        this?.Children?.Remove(SizeManipulator);*/
-      }
+      Manipulator?.Unbind();
+      Children.Remove(Manipulator);
     }
 
     #endregion
@@ -157,18 +126,18 @@ namespace Hymperia.Facade.DependencyObjects
       if (sender == SelectedItems)
       {
         SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-        UnselectMaterial(args.Action == NotifyCollectionChangedAction.Reset
-          ? Children.OfType<MeshElement3D>()
-          : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+        UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
+          ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+          : from mesh in Children.OfType<MeshElement3D>()
+            where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
+            select mesh);
 
-        if (SelectedItems.Distinct().Count() == 1)
+        RemoveManipulator();
+
+        if (SelectedItems.Count == 1)
         {
-          AddMovementPropertyManipulator(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-          RemoveMovementPropertyManipulator(args.Action == NotifyCollectionChangedAction.Reset
-            ? Children.OfType<MeshElement3D>()
-            : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+          AddManipulator(SelectedItems.Single());
         }
-
       }
     }
 
@@ -181,6 +150,8 @@ namespace Hymperia.Facade.DependencyObjects
 
     private void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
     {
+      RemoveManipulator();
+      CachedMaterials.Clear();
       newvalue.CollectionChanged += SelectedItemsChanged;
     }
 
@@ -193,6 +164,16 @@ namespace Hymperia.Facade.DependencyObjects
           (ObservableCollection<MeshElement3D>)args.OldValue);
       }
     }
+
+    #endregion
+
+    #region Private Fields
+
+    private readonly IDictionary<MeshElement3D, MaterialGroup> CachedMaterials;
+    private readonly SunLight Sunlight;
+    private readonly GridLinesVisual3D GridLines;
+    private readonly Material SelectedMaterial;
+    private Manipulators.CombinedManipulator Manipulator;
 
     #endregion
   }
