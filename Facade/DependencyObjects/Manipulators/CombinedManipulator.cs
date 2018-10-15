@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
@@ -56,16 +57,17 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     {
       var binding = new Binding("Transform") { Source = this };
 
-      foreach (var manipulator in GenerateManipulators())
+      foreach (var (manipulator, binder) in GenerateManipulators())
       {
         BindingOperations.SetBinding(manipulator, Manipulator.TargetTransformProperty, binding);
+        binder(manipulator);
         Children.Add(manipulator);
       }
     }
 
     [NotNull]
     [ItemNotNull]
-    protected abstract IEnumerable<Manipulator> GenerateManipulators();
+    protected abstract IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators();
 
     #endregion
 
@@ -73,27 +75,6 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     public abstract void Bind([NotNull] ModelVisual3D source);
     public abstract void Unbind();
-
-    #endregion
-
-    #region Sizing
-
-    protected static void Resize([NotNull] Manipulator manipulator, double main) => Resize(manipulator, main, main);
-    protected static void Resize([NotNull] Manipulator manipulator, double main, double secondary)
-    {
-      switch (manipulator)
-      {
-        case TranslateManipulator translate:
-          translate.Length = main * 1.25;
-          translate.Diameter = secondary * 0.12;
-          break;
-        case RotateManipulator rotate:
-          rotate.Diameter = secondary * 1.65;
-          rotate.InnerDiameter = secondary * 1.5;
-          rotate.Length = secondary * 0.1;
-          break;
-      }
-    }
 
     #endregion
   }

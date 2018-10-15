@@ -207,8 +207,8 @@
     <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
-    <Compile Include="DependencyObjects\MovementManipulator.cs" />
-    <Compile Include="DependencyObjects\ResizeManipulator.cs" />
+    <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
+    <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />

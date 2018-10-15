@@ -36,23 +36,88 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     static MovementManipulator()
     {
       Converter = new DiameterConverter();
-      LinearConverter = new LinearConverter();
+      LinearConverter = new LinearConverter() { M = 1 };
       PointsToHeightConverter = new PointsToHeightConverter();
-      DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator),
-        new UIPropertyMetadata(2.0, (sender, args) => (sender as MovementManipulator).OnDiameterChanged(args)));
+      DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator));
     }
 
     public MovementManipulator() : base() { }
 
-    protected override IEnumerable<Manipulator> GenerateManipulators()
+    [NotNull]
+    [ItemNotNull]
+    protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
     {
-      yield return new RotateManipulator { Axis = new Vector3D(1, 0, 0), Color = Colors.Red };
-      yield return new RotateManipulator { Axis = new Vector3D(0, 1, 0), Color = Colors.Green };
-      yield return new RotateManipulator { Axis = new Vector3D(0, 0, 1), Color = Colors.Blue };
-      yield return new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
-      yield return new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green };
-      yield return new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue };
+      IEnumerable<Manipulator> Generate()
+      {
+        yield return new RotateManipulator { Axis = new Vector3D(1, 0, 0), Color = Colors.Red };
+        yield return new RotateManipulator { Axis = new Vector3D(0, 1, 0), Color = Colors.Green };
+        yield return new RotateManipulator { Axis = new Vector3D(0, 0, 1), Color = Colors.Blue };
+        yield return new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
+        yield return new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green };
+        yield return new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue };
+      }
+
+      return from manipulator in Generate()
+             select Tuple.Create<Manipulator, Action<Manipulator>>(manipulator, BindToManipulator);
     }
+
+    #region Manipulator Size Bindings
+
+    private void BindToManipulator(Manipulator manipulator)
+    {
+      switch (manipulator)
+      {
+        case TranslateManipulator translate:
+          BindToTranslateManipulator(translate); break;
+        case RotateManipulator rotate:
+          BindToRotationManipulator(rotate); break;
+      }
+    }
+
+    private void BindToTranslateManipulator(TranslateManipulator manipulator)
+    {
+      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding("Diameter")
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 1.25,
+        Mode = BindingMode.OneWay
+      });
+      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Diameter")
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 0.12,
+        Mode = BindingMode.OneWay
+      });
+    }
+
+    private void BindToRotationManipulator(RotateManipulator manipulator)
+    {
+      BindingOperations.SetBinding(manipulator, RotateManipulator.DiameterProperty, new Binding("Diameter")
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 1.65,
+        Mode = BindingMode.OneWay
+      });
+      BindingOperations.SetBinding(manipulator, RotateManipulator.InnerDiameterProperty, new Binding("Diameter")
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 1.5,
+        Mode = BindingMode.OneWay
+      });
+      BindingOperations.SetBinding(manipulator, RotateManipulator.LengthProperty, new Binding("Diameter")
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 0.1,
+        Mode = BindingMode.OneWay
+      });
+    }
+
+    #endregion
 
     #endregion
 
@@ -157,14 +222,6 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     #endregion
 
     #region Sizing
-
-    protected virtual void OnDiameterChanged(DependencyPropertyChangedEventArgs args)
-    {
-      foreach (Manipulator manipulator in Children)
-      {
-        Resize(manipulator, (double)args.NewValue);
-      }
-    }
 
     /// <remarks><see cref="ConvertBack(object, Type[], object, CultureInfo)"/> n'est pas implémenté parce que la transformation est un processus destructif.</remarks>
     private class DiameterConverter : IMultiValueConverter

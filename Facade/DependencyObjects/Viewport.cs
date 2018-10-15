@@ -38,8 +38,7 @@ namespace Hymperia.Facade.DependencyObjects
     private readonly SunLight Sunlight;
     private readonly GridLinesVisual3D GridLines;
     private readonly Material SelectedMaterial;
-    private MovementManipulator MoveManipulator;
-    //private ResizeManipulator SizeManipulator;
+    private Manipulators.CombinedManipulator Manipulator;
 
     #endregion
 
@@ -51,11 +50,9 @@ namespace Hymperia.Facade.DependencyObjects
 
     public Viewport() : base()
     {
-      var diffuse = Brushes.Red.Clone();
-
       Sunlight = new SunLight();
-      GridLines = new GridLinesVisual3D { Width = 1000, Length = 1000, /*MinorDistance = 0.1,*/ MajorDistance = 1, Thickness = 0.01 };
-      SelectedMaterial = new DiffuseMaterial(diffuse);
+      GridLines = new GridLinesVisual3D { Width = 100, Length = 100, MajorDistance = 1, Thickness = 0.01 };
+      SelectedMaterial = new DiffuseMaterial(Brushes.Red.Clone());
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(false, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
@@ -118,9 +115,9 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        MoveManipulator = new MovementManipulator();
-        MoveManipulator.Bind(model);
-        this?.Children?.Add(MoveManipulator);
+        Manipulator = new MovementManipulator();
+        Manipulator.Bind(model);
+        this?.Children?.Add(Manipulator);
       }
     }
 
@@ -128,8 +125,8 @@ namespace Hymperia.Facade.DependencyObjects
     {
       foreach (MeshElement3D model in models)
       {
-        MoveManipulator.Unbind();
-        this?.Children?.Remove(MoveManipulator);
+        Manipulator.Unbind();
+        this?.Children?.Remove(Manipulator);
       }
     }
 
