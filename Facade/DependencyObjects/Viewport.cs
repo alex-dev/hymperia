@@ -39,7 +39,7 @@ namespace Hymperia.Facade.DependencyObjects
     private readonly GridLinesVisual3D GridLines;
     private readonly Material SelectedMaterial;
     private MovementManipulator MoveManipulator;
-    //private ResizeManipulator SizeManipulator;
+    private ResizeManipulator SizeManipulator;    
 
     #endregion
 
@@ -59,6 +59,7 @@ namespace Hymperia.Facade.DependencyObjects
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(false, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
+      
     }
 
     #region Methods
@@ -114,7 +115,7 @@ namespace Hymperia.Facade.DependencyObjects
       }
     }
 
-    private void AddPropertyManipulator(IEnumerable<MeshElement3D> models)
+    private void AddMovementPropertyManipulator(IEnumerable<MeshElement3D> models)
     {
       foreach (MeshElement3D model in models)
       {
@@ -124,12 +125,31 @@ namespace Hymperia.Facade.DependencyObjects
       }
     }
 
-    private void RemovePropertyManipulator(IEnumerable<MeshElement3D> models)
+    private void RemoveMovementPropertyManipulator(IEnumerable<MeshElement3D> models)
     {
       foreach (MeshElement3D model in models)
       {
         MoveManipulator.Unbind();
         this?.Children?.Remove(MoveManipulator);
+      }
+    }
+
+    private void AddSizePropertyManipulator(IEnumerable<MeshElement3D> models)
+    {
+      foreach (MeshElement3D model in models)
+      {
+        /*SizeManipulator = new ResizeManipulator(model);
+        SizeManipulator.Bind(model);
+        this?.Children?.Add(MoveManipulator);*/
+      }
+    }
+
+    private void RemoveSizePropertyManipulator(IEnumerable<MeshElement3D> models)
+    {
+      foreach (MeshElement3D model in models)
+      {
+        /*SizeManipulator.Unbind();
+        this?.Children?.Remove(SizeManipulator);*/
       }
     }
 
@@ -146,8 +166,8 @@ namespace Hymperia.Facade.DependencyObjects
 
         if (SelectedItems.Distinct().Count() == 1)
         {
-          AddPropertyManipulator(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-          RemovePropertyManipulator(args.Action == NotifyCollectionChangedAction.Reset
+          AddMovementPropertyManipulator(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+          RemoveMovementPropertyManipulator(args.Action == NotifyCollectionChangedAction.Reset
             ? Children.OfType<MeshElement3D>()
             : args.OldItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
         }
