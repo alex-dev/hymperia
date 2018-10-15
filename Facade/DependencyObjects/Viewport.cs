@@ -33,10 +33,12 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
+    #region Constructors
+
     static Viewport()
     {
-      var metadata = new PropertyMetadata(new PropertyChangedCallback(BindToSelectedItem));
-      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport), metadata);
+      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport),
+        new PropertyMetadata(new PropertyChangedCallback(BindToSelectedItem)));
     }
 
     public Viewport() : base()
@@ -53,7 +55,7 @@ namespace Hymperia.Facade.DependencyObjects
       InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
     }
 
-    #region Methods
+    #endregion
 
     #region Selection Handlers
 
@@ -83,6 +85,12 @@ namespace Hymperia.Facade.DependencyObjects
 
     private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
       SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>().Distinct());
+
+    #endregion
+
+    #region Selected Items Changed
+
+    #region Update Visual Elements
 
     private void SelectMaterial(IEnumerable<MeshElement3D> models)
     {
