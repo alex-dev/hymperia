@@ -23,46 +23,52 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref materiaux, value);
     }
 
+    [CanBeNull]
+    public Task<Materiau[]> Loading
+    {
+      get => loading;
+      set => SetProperty(ref loading, value, () =>
+      {
+        IsLoading = true;
+        value.ContinueWith(result => IsLoading = false);
+      });
+    }
+
     [NotNull]
     public string DefaultName => "Bois";
 
     public ICommand RefreshItems { get; private set; }
 
+    private bool IsLoading
+    {
+      get => isLoading;
+      set => SetProperty(ref isLoading, value);
+    }
+
     #endregion
 
     #region Constructors
 
-    static MateriauxSelectionViewModel()
-    {
-      TaskStatusToAccept = new TaskStatus[]
-      {
-        TaskStatus.Canceled,
-        TaskStatus.Faulted,
-        TaskStatus.RanToCompletion
-      };
-    }
-
     public MateriauxSelectionViewModel([NotNull] ContextFactory factory)
     {
       Factory = factory;
-      RefreshItems = new DelegateCommand(() => Loading = RefreshMateriaux());
-      Loading = RefreshMateriaux();
+      RefreshItems = new DelegateCommand(RefreshMateriaux).ObservesCanExecute(() => IsLoading);
+      RefreshItems.Execute(null);
     }
 
     #endregion
 
     #region Queries
 
-    private static readonly TaskStatus[] TaskStatusToAccept;
-    private Task Loading;
 
-    private async Task RefreshMateriaux()
+    private async void RefreshMateriaux()
     {
-      if (TaskStatusToAccept.Contains(Loading?.Status ?? TaskStatus.RanToCompletion))
+      if (IsLoading)
       {
         using (var context = Factory.GetContext())
         {
-          Materiaux = await context.Materiaux.ToArrayAsync();
+          Loading = context.Materiaux.ToArrayAsync();
+          Materiaux = await Loading;
         }
       }
     }
@@ -78,6 +84,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private Task<Materiau[]> loading;
+    private bool isLoading;
     private ICollection<Materiau> materiaux;
 
     #endregion
