@@ -237,8 +237,14 @@
     <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
       <DependentUpon>MateriauxSelection.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PrixAnalyse.xaml.cs">
-      <DependentUpon>PrixAnalyse.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\PrixAnalyseFormes.xaml.cs">
+      <DependentUpon>PrixAnalyseFormes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
+      <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\SelectionMode.xaml.cs">
+      <DependentUpon>SelectionMode.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
@@ -296,7 +302,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PrixAnalyse.xaml">
+    <Page Include="Views\Editeur\PrixAnalyseFormes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PrixAnalyseMateriaux.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\SelectionMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

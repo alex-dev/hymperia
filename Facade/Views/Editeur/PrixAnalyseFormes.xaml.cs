@@ -8,11 +8,11 @@ using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.Views.Editeur
 {
-  public partial class PrixAnalyse : RegionContextAwareUserControl
+  public partial class PrixAnalyseFormes : RegionContextAwareUserControl
   {
     public Projet Projet => (RegionContext as IProjetViewModel)?.Projet;
 
-    public PrixAnalyse() : base()
+    public PrixAnalyseFormes() : base()
     {
       InitializeComponent();
     }
