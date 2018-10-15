@@ -1,13 +1,18 @@
-﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.PrixAnalyse"
+﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.PrixAnalyseMateriaux"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
-  <StackPanel>
+  <DockPanel>
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+      <TextBlock Text="Prix total :" />
+      <TextBlock Name="PrixTotal"
+          Text="{Binding Projet.Prix, StringFormat={}{0:c}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
+    </StackPanel>
     <ItemsControl Name="MateriauxPrix"
         ItemsSource="{Binding Projet.PrixMateriaux, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}">
       <ItemsControl.Template>
         <ControlTemplate>
-          <ScrollViewer Padding="{TemplateBinding Padding}">
+          <ScrollViewer Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}">
             <ItemsPresenter />
           </ScrollViewer>
         </ControlTemplate>
@@ -31,10 +36,6 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-    <StackPanel Orientation="Horizontal">
-      <TextBlock Text="Prix total :"  />
-      <TextBlock Name="PrixTotal"
-          Text="{Binding Projet.Prix, StringFormat={}{0:c}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
-    </StackPanel>
-  </StackPanel>
+  </DockPanel>
+
 </base:RegionContextAwareUserControl>
