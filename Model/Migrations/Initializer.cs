@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.Model.Migrations
 {

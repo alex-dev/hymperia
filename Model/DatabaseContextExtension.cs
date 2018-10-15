@@ -3,10 +3,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Hymperia.Model.Modeles;
 
 namespace Hymperia.Model
 {

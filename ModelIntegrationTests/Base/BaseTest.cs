@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hymperia.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelIntegrationTests.Base;
 
 namespace ModelIntegrationTests

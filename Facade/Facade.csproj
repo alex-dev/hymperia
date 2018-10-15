@@ -68,6 +68,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -225,8 +226,31 @@
     <Compile Include="Services\PointsToHeightConverters\PointsToHeightConverter.cs" />
     <Compile Include="Services\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
+    <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
+      <DependentUpon>FormesProperties.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
+      <DependentUpon>FormesSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
+      <DependentUpon>MateriauxSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PrixAnalyseFormes.xaml.cs">
+      <DependentUpon>PrixAnalyseFormes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
+      <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\SelectionMode.xaml.cs">
+      <DependentUpon>SelectionMode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
     </Compile>
@@ -271,6 +295,30 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Editeur\FormesProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\FormesSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\MateriauxSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PrixAnalyseFormes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PrixAnalyseMateriaux.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\SelectionMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editeur\Viewport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -305,6 +353,20 @@
       <Project>{77e58132-639f-4902-bf07-0e57ba979cfc}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cone.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cylindre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Ellipsoide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\PrismeRectangulaire.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

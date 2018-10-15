@@ -1,30 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using JetBrains.Annotations;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
-using System.Collections.Generic;
-using System.Collections;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class ViewportViewModel : RegionContextAwareViewModel
   {
     #region Attributes
-
-    #region Fields
-
-    private BulkObservableCollection<MeshElement3D> formes;
-    private BulkObservableCollection<MeshElement3D> selected;
-    private ICommand ajouter;
-    private ICommand supprimer;
-
-    #endregion
 
     #region Binding
 
@@ -55,43 +45,29 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public ICommand AjouterForme
-    {
-      get => ajouter;
-      private set => SetProperty(ref ajouter, value);
-    }
-
-    public ICommand SupprimerForme
-    {
-      get => supprimer;
-      set => SetProperty(ref supprimer, value);
-    }
+    public ICommand AjouterForme { get; private set; }
+    public ICommand SupprimerForme { get; private set; }
 
     #endregion
 
     #endregion
 
-    #region Services
-
-    [NotNull]
-    private readonly ConvertisseurWrappers ConvertisseurWrappers;
-
-    #endregion
+    #region Constructors
 
     public ViewportViewModel([NotNull] ConvertisseurWrappers wrappers)
     {
       ConvertisseurWrappers = wrappers;
     }
 
-    #region Methods
+    #endregion
 
     #region Region Interactions
 
     protected override void OnRegionContextChanged()
     {
-      if (!(RegionContext is EditeurViewModel context))
+      if (!(RegionContext is IEditeurViewModel context))
       {
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
       }
 
       context.PropertyChanged += (sender, args) =>
@@ -118,9 +94,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void UpdateFormes()
     {
-      if (!(RegionContext is EditeurViewModel context))
+      if (!(RegionContext is IEditeurViewModel context))
       {
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
       }
 
       if (context.Formes is null)
@@ -139,9 +115,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void UpdateFormesSelectionnees()
     {
-      if (!(RegionContext is EditeurViewModel context))
+      if (!(RegionContext is IEditeurViewModel context))
       {
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(EditeurViewModel) }.");
+        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
       }
 
       if (Formes is null && context.FormesSelectionnees.Count > 0)
@@ -167,7 +143,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == ((EditeurViewModel)RegionContext).Formes)
+      if (sender == ((IEditeurViewModel)RegionContext).Formes)
       {
         var newitems = from FormeWrapper forme in (IEnumerable)args.NewItems ?? Enumerable.Empty<FormeWrapper>()
                        select ConvertisseurWrappers.Convertir(forme);
@@ -192,7 +168,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == ((EditeurViewModel)RegionContext).FormesSelectionnees)
+      if (sender == ((IEditeurViewModel)RegionContext).FormesSelectionnees)
       {
         var newitems = from FormeWrapper wrapper in (IEnumerable)args.NewItems ?? Enumerable.Empty<MeshElement3D>()
                        join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
@@ -252,6 +228,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly ConvertisseurWrappers ConvertisseurWrappers;
+
+    #endregion
+
+    #region Private Fields
+
+    private BulkObservableCollection<MeshElement3D> formes;
+    private BulkObservableCollection<MeshElement3D> selected;
 
     #endregion
   }

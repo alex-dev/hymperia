@@ -40,11 +40,24 @@ namespace Hymperia.Model.Modeles
     [NotMapped]
     public double Prix => Formes.Sum(forme => forme.Prix);
 
+    /// <summary>Le prix du plan séparé par matériaux.</summary>
+    [NotMapped]
+    public IEnumerable<KeyValuePair<Materiau, double>> PrixMateriaux =>
+     from forme in Formes
+     group forme.Prix by forme.Materiau into pair
+     select new KeyValuePair<Materiau, double>(pair.Key, pair.Sum());
+
+    /// <summary>Le prix du plan séparé par formes.</summary>
+    [NotMapped]
+    public IEnumerable<KeyValuePair<int, double>> PrixFormes =>
+     from forme in Formes
+     select new KeyValuePair<int, double>(forme.Id, forme.Prix);
+
     #endregion
 
-    #region Constructors
+     #region Constructors
 
-    /// <param name="name">Le nom du projet.</param>
+     /// <param name="name">Le nom du projet.</param>
     public Projet([NotNull] string nom)
     {
       Id = default;
@@ -54,12 +67,7 @@ namespace Hymperia.Model.Modeles
     #endregion
 
     #region Methods
-
-    public IEnumerable<KeyValuePair<Materiau, double>> CalculePrixMateriaux() =>
-     from forme in Formes
-     group forme.Prix by forme.Materiau into pair
-     select new KeyValuePair<Materiau, double>(pair.Key, pair.Sum());
-
+    
     /// <summary></summary>
     /// <param name="forme"></param>
     public void AjouterForme([NotNull] Forme forme)

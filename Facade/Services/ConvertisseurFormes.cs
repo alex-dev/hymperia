@@ -1,6 +1,7 @@
 ﻿using System;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
 {
@@ -11,7 +12,8 @@ namespace Hymperia.Facade.Services
     /// </summary>
     /// <param name="forme">Une forme.</param>
     /// <returns>La forme en FormeWrapper</returns>
-    public FormeWrapper Convertir(Forme forme)
+    [NotNull]
+    public FormeWrapper Convertir([NotNull] Forme forme)
     {
       switch (forme)
       {

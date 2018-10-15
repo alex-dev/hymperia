@@ -1,29 +1,90 @@
-﻿using System.Windows.Controls;
-using System.Windows.Data;
-using Prism.Common;
-using R = Prism.Regions;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using JetBrains.Annotations;
+using R = Prism.Regions;
 
 namespace Hymperia.Facade.BaseClasses
 {
   public abstract class RegionContextAwareUserControl : UserControl
   {
+    #region Dependency Properties
+
     public static readonly DependencyProperty RegionContextProperty;
 
+    #endregion
+
+    [CanBeNull]
     public object RegionContext
     {
       get => GetValue(RegionContextProperty);
       set => SetValue(RegionContextProperty, value);
     }
 
+    #region Constructors
+
     static RegionContextAwareUserControl()
     {
-      RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl));
+      RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
     }
 
     protected RegionContextAwareUserControl()
     {
-      BindingOperations.SetBinding(R.RegionContext.GetObservableContext(this), ObservableObject<object>.ValueProperty, new Binding("RegionContext") { Source = this, Mode = BindingMode.OneWayToSource });
+      Monitor = new SimpleMonitor();
+      RegionContext = R.RegionContext.GetObservableContext(this).Value;
+      R.RegionContext.GetObservableContext(this).PropertyChanged += RegionContextChanged;
     }
+
+    #endregion
+
+    #region Region Context Changes Handlers
+
+    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
+      ((RegionContextAwareUserControl)sender).RegionContextChanged(args);
+
+    protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    {
+      if (!IsBusy())
+      {
+        using (var monitor = Monitor.Enter())
+        {
+          RegionContext = R.RegionContext.GetObservableContext(this).Value;
+        }
+      }
+    }
+
+    protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs args)
+    {
+      if (!IsBusy())
+      {
+        using (var monitor = Monitor.Enter())
+        {
+          R.RegionContext.GetObservableContext(this).Value = RegionContext;
+        }
+      }
+    }
+
+    #region Block Reentrancy
+
+    protected bool IsBusy() => Monitor.Busy;
+    private readonly SimpleMonitor Monitor;
+
+    private class SimpleMonitor : IDisposable
+    {
+      [NotNull]
+      public SimpleMonitor Enter()
+      {
+        Busy = true;
+        return this;
+      }
+
+      public void Dispose() => Busy = false;
+      public bool Busy { get; private set; }
+    }
+
+    #endregion
+
+    #endregion
   }
 }

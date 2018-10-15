@@ -2,10 +2,10 @@
 using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Hymperia.Model.Migrations;
 using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.Model
 {

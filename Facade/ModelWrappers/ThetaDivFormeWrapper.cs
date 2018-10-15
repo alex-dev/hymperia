@@ -1,15 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
-using Hymperia.Model.Modeles;
-using Hymperia.Model.Modeles.JsonObject;
+﻿using Hymperia.Model.Modeles;
 
 
 namespace Hymperia.Facade.ModelWrappers
 {
   public class ThetaDivFormeWrapper : FormeWrapper
   {
-    
     #region Attributs
 
     public int ThetaDiv
@@ -21,6 +16,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     #endregion
 
     public ThetaDivFormeWrapper(Forme forme) : base (forme) {}

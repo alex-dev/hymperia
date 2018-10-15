@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.ConsoleModelTest
 {

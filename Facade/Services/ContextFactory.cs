@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using Hymperia.Model;
+﻿using Hymperia.Model;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
 {

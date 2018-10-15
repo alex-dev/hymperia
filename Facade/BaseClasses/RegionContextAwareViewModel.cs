@@ -1,11 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using JetBrains.Annotations;
+using Prism.Mvvm;
 
 namespace Hymperia.Facade.BaseClasses
 {
   public abstract class RegionContextAwareViewModel : BindableBase
   {
-    private object context;
-
+    [CanBeNull]
     public object RegionContext
     {
       get => context;
@@ -13,5 +13,11 @@ namespace Hymperia.Facade.BaseClasses
     }
 
     protected virtual void OnRegionContextChanged() { }
+
+    #region Private FIelds
+
+    private object context;
+
+    #endregion
   }
 }

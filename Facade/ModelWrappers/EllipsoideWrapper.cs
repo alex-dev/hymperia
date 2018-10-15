@@ -5,6 +5,7 @@ namespace Hymperia.Facade.ModelWrappers
   public class EllipsoideWrapper : FormeWrapper
   {
     #region Attributs
+
     public double RayonX
     {
       get => ((Ellipsoide)Forme).RayonX;
@@ -14,6 +15,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public double RayonY
     {
       get => ((Ellipsoide)Forme).RayonY;
@@ -23,6 +25,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public double RayonZ
     {
       get => ((Ellipsoide)Forme).RayonZ;
@@ -32,6 +35,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public int PhiDiv
     {
       get => ((Ellipsoide)Forme).PhiDiv;
@@ -41,6 +45,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     public int ThetaDiv
     {
       get => ((Ellipsoide)Forme).ThetaDiv;
@@ -50,6 +55,7 @@ namespace Hymperia.Facade.ModelWrappers
         OnPropertyChanged();
       }
     }
+
     #endregion
 
     public EllipsoideWrapper(Ellipsoide forme) : base(forme) { }
