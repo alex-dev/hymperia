@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using JetBrains.Annotations;
@@ -7,6 +8,7 @@ using R = Prism.Regions;
 
 namespace Hymperia.Facade.BaseClasses
 {
+  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
   public abstract class RegionContextAwareUserControl : UserControl
   {
     #region Dependency Properties

@@ -17,33 +17,37 @@ namespace Hymperia.Model.Migrations
     {
       get => new Func<Materiau[], Forme>[]
       {
-        materiaux => new PrismeRectangulaire(materiaux[Random.Next(materiaux.Length)])
+        materiaux => new PrismeRectangulaire(
+          materiaux[Random.Next(materiaux.Length)],
+          new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
+          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
         {
-          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           Largeur = Random.Next(1, 15),
           Longueur = Random.Next(1, 15)
         },
-        materiaux => new Ellipsoide(materiaux[Random.Next(materiaux.Length)])
+        materiaux => new Ellipsoide(
+          materiaux[Random.Next(materiaux.Length)],
+          new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
+          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
         {
-          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           RayonX = Random.Next(1, 15),
           RayonY = Random.Next(1, 15),
           RayonZ = Random.Next(1, 15)
         },
-        materiaux => new Cylindre(materiaux[Random.Next(materiaux.Length)])
+        materiaux => new Cylindre(
+          materiaux[Random.Next(materiaux.Length)],
+          new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
+          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
         {
-          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           Diametre = Random.Next(1, 15)
         },
-        materiaux => new Cone(materiaux[Random.Next(materiaux.Length)])
+        materiaux => new Cone(
+          materiaux[Random.Next(materiaux.Length)],
+          new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
+          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
         {
-          Origine = new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          Rotation = new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()),
           Hauteur = Random.Next(1, 15),
           RayonBase = Random.Next(1, 15)
         }

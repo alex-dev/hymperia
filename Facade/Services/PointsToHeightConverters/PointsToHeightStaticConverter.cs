@@ -21,9 +21,9 @@ namespace Hymperia.Facade.Services.PointsToHeightConverters
           return new Point3D(0, 0, height / 2);
         case PointOrientation.Bottom:
           return new Point3D(0, 0, -height / 2);
+        default:
+          throw new NotImplementedException("How did you get there???");
       }
-
-      throw new Exception("How did you get there???");
     }
 
     public static object ConvertToHeight(Point3D point, Type target)

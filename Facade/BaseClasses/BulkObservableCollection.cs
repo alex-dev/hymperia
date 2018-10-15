@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
+using System.Windows.Data;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.BaseClasses
@@ -51,16 +54,108 @@ namespace Hymperia.Facade.BaseClasses
     {
       OnPropertyChanged(new PropertyChangedEventArgs("Count"));
       OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-      OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items, index));
+      OnMultipleCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items, index));
     }
 
     private void OnCollectionChanged_Remove(IList items)
     {
       OnPropertyChanged(new PropertyChangedEventArgs("Count"));
       OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-      OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
+      OnMultipleCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
+    }
+
+    #region Multiple CollectionChanged Invoker
+
+    protected virtual void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs args)
+    {
+      if (CollectionChangedInfos.GetInvocationList() is Delegate[] handlers)
+      {
+        using (BlockReentrancy())
+        {
+          foreach (NotifyCollectionChangedEventHandler handler in handlers)
+          {
+            switch (handler.Target)
+            {
+              case CollectionView view:
+                HandleCollectionView(handler, args); break;
+              default:
+                handler(this, args); break;
+            }
+          }
+        }
+      }
+    }
+
+    protected void HandleCollectionView(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs args)
+    {
+      void HandleMultiple(NotifyCollectionChangedAction action, IList items)
+      {
+        var eventArgs = from T arg in items
+                        select new NotifyCollectionChangedEventArgs(action, arg);
+
+        foreach (var arg in eventArgs)
+        {
+          handler(this, arg);
+        }
+      }
+
+      switch (args.Action)
+      {
+        case NotifyCollectionChangedAction.Add:
+          HandleMultiple(NotifyCollectionChangedAction.Add, args.NewItems); break;
+        case NotifyCollectionChangedAction.Remove:
+          HandleMultiple(NotifyCollectionChangedAction.Remove, args.OldItems); break;
+        case NotifyCollectionChangedAction.Replace:
+        case NotifyCollectionChangedAction.Move:
+        case NotifyCollectionChangedAction.Reset:
+          handler(this, args); break;
+      }
     }
 
     #endregion
+
+    #endregion
+
+    #region Reflection - Danger!! Do not attempt to change or you shall lose your mind
+
+    private EventDelegate CollectionChangedInfos => infos ?? (infos = EventDelegate.LoadCollectionChanged(this));
+    private EventDelegate infos;
+
+    private class EventDelegate
+    {
+      public static readonly BindingFlags Flags;
+
+      #region Constructors
+
+      public static EventDelegate LoadCollectionChanged(ObservableCollection<T> owner) =>
+        new EventDelegate(typeof(ObservableCollection<T>).GetField(nameof(CollectionChanged), Flags), owner);
+
+      static EventDelegate()
+      {
+        Flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+      }
+
+      public EventDelegate(FieldInfo field, ObservableCollection<T> owner)
+      {
+        Field = field;
+        Owner = owner;
+      }
+
+      #endregion
+
+      public Delegate[] GetInvocationList() => Delegate?.GetInvocationList();
+
+      private Delegate Delegate => (Delegate)Field.GetValue(Owner);
+
+      #region Private Fields
+
+      private readonly FieldInfo Field;
+      private readonly ObservableCollection<T> Owner;
+
+      #endregion
+    }
   }
+
+  #endregion
 }
+

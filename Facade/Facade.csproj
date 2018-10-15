@@ -221,6 +221,7 @@
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
+    <Compile Include="Services\Point3DToPointConverter.cs" />
     <Compile Include="Services\PointsToHeightConverters\HeightToPointsConverter.cs" />
     <Compile Include="Services\PointsToHeightConverters\PointsToHeightStaticConverter.cs" />
     <Compile Include="Services\PointsToHeightConverters\PointsToHeightConverter.cs" />

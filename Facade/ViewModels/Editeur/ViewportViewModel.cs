@@ -5,10 +5,12 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
+using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
