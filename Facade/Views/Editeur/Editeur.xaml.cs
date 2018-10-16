@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Prism.Regions;
 using Hymperia.Model.Modeles;
+using System;
+using Hymperia.Facade.ViewModels.Editeur;
 
 namespace Hymperia.Facade.Views.Editeur
 {
@@ -24,14 +26,14 @@ namespace Hymperia.Facade.Views.Editeur
 
     static Editeur()
     {
-      ProjetProperty = DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
+      ProjetProperty = DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur), new PropertyMetadata(ProjetChanged));
     }
 
     public Editeur(IRegionManager manager)
     {
       RegisterViews(manager);
       InitializeComponent();
-      SetBinding(ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource, NotifyOnSourceUpdated = true });
     }
 
     #endregion
@@ -46,6 +48,21 @@ namespace Hymperia.Facade.Views.Editeur
       manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(PrixAnalyseFormes));
       manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
       manager.RegisterViewWithRegion("SelectionModeRegion", typeof(SelectionMode));
+    }
+
+    #endregion
+
+    #region Projet Changes
+
+    private static void ProjetChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
+      ((Editeur)sender).ProjetChanged(args);
+
+    private void ProjetChanged(DependencyPropertyChangedEventArgs args)
+    {
+      if (DataContext is EditeurViewModel context && context.Revert.CanExecute(null))
+      {
+        context.Revert.Execute(null);
+      }
     }
 
     #endregion

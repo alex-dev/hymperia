@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.Services;
@@ -15,6 +14,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
   {
     #region Attributes
 
+    [NotNull]
+    public string DefaultName => "Bois";
+
+    #region Bindings
+
     [CanBeNull]
     [ItemNotNull]
     public ICollection<Materiau> Materiaux
@@ -23,42 +27,55 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref materiaux, value);
     }
 
-    [NotNull]
-    public string DefaultName => "Bois";
+    #endregion
+
+    #region Commands
 
     public ICommand RefreshItems { get; private set; }
 
     #endregion
 
-    #region Constructors
+    #region Asynchronous Loading
 
-    static MateriauxSelectionViewModel()
+    [CanBeNull]
+    private Task Loading
     {
-      TaskStatusToAccept = new TaskStatus[]
+      get => loading;
+      set => SetProperty(ref loading, value, () =>
       {
-        TaskStatus.Canceled,
-        TaskStatus.Faulted,
-        TaskStatus.RanToCompletion
-      };
+        IsLoading = true;
+        value.ContinueWith(result => IsLoading = false);
+      });
     }
+
+    public bool IsLoading
+    {
+      get => isLoading;
+      private set => SetProperty(ref isLoading, value);
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Constructors
 
     public MateriauxSelectionViewModel([NotNull] ContextFactory factory)
     {
       Factory = factory;
-      RefreshItems = new DelegateCommand(() => Loading = RefreshMateriaux());
-      Loading = RefreshMateriaux();
+      RefreshItems = new DelegateCommand(() => Loading = RefreshMateriaux())
+        .ObservesCanExecute(() => IsLoading);
+
+      RefreshItems.Execute(null);
     }
 
     #endregion
 
     #region Queries
 
-    private static readonly TaskStatus[] TaskStatusToAccept;
-    private Task Loading;
-
     private async Task RefreshMateriaux()
     {
-      if (TaskStatusToAccept.Contains(Loading?.Status ?? TaskStatus.RanToCompletion))
+      if (!IsLoading)
       {
         using (var context = Factory.GetContext())
         {
@@ -78,6 +95,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private Task loading;
+    private bool isLoading;
     private ICollection<Materiau> materiaux;
 
     #endregion
