@@ -132,7 +132,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       ContextFactory = factory;
       ConvertisseurFormes = formes;
-      AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme)
+      AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
         .ObservesProperty(() => SelectedForme)
         .ObservesProperty(() => SelectedMateriau);
