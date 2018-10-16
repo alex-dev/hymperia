@@ -1,5 +1,7 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Controls;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
@@ -56,7 +58,7 @@ namespace Hymperia.Facade.Views.Editeur
     {
       if (sender == (RegionContext as IProjetViewModel)?.Formes)
       {
-        foreach (FormeWrapper forme in args.NewItems)
+        foreach (FormeWrapper forme in (IEnumerable)args.NewItems ?? Enumerable.Empty<FormeWrapper>())
         {
           forme.PropertyChanged += FormeChanged;
         }

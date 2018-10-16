@@ -33,7 +33,6 @@ namespace Hymperia.Facade.Views.Editeur
     {
       RegisterViews(manager);
       InitializeComponent();
-
       BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource, NotifyOnSourceUpdated = true });
     }
 

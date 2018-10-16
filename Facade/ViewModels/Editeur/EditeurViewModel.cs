@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
+using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
@@ -125,6 +127,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
+    [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes)
     {
       ContextFactory = factory;
@@ -139,6 +142,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         .ObservesCanExecute(() => IsModified);
       Revert = new DelegateCommand(() => ProjetLoading = SaveLoading = _Revert())
         .ObservesCanExecute(() => IsModified);
+        
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
     }
 
@@ -146,14 +150,23 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Command AjouterForme
 
-    private Forme CreerForme()
+    private Forme CreerForme(Point point)
     {
-      throw new NotImplementedException();
+      if (SelectedForme == typeof(PrismeRectangulaire))
+        return new PrismeRectangulaire(SelectedMateriau) { Origine = point };
+      else if (SelectedForme == typeof(Ellipsoide))
+        return new Ellipsoide(SelectedMateriau) { Origine = point };
+      else if (SelectedForme == typeof(Cone))
+        return new Cone(SelectedMateriau) { Origine = point };
+      else if (SelectedForme == typeof(Cylindre))
+        return new Cylindre(SelectedMateriau) { Origine = point };
+      else
+        throw new NotImplementedException("Seems like something broke. Blame the devs.");
     }
 
-    private void _AjouterForme()
+    private void _AjouterForme(Point point)
     {
-      var forme = CreerForme();
+      var forme = CreerForme(point);
       var wrapper = ConvertisseurFormes.Convertir(forme);
 
       Projet.AjouterForme(forme);
@@ -161,8 +174,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Formes.Add(wrapper);
     }
 
-    // TODO: Add Check
-    private bool PeutAjouterForme() => Projet is Projet && SelectedMateriau is Materiau;
+    private bool PeutAjouterForme(Point point) =>
+      point is Point && Projet is Projet && SelectedMateriau is Materiau && SelectedForme.IsSubclassOf(typeof(Forme));
 
     #endregion
 

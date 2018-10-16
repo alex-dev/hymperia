@@ -20,6 +20,7 @@ namespace Hymperia.Facade.DependencyObjects
     #region Dependancy Properties
 
     public static readonly DependencyProperty SelectedItemsProperty;
+    public static readonly DependencyProperty SelectionModeProperty;
 
     #endregion
 
@@ -33,6 +34,12 @@ namespace Hymperia.Facade.DependencyObjects
       set => SetValue(SelectedItemsProperty, value);
     }
 
+    public SelectionMode SelectionMode
+    {
+      get => (SelectionMode)GetValue(SelectionModeProperty);
+      set => SetValue(SelectionModeProperty, value);
+    }
+
     #endregion
 
     #region Constructors
@@ -40,7 +47,8 @@ namespace Hymperia.Facade.DependencyObjects
     static Viewport()
     {
       SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport),
-        new PropertyMetadata(new PropertyChangedCallback(BindToSelectedItem)));
+        new PropertyMetadata(BindToSelectedItem));
+      SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(Viewport));
     }
 
     public Viewport() : base()
@@ -64,7 +72,7 @@ namespace Hymperia.Facade.DependencyObjects
     private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
     {
       args = new VisualsSelectedEventArgs(
-        args.SelectedVisuals.OfType<MeshElement3D>().ToList<Visual3D>(),
+        args.SelectedVisuals.OfType<MeshElement3D>().Distinct().Except(SelectedItems).ToList<Visual3D>(),
         args.AreSortedByDistanceAscending);
 
       if (clear)
@@ -86,7 +94,7 @@ namespace Hymperia.Facade.DependencyObjects
     };
 
     private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
-      SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>().Distinct());
+      SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>());
 
     #endregion
 
@@ -118,9 +126,22 @@ namespace Hymperia.Facade.DependencyObjects
 
     private void AddManipulator(MeshElement3D model)
     {
-      Manipulator = new MovementManipulator();
+      Manipulator = CreateManipulator();
       Manipulator.Bind(model);
       Children.Add(Manipulator);
+    }
+
+    private Manipulators.CombinedManipulator CreateManipulator()
+    {
+      switch (SelectionMode)
+      {
+        case SelectionMode.Deplacement:
+          return new MovementManipulator();
+        case SelectionMode.Transformation:
+          return new MovementManipulator();
+        default:
+          throw new NotImplementedException("You forgot to implement stuff!!");
+      }
     }
 
     private void RemoveManipulator()
