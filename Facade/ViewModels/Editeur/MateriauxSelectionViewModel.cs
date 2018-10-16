@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.Services;
@@ -15,6 +14,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
   {
     #region Attributes
 
+    [NotNull]
+    public string DefaultName => "Bois";
+
+    #region Bindings
+
     [CanBeNull]
     [ItemNotNull]
     public ICollection<Materiau> Materiaux
@@ -23,8 +27,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref materiaux, value);
     }
 
+    #endregion
+
+    #region Commands
+
+    public ICommand RefreshItems { get; private set; }
+
+    #endregion
+
+    #region Asynchronous Loading
+
     [CanBeNull]
-    public Task<Materiau[]> Loading
+    private Task Loading
     {
       get => loading;
       set => SetProperty(ref loading, value, () =>
@@ -34,16 +48,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
       });
     }
 
-    [NotNull]
-    public string DefaultName => "Bois";
-
-    public ICommand RefreshItems { get; private set; }
-
-    private bool IsLoading
+    public bool IsLoading
     {
       get => isLoading;
-      set => SetProperty(ref isLoading, value);
+      private set => SetProperty(ref isLoading, value);
     }
+
+    #endregion
 
     #endregion
 
@@ -52,7 +63,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public MateriauxSelectionViewModel([NotNull] ContextFactory factory)
     {
       Factory = factory;
-      RefreshItems = new DelegateCommand(RefreshMateriaux).ObservesCanExecute(() => IsLoading);
+      RefreshItems = new DelegateCommand(() => Loading = RefreshMateriaux())
+        .ObservesCanExecute(() => IsLoading);
+
       RefreshItems.Execute(null);
     }
 
@@ -60,15 +73,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Queries
 
-
-    private async void RefreshMateriaux()
+    private async Task RefreshMateriaux()
     {
-      if (IsLoading)
+      if (!IsLoading)
       {
         using (var context = Factory.GetContext())
         {
-          Loading = context.Materiaux.ToArrayAsync();
-          Materiaux = await Loading;
+          Materiaux = await context.Materiaux.ToArrayAsync();
         }
       }
     }
@@ -84,7 +95,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
-    private Task<Materiau[]> loading;
+    private Task loading;
     private bool isLoading;
     private ICollection<Materiau> materiaux;
 

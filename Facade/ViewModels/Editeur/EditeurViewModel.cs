@@ -30,7 +30,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public Projet Projet
     {
       get => projet;
-      set => QueryProjet(value, UpdateFormes);
+      set => ProjetLoading = QueryProjet(value, UpdateFormes);
     }
 
     /// <summary>Les formes éditables.</summary>
@@ -72,21 +72,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
       set => SetProperty(ref materiau, value);
     }
 
-    [CanBeNull]
-    public Task ProjetLoading
-    {
-      get => projetLoading;
-      set => SetProperty(ref projetLoading, value);
-    }
-
-    [CanBeNull]
-    public Task SaveLoading
-    {
-      get => saveLoading;
-      set => SetProperty(ref saveLoading, value);
-    }
-
-
     #endregion
 
     #region Commands
@@ -95,6 +80,44 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public ICommand SupprimerForme { get; private set; }
     public ICommand Sauvegarder { get; private set; }
     public ICommand Revert { get; private set; }
+
+    #endregion
+
+    #region Asynchronous Loading
+
+    [CanBeNull]
+    private Task ProjetLoading
+    {
+      get => projetLoading;
+      set => SetProperty(ref projetLoading, value, () =>
+      {
+        IsProjetLoading = true;
+        value.ContinueWith(result => IsProjetLoading = false);
+      });
+    }
+
+    [CanBeNull]
+    private Task SaveLoading
+    {
+      get => saveLoading;
+      set => SetProperty(ref saveLoading, value, () =>
+      {
+        IsSaveLoading = true;
+        value.ContinueWith(result => IsSaveLoading = false);
+      });
+    }
+
+    public bool IsProjetLoading
+    {
+      get => isProjetLoading;
+      private set => SetProperty(ref isProjetLoading, value);
+    }
+
+    public bool IsSaveLoading
+    {
+      get => isSaveLoading;
+      private set => SetProperty(ref isSaveLoading, value);
+    }
 
     #endregion
 
@@ -112,9 +135,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
         .ObservesProperty(() => SelectedMateriau);
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme)
         .ObservesProperty(() => FormesSelectionnees);
-      Sauvegarder = new DelegateCommand(_Sauvegarder)
+      Sauvegarder = new DelegateCommand(() => SaveLoading = _Sauvegarder())
         .ObservesCanExecute(() => IsModified);
-      Revert = new DelegateCommand(_Revert)
+      Revert = new DelegateCommand(() => ProjetLoading = SaveLoading = _Revert())
         .ObservesCanExecute(() => IsModified);
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
     }
@@ -166,7 +189,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Command Sauvegarder
 
-    private async void _Sauvegarder()
+    private async Task _Sauvegarder()
     {
       await (SaveLoading ?? Task.FromCanceled(default));
 
@@ -184,7 +207,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Command Revert
 
-    private async void _Revert()
+    private async Task _Revert()
     {
       await (ProjetLoading ?? Task.FromCanceled(default));
 
@@ -340,6 +363,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private Materiau materiau;
     private Task saveLoading;
     private Task projetLoading;
+    private bool isSaveLoading;
+    private bool isProjetLoading;
     private bool isModified;
 
     #endregion
