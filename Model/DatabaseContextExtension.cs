@@ -70,5 +70,18 @@ namespace Hymperia.Model
     {
       return projets.Include(utilisateur => utilisateur._Acces).ThenInclude(acces => acces.Projet);
     }
+
+    public static void UnloadFormes(this DatabaseContext context, Projet projet)
+    {
+      var entry = context.Entry(projet);
+      var formes = entry.Collection(p => p._Formes);
+
+      foreach (var forme in formes.CurrentValue)
+      {
+        context.Entry(forme).State = EntityState.Detached;
+      }
+
+      formes.CurrentValue = null;
+    }
   }
 }
