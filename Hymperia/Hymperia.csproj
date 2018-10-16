@@ -302,6 +302,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\ListBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editeur\FormesProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
