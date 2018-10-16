@@ -13,6 +13,9 @@ namespace Hymperia.Facade.BaseClasses
 {
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
+    /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> </summary>
+    protected NotifyCollectionChangedEventHandler CollectionChangedEventHandler => CollectionChangedInfos.Delegate as NotifyCollectionChangedEventHandler;
+
     #region Constructors
 
     public BulkObservableCollection() : base() { }
@@ -68,11 +71,11 @@ namespace Hymperia.Facade.BaseClasses
 
     protected virtual void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs args)
     {
-      if (CollectionChangedInfos.GetInvocationList() is Delegate[] handlers)
+      if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
       {
         using (BlockReentrancy())
         {
-          foreach (NotifyCollectionChangedEventHandler handler in handlers)
+          foreach (NotifyCollectionChangedEventHandler handler in handlers.GetInvocationList())
           {
             switch (handler.Target)
             {
@@ -143,9 +146,7 @@ namespace Hymperia.Facade.BaseClasses
 
       #endregion
 
-      public Delegate[] GetInvocationList() => Delegate?.GetInvocationList();
-
-      private Delegate Delegate => (Delegate)Field.GetValue(Owner);
+      public Delegate Delegate => (Delegate)Field.GetValue(Owner);
 
       #region Private Fields
 
