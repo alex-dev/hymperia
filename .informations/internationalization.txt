@@ -1,0 +1,7 @@
+XAML:
+<TextBlock Text="{x:Static Messages.WarningUserMessage}" />
+CodeGeneration public
+CS :
+var cityName = Properties.Resources.city;
+MySQL :
+https://stackoverflow.com/questions/11085205/internationalization-of-content-in-entity-framework
