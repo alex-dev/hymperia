@@ -16,3 +16,5 @@ La `ConnectionString` de la base de données est dans `connections.config`
 - `./ConsoleModelTest.exe utilisateurs` affiche les utilisateurs de l'application.
 
 ## Facade - Application WPF
+
+- Les manipulateurs de redimensionnement ne sont pas fonctionnels. En conséquent, aucun manipulateur n'est afficher lors d'une sélection de redimensionnement.

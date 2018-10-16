@@ -126,9 +126,13 @@ namespace Hymperia.Facade.DependencyObjects
 
     private void AddManipulator(MeshElement3D model)
     {
-      Manipulator = CreateManipulator();
-      Manipulator.Bind(model);
-      Children.Add(Manipulator);
+      try
+      {
+        Manipulator = CreateManipulator();
+        Manipulator.Bind(model);
+        Children.Add(Manipulator);
+      }
+      catch (NotImplementedException) { }
     }
 
     private Manipulators.CombinedManipulator CreateManipulator()
@@ -138,7 +142,6 @@ namespace Hymperia.Facade.DependencyObjects
         case SelectionMode.Deplacement:
           return new MovementManipulator();
         case SelectionMode.Transformation:
-          return new MovementManipulator();
         default:
           throw new NotImplementedException("You forgot to implement stuff!!");
       }
