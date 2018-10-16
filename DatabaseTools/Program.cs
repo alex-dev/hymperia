@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 
-namespace Hymperia.ConsoleModelTest
+namespace Hymperia.DatabaseTools
 {
   static class Program
   {

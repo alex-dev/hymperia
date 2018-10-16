@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Hymperia.ConsoleModelTest
+namespace Hymperia.DatabaseTools
 {
   internal static class Printer
   {

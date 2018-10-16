@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Hymperia.Model;
 
-namespace Hymperia.ConsoleModelTest
+namespace Hymperia.DatabaseTools
 {
   internal static class Deploy
   {

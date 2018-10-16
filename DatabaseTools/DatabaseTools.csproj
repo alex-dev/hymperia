@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CB0D6709-5A27-4227-8F93-E8E5931D70A2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Hymperia.ConsoleModelTest</RootNamespace>
-    <AssemblyName>ConsoleModelTest</AssemblyName>
+    <RootNamespace>Hymperia.DatabaseTools</RootNamespace>
+    <AssemblyName>DatabaseTools</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

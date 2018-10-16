@@ -4,9 +4,9 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{77E58132-639F-4902-BF07-0E57BA979CFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleModelTest", "ConsoleModelTest\ConsoleModelTest.csproj", "{CB0D6709-5A27-4227-8F93-E8E5931D70A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTools", "DatabaseTools\DatabaseTools.csproj", "{CB0D6709-5A27-4227-8F93-E8E5931D70A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "Facade\Facade.csproj", "{4745B556-160E-40F5-9F5D-1FDE36877E43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hymperia", "Hymperia\Hymperia.csproj", "{4745B556-160E-40F5-9F5D-1FDE36877E43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelixViewport3DTest", "HelixViewport3DTest\HelixViewport3DTest.csproj", "{0093D812-BAD7-45F0-A313-ED9343DF2652}"
 EndProject

@@ -5,7 +5,7 @@ using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hymperia.ConsoleModelTest
+namespace Hymperia.DatabaseTools
 {
   internal static class Query
   {
