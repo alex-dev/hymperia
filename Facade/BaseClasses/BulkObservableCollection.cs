@@ -13,7 +13,7 @@ namespace Hymperia.Facade.BaseClasses
 {
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
-    /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> </summary>
+    /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> acquired through reflection. Avoid using if not needed.</summary>
     protected NotifyCollectionChangedEventHandler CollectionChangedEventHandler => CollectionChangedInfos.Delegate as NotifyCollectionChangedEventHandler;
 
     #region Constructors
@@ -159,4 +159,3 @@ namespace Hymperia.Facade.BaseClasses
 
   #endregion
 }
-
