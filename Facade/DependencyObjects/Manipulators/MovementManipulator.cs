@@ -202,7 +202,13 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     private IEnumerable<Binding> CreateBindings([NotNull] TruncatedConeVisual3D source)
     {
-      yield return new Binding("Height") { Source = source, Mode = BindingMode.OneWay };
+      yield return new Binding("Height")
+      {
+        Source = source,
+        Converter = LinearConverter,
+        ConverterParameter = 1.25,
+        Mode = BindingMode.OneWay
+      };
       yield return new Binding("BaseRadius")
       {
         Source = source,

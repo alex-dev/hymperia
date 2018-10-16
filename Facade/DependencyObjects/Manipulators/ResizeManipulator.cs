@@ -83,13 +83,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     private void BindToHeightManipulator(Manipulator manipulator)
     {
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding("Height")
+      var binding = new Binding("Height")
       {
         Source = this,
         Converter = LinearConverter,
-        ConverterParameter = 1.25,
+        ConverterParameter = 1.1,
         Mode = BindingMode.OneWay
-      });
+      };
+
+      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
+      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
       BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Height")
       {
         Source = this,
@@ -100,13 +103,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     }
     private void BindToLengthManipulator(Manipulator manipulator)
     {
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding("Length")
+      var binding = new Binding("Length")
       {
         Source = this,
         Converter = LinearConverter,
-        ConverterParameter = 1.25,
+        ConverterParameter = 1.1,
         Mode = BindingMode.OneWay
-      });
+      };
+
+      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
+      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
       BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Length")
       {
         Source = this,
@@ -118,13 +124,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     private void BindToWidthManipulator(Manipulator manipulator)
     {
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding("Width")
+      var binding = new Binding("Width")
       {
         Source = this,
         Converter = LinearConverter,
-        ConverterParameter = 1.25,
+        ConverterParameter = 1.1,
         Mode = BindingMode.OneWay
-      });
+      };
+
+      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
+      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
       BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Width")
       {
         Source = this,
@@ -147,6 +156,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       BindingOperations.SetBinding(this, HeightProperty, height);
       BindingOperations.SetBinding(this, LengthProperty, length);
       BindingOperations.SetBinding(this, WidthProperty, width);
+      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.OneWay });
     }
 
     public override void Unbind()
@@ -154,6 +164,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       BindingOperations.ClearBinding(this, HeightProperty);
       BindingOperations.ClearBinding(this, LengthProperty);
       BindingOperations.ClearBinding(this, WidthProperty);
+      BindingOperations.ClearBinding(this, TransformProperty);
     }
 
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] ModelVisual3D source)
@@ -184,9 +195,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] EllipsoidVisual3D source) =>
       Tuple.Create(
-        new Binding("RadiusZ") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("RadiusX") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("RadiusY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
+        new Binding("RadiusZ") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
+        new Binding("RadiusX") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
+        new Binding("RadiusY") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay });
 
     /*private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source) =>
       Tuple.Create(

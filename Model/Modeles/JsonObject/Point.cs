@@ -2,6 +2,8 @@
 {
   public class Point
   {
+    public static Point Center => new Point(0, 0, 0);
+
     public double X { get; set; }
     public double Y { get; set; }
     public double Z { get; set; }

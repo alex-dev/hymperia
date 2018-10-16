@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -31,7 +32,8 @@ namespace Hymperia.Model.Modeles
     #region Constructors
 
     /// <inheritdoc />
-    public ThetaDivForme([NotNull] Materiau materiau) : base(materiau)
+    public ThetaDivForme([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default) 
+      : base(materiau, point, quaternion)
     {
       ThetaDiv = 60;
     }
