@@ -142,6 +142,7 @@ namespace Hymperia.Facade.DependencyObjects
         case SelectionMode.Deplacement:
           return new MovementManipulator();
         case SelectionMode.Transformation:
+          return new ResizeManipulator();
         default:
           throw new NotImplementedException("You forgot to implement stuff!!");
       }

@@ -5,13 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:Helix="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf" mc:Ignorable="d">
   <UserControl.Resources>
-    <Helix:LinearConverter x:Key="Multiplier" M="0.5" />
+    <Helix:LinearConverter x:Key="Multiplier" M="1" />
   </UserControl.Resources>
-  <Helix:HelixViewport3D Name="viewport" ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True">
+  <Helix:HelixViewport3D ZoomExtentsWhenLoaded="True" CalculateCursorPosition="True">
     <Helix:SunLight />
-    <Helix:GridLinesVisual3D Width="10" Length="10" MinorDistance="1" MajorDistance="1" Thickness="0.01" />
-    <!--<Helix:CubeVisual3D x:Name="box1" Center="0,0,0" Fill="Gray" SideLength="3"/>
-    <Helix:TranslateManipulator Color="Black" Position="0,0,0" Offset="0,0,0.5" Length="1" Value="{Binding Height, ElementName=box1, Converter={StaticResource Multiplier}}" Direction="0,0,1" />-->
-
+    <Helix:BoxVisual3D x:Name="Forme" Center="0,0,0" Fill="Gray" Height="1" Length="1" Width="1" />
+    <Helix:TranslateManipulator Color="Black" Position="0,0,0" Offset="0,0,0.5" Length="1" Value="{Binding Height, ElementName=Forme, Converter={StaticResource Multiplier}}" Direction="0,0,1" />
   </Helix:HelixViewport3D>
 </UserControl>
