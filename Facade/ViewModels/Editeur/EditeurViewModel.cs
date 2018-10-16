@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -15,6 +14,7 @@ using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -32,7 +32,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public Projet Projet
     {
       get => projet;
-      set => ProjetLoading = QueryProjet(value, UpdateFormes);
+      set
+      {
+        if (Revert.CanExecute(null))
+        {
+          Revert.Execute(null);
+        }
+
+        Loading = QueryProjet(value, UpdateFormes);
+      }
     }
 
     /// <summary>Les formes éditables.</summary>
@@ -88,37 +96,26 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Asynchronous Loading
 
     [CanBeNull]
-    private Task ProjetLoading
+    private Task Loading
     {
-      get => projetLoading;
-      set => SetProperty(ref projetLoading, value, () =>
+      get => loading;
+      set => SetProperty(ref loading, value, () =>
       {
-        IsProjetLoading = true;
-        value.ContinueWith(result => IsProjetLoading = false);
+        IsLoading = true;
+        value
+          .ContinueWith(
+            result => throw result.Exception.Flatten(),
+            default,
+            TaskContinuationOptions.OnlyOnFaulted,
+            TaskScheduler.FromCurrentSynchronizationContext())
+          .ContinueWith(result => IsLoading = false, TaskScheduler.FromCurrentSynchronizationContext());
       });
     }
 
-    [CanBeNull]
-    private Task SaveLoading
+    public bool IsLoading
     {
-      get => saveLoading;
-      set => SetProperty(ref saveLoading, value, () =>
-      {
-        IsSaveLoading = true;
-        value.ContinueWith(result => IsSaveLoading = false);
-      });
-    }
-
-    public bool IsProjetLoading
-    {
-      get => isProjetLoading;
-      private set => SetProperty(ref isProjetLoading, value);
-    }
-
-    public bool IsSaveLoading
-    {
-      get => isSaveLoading;
-      private set => SetProperty(ref isSaveLoading, value);
+      get => isLoading;
+      private set => SetProperty(ref isLoading, value);
     }
 
     #endregion
@@ -132,17 +129,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       ContextFactory = factory;
       ConvertisseurFormes = formes;
-      AjouterForme = new DelegateCommand(_AjouterForme, PeutAjouterForme)
+      AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
         .ObservesProperty(() => SelectedForme)
         .ObservesProperty(() => SelectedMateriau);
       SupprimerForme = new DelegateCommand(_SupprimerForme, PeutSupprimerForme)
         .ObservesProperty(() => FormesSelectionnees);
-      Sauvegarder = new DelegateCommand(() => SaveLoading = _Sauvegarder())
+      Sauvegarder = new DelegateCommand(() => Loading = _Sauvegarder())
         .ObservesCanExecute(() => IsModified);
-      Revert = new DelegateCommand(() => ProjetLoading = SaveLoading = _Revert())
+      Revert = new DelegateCommand(() => Loading = _Revert())
         .ObservesCanExecute(() => IsModified);
-        
+
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
     }
 
@@ -153,15 +150,25 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private Forme CreerForme(Point point)
     {
       if (SelectedForme == typeof(PrismeRectangulaire))
+      {
         return new PrismeRectangulaire(SelectedMateriau) { Origine = point };
+      }
       else if (SelectedForme == typeof(Ellipsoide))
+      {
         return new Ellipsoide(SelectedMateriau) { Origine = point };
+      }
       else if (SelectedForme == typeof(Cone))
+      {
         return new Cone(SelectedMateriau) { Origine = point };
+      }
       else if (SelectedForme == typeof(Cylindre))
+      {
         return new Cylindre(SelectedMateriau) { Origine = point };
+      }
       else
+      {
         throw new NotImplementedException("Seems like something broke. Blame the devs.");
+      }
     }
 
     private void _AjouterForme(Point point)
@@ -170,8 +177,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       var wrapper = ConvertisseurFormes.Convertir(forme);
 
       Projet.AjouterForme(forme);
-      FormesAdded.Add(wrapper);
       Formes.Add(wrapper);
+      HasBeenModified(null, null);
     }
 
     private bool PeutAjouterForme(Point point) =>
@@ -192,7 +199,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
 
       Formes.RemoveRange(FormesSelectionnees);
-      FormesDeleted = FormesDeleted.Concat(FormesSelectionnees).ToArray();
+      FormesDeleted.AddRange(formes);
       FormesSelectionnees.Clear();
     }
 
@@ -204,15 +211,22 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task _Sauvegarder()
     {
-      await (SaveLoading ?? Task.FromCanceled(default));
+      if (!IsModified)
+      {
+        throw new InvalidOperationException("Project has not been modified yet.");
+      }
+
+      var projet = Projet;
+      var deleted = FormesDeleted;
+
+      await (Loading ?? Task.CompletedTask);
 
       using (var context = ContextFactory.GetContext())
       {
-        ConstructEntriesState(context);
-        ResetChangeTracker();
+        Populate(context, projet, deleted);
+        ResetChangeTracker(projet, deleted);
 
-        SaveLoading = context.SaveChangesAsync();
-        await SaveLoading;
+        await context.SaveChangesAsync();
       }
     }
 
@@ -222,13 +236,19 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task _Revert()
     {
-      await (ProjetLoading ?? Task.FromCanceled(default));
+      if (!IsModified)
+      {
+        throw new InvalidOperationException("Project has not been modified yet.");
+      }
+
+      var projet = Projet;
+      var deleted = FormesDeleted;
+
+      await (Loading ?? Task.CompletedTask);
 
       using (var context = ContextFactory.GetContext())
       {
-        context.Attach(Projet);
-        ProjetLoading = context.Entry(Projet).ReloadAsync();
-        await ProjetLoading;
+        context.UnloadFormes(projet);
       }
     }
 
@@ -242,14 +262,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       if (_projet is Projet)
       {
-        await (ProjetLoading ?? Task.FromCanceled(default));
-        await (SaveLoading ?? Task.FromCanceled(default));
+        await (Loading ?? Task.CompletedTask);
 
         using (var context = ContextFactory.GetContext())
         {
           context.Attach(_projet);
-          ProjetLoading = context.Entry(_projet).CollectionFormes().LoadAsync();
-          await ProjetLoading;
+
+          await context.Entry(_projet).CollectionFormes().LoadAsync();
         }
 
         SetProperty(ref projet, _projet, onChanged, "Projet");
@@ -265,9 +284,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       if (Projet is null)
       {
         Formes = null;
-        FormesAdded = null;
-        FormesChanged = null;
-        FormesDeleted = null;
+        ResetChangeTracker();
       }
       else
       {
@@ -287,9 +304,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
     {
-      if (sender is FormeWrapper forme && !FormesChanged.Contains(forme) && Formes.Contains(forme))
+      if (sender is FormeWrapper forme && Formes.Contains(forme))
       {
-        FormesChanged.Add(forme);
+        HasBeenModified(null, null);
       }
     }
 
@@ -299,15 +316,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     [CanBeNull]
     [ItemNotNull]
-    private ICollection<FormeWrapper> FormesAdded { get; set; }
-
-    [CanBeNull]
-    [ItemNotNull]
-    private ICollection<FormeWrapper> FormesChanged { get; set; }
-
-    [CanBeNull]
-    [ItemNotNull]
-    private ICollection<FormeWrapper> FormesDeleted { get; set; }
+    private BulkObservableCollection<Forme> FormesDeleted { get; set; }
 
     private bool IsModified
     {
@@ -315,40 +324,29 @@ namespace Hymperia.Facade.ViewModels.Editeur
       set => SetProperty(ref isModified, value);
     }
 
+    private void Populate(DatabaseContext context, Projet projet, ICollection<Forme> deleted)
+    {
+      var materiaux = (from forme in Projet.Formes
+                       select forme.Materiau).DistinctBy(materiau => materiau.Id);
+
+      context.AttachRange(materiaux);
+      context.Update(Projet);
+      context.RemoveRange(FormesDeleted);
+    }
+
     private void ResetChangeTracker()
     {
-      FormesAdded = new ObservableCollection<FormeWrapper>();
-      ((ObservableCollection<FormeWrapper>)FormesAdded).CollectionChanged += HasBeenModified;
-
-      FormesChanged = new ObservableCollection<FormeWrapper>();
-      ((ObservableCollection<FormeWrapper>)FormesChanged).CollectionChanged += HasBeenModified;
-
-      FormesDeleted = new ObservableCollection<FormeWrapper>();
-      ((ObservableCollection<FormeWrapper>)FormesDeleted).CollectionChanged += HasBeenModified;
+      FormesDeleted = new BulkObservableCollection<Forme>();
+      FormesDeleted.CollectionChanged += HasBeenModified;
 
       IsModified = false;
     }
 
-    private void ConstructEntriesState(DatabaseContext context)
+    private void ResetChangeTracker(Projet projet, ICollection<Forme> deleted)
     {
-      var changed = FormesChanged;
-      var deleted = FormesDeleted;
-
-      context.Attach(Projet);
-
-      // On charge les changements potentiels dans l'objet pour sauvegarder.
-      // Les nouveaux objets (id == default) sont déjà marqué pour ajout.
-      // Les objets connus (id != default) doivent être marqué pour changement
-      // s'ils ont été modifiés.
-      // Les objets supprimés doivent être retirés.
-      foreach (var forme in changed)
+      if (Projet == projet && FormesDeleted == deleted)
       {
-        context.Entry(forme.Forme).State = EntityState.Modified;
-      }
-
-      foreach (var forme in deleted)
-      {
-        context.Remove(forme.Forme);
+        ResetChangeTracker();
       }
     }
 
@@ -374,10 +372,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private SelectionMode selection;
     private Type forme;
     private Materiau materiau;
-    private Task saveLoading;
-    private Task projetLoading;
-    private bool isSaveLoading;
-    private bool isProjetLoading;
+    private Task loading;
+    private bool isLoading;
     private bool isModified;
 
     #endregion

@@ -44,7 +44,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
       set => SetProperty(ref loading, value, () =>
       {
         IsLoading = true;
-        value.ContinueWith(result => IsLoading = false);
+        value
+          .ContinueWith(
+            result => throw result.Exception.Flatten(),
+            default,
+            TaskContinuationOptions.OnlyOnFaulted,
+            TaskScheduler.FromCurrentSynchronizationContext())
+          .ContinueWith(result => IsLoading = false, TaskScheduler.FromCurrentSynchronizationContext());
       });
     }
 

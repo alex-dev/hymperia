@@ -71,20 +71,32 @@ namespace Hymperia.Facade.BaseClasses
 
     protected virtual void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs args)
     {
-      if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
+      if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handler)
       {
         using (BlockReentrancy())
         {
-          foreach (NotifyCollectionChangedEventHandler handler in handlers.GetInvocationList())
-          {
-            switch (handler.Target)
-            {
-              case CollectionView view:
-                HandleCollectionView(handler, args); break;
-              default:
-                handler(this, args); break;
-            }
-          }
+          OnMultipleCollectionChanged(handler, args);
+        }
+      }
+    }
+
+    protected void OnMultipleCollectionChanged(NotifyCollectionChangedEventHandler handlers, NotifyCollectionChangedEventArgs args)
+    {
+      var delegates = handlers.GetInvocationList();
+
+      if (delegates is null)
+      {
+        delegates = new Delegate[] { handlers };
+      }
+
+      foreach (NotifyCollectionChangedEventHandler handler in delegates)
+      {
+        switch (handler.Target)
+        {
+          case CollectionView view:
+            HandleCollectionView(handler, args); break;
+          default:
+            handler(this, args); break;
         }
       }
     }

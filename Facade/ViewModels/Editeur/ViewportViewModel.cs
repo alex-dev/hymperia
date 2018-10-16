@@ -1,16 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
-using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
@@ -139,9 +136,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
                            on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                          select mesh;
 
-        context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
         FormesSelectionnees = new BulkObservableCollection<MeshElement3D>(enumerable);
       }
+
+      context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
     }
 
     private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs args)

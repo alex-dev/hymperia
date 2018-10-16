@@ -7,6 +7,7 @@ using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
+#pragma warning disable 4014 
   public class FormesSelectionViewModel : BindableBase
   {
     #region Attributes
