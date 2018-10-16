@@ -150,7 +150,7 @@ namespace Hymperia.Facade.BaseClasses
         Flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
       }
 
-      public EventDelegate(FieldInfo field, ObservableCollection<T> owner)
+      private EventDelegate(FieldInfo field, ObservableCollection<T> owner)
       {
         Field = field;
         Owner = owner;
