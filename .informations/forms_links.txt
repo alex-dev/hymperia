@@ -1,9 +1,0 @@
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/ExtrudedVisual3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/HelixVisual3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/ParametricSurface3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/ParticleSystem.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/PieSliceVisual3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/PipeVisual3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/TorusVisual3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/TruncatedConeVisual3D.cs
-https://github.com/helix-toolkit/helix-toolkit/blob/01d38dcf8f2a1cf2556589774938c88dec81ee6d/Source/HelixToolkit.Wpf/Visual3Ds/MeshVisuals/TubeVisual3D.cs
