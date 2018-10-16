@@ -67,20 +67,14 @@ namespace Hymperia.Model.Modeles
     #endregion
 
     #region Methods
-    
-    /// <summary></summary>
-    /// <param name="forme"></param>
-    public void AjouterForme([NotNull] Forme forme)
-    {
-      throw new System.NotImplementedException();
-    }
 
     /// <summary></summary>
     /// <param name="forme"></param>
-    public void SupprimerForme([NotNull] Forme forme)
-    {
-      throw new System.NotImplementedException();
-    }
+    public void AjouterForme([NotNull] Forme forme) => _Formes.Add(forme);
+
+    /// <summary></summary>
+    /// <param name="forme"></param>
+    public void SupprimerForme([NotNull] Forme forme) => _Formes.Remove(forme);
 
     #endregion
 

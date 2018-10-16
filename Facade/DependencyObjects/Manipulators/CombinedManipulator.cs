@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
@@ -53,6 +54,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Constructors
 
+    [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     protected CombinedManipulator()
     {
       var binding = new Binding("Transform") { Source = this };

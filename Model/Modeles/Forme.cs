@@ -59,12 +59,12 @@ namespace Hymperia.Model.Modeles
     #region Constructors
 
     /// <param name="materiau">Le matériau composant la forme.</param>
-    public Forme([NotNull] Materiau materiau)
+    public Forme([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default)
     {
       Id = default;
       Materiau = materiau;
-      _Origine = new JsonObject<Point>();
-      _Rotation = new JsonObject<Quaternion>();
+      _Origine = new JsonObject<Point>(point ?? Point.Center);
+      _Rotation = new JsonObject<Quaternion>(quaternion ?? Quaternion.Identity);
     }
 
     #endregion

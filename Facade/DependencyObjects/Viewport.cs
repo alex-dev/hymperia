@@ -139,9 +139,9 @@ namespace Hymperia.Facade.DependencyObjects
           return new MovementManipulator();
         case SelectionMode.Transformation:
           return new MovementManipulator();
+        default:
+          throw new NotImplementedException("You forgot to implement stuff!!");
       }
-
-      throw new Exception("You forgot to implement stuff!!");
     }
 
     private void RemoveManipulator()

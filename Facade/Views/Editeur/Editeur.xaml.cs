@@ -31,7 +31,7 @@ namespace Hymperia.Facade.Views.Editeur
     {
       RegisterViews(manager);
       InitializeComponent();
-      BindingOperations.SetBinding(this, ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(ProjetProperty, new Binding("Projet") { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
