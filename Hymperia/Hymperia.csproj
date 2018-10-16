@@ -226,6 +226,7 @@
     <Compile Include="EventHandlerExtension.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="LINQExtension.cs" />
+    <Compile Include="I18NResources\fr_CA.Designer.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
     <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
@@ -290,6 +291,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="I18NResources\fr_CA.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
