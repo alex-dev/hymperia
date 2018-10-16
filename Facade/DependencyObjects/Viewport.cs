@@ -72,7 +72,7 @@ namespace Hymperia.Facade.DependencyObjects
     private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
     {
       args = new VisualsSelectedEventArgs(
-        args.SelectedVisuals.OfType<MeshElement3D>().ToList<Visual3D>(),
+        args.SelectedVisuals.OfType<MeshElement3D>().Distinct().Except(SelectedItems).ToList<Visual3D>(),
         args.AreSortedByDistanceAscending);
 
       if (clear)
@@ -94,7 +94,7 @@ namespace Hymperia.Facade.DependencyObjects
     };
 
     private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
-      SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>().Distinct());
+      SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>());
 
     #endregion
 

@@ -185,12 +185,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       // Les objets supprimés doivent être retirés.
       foreach (var forme in changed)
       {
-        context.Entry(forme.Forme).Reference(f => f.Materiau).IsModified = true;
-
-        foreach (var property in context.Entry(forme.Forme).Properties)
-        {
-          property.IsModified = true;
-        }
+        context.Entry(forme.Forme).State = EntityState.Modified;
       }
 
       foreach (var forme in deleted)
