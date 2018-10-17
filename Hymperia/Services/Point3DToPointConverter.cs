@@ -6,6 +6,7 @@ using O = Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Facade.Services
 {
+  [ValueConversion(typeof(M.Point3D), typeof(O.Point))]
   public class Point3DToPointConverter : IValueConverter
   {
     /// <inheritdoc />

@@ -5,6 +5,7 @@ using System.Windows.Media.Media3D;
 
 namespace Hymperia.Facade.Services.PointsToHeightConverters
 {
+  [ValueConversion(typeof(Point3D), typeof(double))]
   public class PointsToHeightConverter : IValueConverter
   {
     /// <inheritdoc />

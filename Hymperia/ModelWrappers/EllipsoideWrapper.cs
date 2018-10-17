@@ -1,7 +1,9 @@
 ﻿using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
+  /// <inheritdoc />
   public class EllipsoideWrapper : FormeWrapper
   {
     #region Attributs
@@ -58,6 +60,6 @@ namespace Hymperia.Facade.ModelWrappers
 
     #endregion
 
-    public EllipsoideWrapper(Ellipsoide forme) : base(forme) { }
+    public EllipsoideWrapper([NotNull] Ellipsoide forme) : base(forme) { }
   }
 }

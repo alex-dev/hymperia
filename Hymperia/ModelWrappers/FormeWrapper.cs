@@ -6,10 +6,12 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  public abstract class FormeWrapper
+  /// <summary>Wrap les formes du modèle avec un <see cref="INotifyPropertyChanged"/> wrapper.</summary>
+  public abstract class FormeWrapper : INotifyPropertyChanged
   {
     #region Attributs
 
+    [NotNull]
     public readonly Forme Forme;
 
     public int Id => Forme.Id;
@@ -52,7 +54,7 @@ namespace Hymperia.Facade.ModelWrappers
 
     #endregion
 
-    protected FormeWrapper(Forme forme)
+    protected FormeWrapper([NotNull] Forme forme)
     {
       Forme = forme;
     }

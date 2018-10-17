@@ -37,7 +37,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     {
       Converter = new DiameterConverter();
       LinearConverter = new LinearConverter() { M = 1 };
-      PointsToHeightConverter = new PointsToHeightConverter();
+      PointsToHeightConverter = (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
       DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator));
     }
 
