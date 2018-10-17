@@ -22,7 +22,7 @@ namespace UnitTests.ServiceTests
     [TestInitialize]
     public void Initialize()
     {
-      Converter = new TransformConverter();
+      Converter = TransformConverter.Instance;
     }
 
     [TestMethod]

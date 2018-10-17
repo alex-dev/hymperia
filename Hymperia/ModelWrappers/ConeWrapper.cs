@@ -1,7 +1,9 @@
 ﻿using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
+  /// <inheritdoc />
   public class ConeWrapper : ThetaDivFormeWrapper
   {
     #region Attributs
@@ -38,6 +40,6 @@ namespace Hymperia.Facade.ModelWrappers
 
     #endregion
 
-    public ConeWrapper(Cone forme) : base(forme) { }
+    public ConeWrapper([NotNull] Cone forme) : base(forme) { }
   }
 }

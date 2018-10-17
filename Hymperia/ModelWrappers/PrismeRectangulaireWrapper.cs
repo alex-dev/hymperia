@@ -1,7 +1,9 @@
 ﻿using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
+  /// <inheritdoc />
   public class PrismeRectangulaireWrapper : FormeWrapper
   {
     #region Attributs
@@ -38,6 +40,6 @@ namespace Hymperia.Facade.ModelWrappers
 
     #endregion
 
-    public PrismeRectangulaireWrapper(PrismeRectangulaire forme) : base(forme) { }
+    public PrismeRectangulaireWrapper([NotNull] PrismeRectangulaire forme) : base(forme) { }
   }
 }

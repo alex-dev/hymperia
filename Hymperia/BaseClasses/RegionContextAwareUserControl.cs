@@ -9,6 +9,7 @@ using R = Prism.Regions;
 namespace Hymperia.Facade.BaseClasses
 {
   [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
+  [Obsolete("Cette base classes sera retiré lorsque l'application passera d'un modèle basé sur les régions à un modèle basé sur l'eventaggregator")]
   public abstract class RegionContextAwareUserControl : UserControl
   {
     #region Dependency Properties

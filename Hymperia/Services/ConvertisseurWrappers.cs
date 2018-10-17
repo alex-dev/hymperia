@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
 {
+  /// <summary>Convertit des <see cref="FormeWrapper"/> en <see cref="MeshElement3D"/> et les binds aux <see cref="FormeWrapper"/>.</summary>
   public class ConvertisseurWrappers
   {
     #region Services
@@ -47,10 +48,14 @@ namespace Hymperia.Facade.Services
       }
     }
 
-    private TruncatedConeVisual3D Convertir(ConeWrapper forme) => Lier(new TruncatedConeVisual3D(), forme);
-    private PipeVisual3D Convertir(CylindreWrapper forme) => Lier(new PipeVisual3D(), forme);
-    private EllipsoidVisual3D Convertir(EllipsoideWrapper forme) => Lier(new EllipsoidVisual3D(), forme);
-    private BoxVisual3D Convertir(PrismeRectangulaireWrapper forme) => Lier(new BoxVisual3D(), forme);
+    [NotNull]
+    private TruncatedConeVisual3D Convertir([NotNull] ConeWrapper forme) => Lier(new TruncatedConeVisual3D(), forme);
+    [NotNull]
+    private PipeVisual3D Convertir([NotNull] CylindreWrapper forme) => Lier(new PipeVisual3D(), forme);
+    [NotNull]
+    private EllipsoidVisual3D Convertir([NotNull] EllipsoideWrapper forme) => Lier(new EllipsoidVisual3D(), forme);
+    [NotNull]
+    private BoxVisual3D Convertir([NotNull] PrismeRectangulaireWrapper forme) => Lier(new BoxVisual3D(), forme);
 
     #endregion
 
@@ -77,7 +82,8 @@ namespace Hymperia.Facade.Services
       }
     }
 
-    private TruncatedConeVisual3D Lier(TruncatedConeVisual3D forme, ConeWrapper source)
+    [NotNull]
+    private TruncatedConeVisual3D Lier([NotNull] TruncatedConeVisual3D forme, [NotNull] ConeWrapper source)
     {
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase") { Source = source, Mode = BindingMode.TwoWay });
@@ -87,7 +93,8 @@ namespace Hymperia.Facade.Services
       return (TruncatedConeVisual3D)_Lier(forme, source);
     }
 
-    private PipeVisual3D Lier(PipeVisual3D forme, CylindreWrapper source)
+    [NotNull]
+    private PipeVisual3D Lier([NotNull] PipeVisual3D forme, [NotNull] CylindreWrapper source)
     {
       var hauteur_binding_top = new Binding("Hauteur")
       {
@@ -113,7 +120,8 @@ namespace Hymperia.Facade.Services
       return (PipeVisual3D)_Lier(forme, source);
     }
 
-    private EllipsoidVisual3D Lier(EllipsoidVisual3D forme, EllipsoideWrapper source)
+    [NotNull]
+    private EllipsoidVisual3D Lier([NotNull] EllipsoidVisual3D forme, [NotNull] EllipsoideWrapper source)
     {
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY") { Source = source, Mode = BindingMode.TwoWay });
@@ -124,7 +132,8 @@ namespace Hymperia.Facade.Services
       return (EllipsoidVisual3D)_Lier(forme, source);
     }
 
-    private BoxVisual3D Lier(BoxVisual3D forme, PrismeRectangulaireWrapper source)
+    [NotNull]
+    private BoxVisual3D Lier([NotNull] BoxVisual3D forme, [NotNull] PrismeRectangulaireWrapper source)
     {
       BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur") { Source = source, Mode = BindingMode.TwoWay });
@@ -133,7 +142,8 @@ namespace Hymperia.Facade.Services
       return (BoxVisual3D)_Lier(forme, source);
     }
 
-    private MeshElement3D _Lier(MeshElement3D forme, FormeWrapper source)
+    [NotNull]
+    private MeshElement3D _Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper source)
     {
       var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
       bindings.Bindings.AddRange(new Binding[]

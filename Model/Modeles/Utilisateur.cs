@@ -63,6 +63,7 @@ namespace Hymperia.Model.Modeles
     /// <summary></summary>
     /// <param name="nom"></param>
     /// <returns></returns>
+    [NotNull]
     public Projet CreerProjet([NotNull] string nom)
     {
       throw new System.NotImplementedException();
