@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.Model.Migrations
 {
-  internal class Initializer
+  /// <summary>Initialiseur de la base de données.</summary>
+  internal sealed class Initializer
   {
     private Random Random { get; set; }
 
@@ -59,6 +60,9 @@ namespace Hymperia.Model.Migrations
       Random = new Random();
     }
 
+    /// <summary>Initialise la base de données aléatoirement.</summary>
+    /// <param name="context">Le <see cref="DatabaseContext"/> de la base de données à initialiser.</param>
+    /// <param name="token">Un token d'annulation.</param>
     public async Task Initialize(DatabaseContext context, CancellationToken token = default)
     {
       await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token);
