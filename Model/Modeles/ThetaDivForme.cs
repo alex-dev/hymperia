@@ -42,8 +42,10 @@ namespace Hymperia.Model.Modeles
 
     #region Methods
 
+    [Pure]
     protected double CalculeAire(double rayon) => ThetaDiv * CalculeDemiDimensionCote(rayon) / Tan180N;
 
+    [Pure]
     private double CalculeDemiDimensionCote(double rayon) => rayon * Math.Cos(AngleBaseInterne);
 
     #endregion

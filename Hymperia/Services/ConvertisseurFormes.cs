@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
 {
+  /// <summary>Convertit des <see cref="Forme"/> en <see cref="FormeWrapper"/>.</summary>
   public class ConvertisseurFormes
   {
     /// <summary>Permet de convertir une Forme en FormeWrapper.</summary>

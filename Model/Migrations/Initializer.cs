@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.Model.Migrations
@@ -12,8 +13,11 @@ namespace Hymperia.Model.Migrations
   /// <summary>Initialiseur de la base de données.</summary>
   internal sealed class Initializer
   {
+    [NotNull]
     private Random Random { get; set; }
 
+    [NotNull]
+    [ItemNotNull]
     private Func<Materiau[], Forme>[] FormeCreators
     {
       get => new Func<Materiau[], Forme>[]
@@ -63,7 +67,7 @@ namespace Hymperia.Model.Migrations
     /// <summary>Initialise la base de données aléatoirement.</summary>
     /// <param name="context">Le <see cref="DatabaseContext"/> de la base de données à initialiser.</param>
     /// <param name="token">Un token d'annulation.</param>
-    public async Task Initialize(DatabaseContext context, CancellationToken token = default)
+    public async Task Initialize([NotNull] DatabaseContext context, [NotNull] CancellationToken token = default)
     {
       await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token);
       await context.SaveChangesAsync(token);
@@ -75,10 +79,11 @@ namespace Hymperia.Model.Migrations
       await context.SaveChangesAsync(token);
     }
 
-    private Acces[] InitializeAcces(Utilisateur[] utilisateurs, Projet[] projets)
+    [NotNull]
+    [ItemNotNull]
+    private IEnumerable<Acces> InitializeAcces([NotNull][ItemNotNull] Utilisateur[] utilisateurs, [NotNull][ItemNotNull] Projet[] projets)
     {
       var array = new Acces.Droit?[] { null, Acces.Droit.Lecture, Acces.Droit.LectureEcriture };
-      var acces = new List<Acces> { };
 
       for (int i = 0; i < projets.Length; ++i)
       {
@@ -88,17 +93,18 @@ namespace Hymperia.Model.Migrations
 
           if (droit is Acces.Droit _droit)
           {
-            var _acces = new Acces(projets[i], utilisateurs[j], _droit);
-            utilisateurs[j]._Acces.Add(_acces);
-            acces.Add(_acces);
+            var acces = new Acces(projets[i], utilisateurs[j], _droit);
+            utilisateurs[j]._Acces.Add(acces);
+
+            yield return acces;
           }
         }
       }
-
-      return acces.ToArray();
     }
 
-    private IEnumerable<Forme> InitializeFormes(Materiau[] materiaux)
+    [NotNull]
+    [ItemNotNull]
+    private IEnumerable<Forme> InitializeFormes([NotNull][ItemNotNull] Materiau[] materiaux)
     {
       var creators = FormeCreators;
       int count = Random.Next(50, 250);
@@ -109,27 +115,24 @@ namespace Hymperia.Model.Migrations
       }
     }
 
-    private Projet[] InitializeProjets(Materiau[] materiaux)
+    [NotNull]
+    [ItemNotNull]
+    private IEnumerable<Projet> InitializeProjets([NotNull][ItemNotNull] Materiau[] materiaux)
     {
-      var projets = new Projet[]
-      {
-        new Projet("Projet 1") { _Formes = InitializeFormes(materiaux).ToList() },
-        new Projet("Projet 2") { _Formes = InitializeFormes(materiaux).ToList() },
-        new Projet("Projet 3") { _Formes = InitializeFormes(materiaux).ToList() }
-      };
-
-      return projets;
+      yield return new Projet("Projet 1") { _Formes = InitializeFormes(materiaux).ToList() };
+      yield return new Projet("Projet 2") { _Formes = InitializeFormes(materiaux).ToList() };
+      yield return new Projet("Projet 3") { _Formes = InitializeFormes(materiaux).ToList() };
     }
 
-    private Utilisateur[] InitializeUtilisateurs()
+    [NotNull]
+    [ItemNotNull]
+    private IEnumerable<Utilisateur> InitializeUtilisateurs()
     {
       const string password = "$2y$15$eiI786bZMg0HrJP4BphbveEXb1UHmkkd5p8feoUpDqYwuvgHjik2q";
-      return new Utilisateur[]
-      {
-        new Utilisateur("Alexandre", password),
-        new Utilisateur("Guillaume", password),
-        new Utilisateur("Antoine", password)
-      };
+
+      yield return new Utilisateur("Alexandre", password);
+      yield return new Utilisateur("Guillaume", password);
+      yield return new Utilisateur("Antoine", password);
     }
   }
 }

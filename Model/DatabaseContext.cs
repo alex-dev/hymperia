@@ -35,6 +35,7 @@ namespace Hymperia.Model
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
+    [NotNull]
     [ItemNotNull]
     public DbSet<Acces> Acces
     {
@@ -49,6 +50,7 @@ namespace Hymperia.Model
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
+    [NotNull]
     [ItemNotNull]
     public DbSet<Materiau> Materiaux
     {
@@ -63,6 +65,7 @@ namespace Hymperia.Model
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
+    [NotNull]
     [ItemNotNull]
     public DbSet<Projet> Projets
     {
@@ -77,6 +80,7 @@ namespace Hymperia.Model
     ///   Un accès "lazy" est préférable ici plutôt que de créer tous les <see cref="DbSet{T}"/> initialement,
     ///   ce qui peut être lourd.
     /// </remarks>
+    [NotNull]
     [ItemNotNull]
     public DbSet<Utilisateur> Utilisateurs
     {
@@ -95,7 +99,9 @@ namespace Hymperia.Model
     public DatabaseContext([NotNull] DbContextOptions<DatabaseContext> options)
       : base(options) { }
 
-    public DatabaseContext(string connection) : base()
+    /// <summary>Initialise le base de donnée selon la connection string passée.</summary>
+    /// <param name="connection">Connection string.</param>
+    public DatabaseContext([NotNull] string connection) : base()
     {
       Connection = connection;
     }
@@ -171,6 +177,7 @@ namespace Hymperia.Model
       base.OnConfiguring(builder);
     }
 
+    [NotNull]
     protected static string GetConnectionString()
     {
       string connection = $"Server=localhost; SslMode=Preferred; Database=hymperia_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";

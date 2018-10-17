@@ -5,9 +5,9 @@ namespace Hymperia.Facade.Services.PointsToHeightConverters
 {
   public enum PointOrientation { Top, Bottom }
 
+  /// <summary>Implémente la logique derrière <see cref="PointsToHeightConverter"/> et <see cref="HeightToPointsConverter"/>.</summary>
   internal static class PointsToHeightStaticConverter
   {
-
     public static object ConvertToPoint(double height, PointOrientation orientation, Type target)
     {
       if (typeof(Point3D) != target)
@@ -31,6 +31,6 @@ namespace Hymperia.Facade.Services.PointsToHeightConverters
       return ChangeType(point.Z * 2, target);
     }
 
-    public static object ChangeType(object value, Type target) => Convert.ChangeType(value, target);
+    private static object ChangeType(object value, Type target) => Convert.ChangeType(value, target);
   }
 }
