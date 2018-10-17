@@ -38,7 +38,7 @@ namespace Hymperia.Facade.DependencyObjects
 
     static SelectionViewport()
     {
-      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(Viewport),
+      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(SelectionViewport),
         new PropertyMetadata(BindToSelectedItem));
     }
 
