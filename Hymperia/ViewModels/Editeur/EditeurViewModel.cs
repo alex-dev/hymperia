@@ -268,7 +268,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         {
           context.Attach(_projet);
 
-          await context.LoadFormesAsync(Projet);
+          await context.LoadFormesAsync(_projet);
         }
 
         SetProperty(ref projet, _projet, onChanged, "Projet");
