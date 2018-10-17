@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 
 namespace Hymperia.Facade.Services.PointsToHeightConverters
 {
-  /// <summary>Convertit les <see cref="Point3D"/> d'un cylindre en hauteur et vice versa.</summary>
+  [ValueConversion(typeof(Point3D), typeof(double))]
   public class PointsToHeightConverter : IValueConverter
   {
     /// <inheritdoc />

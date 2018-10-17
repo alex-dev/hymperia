@@ -218,6 +218,7 @@
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
+    <Compile Include="EventHandlerExtension.cs" />
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
@@ -303,6 +304,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WPFResources\ValueConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editeur\FormesProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

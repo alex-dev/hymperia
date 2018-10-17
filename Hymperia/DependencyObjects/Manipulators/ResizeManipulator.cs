@@ -47,7 +47,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     static ResizeManipulator()
     {
       LinearConverter = new LinearConverter() { M = 1 };
-      PointsToHeightConverter = new PointsToHeightConverter();
+      PointsToHeightConverter = (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
       WidthProperty = DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator));
       HeightProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator));
       LengthProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator));

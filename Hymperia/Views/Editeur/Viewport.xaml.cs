@@ -19,7 +19,7 @@ namespace Hymperia.Facade.Views.Editeur
 
     static Viewport()
     {
-      Point3DToPointConverter = new Point3DToPointConverter();
+      Point3DToPointConverter = (Point3DToPointConverter)Application.Current.Resources["Point3DToPoint"]; ;
       CursorPositionProperty = DependencyProperty.Register("CursorPosition", typeof(Object.Point), typeof(Viewport));
     }
 
