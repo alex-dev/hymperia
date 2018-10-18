@@ -211,6 +211,8 @@
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
     <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
+	<Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
+    <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\BaseAggregatorConverter.cs" />
@@ -232,8 +234,8 @@
     <Compile Include="ModelWrappers\FormeWrapper.cs" />
     <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
-    <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
-    <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
+    <Compile Include="NavigationKeys.cs" />
+    <Compile Include="NavigationParameterKeys.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />

@@ -39,9 +39,9 @@ namespace Hymperia.Facade.ViewModels
 
     private void NavigateToViewport()
     {
-      Manager.RequestNavigate("ContentRegion", "Editeur", new NavigationParameters
+      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
       {
-        { "Utilisateur", Utilisateur }
+        { NavigationParameterKeys.Utilisateur, Utilisateur }
       });
     }
 
