@@ -31,7 +31,7 @@ namespace Hymperia.Facade.Views.Editeur
     {
       base.RegionContextChanged(sender, args);
       
-      if (sender is IProjetViewModel context)
+      if (RegionContext is IProjetViewModel context)
       {
         context.PropertyChanged += ProjetChanged;
       }
@@ -67,13 +67,7 @@ namespace Hymperia.Facade.Views.Editeur
       }
     }
 
-    private void FormeChanged(object sender, PropertyChangedEventArgs args)
-    {
-      if ((RegionContext as IProjetViewModel)?.Formes?.Contains(sender as FormeWrapper) ?? false)
-      {
-        Update();
-      }
-    }
+    private void FormeChanged(object sender, PropertyChangedEventArgs args) => Update();
 
     #endregion
   }
