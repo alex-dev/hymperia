@@ -13,7 +13,6 @@ using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -258,7 +257,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task QueryProjet(Projet _projet, Action onChanged)
     {
-      SetProperty(ref projet, null, onChanged, "Projet");
+      SetProperty(ref projet, null, onChanged, nameof(Projet));
 
       if (_projet is Projet)
       {
@@ -271,13 +270,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
           await context.LoadFormesAsync(_projet);
         }
 
-        SetProperty(ref projet, _projet, onChanged, "Projet");
+        SetProperty(ref projet, _projet, onChanged, nameof(Projet));
       }
     }
 
     #endregion
 
-    #region Formes Changed Event Handlers
+    #region On Projet Changed
 
     private void UpdateFormes()
     {
@@ -299,14 +298,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
         Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
         ResetChangeTracker();
-      }
-    }
-
-    private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
-    {
-      if (sender is FormeWrapper forme && Formes.Contains(forme))
-      {
-        HasBeenModified(null, null);
       }
     }
 
@@ -347,6 +338,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
       if (Projet == projet && FormesDeleted == deleted)
       {
         ResetChangeTracker();
+      }
+    }
+
+    private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
+    {
+      if (sender is FormeWrapper forme && Formes.Contains(forme))
+      {
+        HasBeenModified(null, null);
       }
     }
 

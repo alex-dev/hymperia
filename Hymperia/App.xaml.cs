@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* 
+ * Auteur : Alexandre
+ * Date de création : 6 septembre 2018
+*/ 
+
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
@@ -21,8 +26,8 @@ namespace Hymperia.Facade
       registry.RegisterInstance((PointsToHeightConverter)Resources["PointsToHeight"]);
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
-      registry.RegisterForNavigation<AffichageProjets>(nameof(AffichageProjets));
-      registry.RegisterForNavigation<Editeur>(nameof(Editeur));
+      registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
+      registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>
