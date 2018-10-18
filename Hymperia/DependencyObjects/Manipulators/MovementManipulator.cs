@@ -13,13 +13,14 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators
 {
+  /// <summary>Manipulateur de déplacement.</summary>
   public class MovementManipulator : CombinedManipulator
   {
     #region Dependency Properties
 
     /// <seealso cref="Diameter"/>
     public static readonly DependencyProperty DiameterProperty =
-      DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator), new PropertyMetadata(1));
+      DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator), new PropertyMetadata(2d));
 
     #endregion
 
@@ -36,7 +37,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Constructors
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     [NotNull]
     [ItemNotNull]
     protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
@@ -57,7 +58,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Manipulator Size Bindings
 
-    private void BindToManipulator(Manipulator manipulator)
+    private void BindToManipulator([NotNull] Manipulator manipulator)
     {
       switch (manipulator)
       {
@@ -68,16 +69,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       }
     }
 
-    private void BindToTranslateManipulator(TranslateManipulator manipulator)
+    private void BindToTranslateManipulator([NotNull] TranslateManipulator manipulator)
     {
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding("Diameter")
+      SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding("Diameter")
       {
         Source = this,
         Converter = LinearConverter,
         ConverterParameter = 1.25,
         Mode = BindingMode.OneWay
       });
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Diameter")
+      SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Diameter")
       {
         Source = this,
         Converter = LinearConverter,
@@ -86,23 +87,23 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       });
     }
 
-    private void BindToRotationManipulator(RotateManipulator manipulator)
+    private void BindToRotationManipulator([NotNull] RotateManipulator manipulator)
     {
-      BindingOperations.SetBinding(manipulator, RotateManipulator.DiameterProperty, new Binding("Diameter")
+      SetBinding(manipulator, RotateManipulator.DiameterProperty, new Binding("Diameter")
       {
         Source = this,
         Converter = LinearConverter,
         ConverterParameter = 1.65,
         Mode = BindingMode.OneWay
       });
-      BindingOperations.SetBinding(manipulator, RotateManipulator.InnerDiameterProperty, new Binding("Diameter")
+      SetBinding(manipulator, RotateManipulator.InnerDiameterProperty, new Binding("Diameter")
       {
         Source = this,
         Converter = LinearConverter,
         ConverterParameter = 1.5,
         Mode = BindingMode.OneWay
       });
-      BindingOperations.SetBinding(manipulator, RotateManipulator.LengthProperty, new Binding("Diameter")
+      SetBinding(manipulator, RotateManipulator.LengthProperty, new Binding("Diameter")
       {
         Source = this,
         Converter = LinearConverter,
@@ -117,23 +118,25 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Binding to Source
 
-    /// <inheritdoc />
-    public override void Bind(ModelVisual3D source)
+    /// inheritdoc/>
+    public override void Bind([NotNull] ModelVisual3D source)
     {
-      MultiBinding bindings = new MultiBinding() { Mode = BindingMode.OneWay, Converter = Converter };
+      var bindings = new MultiBinding() { Mode = BindingMode.OneWay, Converter = Converter };
       bindings.Bindings.AddRange(CreateBindings(source));
 
-      BindingOperations.SetBinding(this, DiameterProperty, bindings);
-      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.TwoWay });
+      SetBinding(DiameterProperty, bindings);
+      SetBinding(TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.TwoWay });
     }
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     public override void Unbind()
     {
-      BindingOperations.ClearBinding(this, DiameterProperty);
-      BindingOperations.ClearBinding(this, TransformProperty);
+      ClearBinding(DiameterProperty);
+      ClearBinding(TransformProperty);
     }
 
+    [NotNull]
+    [ItemNotNull]
     private IEnumerable<Binding> CreateBindings([NotNull] ModelVisual3D source)
     {
       switch (source)
@@ -152,6 +155,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       }
     }
 
+    [NotNull]
+    [ItemNotNull]
     private IEnumerable<Binding> CreateBindings([NotNull] BoxVisual3D source)
     {
       yield return new Binding("Height") { Source = source, Mode = BindingMode.OneWay };
@@ -159,6 +164,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       yield return new Binding("Width") { Source = source, Mode = BindingMode.OneWay };
     }
 
+    [NotNull]
+    [ItemNotNull]
     private IEnumerable<Binding> CreateBindings([NotNull] EllipsoidVisual3D source)
     {
       yield return new Binding("RadiusX")
@@ -184,6 +191,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       };
     }
 
+    [NotNull]
+    [ItemNotNull]
     private IEnumerable<Binding> CreateBindings([NotNull] PipeVisual3D source)
     {
       yield return new Binding("Diameter") { Source = source, Mode = BindingMode.OneWay };
@@ -196,6 +205,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       };
     }
 
+    [NotNull]
+    [ItemNotNull]
     private IEnumerable<Binding> CreateBindings([NotNull] TruncatedConeVisual3D source)
     {
       yield return new Binding("Height")
@@ -228,11 +239,11 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// <remarks><see cref="ConvertBack(object, Type[], object, CultureInfo)"/> n'est pas implémenté parce que la transformation est un processus destructif.</remarks>
     private class DiameterConverter : IMultiValueConverter
     {
-      /// <inheritdoc />
+      /// inheritdoc/>
       public object Convert(object[] values, Type target, object parameter = null, CultureInfo culture = default) =>
         ChangeType((from double value in values select Math.Abs(value)).Max(), target);
 
-      /// <inheritdoc />
+      /// inheritdoc/>
       public object[] ConvertBack(object value, Type[] targets, object parameter = null, CultureInfo culture = default) => throw new NotImplementedException();
 
       private object ChangeType(object value, Type target) => System.Convert.ChangeType(value, target);
@@ -248,7 +259,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     private static readonly LinearConverter LinearConverter = new LinearConverter() { M = 1 };
     [NotNull]
     private static readonly PointsToHeightConverter PointsToHeightConverter =
-      (PointsToHeightConverter) Application.Current.Resources["PointsToHeight"];
+      (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
 
     #endregion
   }

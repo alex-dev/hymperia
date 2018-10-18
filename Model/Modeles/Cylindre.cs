@@ -16,7 +16,7 @@ namespace Hymperia.Model.Modeles
 
     #region Not Mapped Properties
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     [NotMapped]
     public override double Volume => Aire * Hauteur;
 
@@ -31,7 +31,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
     internal Cylindre() : this(null) { }
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     public Cylindre([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default)
       : base(materiau, point, quaternion) { }
 

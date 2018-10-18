@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
@@ -59,6 +60,23 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     public abstract void Bind([NotNull] ModelVisual3D source);
     /// <summary>Délie le <see cref="ModelVisual3D"/> déjà lié au <see cref="CombinedManipulator"/>.</summary>
     public abstract void Unbind();
+
+    #endregion
+
+    #region Binding Operations
+
+    protected BindingBase GetBinding(DependencyProperty property) => GetBinding(this, property);
+    protected BindingBase GetBinding(DependencyObject @object, DependencyProperty property) =>
+      BindingOperations.GetBinding(@object, property);
+
+    protected BindingExpressionBase SetBinding(DependencyProperty property, BindingBase binding) =>
+      SetBinding(this, property, binding);
+    protected BindingExpressionBase SetBinding(DependencyObject @object, DependencyProperty property, BindingBase binding) =>
+      BindingOperations.SetBinding(@object, property, binding);
+
+    protected void ClearBinding(DependencyProperty property) => ClearBinding(this, property);
+    protected void ClearBinding(DependencyObject @object, DependencyProperty property) =>
+      BindingOperations.ClearBinding(@object, property);
 
     #endregion
   }

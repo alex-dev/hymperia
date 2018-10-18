@@ -19,7 +19,7 @@ namespace Hymperia.Model.Modeles
 
     #region Not Mapped Properties
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     [NotMapped]
     public override double Volume => (4.0 * Math.PI * RayonX * RayonY * RayonZ) / 3.0;
 
@@ -30,7 +30,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
     internal Ellipsoide() : this(null) { }
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     public Ellipsoide([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default) 
       : base(materiau, point, quaternion) { }
 

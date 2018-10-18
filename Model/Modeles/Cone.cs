@@ -17,7 +17,7 @@ namespace Hymperia.Model.Modeles
 
     #region Not Mapped Properties
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     [NotMapped]
     public override double Volume => RayonTop == 0 ? FullVolume : PartialVolume;
 
@@ -53,7 +53,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Constructeur pour EFCore. Ne pas utiliser directement.</summary>
     internal Cone() : this(null) { }
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     public Cone([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default) 
       : base(materiau, point, quaternion) { }
 

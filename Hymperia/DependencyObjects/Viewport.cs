@@ -65,7 +65,7 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     protected override void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs args)
     {
       base.OnSelectedItemsCollectionChanged(sender, args);
@@ -77,7 +77,7 @@ namespace Hymperia.Facade.DependencyObjects
       }
     }
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     protected override void OnSelectedItemsChanged(
       [ItemNotNull] ObservableCollection<MeshElement3D> oldvalue,
       [NotNull][ItemNotNull] ObservableCollection<MeshElement3D> newvalue)

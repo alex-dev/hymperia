@@ -10,33 +10,40 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators
 {
+  /// <summary>Manipulateur de redimensionnement.</summary>
   public class ResizeManipulator : CombinedManipulator
   {
     #region Dependency Properties
 
+    /// <seealso cref="Height"/>
     public static readonly DependencyProperty HeightProperty =
-      DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator));
+      DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d));
+    /// <seealso cref="Length"/>
     public static readonly DependencyProperty LengthProperty =
-      DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator));
+      DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d));
+    /// <seealso cref="Width"/>
     public static readonly DependencyProperty WidthProperty =
-      DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator));
+      DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d));
 
     #endregion
 
     #region Properties
 
+    /// <summary>La taille en Z de la source.</summary>
     public double Height
     {
       get => (double)GetValue(HeightProperty);
       set => SetValue(HeightProperty, value);
     }
 
+    /// <summary>La taille en X de la source.</summary>
     public double Length
     {
       get => (double)GetValue(LengthProperty);
       set => SetValue(LengthProperty, value);
     }
 
+    /// <summary>La taille en Y de la source.</summary>
     public double Width
     {
       get => (double)GetValue(WidthProperty);
@@ -47,6 +54,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Constructors
 
+    /// <inheritdoc/>
     [NotNull]
     [ItemNotNull]
     protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
@@ -73,60 +81,26 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Manipulator Size Bindings
 
-    private void BindToHeightManipulator(Manipulator manipulator)
+    private void BindToHeightManipulator([NotNull] Manipulator manipulator) => BindTo("Height", manipulator);
+    private void BindToLengthManipulator([NotNull] Manipulator manipulator) => BindTo("Length", manipulator);
+    private void BindToWidthManipulator([NotNull] Manipulator manipulator) => BindTo("Width", manipulator);
+    private void BindTo([NotNull] string dimension, [NotNull] Manipulator manipulator)
     {
-      var binding = new Binding("Height")
+      SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding(dimension)
       {
         Source = this,
         Converter = LinearConverter,
         ConverterParameter = 1.1,
-        Mode = BindingMode.OneWay
-      };
-
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
-      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Height")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.12,
         Mode = BindingMode.OneWay
       });
-    }
-    private void BindToLengthManipulator(Manipulator manipulator)
-    {
-      var binding = new Binding("Length")
+      SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension)
       {
         Source = this,
         Converter = LinearConverter,
         ConverterParameter = 1.1,
-        Mode = BindingMode.OneWay
-      };
-
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
-      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Length")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.12,
-        Mode = BindingMode.OneWay
+        Mode = BindingMode.TwoWay
       });
-    }
-
-    private void BindToWidthManipulator(Manipulator manipulator)
-    {
-      var binding = new Binding("Width")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 1.1,
-        Mode = BindingMode.OneWay
-      };
-
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
-      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Width")
+      SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding(dimension)
       {
         Source = this,
         Converter = LinearConverter,
@@ -141,24 +115,28 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Binding to Source
 
+    /// <inheritdoc/>
     public override void Bind([NotNull] ModelVisual3D source)
     {
       (Binding height, Binding length, Binding width) = CreateBindings(source);
 
-      BindingOperations.SetBinding(this, HeightProperty, height);
-      BindingOperations.SetBinding(this, LengthProperty, length);
-      BindingOperations.SetBinding(this, WidthProperty, width);
-      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.OneWay });
+      SetBinding(HeightProperty, height);
+      SetBinding(LengthProperty, length);
+      SetBinding(WidthProperty, width);
+      SetBinding(TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.OneWay });
     }
 
+    /// <inheritdoc/>
     public override void Unbind()
     {
-      BindingOperations.ClearBinding(this, HeightProperty);
-      BindingOperations.ClearBinding(this, LengthProperty);
-      BindingOperations.ClearBinding(this, WidthProperty);
-      BindingOperations.ClearBinding(this, TransformProperty);
+      ClearBinding(HeightProperty);
+      ClearBinding(LengthProperty);
+      ClearBinding(WidthProperty);
+      ClearBinding(TransformProperty);
     }
 
+    [NotNull]
+    [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] ModelVisual3D source)
     {
       switch (source)
@@ -179,12 +157,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       }
     }
 
+    [NotNull]
+    [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] BoxVisual3D source) =>
       Tuple.Create(
         new Binding("Height") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("Length") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("Width") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
 
+    [NotNull]
+    [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] EllipsoidVisual3D source) =>
       Tuple.Create(
         new Binding("RadiusZ") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },

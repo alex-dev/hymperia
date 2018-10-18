@@ -9,12 +9,12 @@ namespace Hymperia.Facade.Services
   [ValueConversion(typeof(M.Point3D), typeof(O.Point))]
   public class Point3DToPointConverter : IValueConverter
   {
-    /// <inheritdoc />
+    /// inheritdoc/>
     /// <remarks>Vers la vue.</remarks>
     public object Convert(object value, Type target, object parameter = null, CultureInfo culture = default) =>
       ((M.Point3D?)value)?.Convert();
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     /// <remarks>Vers le modèle.</remarks>
     public object ConvertBack(object value, Type target, object parameter = null, CultureInfo culture = default) =>
       ((O.Point)value)?.Convert();

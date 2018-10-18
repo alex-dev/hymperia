@@ -21,7 +21,7 @@ namespace Hymperia.Facade.Services
       typeof(Object.Quaternion)
     };
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     /// <remarks>Vers la vue.</remarks>
     public object Convert(object[] values, Type target, object parameter = null, CultureInfo culture = default)
     {
@@ -34,7 +34,7 @@ namespace Hymperia.Facade.Services
       return new MatrixTransform3D(quaternion.ComposeTransform(ref vector));
     }
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     /// <remarks>Vers le modèle.</remarks>
     public object[] ConvertBack(object value, Type[] targets, object parameter = null, CultureInfo culture = default)
     {

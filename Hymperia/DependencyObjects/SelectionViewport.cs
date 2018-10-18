@@ -45,9 +45,15 @@ namespace Hymperia.Facade.DependencyObjects
     {
       SelectedMaterial.Freeze();
 
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
-      InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(false, false)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
-      InputBindings.Add(new MouseBinding(new RectangleSelectionCommand(Viewport, CreateHandler(false, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
+      InputBindings.Add(new MouseBinding(
+        new PointSelectionCommand(Viewport, CreateHandler(true, true)),
+        new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
+      InputBindings.Add(new MouseBinding(
+        new PointSelectionCommand(Viewport, CreateHandler(false, false)),
+        new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control)));
+      InputBindings.Add(new MouseBinding(
+        new RectangleSelectionCommand(Viewport, CreateHandler(false, true)),
+        new MouseGesture(MouseAction.LeftClick, ModifierKeys.Shift)));
     }
 
     #endregion

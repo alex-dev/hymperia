@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace Hymperia.Facade.BaseClasses
 {
   /// <summary>Implement bulk changes for <see cref="ObservableCollection{T}"/>.</summary>
-  /// <inheritdoc />
+  /// inheritdoc/>
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
     /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> acquired through reflection. Avoid using if not needed.</summary>
@@ -20,11 +20,11 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Constructors
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     public BulkObservableCollection() { }
-    /// <inheritdoc />
+    /// inheritdoc/>
     public BulkObservableCollection([NotNull] List<T> list) : base(list) { }
-    /// <inheritdoc />
+    /// inheritdoc/>
     public BulkObservableCollection([NotNull] IEnumerable<T> collection) : base(collection) { }
 
     #endregion
