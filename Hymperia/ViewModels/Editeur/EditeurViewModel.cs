@@ -137,7 +137,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         .ObservesProperty(() => FormesSelectionnees);
       Sauvegarder = new DelegateCommand(() => Loading = _Sauvegarder())
         .ObservesCanExecute(() => IsModified);
-      Revert = new DelegateCommand<bool>(leaving => Loading = _Revert(leaving))
+      Revert = new DelegateCommand<bool?>(leaving => Loading = _Revert(leaving ?? false))
         .ObservesCanExecute(() => IsModified);
 
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();

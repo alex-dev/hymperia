@@ -27,7 +27,7 @@ namespace Hymperia.Facade.DependencyObjects
     #region Properties
 
     /// <summary>Les formes sélectionnées dans le viewport.</summary>
-    [CanBeNull]
+    [NotNull]
     [ItemNotNull]
     public BulkObservableCollection<MeshElement3D> SelectedItems
     {
