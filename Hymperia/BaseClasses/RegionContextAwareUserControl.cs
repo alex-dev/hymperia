@@ -8,7 +8,8 @@ using R = Prism.Regions;
 
 namespace Hymperia.Facade.BaseClasses
 {
-  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
+  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+    Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
   [Obsolete("Cette base classes sera retiré lorsque l'application passera d'un modèle basé sur les régions à un modèle basé sur l'eventaggregator")]
   public abstract class RegionContextAwareUserControl : UserControl
   {

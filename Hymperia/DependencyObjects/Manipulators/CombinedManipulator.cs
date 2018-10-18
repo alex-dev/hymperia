@@ -54,7 +54,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Constructors
 
-    [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors",
+    Justification = @"The call is known and needed to perform proper initialization.")]
     protected CombinedManipulator()
     {
       var binding = new Binding("Transform") { Source = this };

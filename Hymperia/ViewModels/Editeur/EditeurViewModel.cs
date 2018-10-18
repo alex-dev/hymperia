@@ -124,7 +124,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors",
+    Justification = @"The call is known and needed to perform proper initialization.")]
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes)
     {
       ContextFactory = factory;

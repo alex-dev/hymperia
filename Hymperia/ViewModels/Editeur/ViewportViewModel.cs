@@ -15,7 +15,8 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
+  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+    Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
   public class ViewportViewModel : RegionContextAwareViewModel
   {
     #region Properties
@@ -134,7 +135,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       if (Formes is null)
       {
-        FormesSelectionnees.Clear();
+        FormesSelectionnees = null;
       }
       else
       {
