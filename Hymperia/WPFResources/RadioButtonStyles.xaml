@@ -23,6 +23,8 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontFamily" Value="."/>
   </Style>
   <Style x:Key="RadioButtonList" TargetType="{x:Type ListBox}">
     <Style.Resources>
