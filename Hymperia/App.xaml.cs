@@ -18,7 +18,8 @@ namespace Hymperia.Facade
     {
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
-      registry.RegisterForNavigation<Editeur>("Editeur");
+      registry.RegisterForNavigation<AffichageProjets>(nameof(AffichageProjets));
+      registry.RegisterForNavigation<Editeur>(nameof(Editeur));
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>
