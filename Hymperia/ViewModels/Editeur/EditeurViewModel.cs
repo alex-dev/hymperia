@@ -22,7 +22,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class EditeurViewModel : BindableBase, IProjetViewModel, IEditeurViewModel
   {
-    #region Attributes
+    #region Properties
 
     #region Binding
 

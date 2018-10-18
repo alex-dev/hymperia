@@ -11,7 +11,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 {
   public abstract class CombinedManipulator : ModelVisual3D
   {
-    #region Attributes
+    #region Properties
 
     [CanBeNull]
     public Transform3D TargetTransform

@@ -7,7 +7,7 @@ namespace Hymperia.Model.Modeles
 {
   public class Ellipsoide : Forme
   {
-    #region Attributes
+    #region Properties
 
     public double RayonX { get; set; }
     public double RayonY { get; set; }

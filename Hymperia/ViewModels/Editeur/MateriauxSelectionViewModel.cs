@@ -12,7 +12,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class MateriauxSelectionViewModel : BindableBase
   {
-    #region Attributes
+    #region Properties
 
     [NotNull]
     public string DefaultName => "Bois";

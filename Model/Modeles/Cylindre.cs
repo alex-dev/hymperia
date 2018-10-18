@@ -6,7 +6,7 @@ namespace Hymperia.Model.Modeles
 {
   public class Cylindre : ThetaDivForme
   {
-    #region Attributes
+    #region Properties
 
     public double Hauteur { get; set; }
     public double Diametre { get; set; }

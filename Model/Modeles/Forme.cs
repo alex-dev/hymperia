@@ -8,7 +8,7 @@ namespace Hymperia.Model.Modeles
 {
   public abstract class Forme : IIdentity
   {
-    #region Attributes
+    #region Properties
 
     /// <summary>La clé primaire de la forme.</summary>
     public int Id { get; private set; }
