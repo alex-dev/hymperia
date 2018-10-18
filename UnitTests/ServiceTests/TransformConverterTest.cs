@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Media.Media3D;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SuccincT.Functional;
@@ -22,7 +21,7 @@ namespace UnitTests.ServiceTests
     [TestInitialize]
     public void Initialize()
     {
-      Converter = TransformConverter.Instance;
+      Converter = new TransformConverter();
     }
 
     [TestMethod]

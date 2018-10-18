@@ -6,19 +6,23 @@ using System.Windows;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.DependencyObjects.Manipulators;
+using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects
 {
+  /// <summary>Extension de <see cref="HelixViewport3D"/> pour supporter les transformations via des <see cref="HelixToolkit.Wpf.Manipulator"/>.</summary>
   public class Viewport : SelectionViewport
   {
     #region Dependancy Properties
 
+    /// <seealso cref="SelectionMode"/>
     public static readonly DependencyProperty SelectionModeProperty;
 
     #endregion
 
     #region Properties
 
+    /// <summary>Le <see cref="SelectionMode"/> que le viewport doit utiliser pour afficher ses <see cref="HelixToolkit.Wpf.Manipulator"/>.</summary>
     public SelectionMode SelectionMode
     {
       get => (SelectionMode)GetValue(SelectionModeProperty);
@@ -31,7 +35,7 @@ namespace Hymperia.Facade.DependencyObjects
 
     static Viewport()
     {
-      SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(Viewport));
+      SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(Viewport), new PropertyMetadata(SelectionMode.Deplacement));
     }
 
     public Viewport() : base() { }
@@ -42,17 +46,14 @@ namespace Hymperia.Facade.DependencyObjects
 
     #region Handle Manipulators
 
-    private void AddManipulator(MeshElement3D model)
+    private void AddManipulator([NotNull] MeshElement3D model)
     {
-      try
-      {
-        Manipulator = CreateManipulator();
-        Manipulator.Bind(model);
-        Children.Add(Manipulator);
-      }
-      catch (NotImplementedException) { }
+      Manipulator = CreateManipulator();
+      Manipulator.Bind(model);
+      Children.Add(Manipulator);
     }
 
+    [NotNull]
     private Manipulators.CombinedManipulator CreateManipulator()
     {
       switch (SelectionMode)
@@ -62,7 +63,7 @@ namespace Hymperia.Facade.DependencyObjects
         case SelectionMode.Transformation:
           return new ResizeManipulator();
         default:
-          throw new NotImplementedException("You forgot to implement stuff!!");
+          throw new InvalidOperationException("You forgot to implement stuff!!");
       }
     }
 
@@ -74,22 +75,23 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    protected override void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+    /// <inheritdoc />
+    protected override void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs args)
     {
-      base.SelectedItemsChanged(sender, args);
+      base.OnSelectedItemsCollectionChanged(sender, args);
+      RemoveManipulator();
 
-      if (sender == SelectedItems)
+      if (SelectedItems.Count == 1)
       {
-        RemoveManipulator();
-
-        if (SelectedItems.Count == 1)
-        {
-          AddManipulator(SelectedItems.Single());
-        }
+        AddManipulator(SelectedItems.Single());
       }
     }
 
-    protected override void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
+    /// <inheritdoc />
+    protected override void OnSelectedItemsChanged(
+      [ItemNotNull] ObservableCollection<MeshElement3D> oldvalue,
+      [NotNull][ItemNotNull] ObservableCollection<MeshElement3D> newvalue)
+
     {
       RemoveManipulator();
       base.OnSelectedItemsChanged(newvalue, oldvalue);

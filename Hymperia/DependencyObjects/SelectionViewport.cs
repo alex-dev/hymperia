@@ -14,16 +14,19 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects
 {
+  /// <summary>Extension de <see cref="HelixViewport3D"/> pour supporter la sélection.</summary>
   public class SelectionViewport : HelixViewport3D
   {
     #region Dependancy Properties
 
+    /// <seealso cref="SelectedItems"/>
     public static readonly DependencyProperty SelectedItemsProperty;
 
     #endregion
 
     #region Properties
 
+    /// <summary>Les formes sélectionnées dans le viewport.</summary>
     [CanBeNull]
     [ItemNotNull]
     public BulkObservableCollection<MeshElement3D> SelectedItems
@@ -39,7 +42,7 @@ namespace Hymperia.Facade.DependencyObjects
     static SelectionViewport()
     {
       SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(SelectionViewport),
-        new PropertyMetadata(BindToSelectedItem));
+        new PropertyMetadata(new BulkObservableCollection<MeshElement3D>(), OnSelectedItemsChanged));
     }
 
     public SelectionViewport() : base()
@@ -60,6 +63,10 @@ namespace Hymperia.Facade.DependencyObjects
 
     #region Selection Handlers
 
+    /// <summary>Crée un handler autour de <see cref="SelectionHandler(object, VisualsSelectedEventArgs)"/>.</summary>
+    /// <param name="single">Si le handler n'accepte qu'une seule forme sélectionnée ou plusieurs.</param>
+    /// <param name="clear">Si le handler doit vider <see cref="SelectedItems"/> ou pas.</param>
+    [NotNull]
     private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
     {
       args = new VisualsSelectedEventArgs(
@@ -84,7 +91,8 @@ namespace Hymperia.Facade.DependencyObjects
       }
     };
 
-    private void SelectionHandler(object sender, VisualsSelectedEventArgs args) =>
+
+    private void SelectionHandler([NotNull] object sender, [NotNull] VisualsSelectedEventArgs args) =>
       SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>());
 
     #endregion
@@ -93,23 +101,23 @@ namespace Hymperia.Facade.DependencyObjects
 
     #region Update Visual Elements
 
-    private void SelectMaterial(IEnumerable<MeshElement3D> models)
+    private void SelectMaterial([NotNull][ItemNotNull] IEnumerable<MeshElement3D> models)
     {
-      foreach (MeshElement3D model in models)
+      foreach (var model in models)
       {
-        CachedMaterials[model] = (model.Material as MaterialGroup);
+        CachedMaterials[model] = (MaterialGroup)model.Material;
 
         var material = CachedMaterials[model].Clone();
-        material?.Children?.Add(SelectedMaterial);
+        material.Children.Add(SelectedMaterial);
         material.Freeze();
 
         model.Material = material;
       }
     }
 
-    private void UnselectMaterial(IEnumerable<MeshElement3D> models)
+    private void UnselectMaterial([NotNull][ItemNotNull] IEnumerable<MeshElement3D> models)
     {
-      foreach (MeshElement3D model in models)
+      foreach (var model in models)
       {
         model.Material = CachedMaterials[model];
       }
@@ -117,39 +125,44 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    protected virtual void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+    protected virtual void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs args)
     {
-      if (sender == SelectedItems)
-      {
-        SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-        UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
-          ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
-          : from mesh in Children.OfType<MeshElement3D>()
-            where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
-            select mesh);
-      }
+      SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+      UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
+        ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+        : from mesh in Children.OfType<MeshElement3D>()
+          where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
+          select mesh);
     }
 
-    protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
+    protected override void OnItemsSourceChanged([NotNull][ItemNotNull] IEnumerable oldValue, [NotNull][ItemNotNull] IEnumerable newValue)
     {
       base.OnItemsSourceChanged(oldValue, newValue);
       Children.Add(Sunlight);
       Children.Add(GridLines);
     }
 
-    protected virtual void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
+    protected virtual void OnSelectedItemsChanged(
+      [ItemNotNull] ObservableCollection<MeshElement3D> oldvalue,
+      [NotNull][ItemNotNull] ObservableCollection<MeshElement3D> newvalue)
     {
       CachedMaterials.Clear();
-      newvalue.CollectionChanged += SelectedItemsChanged;
+
+      if (oldvalue is ObservableCollection<MeshElement3D>)
+      {
+        oldvalue.CollectionChanged -= OnSelectedItemsCollectionChanged;
+      }
+
+      newvalue.CollectionChanged += OnSelectedItemsCollectionChanged;
     }
 
-    private static void BindToSelectedItem(DependencyObject self, DependencyPropertyChangedEventArgs args)
+    private static void OnSelectedItemsChanged([NotNull] DependencyObject self, [NotNull] DependencyPropertyChangedEventArgs args)
     {
       if (args.Property == SelectedItemsProperty)
       {
-        ((Viewport)self).OnSelectedItemsChanged(
-          (ObservableCollection<MeshElement3D>)args.NewValue,
-          (ObservableCollection<MeshElement3D>)args.OldValue);
+        ((SelectionViewport)self).OnSelectedItemsChanged(
+          (ObservableCollection<MeshElement3D>)args.OldValue,
+          (ObservableCollection<MeshElement3D>)args.NewValue);
       }
     }
 
