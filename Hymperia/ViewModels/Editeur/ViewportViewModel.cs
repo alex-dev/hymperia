@@ -14,7 +14,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 {
   public class ViewportViewModel : RegionContextAwareViewModel
   {
-    #region Attributes
+    #region Properties
 
     #region Binding
 

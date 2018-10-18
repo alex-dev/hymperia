@@ -11,7 +11,7 @@ namespace Hymperia.Facade.ViewModels
 {
   public class FenetrePrincipaleViewModel : BindableBase
   {
-    #region Attributes
+    #region Properties
 
     public Projet Projet
     {

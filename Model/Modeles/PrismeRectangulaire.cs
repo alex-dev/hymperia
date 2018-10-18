@@ -6,7 +6,7 @@ namespace Hymperia.Model.Modeles
 {
   public class PrismeRectangulaire : Forme
   {
-    #region Attributes
+    #region Properties
 
     public double Hauteur { get; set; }
     public double Largeur { get; set; }

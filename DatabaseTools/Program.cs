@@ -2,15 +2,8 @@
 
 namespace Hymperia.DatabaseTools
 {
-  static class Program
+  internal static class Program
   {
-
-    /// <summary>Affiche l'ensemble de la collection demandée</summary>
-    /// <param name="args">
-    ///   <list type="number">
-    ///     <item>Le type de la collection à afficher.</item>
-    ///   </list>
-    /// </param>
     public static int Main(string[] args)
     {
       var app = CreateApp();
@@ -45,7 +38,7 @@ namespace Hymperia.DatabaseTools
 
     private static void Migrate(CommandLineApplication command)
     {
-      CommandOption option = command.Option("-i|--initialisation", "Initialise ou réinitialise la base de données.", CommandOptionType.NoValue);
+      var option = command.Option("-i|--initialisation", "Initialise ou réinitialise la base de données.", CommandOptionType.NoValue);
       option.ShowInHelpText = true;
       command.Description = $"Déploie ou met à jour la base de données ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
       command.ShowInHelpText = true;
@@ -60,7 +53,7 @@ namespace Hymperia.DatabaseTools
 
     private static void Materiaux(CommandLineApplication command)
     {
-      CommandOption option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
+      var option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
       option.ShowInHelpText = true;
       command.Description = $"Retourne les objets de la table 'Materiaux' la base de donnée ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
       command.ShowInHelpText = true;
@@ -76,7 +69,7 @@ namespace Hymperia.DatabaseTools
 
     private static void Projets(CommandLineApplication command)
     {
-      CommandOption option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
+      var option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
       option.ShowInHelpText = true;
       command.Description = $"Retourne les objets de la table 'Projets' la base de donnée ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
       command.ShowInHelpText = true;
@@ -92,7 +85,7 @@ namespace Hymperia.DatabaseTools
 
     private static void Utilisateurs(CommandLineApplication command)
     {
-      CommandOption option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
+      var option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
       option.ShowInHelpText = true;
       command.Description = $"Retourne les objets de la table 'Utilisateurs' la base de donnée ciblée par la connection { Query.ConfigurationName } du fichier connections.config.";
       command.ShowInHelpText = true;

@@ -7,7 +7,7 @@ namespace Hymperia.Model.Modeles
 {
   public class Cone : ThetaDivForme
   {
-    #region Attributes
+    #region Properties
 
     public double Hauteur { get; set; }
     public double RayonBase { get; set; }
