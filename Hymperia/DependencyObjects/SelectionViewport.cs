@@ -119,15 +119,12 @@ namespace Hymperia.Facade.DependencyObjects
 
     protected virtual void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (sender == SelectedItems)
-      {
-        SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-        UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
-          ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
-          : from mesh in Children.OfType<MeshElement3D>()
-            where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
-            select mesh);
-      }
+      SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+      UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
+        ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+        : from mesh in Children.OfType<MeshElement3D>()
+          where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
+          select mesh);
     }
 
     protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
@@ -140,6 +137,7 @@ namespace Hymperia.Facade.DependencyObjects
     protected virtual void OnSelectedItemsChanged(ObservableCollection<MeshElement3D> newvalue, ObservableCollection<MeshElement3D> oldvalue)
     {
       CachedMaterials.Clear();
+      oldvalue.CollectionChanged -= SelectedItemsChanged;
       newvalue.CollectionChanged += SelectedItemsChanged;
     }
 

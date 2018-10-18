@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -13,7 +14,6 @@ using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -34,9 +34,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       get => projet;
       set
       {
-        if (Revert.CanExecute(null))
+        if (Revert.CanExecute(true))
         {
-          Revert.Execute(null);
+          Revert.Execute(true);
         }
 
         Loading = QueryProjet(value, UpdateFormes);
@@ -137,7 +137,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         .ObservesProperty(() => FormesSelectionnees);
       Sauvegarder = new DelegateCommand(() => Loading = _Sauvegarder())
         .ObservesCanExecute(() => IsModified);
-      Revert = new DelegateCommand(() => Loading = _Revert())
+      Revert = new DelegateCommand<bool>(leaving => Loading = _Revert(leaving))
         .ObservesCanExecute(() => IsModified);
 
       FormesSelectionnees = new BulkObservableCollection<FormeWrapper>();
@@ -150,25 +150,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private Forme CreerForme(Point point)
     {
       if (SelectedForme == typeof(PrismeRectangulaire))
-      {
         return new PrismeRectangulaire(SelectedMateriau) { Origine = point };
-      }
       else if (SelectedForme == typeof(Ellipsoide))
-      {
         return new Ellipsoide(SelectedMateriau) { Origine = point };
-      }
       else if (SelectedForme == typeof(Cone))
-      {
         return new Cone(SelectedMateriau) { Origine = point };
-      }
       else if (SelectedForme == typeof(Cylindre))
-      {
         return new Cylindre(SelectedMateriau) { Origine = point };
-      }
       else
-      {
-        throw new NotImplementedException("Seems like something broke. Blame the devs.");
-      }
+        throw new InvalidOperationException("Seems like something broke. Blame the devs.");
     }
 
     private void _AjouterForme(Point point)
@@ -211,11 +201,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task _Sauvegarder()
     {
-      if (!IsModified)
-      {
-        throw new InvalidOperationException("Project has not been modified yet.");
-      }
-
       var projet = Projet;
       var deleted = FormesDeleted;
 
@@ -234,13 +219,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Command Revert
 
-    private async Task _Revert()
+    private async Task _Revert(bool leaving)
     {
-      if (!IsModified)
-      {
-        throw new InvalidOperationException("Project has not been modified yet.");
-      }
-
       var projet = Projet;
       var deleted = FormesDeleted;
 
@@ -249,6 +229,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
       using (var context = ContextFactory.GetContext())
       {
         context.UnloadFormes(projet);
+
+        if (!leaving)
+        {
+          context.LoadFormes(projet);
+        }
       }
     }
 
@@ -283,19 +268,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       if (Projet is null)
       {
+        Formes.ForEach(wrapper => wrapper.PropertyChanged -= FormeHasChanged);
         Formes = null;
         ResetChangeTracker();
       }
       else
       {
-        FormeWrapper Attach(FormeWrapper forme)
-        {
-          forme.PropertyChanged += FormeHasChanged;
-          return forme;
-        }
-
-        var enumerable = from forme in Projet.Formes
-                         select Attach(ConvertisseurFormes.Convertir(forme));
+        var enumerable = (from forme in Projet.Formes
+                          select ConvertisseurFormes.Convertir(forme))
+          .DeferredForEach(wrapper => wrapper.PropertyChanged += FormeHasChanged);
 
         Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
         ResetChangeTracker();
@@ -304,10 +285,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
     {
-      if (sender is FormeWrapper forme && Formes.Contains(forme))
-      {
-        HasBeenModified(null, null);
-      }
+      HasBeenModified(null, null);
     }
 
     #endregion
@@ -336,6 +314,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void ResetChangeTracker()
     {
+      if (FormesDeleted is ObservableCollection<Forme>)
+      {
+        FormesDeleted.CollectionChanged -= HasBeenModified;
+      }
+
       FormesDeleted = new BulkObservableCollection<Forme>();
       FormesDeleted.CollectionChanged += HasBeenModified;
 

@@ -11,9 +11,7 @@ namespace Hymperia.Facade.Services.PointsToHeightConverters
     public static object ConvertToPoint(double height, PointOrientation orientation, Type target)
     {
       if (typeof(Point3D) != target)
-      {
         throw new ArgumentException($"Can only convert to { nameof(Point3D) }.", nameof(target));
-      }
 
       switch (orientation)
       {

@@ -31,7 +31,7 @@ namespace Hymperia.Facade.Views.Editeur
     {
       base.RegionContextChanged(sender, args);
       
-      if (!IsBusy() && RegionContext is IProjetViewModel context)
+      if (sender is IProjetViewModel context)
       {
         context.PropertyChanged += ProjetChanged;
       }
@@ -39,7 +39,7 @@ namespace Hymperia.Facade.Views.Editeur
 
     private void ProjetChanged(object sender, PropertyChangedEventArgs args)
     {
-      if (sender == RegionContext && sender is IProjetViewModel context)
+      if (sender is IProjetViewModel context)
       {
         switch (args.PropertyName)
         {

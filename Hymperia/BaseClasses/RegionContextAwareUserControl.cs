@@ -46,6 +46,7 @@ namespace Hymperia.Facade.BaseClasses
     private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
       ((RegionContextAwareUserControl)sender).RegionContextChanged(args);
 
+    [Obsolete]
     protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs args)
     {
       if (!IsBusy())
@@ -57,6 +58,7 @@ namespace Hymperia.Facade.BaseClasses
       }
     }
 
+    [Obsolete]
     protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs args)
     {
       if (!IsBusy())
@@ -70,11 +72,14 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Block Reentrancy
 
+    [Pure]
     protected bool IsBusy() => Monitor.Busy;
     private readonly SimpleMonitor Monitor;
 
     private class SimpleMonitor : IDisposable
     {
+      public bool Busy { get; private set; }
+
       [NotNull]
       public SimpleMonitor Enter()
       {
@@ -82,8 +87,8 @@ namespace Hymperia.Facade.BaseClasses
         return this;
       }
 
+      [Pure]
       public void Dispose() => Busy = false;
-      public bool Busy { get; private set; }
     }
 
     #endregion
