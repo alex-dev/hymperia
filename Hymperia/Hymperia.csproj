@@ -242,6 +242,7 @@
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
+    <Compile Include="ViewModels\AffichageProjetsViewModel.cs" />
     <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
       <DependentUpon>FormesProperties.xaml</DependentUpon>
     </Compile>
@@ -265,6 +266,9 @@
     </Compile>
     <Compile Include="Views\Editeur\Editeur.xaml.cs">
       <DependentUpon>Editeur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AffichageProjets.xaml.cs">
+      <DependentUpon>AffichageProjets.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +308,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AffichageProjets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFResources\ValueConverters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
