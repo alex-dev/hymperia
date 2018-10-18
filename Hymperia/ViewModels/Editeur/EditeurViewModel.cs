@@ -321,6 +321,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
 #pragma warning restore 4014
 
+    private void HasBeenModified(object sender, NotifyCollectionChangedEventArgs args) => IsModified = true;
+
     #endregion
 
     #region IDisposable
