@@ -156,10 +156,15 @@ namespace Hymperia.Facade.DependencyObjects
 
     #region Private Fields
 
+    [NotNull]
     private readonly SunLight Sunlight = new SunLight();
+    [NotNull]
     private readonly GridLinesVisual3D GridLines =
       new GridLinesVisual3D { Width = 100, Length = 100, MajorDistance = 1, Thickness = 0.01 };
-    private readonly IDictionary<MeshElement3D, MaterialGroup> CachedMaterials = new Dictionary<MeshElement3D, MaterialGroup> { };
+    [NotNull]
+    private readonly IDictionary<MeshElement3D, MaterialGroup> CachedMaterials =
+      new Dictionary<MeshElement3D, MaterialGroup> { };
+    [NotNull]
     private readonly Material SelectedMaterial = new DiffuseMaterial(Brushes.Red.Clone());
 
     #endregion

@@ -167,7 +167,9 @@ namespace Hymperia.Facade.BaseClasses
 
       #region Private Fields
 
+      [NotNull]
       private readonly FieldInfo Field;
+      [NotNull]
       private readonly ObservableCollection<T> Owner;
 
       #endregion

@@ -15,8 +15,6 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
-    Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
   public class ViewportViewModel : RegionContextAwareViewModel
   {
     #region Properties
@@ -250,11 +248,16 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     /// <summary>Valide si <paramref name="sender"/> est occupé à répondre à une requête de <see cref="this"/>.</summary>
     [Pure]
+    [NotNull]
     protected bool IsBusy(object sender) => Monitor.Busy(sender);
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+      Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
+    [NotNull]
     private readonly SimpleMonitor Monitor;
 
     private class SimpleMonitor
     {
+      [NotNull]
       private readonly ICollection<object> Senders;
 
       public SimpleMonitor()
@@ -270,7 +273,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       public class InternalMonitor : IDisposable
       {
+        [NotNull]
         private readonly SimpleMonitor Monitor;
+        [NotNull]
         public readonly object Sender;
 
         public InternalMonitor(object sender, SimpleMonitor monitor)

@@ -207,8 +207,10 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Static Services
 
+    [NotNull]
     private static readonly LinearConverter LinearConverter =
       new LinearConverter() { M = 1 };
+    [NotNull]
     private static readonly PointsToHeightConverter PointsToHeightConverter =
       (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
 

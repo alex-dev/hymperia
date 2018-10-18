@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using DirectXOperations;
+using JetBrains.Annotations;
 using Object = Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Facade.Services
@@ -12,6 +13,8 @@ namespace Hymperia.Facade.Services
   public class TransformConverter : IMultiValueConverter
   {
     /// <summary>Le type de la propriété source.</summary>
+    [NotNull]
+    [ItemNotNull]
     public readonly Type[] Types = new Type[]
     {
       typeof(Object.Point),

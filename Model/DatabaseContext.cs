@@ -13,7 +13,9 @@ namespace Hymperia.Model
   {
     #region Constants
 
+    [NotNull]
     public const string ConfigurationName = "MainDatabase";
+    [CanBeNull]
     private readonly string Connection;
 
     #endregion

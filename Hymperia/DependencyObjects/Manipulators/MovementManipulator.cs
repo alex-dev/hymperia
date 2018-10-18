@@ -17,13 +17,15 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
   {
     #region Dependency Properties
 
+    /// <seealso cref="Diameter"/>
     public static readonly DependencyProperty DiameterProperty =
-      DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator));
+      DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator), new PropertyMetadata(1));
 
     #endregion
 
     #region Properties
 
+    /// <summary>Le diamètre du manipulateur.</summary>
     public double Diameter
     {
       get => (double)GetValue(DiameterProperty);
@@ -34,6 +36,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Constructors
 
+    /// <inheritdoc />
     [NotNull]
     [ItemNotNull]
     protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
@@ -114,6 +117,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Binding to Source
 
+    /// <inheritdoc />
     public override void Bind(ModelVisual3D source)
     {
       MultiBinding bindings = new MultiBinding() { Mode = BindingMode.OneWay, Converter = Converter };
@@ -123,6 +127,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.TwoWay });
     }
 
+    /// <inheritdoc />
     public override void Unbind()
     {
       BindingOperations.ClearBinding(this, DiameterProperty);
@@ -237,8 +242,11 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Static Services
 
+    [NotNull]
     private static readonly DiameterConverter Converter = new DiameterConverter();
+    [NotNull]
     private static readonly LinearConverter LinearConverter = new LinearConverter() { M = 1 };
+    [NotNull]
     private static readonly PointsToHeightConverter PointsToHeightConverter =
       (PointsToHeightConverter) Application.Current.Resources["PointsToHeight"];
 

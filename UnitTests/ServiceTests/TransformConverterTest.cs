@@ -4,12 +4,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SuccincT.Functional;
 using Hymperia.Facade;
 using Hymperia.Facade.Services;
+using JetBrains.Annotations;
 
 namespace UnitTests.ServiceTests
 {
   [TestClass]
   public class TransformConverterTest
   {
+    [NotNull]
     private readonly Random Random;
     private TransformConverter Converter { get; set; }
 
