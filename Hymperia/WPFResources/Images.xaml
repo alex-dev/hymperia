@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <BitmapImage x:Key="Cone" UriSource="../Images/Cone.png" />
+  <BitmapImage x:Key="Cylindre" UriSource="../Images/Cylindre.png" />
+  <BitmapImage x:Key="Ellipsoide" UriSource="../Images/Ellipsoide.png" />
+  <BitmapImage x:Key="PrismeRecangulaire" UriSource="../Images/PrismeRectangulaire.png" />
+</ResourceDictionary>

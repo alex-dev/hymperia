@@ -220,10 +220,12 @@
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
-    <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
+<<<<<<< HEAD
     <Compile Include="EventDelegateExtension.cs" />
     <Compile Include="EventHandlerExtension.cs" />
+=======
+>>>>>>> Styling RadioButtons
     <Compile Include="GeometryExtension.cs" />
     <Compile Include="LINQExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
@@ -309,10 +311,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WPFResources\ValueConverters.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Editeur\FormesProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -349,7 +347,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPFResources\ListBoxStyles.xaml">
+    <Page Include="WPFResources\RadioButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="WPFResources\DockPanelStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="WPFResources\ValueConverters.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
