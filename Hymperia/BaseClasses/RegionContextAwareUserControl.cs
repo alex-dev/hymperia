@@ -15,7 +15,8 @@ namespace Hymperia.Facade.BaseClasses
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty RegionContextProperty;
+    public static readonly DependencyProperty RegionContextProperty =
+      DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
 
     #endregion
 
@@ -27,11 +28,6 @@ namespace Hymperia.Facade.BaseClasses
     }
 
     #region Constructors
-
-    static RegionContextAwareUserControl()
-    {
-      RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
-    }
 
     protected RegionContextAwareUserControl()
     {

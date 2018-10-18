@@ -8,9 +8,9 @@ namespace Hymperia.Model.Modeles
   {
     #region Properties
 
-    public double Hauteur { get; set; }
-    public double Largeur { get; set; }
-    public double Longueur { get; set; }
+    public double Hauteur { get; set; } = 1;
+    public double Largeur { get; set; } = 1;
+    public double Longueur { get; set; } = 1;
 
     #endregion
 
@@ -29,10 +29,7 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     public PrismeRectangulaire([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default)
-      : base(materiau, point, quaternion)
-    {
-      Hauteur = Largeur = Longueur = 1;
-    }
+      : base(materiau, point, quaternion) { }
 
     #endregion
 

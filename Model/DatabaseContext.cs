@@ -92,7 +92,7 @@ namespace Hymperia.Model
     #region Constructors
 
     /// <summary>Initialise le contexte selon les options par défaut.</summary>
-    public DatabaseContext() : base() { }
+    public DatabaseContext() { }
 
     /// <summary>Initialise le contexte selon les options passées.</summary>
     /// <param name="options">Les options préconfigurées passées au contexte.</param>
@@ -101,7 +101,7 @@ namespace Hymperia.Model
 
     /// <summary>Initialise le base de donnée selon la connection string passée.</summary>
     /// <param name="connection">Connection string.</param>
-    public DatabaseContext([NotNull] string connection) : base()
+    public DatabaseContext([NotNull] string connection)
     {
       Connection = connection;
     }

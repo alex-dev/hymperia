@@ -315,11 +315,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void ResetChangeTracker()
     {
-      if (FormesDeleted is ObservableCollection<Forme>)
-      {
-        FormesDeleted.CollectionChanged -= HasBeenModified;
-      }
-
+      FormesDeleted?.Remove(HasBeenModified);
       FormesDeleted = new BulkObservableCollection<Forme>();
       FormesDeleted.CollectionChanged += HasBeenModified;
 

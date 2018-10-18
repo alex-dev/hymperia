@@ -34,18 +34,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
-    [NotNull]
+    [CanBeNull]
     [ItemNotNull]
     public BulkObservableCollection<MeshElement3D> FormesSelectionnees
     {
       get => selected;
       private set
       {
-        if (selected is ObservableCollection<MeshElement3D>)
-        {
-          selected.CollectionChanged -= FormesSelectionneesChanged;
-        }
-
+        selected?.Remove(FormesSelectionneesChanged);
         value.CollectionChanged += FormesSelectionneesChanged;
         SetProperty(ref selected, value);
       }
@@ -68,6 +64,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       Monitor = new SimpleMonitor();
       ConvertisseurWrappers = wrappers;
+      FormesSelectionnees = new BulkObservableCollection<MeshElement3D>();
     }
 
     #endregion
@@ -135,7 +132,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       if (Formes is null)
       {
-        FormesSelectionnees = null;
+        FormesSelectionnees.Clear();
       }
       else
       {

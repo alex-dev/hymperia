@@ -17,7 +17,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty DiameterProperty;
+    public static readonly DependencyProperty DiameterProperty =
+      DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator));
 
     #endregion
 
@@ -32,16 +33,6 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     #endregion
 
     #region Constructors
-
-    static MovementManipulator()
-    {
-      Converter = new DiameterConverter();
-      LinearConverter = new LinearConverter() { M = 1 };
-      PointsToHeightConverter = (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
-      DiameterProperty = DependencyProperty.Register("Diameter", typeof(double), typeof(MovementManipulator));
-    }
-
-    public MovementManipulator() : base() { }
 
     [NotNull]
     [ItemNotNull]
@@ -246,9 +237,10 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Static Services
 
-    private static readonly DiameterConverter Converter;
-    private static readonly LinearConverter LinearConverter;
-    private static readonly PointsToHeightConverter PointsToHeightConverter;
+    private static readonly DiameterConverter Converter = new DiameterConverter();
+    private static readonly LinearConverter LinearConverter = new LinearConverter() { M = 1 };
+    private static readonly PointsToHeightConverter PointsToHeightConverter =
+      (PointsToHeightConverter) Application.Current.Resources["PointsToHeight"];
 
     #endregion
   }

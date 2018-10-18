@@ -13,6 +13,11 @@ namespace Hymperia.Model.Modeles
     /// <summary>La clé primaire de l'utilisateur.</summary>
     public int Id { get; private set; }
 
+    /// <summary>Les accès aux projets de l'utilisateur.</summary>
+    /// <remarks>Modifiable, mais privé.</remarks>
+    [ItemNotNull]
+    internal List<Acces> _Acces { get; private set; } = new List<Acces> { };
+
     /// <summary>Le nom d'utilisateur.</summary>
     /// <remarks>Alternate Key</remarks>
     [NotNull]
@@ -26,11 +31,6 @@ namespace Hymperia.Model.Modeles
     [Required]
     [MinLength(1, ErrorMessage = "Le mot de passe ne peut pas être vide.")]
     public string MotDePasse { get; set; }
-
-    /// <summary>Les accès aux projets de l'utilisateur.</summary>
-    /// <remarks>Modifiable, mais privé.</remarks>
-    [ItemNotNull]
-    internal List<Acces> _Acces { get; set; }
 
     #endregion
 
@@ -50,10 +50,8 @@ namespace Hymperia.Model.Modeles
     /// <param name="motDePasse">Le mot de passe encrypté de l'utilisateur.</param>
     public Utilisateur([NotNull][MinLength(1)] string nom, [NotNull] string motDePasse)
     {
-      Id = default;
       Nom = nom;
       MotDePasse = motDePasse;
-      _Acces = new List<Acces> { };
     }
 
     #endregion

@@ -9,8 +9,8 @@ namespace Hymperia.Model.Modeles
   {
     #region Properties
 
-    public double Hauteur { get; set; }
-    public double RayonBase { get; set; }
+    public double Hauteur { get; set; } = 1;
+    public double RayonBase { get; set; } = 1;
     public double RayonTop { get; set; }
 
     #endregion
@@ -55,12 +55,7 @@ namespace Hymperia.Model.Modeles
 
     /// <inheritdoc />
     public Cone([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default) 
-      : base(materiau, point, quaternion)
-    {
-      RayonTop = 0;
-      RayonBase = 1;
-      Hauteur = 1;
-    }
+      : base(materiau, point, quaternion) { }
 
     #endregion
 

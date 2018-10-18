@@ -16,7 +16,8 @@ namespace Hymperia.Facade.DependencyObjects
     #region Dependancy Properties
 
     /// <seealso cref="SelectionMode"/>
-    public static readonly DependencyProperty SelectionModeProperty;
+    public static readonly DependencyProperty SelectionModeProperty =
+      DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(Viewport), new PropertyMetadata(SelectionMode.Deplacement));
 
     #endregion
 
@@ -28,17 +29,6 @@ namespace Hymperia.Facade.DependencyObjects
       get => (SelectionMode)GetValue(SelectionModeProperty);
       set => SetValue(SelectionModeProperty, value);
     }
-
-    #endregion
-
-    #region Constructors
-
-    static Viewport()
-    {
-      SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(Viewport), new PropertyMetadata(SelectionMode.Deplacement));
-    }
-
-    public Viewport() : base() { }
 
     #endregion
 

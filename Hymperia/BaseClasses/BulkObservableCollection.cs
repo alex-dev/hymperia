@@ -21,7 +21,7 @@ namespace Hymperia.Facade.BaseClasses
     #region Constructors
 
     /// <inheritdoc />
-    public BulkObservableCollection() : base() { }
+    public BulkObservableCollection() { }
     /// <inheritdoc />
     public BulkObservableCollection([NotNull] List<T> list) : base(list) { }
     /// <inheritdoc />
@@ -147,17 +147,13 @@ namespace Hymperia.Facade.BaseClasses
 
     private class EventDelegate
     {
-      public static readonly BindingFlags Flags;
+      public static readonly BindingFlags Flags =
+        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
       #region Constructors
 
       public static EventDelegate LoadCollectionChanged(ObservableCollection<T> owner) =>
         new EventDelegate(typeof(ObservableCollection<T>).GetField(nameof(CollectionChanged), Flags), owner);
-
-      static EventDelegate()
-      {
-        Flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-      }
 
       private EventDelegate(FieldInfo field, ObservableCollection<T> owner)
       {

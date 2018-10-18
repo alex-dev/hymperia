@@ -12,16 +12,11 @@ namespace Hymperia.Facade.Services
   public class TransformConverter : IMultiValueConverter
   {
     /// <summary>Le type de la propriété source.</summary>
-    public readonly Type[] Types;
-
-    public TransformConverter()
+    public readonly Type[] Types = new Type[]
     {
-      Types = new Type[]
-      {
-        typeof(Object.Point),
-        typeof(Object.Quaternion)
-      };
-    }
+      typeof(Object.Point),
+      typeof(Object.Quaternion)
+    };
 
     /// <inheritdoc />
     /// <remarks>Vers la vue.</remarks>
@@ -42,7 +37,7 @@ namespace Hymperia.Facade.Services
     {
       if (!Enumerable.SequenceEqual(targets, Types))
         throw new ArgumentException("Could not cast values into proper return type.", nameof(targets));
-      
+
       if (!(value is Transform3D transform))
         throw new ArgumentException($"Can only convert from { nameof(Transform3D) }.", nameof(value));
 

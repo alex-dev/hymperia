@@ -20,7 +20,9 @@ namespace Hymperia.Facade.DependencyObjects
     #region Dependancy Properties
 
     /// <seealso cref="SelectedItems"/>
-    public static readonly DependencyProperty SelectedItemsProperty;
+    public static readonly DependencyProperty SelectedItemsProperty =
+      DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(SelectionViewport),
+        new PropertyMetadata(new BulkObservableCollection<MeshElement3D>(), OnSelectedItemsChanged));
 
     #endregion
 
@@ -39,19 +41,8 @@ namespace Hymperia.Facade.DependencyObjects
 
     #region Constructors
 
-    static SelectionViewport()
+    public SelectionViewport()
     {
-      SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(SelectionViewport),
-        new PropertyMetadata(new BulkObservableCollection<MeshElement3D>(), OnSelectedItemsChanged));
-    }
-
-    public SelectionViewport() : base()
-    {
-      Sunlight = new SunLight();
-      GridLines = new GridLinesVisual3D { Width = 100, Length = 100, MajorDistance = 1, Thickness = 0.01 };
-      SelectedMaterial = new DiffuseMaterial(Brushes.Red.Clone());
-      CachedMaterials = new Dictionary<MeshElement3D, MaterialGroup> { };
-
       SelectedMaterial.Freeze();
 
       InputBindings.Add(new MouseBinding(new PointSelectionCommand(Viewport, CreateHandler(true, true)), new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt)));
@@ -147,12 +138,7 @@ namespace Hymperia.Facade.DependencyObjects
       [NotNull][ItemNotNull] ObservableCollection<MeshElement3D> newvalue)
     {
       CachedMaterials.Clear();
-
-      if (oldvalue is ObservableCollection<MeshElement3D>)
-      {
-        oldvalue.CollectionChanged -= OnSelectedItemsCollectionChanged;
-      }
-
+      oldvalue?.Add(OnSelectedItemsCollectionChanged);
       newvalue.CollectionChanged += OnSelectedItemsCollectionChanged;
     }
 
@@ -170,10 +156,11 @@ namespace Hymperia.Facade.DependencyObjects
 
     #region Private Fields
 
-    private readonly SunLight Sunlight;
-    private readonly GridLinesVisual3D GridLines;
-    private readonly IDictionary<MeshElement3D, MaterialGroup> CachedMaterials;
-    private readonly Material SelectedMaterial;
+    private readonly SunLight Sunlight = new SunLight();
+    private readonly GridLinesVisual3D GridLines =
+      new GridLinesVisual3D { Width = 100, Length = 100, MajorDistance = 1, Thickness = 0.01 };
+    private readonly IDictionary<MeshElement3D, MaterialGroup> CachedMaterials = new Dictionary<MeshElement3D, MaterialGroup> { };
+    private readonly Material SelectedMaterial = new DiffuseMaterial(Brushes.Red.Clone());
 
     #endregion
   }

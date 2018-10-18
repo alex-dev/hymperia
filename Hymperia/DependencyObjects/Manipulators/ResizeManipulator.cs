@@ -14,9 +14,12 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty HeightProperty;
-    public static readonly DependencyProperty LengthProperty;
-    public static readonly DependencyProperty WidthProperty;
+    public static readonly DependencyProperty HeightProperty =
+      DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator));
+    public static readonly DependencyProperty LengthProperty =
+      DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator));
+    public static readonly DependencyProperty WidthProperty =
+      DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator));
 
     #endregion
 
@@ -43,17 +46,6 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     #endregion
 
     #region Constructors
-
-    static ResizeManipulator()
-    {
-      LinearConverter = new LinearConverter() { M = 1 };
-      PointsToHeightConverter = (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
-      WidthProperty = DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator));
-      HeightProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator));
-      LengthProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator));
-    }
-
-    public ResizeManipulator() : base() { }
 
     [NotNull]
     [ItemNotNull]
@@ -215,8 +207,10 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Static Services
 
-    private static readonly LinearConverter LinearConverter;
-    private static readonly PointsToHeightConverter PointsToHeightConverter;
+    private static readonly LinearConverter LinearConverter =
+      new LinearConverter() { M = 1 };
+    private static readonly PointsToHeightConverter PointsToHeightConverter =
+      (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
 
     #endregion
   }
