@@ -39,14 +39,9 @@ namespace Hymperia.Facade.ViewModels
 
     private void NavigateToViewport()
     {
-      foreach (var view in Manager.Regions["ContentRegion"].ActiveViews)
+      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
       {
-        Manager.Regions["ContentRegion"].Deactivate(view);
-      }
-
-      Manager.RequestNavigate("ContentRegion", "Editeur", new NavigationParameters
-      {
-        { "Utilisateur", Utilisateur }
+        { NavigationParameterKeys.Utilisateur, Utilisateur }
       });
     }
 

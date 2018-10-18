@@ -122,6 +122,8 @@
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
     <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
+    <Compile Include="NavigationKeys.cs" />
+    <Compile Include="NavigationParameterKeys.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurMateriaux.cs" />

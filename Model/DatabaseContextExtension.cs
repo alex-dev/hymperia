@@ -84,7 +84,7 @@ namespace Hymperia.Model
         .Query().Include(forme => forme.Materiau)
         .LoadAsync(token).ConfigureAwait(false);
 
-    /// <summary>Unload les formes du projets.</summary>
+    /// <summary>Unload les formes du <paramref name="projet"/>.</summary>
     [Obsolete("Interface replaced by more long lived context and requery inside each context.")]
     public static void UnloadFormes([NotNull] this DatabaseContext context, [NotNull] Projet projet)
     {
@@ -95,6 +95,35 @@ namespace Hymperia.Model
         context.Entry(forme).State = EntityState.Detached;
 
       formes.CurrentValue = null;
+    }
+
+    #endregion
+
+    #region Utilisateurs
+
+    /// <summary>Load les formes du <paramref name="utilisateur"/>.</summary>
+    public static void LoadProjets([NotNull] this DatabaseContext context, [NotNull] Utilisateur utilisateur) =>
+      context.Entry(utilisateur).Collection(u => u._Acces)
+        .Query().Include(acces => acces.Projet).Load();
+
+    /// <summary>Load asynchronement les projets de l'<paramref name="utilisateur"/>.</summary>
+    public static async Task LoadProjetsAsync([NotNull] this DatabaseContext context, [NotNull] Utilisateur utilisateur, [NotNull] CancellationToken token = default) =>
+      await context.Entry(utilisateur).Collection(u => u._Acces)
+        .Query().Include(acces => acces.Projet).LoadAsync();
+
+    /// <summary>Unload les projets de l'<paramref name="utilisateur"/>.</summary>
+    public static void UnloadProjets([NotNull] this DatabaseContext context, [NotNull] Utilisateur utilisateur)
+    {
+      var entry = context.Entry(utilisateur);
+      var acces = entry.Collection(u => u._Acces);
+
+      foreach (var _acces in acces.CurrentValue)
+      {
+        context.Entry(_acces.Projet).State = EntityState.Detached;
+        context.Entry(_acces).State = EntityState.Detached;
+      }
+
+      acces.CurrentValue = null;
     }
 
     #endregion
