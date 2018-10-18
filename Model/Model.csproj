@@ -145,8 +145,8 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySqlConnector, Version=0.46.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySqlConnector.0.46.0\lib\net461\MySqlConnector.dll</HintPath>
+    <Reference Include="MySqlConnector, Version=0.46.1.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySqlConnector.0.46.1\lib\net461\MySqlConnector.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>

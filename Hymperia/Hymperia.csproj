@@ -220,6 +220,7 @@
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="EventHandlerExtension.cs" />
     <Compile Include="GeometryExtension.cs" />
+    <Compile Include="LINQExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
     <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
