@@ -1,4 +1,9 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<!--
+  Auteur : Alexandre Parent
+  Date : 2018-10-17
+  Fichier : ValueConverters.xaml
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Hymperia.Facade.Services"
     xmlns:pth="clr-namespace:Hymperia.Facade.Services.PointsToHeightConverters">
   <pth:HeightToPointsConverter x:Key="HeightToPoints" />
