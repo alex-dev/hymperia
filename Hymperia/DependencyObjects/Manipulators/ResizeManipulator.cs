@@ -56,26 +56,38 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// <inheritdoc/>
     [NotNull]
     [ItemNotNull]
-    protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
+    protected override IEnumerable<Manipulator> GenerateManipulators()
     {
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red },
-        BindToHeightManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green },
-        BindToLengthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue },
-        BindToWidthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(-1, 0, 0), Color = Colors.Red },
-        BindToHeightManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, -1, 0), Color = Colors.Green },
-        BindToLengthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 0, -1), Color = Colors.Blue },
-        BindToWidthManipulator);
+      {
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
+        BindToHeightManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green };
+        BindToLengthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue };
+        BindToWidthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
+        BindToHeightManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(0, -1, 0), Color = Colors.Green };
+        BindToLengthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(0, 0, -1), Color = Colors.Blue };
+        BindToWidthManipulator(manipulator);
+        yield return manipulator;
+      }
     }
 
     #region Manipulator Size Bindings
@@ -101,9 +113,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// <inheritdoc/>
     public override void Bind([NotNull] ModelVisual3D source)
     {
-      var (height, length, width) = CreateBindings(source);
 
       base.Bind(source);
+      var (height, length, width) = CreateBindings(source);
       SetBinding(HeightProperty, height);
       SetBinding(LengthProperty, length);
       SetBinding(WidthProperty, width);

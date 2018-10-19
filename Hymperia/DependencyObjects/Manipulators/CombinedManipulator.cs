@@ -20,7 +20,11 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     /// <seealso cref=Radius/>
     public static readonly DependencyProperty RadiusProperty =
-      DependencyProperty.Register(nameof(Radius), typeof(double), typeof(MovementManipulator), new PropertyMetadata(2d));
+      DependencyProperty.Register(nameof(Radius), typeof(double), typeof(MovementManipulator), new PropertyMetadata(2d,
+        (o, p) => {
+          int i = 1;
+
+        }));
 
     #endregion
 
@@ -51,10 +55,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     {
       var binding = new Binding("Transform") { Source = this };
 
-      foreach (var (manipulator, binder) in GenerateManipulators())
+      foreach (var manipulator in GenerateManipulators())
       {
-        BindingOperations.SetBinding(manipulator, Manipulator.TargetTransformProperty, binding);
-        binder(manipulator);
+        SetBinding(manipulator, Manipulator.TargetTransformProperty, binding);
         Children.Add(manipulator);
       }
     }
@@ -66,7 +69,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// </returns>
     [NotNull]
     [ItemNotNull]
-    protected abstract IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators();
+    protected abstract IEnumerable<Manipulator> GenerateManipulators();
 
     #endregion
 

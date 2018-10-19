@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -17,7 +16,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// inheritdoc/>
     [NotNull]
     [ItemNotNull]
-    protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
+    protected override IEnumerable<Manipulator> GenerateManipulators()
     {
       IEnumerable<Manipulator> Generate()
       {
@@ -29,8 +28,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
         yield return new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue };
       }
 
-      return from manipulator in Generate()
-             select Tuple.Create<Manipulator, Action<Manipulator>>(manipulator, BindToManipulator);
+        return (from manipulator in Generate()
+                select manipulator).DeferredForEach(BindToManipulator);
     }
 
     #region Manipulator Size Bindings
