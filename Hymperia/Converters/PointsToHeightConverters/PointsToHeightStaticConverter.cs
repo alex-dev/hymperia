@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
 
-namespace Hymperia.Facade.Services.PointsToHeightConverters
+namespace Hymperia.Facade.Converters.PointsToHeightConverters
 {
   public enum PointOrientation { Top, Bottom }
 
@@ -24,10 +24,7 @@ namespace Hymperia.Facade.Services.PointsToHeightConverters
       }
     }
 
-    public static object ConvertToHeight(Point3D point, Type target)
-    {
-      return ChangeType(point.Z * 2, target);
-    }
+    public static object ConvertToHeight(Point3D point, Type target) => ChangeType(point.Z * 2, target);
 
     private static object ChangeType(object value, Type target) => Convert.ChangeType(value, target);
   }

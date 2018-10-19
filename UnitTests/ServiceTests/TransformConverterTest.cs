@@ -3,7 +3,7 @@ using System.Windows.Media.Media3D;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SuccincT.Functional;
 using Hymperia.Facade;
-using Hymperia.Facade.Services;
+using Hymperia.Facade.Converters;
 using JetBrains.Annotations;
 
 namespace UnitTests.ServiceTests

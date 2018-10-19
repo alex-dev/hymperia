@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Data;
 using Hymperia.Facade.BaseClasses;
-using Hymperia.Facade.Services;
+using Hymperia.Facade.Converters;
 using Object = Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 

@@ -3,8 +3,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.ModelWrappers;
-using Hymperia.Facade.Services.PointsToHeightConverters;
+using Hymperia.Facade.Converters.PointsToHeightConverters;
 using JetBrains.Annotations;
+using Hymperia.Facade.Converters;
 
 namespace Hymperia.Facade.Services
 {

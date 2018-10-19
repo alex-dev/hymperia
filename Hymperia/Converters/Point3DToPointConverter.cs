@@ -4,7 +4,7 @@ using System.Windows.Data;
 using M = System.Windows.Media.Media3D;
 using O = Hymperia.Model.Modeles.JsonObject;
 
-namespace Hymperia.Facade.Services
+namespace Hymperia.Facade.Converters
 {
   [ValueConversion(typeof(M.Point3D), typeof(O.Point))]
   public class Point3DToPointConverter : IValueConverter

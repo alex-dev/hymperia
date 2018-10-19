@@ -5,7 +5,6 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
-using Hymperia.Facade.Services.PointsToHeightConverters;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators
@@ -29,21 +28,21 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Properties
 
-    /// <summary>La taille en Z de la source.</summary>
+    /// <summary>La taille en Y de la source.</summary>
     public double Height
     {
       get => (double)GetValue(HeightProperty);
       set => SetValue(HeightProperty, value);
     }
 
-    /// <summary>La taille en X de la source.</summary>
+    /// <summary>La taille en Z de la source.</summary>
     public double Length
     {
       get => (double)GetValue(LengthProperty);
       set => SetValue(LengthProperty, value);
     }
 
-    /// <summary>La taille en Y de la source.</summary>
+    /// <summary>La taille en X de la source.</summary>
     public double Width
     {
       get => (double)GetValue(WidthProperty);
@@ -61,49 +60,51 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     {
       yield return Tuple.Create<Manipulator, Action<Manipulator>>(
         new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red },
-        BindToLengthManipulator);
+        BindToHeightManipulator);
       yield return Tuple.Create<Manipulator, Action<Manipulator>>(
         new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green },
-        BindToWidthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue },
-        BindToHeightManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(-1, 0, 0), Color = Colors.Red },
         BindToLengthManipulator);
       yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, -1, 0), Color = Colors.Green },
+        new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue },
         BindToWidthManipulator);
       yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 0, -1), Color = Colors.Blue },
+        new TranslateManipulator { Direction = new Vector3D(-1, 0, 0), Color = Colors.Red },
         BindToHeightManipulator);
+      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
+        new TranslateManipulator { Direction = new Vector3D(0, -1, 0), Color = Colors.Green },
+        BindToLengthManipulator);
+      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
+        new TranslateManipulator { Direction = new Vector3D(0, 0, -1), Color = Colors.Blue },
+        BindToWidthManipulator);
     }
 
     #region Manipulator Size Bindings
 
-    private void BindToHeightManipulator([NotNull] Manipulator manipulator) => BindTo("Height", manipulator);
-    private void BindToLengthManipulator([NotNull] Manipulator manipulator) => BindTo("Length", manipulator);
-    private void BindToWidthManipulator([NotNull] Manipulator manipulator) => BindTo("Width", manipulator);
+    private void BindToHeightManipulator([NotNull] Manipulator manipulator) => BindTo(nameof(Height), manipulator);
+    private void BindToLengthManipulator([NotNull] Manipulator manipulator) => BindTo(nameof(Length), manipulator);
+    private void BindToWidthManipulator([NotNull] Manipulator manipulator) => BindTo(nameof(Width), manipulator);
     private void BindTo([NotNull] string dimension, [NotNull] Manipulator manipulator)
     {
+      //var binding = new MultiBinding() { Converter = MinConverter, ConverterParameter =  }
+
       SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding(dimension)
       {
         Source = this,
         Converter = LinearConverter,
-        ConverterParameter = 1.1,
+        ConverterParameter = 0.85,
         Mode = BindingMode.OneWay
       });
       SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension)
       {
         Source = this,
         Converter = LinearConverter,
-        ConverterParameter = 1.1,
+        ConverterParameter = 0.85,
         Mode = BindingMode.TwoWay
       });
       SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding(dimension)
       {
         Source = this,
-        Converter = LinearConverter,
+        //Converter = MinConverter,
         ConverterParameter = 0.12,
         Mode = BindingMode.OneWay
       });
@@ -118,12 +119,12 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// <inheritdoc/>
     public override void Bind([NotNull] ModelVisual3D source)
     {
-      (Binding height, Binding length, Binding width) = CreateBindings(source);
+      var (height, length, width) = CreateBindings(source);
 
       SetBinding(HeightProperty, height);
       SetBinding(LengthProperty, length);
       SetBinding(WidthProperty, width);
-      SetBinding(TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.OneWay });
+      SetBinding(TransformProperty, new Binding(nameof(source.Transform)) { Source = source, Mode = BindingMode.OneWay });
     }
 
     /// <inheritdoc/>
@@ -161,17 +162,17 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] BoxVisual3D source) =>
       Tuple.Create(
-        new Binding("Height") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("Length") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("Width") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.Height)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Length)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Width)) { Source = source, Mode = BindingMode.TwoWay });
 
     [NotNull]
     [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] EllipsoidVisual3D source) =>
       Tuple.Create(
-        new Binding("RadiusZ") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
-        new Binding("RadiusX") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
-        new Binding("RadiusY") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.RadiusZ)) { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.RadiusX)) { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.RadiusY)) { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay });
 
     /*private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source) =>
       Tuple.Create(
@@ -190,11 +191,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     #region Static Services
 
     [NotNull]
-    private static readonly LinearConverter LinearConverter =
-      new LinearConverter() { M = 1 };
-    [NotNull]
-    private static readonly PointsToHeightConverter PointsToHeightConverter =
-      (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
+    protected static readonly LinearConverter LinearConverter =
+      (LinearConverter)Application.Current.Resources["Linear"];
 
     #endregion
   }
