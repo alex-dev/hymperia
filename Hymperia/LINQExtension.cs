@@ -38,23 +38,16 @@ namespace Hymperia.Facade
       }
     }
 
-    /// <summary>
-    ///   Validate all items before <paramref name="bound"/> fulfill <paramref name="firstCondition"/> and all
-    ///   items after or at <paramref name="bound"/> fulfill <paramref name="lastCondition"/>.
-    /// </summary>
-    public static bool AllFirstsAndAllLast<T>(this IEnumerable<T> enumerable, Func<T, bool> firstCondition, ulong bound, Func<T, bool> lastCondition)
+    /// <summary>Specific reverse implementation for <see cref="LinkedList{T}"/>.</summary>
+    public static IEnumerable<T> Reverse<T>(this LinkedList<T> collection)
     {
-      var enumerator = enumerable.GetEnumerator();
+      var item = collection.Last;
 
-      for (ulong i = 0; i < bound || enumerator.MoveNext(); ++i) // Relies on shortcut evaluation
-        if (!firstCondition(enumerator.Current))                 // to avoid skipping one. 
-          return false;
-
-      while (enumerator.MoveNext())
-        if (!lastCondition(enumerator.Current))
-          return false;
-
-      return true;
+      while (item != null)
+      {
+        yield return item.Value;
+        item = item.Previous;
+      }
     }
   }
 }

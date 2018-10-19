@@ -216,7 +216,9 @@
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\BaseAggregatorConverter.cs" />
+    <Compile Include="Converters\AggregatorConverters\MultiValueConverterData.cs" />
     <Compile Include="Converters\AggregatorConverters\ValueConverterData.cs" />
+    <Compile Include="Converters\ManipulatorRadiusConverter.cs" />
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />

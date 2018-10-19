@@ -5,24 +5,25 @@ using System.Windows.Markup;
 namespace Hymperia.Facade.Converters.AggregatorConverters
 {
   /// <summary>Value transporter for aggregator converters.</summary>
-  public class ValueConverterData : MarkupExtension
+
+  public class MultiValueConverterData : MarkupExtension
   {
     public Type ConvertTargetType { get; set; }
-    public Type ConvertBackTargetType { get; set; }
+    public Type[] ConvertBackTargetTypes { get; set; }
     public object ConverterParameter { get; set; }
-    public IValueConverter Converter { get; set; }
+    public IMultiValueConverter Converter { get; set; }
 
-    public void Deconstruct(out IValueConverter converter, out Type target, out object parameter)
+    public void Deconstruct(out IMultiValueConverter converter, out Type target, out object parameter)
     {
       converter = Converter;
       target = ConvertTargetType;
       parameter = ConverterParameter;
     }
 
-    public void DeconstructBack(out IValueConverter converter, out Type target, out object parameter)
+    public void DeconstructBack(out IMultiValueConverter converter, out Type[] target, out object parameter)
     {
       converter = Converter;
-      target = ConvertBackTargetType;
+      target = ConvertBackTargetTypes;
       parameter = ConverterParameter;
     }
 

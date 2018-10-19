@@ -80,34 +80,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Manipulator Size Bindings
 
-    private void BindToHeightManipulator([NotNull] Manipulator manipulator) => BindTo(nameof(Height), manipulator);
-    private void BindToLengthManipulator([NotNull] Manipulator manipulator) => BindTo(nameof(Length), manipulator);
-    private void BindToWidthManipulator([NotNull] Manipulator manipulator) => BindTo(nameof(Width), manipulator);
-    private void BindTo([NotNull] string dimension, [NotNull] Manipulator manipulator)
+    private void BindToHeightManipulator([NotNull] Manipulator manipulator) =>
+      BindTo(nameof(Height), (TranslateManipulator)manipulator);
+    private void BindToLengthManipulator([NotNull] Manipulator manipulator) =>
+      BindTo(nameof(Length), (TranslateManipulator)manipulator);
+    private void BindToWidthManipulator([NotNull] Manipulator manipulator) =>
+      BindTo(nameof(Width), (TranslateManipulator)manipulator);
+    private void BindTo([NotNull] string dimension, [NotNull] TranslateManipulator manipulator)
     {
-      //var binding = new MultiBinding() { Converter = MinConverter, ConverterParameter =  }
-
-      SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding(dimension)
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.85,
-        Mode = BindingMode.OneWay
-      });
-      SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension)
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.85,
-        Mode = BindingMode.TwoWay
-      });
-      SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding(dimension)
-      {
-        Source = this,
-        //Converter = MinConverter,
-        ConverterParameter = 0.12,
-        Mode = BindingMode.OneWay
-      });
+      //SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension) { Source = this, Mode = BindingMode.TwoWay });
+      BindToTranslateManipulator(manipulator);
     }
 
     #endregion
@@ -121,6 +103,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     {
       var (height, length, width) = CreateBindings(source);
 
+      base.Bind(source);
       SetBinding(HeightProperty, height);
       SetBinding(LengthProperty, length);
       SetBinding(WidthProperty, width);
@@ -130,6 +113,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     /// <inheritdoc/>
     public override void Unbind()
     {
+      base.Unbind();
       ClearBinding(HeightProperty);
       ClearBinding(LengthProperty);
       ClearBinding(WidthProperty);
@@ -170,9 +154,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] EllipsoidVisual3D source) =>
       Tuple.Create(
-        new Binding(nameof(source.RadiusZ)) { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
-        new Binding(nameof(source.RadiusX)) { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
-        new Binding(nameof(source.RadiusY)) { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.RadiusZ)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.RadiusX)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.RadiusY)) { Source = source, Mode = BindingMode.TwoWay });
 
     /*private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source) =>
       Tuple.Create(
@@ -185,14 +169,6 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
         new Binding("Height") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("RadiusX") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("WidthY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });*/
-
-    #endregion
-
-    #region Static Services
-
-    [NotNull]
-    protected static readonly LinearConverter LinearConverter =
-      (LinearConverter)Application.Current.Resources["Linear"];
 
     #endregion
   }

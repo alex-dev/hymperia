@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -168,7 +166,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (IsBusy(sender))
+      if (IsBusy())
         return;
 
       var newitems = from FormeWrapper wrapper in (IEnumerable)args.NewItems ?? Enumerable.Empty<MeshElement3D>()
@@ -180,7 +178,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
                        on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
                      select mesh;
 
-      using (Monitor.Enter(sender))
+      using (Monitor.Enter())
       {
         switch (args.Action)
         {
@@ -198,7 +196,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void FormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
-      if (IsBusy(sender))
+      if (IsBusy())
         return;
 
       var formes = ((EditeurViewModel)RegionContext).Formes;
@@ -212,7 +210,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
                        on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
                      select wrapper;
 
-      using (Monitor.Enter(sender))
+      using (Monitor.Enter())
       {
         switch (args.Action)
         {
@@ -246,46 +244,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Block Reentrancy
 
-    /// <summary>Valide si <paramref name="sender"/> est occupé à répondre à une requête de <see cref="this"/>.</summary>
+    /// <summary><see cref="true"/> si <paramref name="sender"/> est occupé à répondre à une requête de <see cref="this"/>.</summary>
     [Pure]
-    [NotNull]
-    protected bool IsBusy(object sender) => Monitor.Busy(sender);
+    protected bool IsBusy() => Monitor.Busy;
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
       Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
     [NotNull]
-    private readonly SimpleMonitor Monitor;
+    private readonly SimpleMonitor Monitor = new SimpleMonitor();
 
-    private class SimpleMonitor
+    private class SimpleMonitor : IDisposable
     {
-      [NotNull]
-      private readonly ICollection<object> Senders;
+      public bool Busy { get; private set; }
 
-      public SimpleMonitor()
+      [NotNull]
+      public SimpleMonitor Enter()
       {
-        Senders = new Collection<object> { };
+        Busy = true;
+        return this;
       }
-
-      [NotNull]
-      public InternalMonitor Enter(object sender) => new InternalMonitor(sender, this);
 
       [Pure]
-      public bool Busy(object sender) => Senders.Contains(sender);
-
-      public class InternalMonitor : IDisposable
-      {
-        [NotNull]
-        private readonly SimpleMonitor Monitor;
-        [NotNull]
-        public readonly object Sender;
-
-        public InternalMonitor(object sender, SimpleMonitor monitor)
-        {
-          Sender = sender;
-          Monitor = monitor;
-        }
-
-        public void Dispose() => Monitor.Senders.Remove(this);
-      }
+      public void Dispose() => Busy = false;
     }
 
     #endregion

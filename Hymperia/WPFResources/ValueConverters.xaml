@@ -5,6 +5,7 @@
     xmlns:aggregator="clr-namespace:Hymperia.Facade.Converters.AggregatorConverters"
     xmlns:pth="clr-namespace:Hymperia.Facade.Converters.PointsToHeightConverters">
   <helix:LinearConverter x:Key="Linear" M="1" />
+  <main:ManipulatorRadiusConverter x:Key="ManipulatorRadius" />
   <main:Point3DToPointConverter x:Key="Point3DToPoint" />
   <main:TransformConverter x:Key="Transform" />
   <agg:MaxAggregateConverter x:Key="MaxAggregate" />
@@ -12,13 +13,9 @@
   <pth:HeightToPointsConverter x:Key="HeightToPoints" />
   <pth:PointsToHeightConverter x:Key="PointsToHeight" />
   <aggregator:AggregatorMultiValueConverter x:Key="MinimalScaling">
-    <x:Array Type="{x:Type aggregator:ValueConverterData}">
-      <aggregator:ValueConverterData Converter="{StaticResource MinAggregate}" />
-      <aggregator:ValueConverterData>
-        <aggregator:ValueConverterData.Converter>
-          <helix:LinearConverter M="0.25" />
-        </aggregator:ValueConverterData.Converter>
-      </aggregator:ValueConverterData>
-    </x:Array>
+    <aggregator:AggregatorMultiValueConverter.Converter>
+      <aggregator:MultiValueConverterData Converter="{StaticResource MinAggregate}" />
+    </aggregator:AggregatorMultiValueConverter.Converter>
+    <aggregator:ValueConverterData Converter="{StaticResource Linear}" ConverterParameter="0.5" />
   </aggregator:AggregatorMultiValueConverter>
 </ResourceDictionary>

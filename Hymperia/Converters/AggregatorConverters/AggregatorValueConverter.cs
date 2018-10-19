@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Hymperia.Facade.Converters.AggregatorConverters
 {
   /// <summary>Aggregates a series of <see cref="IValueConverter"/>.</summary>
+  [DefaultProperty(nameof(Converters))]
+  [ContentProperty(nameof(Converters))]
   public class AggregatorValueConverter : BaseAggregatorConverter, IValueConverter
   {
-    /// <inheritdoc/>
-    public override IList<ValueConverterData> Converters
-    {
-      get => converters;
-      set
-      {
-        if (value.Any(c => !(c.Converter is IValueConverter)))
-          throw new ArgumentException($"Only { nameof(IValueConverter) } are allowed.");
-
-        converters = value;
-      }
-    }
+    /// <summary>Child <see cref="IValueConverter"/>.</summary>
+    public LinkedList<ValueConverterData> Converters { get; set; } = new LinkedList<ValueConverterData>();
 
     public object Convert(object value, Type target, object parameter = null, CultureInfo culture = default) =>
       Convert(value, culture);
