@@ -38,5 +38,10 @@ namespace Hymperia.Facade.Views
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
   }
 }

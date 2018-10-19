@@ -1,12 +1,20 @@
-﻿using System;
+﻿/*
+ * Auteur : Antoine Mailhot 
+ * Date de création : 2018-10-19
+*/ 
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels
 {
@@ -30,10 +38,18 @@ namespace Hymperia.Facade.ViewModels
       set => SetProperty(ref projets, value);
     }
 
+    [NotNull]
+    public System.Windows.Controls.SelectionMode SelectionMode
+    {
+      get => selection;
+      set => SetProperty(ref selection, value);
+    }
+
     #endregion
 
     #region Commands
 
+    public ICommand NavigateToProjet { get; private set; }
 
     #endregion
 
@@ -68,14 +84,28 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructors
 
-    public AffichageProjetsViewModel([NotNull] ContextFactory factory)
+    public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
       ContextFactory = factory;
+      Manager = manager;
+      NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet, CanNavigateToProjet)
+        .ObservesProperty(() => SelectionMode);
     }
 
     #endregion
 
-    #region Command 
+    #region Command NavigateToProjet
+
+    private void _NavigateToProjet(Projet projet) =>
+      Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
+      {
+        { NavigationParameterKeys.Projet, projet }
+      });
+
+    private bool CanNavigateToProjet(Projet projet) =>
+      SelectionMode != System.Windows.Controls.SelectionMode.Extended
+        || SelectionMode != System.Windows.Controls.SelectionMode.Multiple;
+
     #endregion
 
     #region Queries
@@ -113,6 +143,8 @@ namespace Hymperia.Facade.ViewModels
 
     [NotNull]
     private readonly ContextFactory ContextFactory;
+    [NotNull]
+    private readonly IRegionManager Manager;
 
     #endregion
 
@@ -120,6 +152,7 @@ namespace Hymperia.Facade.ViewModels
 
     private Utilisateur utilisateur;
     private BulkObservableCollection<Projet> projets;
+    private System.Windows.Controls.SelectionMode selection = System.Windows.Controls.SelectionMode.Single;
     private Task loading;
     private bool isLoading;
 
