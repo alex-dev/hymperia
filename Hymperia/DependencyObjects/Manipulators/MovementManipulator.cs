@@ -49,7 +49,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #endregion
 
-    #region Binding to Source
+    #region Binding from Source
 
     /// inheritdoc/>
     public override void Bind([NotNull] ModelVisual3D source)

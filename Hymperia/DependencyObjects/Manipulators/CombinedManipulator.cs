@@ -20,11 +20,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     /// <seealso cref=Radius/>
     public static readonly DependencyProperty RadiusProperty =
-      DependencyProperty.Register(nameof(Radius), typeof(double), typeof(MovementManipulator), new PropertyMetadata(2d,
-        (o, p) => {
-          int i = 1;
-
-        }));
+      DependencyProperty.Register(nameof(Radius), typeof(double), typeof(CombinedManipulator), new PropertyMetadata(2d));
 
     #endregion
 
@@ -73,7 +69,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #endregion
 
-    #region Binding from Manipulators Size
+    #region Binding to Manipulators Size
 
     protected void BindToTranslateManipulator([NotNull] TranslateManipulator manipulator)
     {
@@ -120,7 +116,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #endregion
 
-    #region Binding to Source
+    #region Binding from Source
 
     /// <summary>
     ///   Lie la <paramref name="source"/> au <see cref="CombinedManipulator"/> pour appliquer à <paramref name="source"/> les
@@ -239,17 +235,20 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Binding Operations
 
-    protected BindingBase GetBinding(DependencyProperty property) => GetBinding(this, property);
-    protected BindingBase GetBinding(DependencyObject @object, DependencyProperty property) =>
+    [NotNull]
+    protected BindingBase GetBinding([NotNull] DependencyProperty property) => GetBinding(this, property);
+    protected BindingBase GetBinding([NotNull] DependencyObject @object, [NotNull] DependencyProperty property) =>
       BindingOperations.GetBinding(@object, property);
 
-    protected BindingExpressionBase SetBinding(DependencyProperty property, BindingBase binding) =>
+    [NotNull]
+    protected BindingExpressionBase SetBinding([NotNull] DependencyProperty property, [NotNull] BindingBase binding) =>
       SetBinding(this, property, binding);
-    protected BindingExpressionBase SetBinding(DependencyObject @object, DependencyProperty property, BindingBase binding) =>
+    [NotNull]
+    protected BindingExpressionBase SetBinding([NotNull] DependencyObject @object, [NotNull] DependencyProperty property, [NotNull] BindingBase binding) =>
       BindingOperations.SetBinding(@object, property, binding);
 
-    protected void ClearBinding(DependencyProperty property) => ClearBinding(this, property);
-    protected void ClearBinding(DependencyObject @object, DependencyProperty property) =>
+    protected void ClearBinding([NotNull] DependencyProperty property) => ClearBinding(this, property);
+    protected void ClearBinding([NotNull] DependencyObject @object, [NotNull] DependencyProperty property) =>
       BindingOperations.ClearBinding(@object, property);
 
     #endregion

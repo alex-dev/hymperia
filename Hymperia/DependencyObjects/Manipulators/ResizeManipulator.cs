@@ -16,13 +16,13 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     /// <seealso cref="Height"/>
     public static readonly DependencyProperty HeightProperty =
-      DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d));
+      DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d, DimensionChanged));
     /// <seealso cref="Length"/>
     public static readonly DependencyProperty LengthProperty =
-      DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d));
+      DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d, DimensionChanged));
     /// <seealso cref="Width"/>
     public static readonly DependencyProperty WidthProperty =
-      DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d));
+      DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2d, DimensionChanged));
 
     #endregion
 
@@ -74,7 +74,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
         yield return manipulator;
       }
       {
-        var manipulator = new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red };
+        var manipulator = new TranslateManipulator { Direction = new Vector3D(-1, 0, 0), Color = Colors.Red };
         BindToHeightManipulator(manipulator);
         yield return manipulator;
       }
@@ -100,7 +100,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       BindTo(nameof(Width), (TranslateManipulator)manipulator);
     private void BindTo([NotNull] string dimension, [NotNull] TranslateManipulator manipulator)
     {
-      //SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension) { Source = this, Mode = BindingMode.TwoWay });
+      SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension) { Source = this, Mode = BindingMode.TwoWay });
       BindToTranslateManipulator(manipulator);
     }
 
@@ -108,18 +108,18 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #endregion
 
-    #region Binding to Source
+    #region Binding from Source
 
     /// <inheritdoc/>
     public override void Bind([NotNull] ModelVisual3D source)
     {
+      var (height, length, width) = CreateBindings(source);
 
       base.Bind(source);
-      var (height, length, width) = CreateBindings(source);
       SetBinding(HeightProperty, height);
       SetBinding(LengthProperty, length);
       SetBinding(WidthProperty, width);
-      SetBinding(TransformProperty, new Binding(nameof(source.Transform)) { Source = source, Mode = BindingMode.OneWay });
+      TransformBinding = SetBinding(TransformProperty, new Binding(nameof(source.Transform)) { Source = source, Mode = BindingMode.OneWay });
     }
 
     /// <inheritdoc/>
@@ -143,10 +143,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
         case EllipsoidVisual3D ellipsoid:
           return CreateBindings(ellipsoid);
         case PipeVisual3D pipe:
-          throw new NotImplementedException();
           return CreateBindings(pipe);
         case TruncatedConeVisual3D cone:
-          throw new NotImplementedException();
           return CreateBindings(cone);
         default:
           string err = $"This manipulator only support { nameof(BoxVisual3D) }, { nameof(EllipsoidVisual3D) }, { nameof(PipeVisual3D) } and { nameof(TruncatedConeVisual3D) }.";
@@ -158,9 +156,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] BoxVisual3D source) =>
       Tuple.Create(
-        new Binding(nameof(source.Height)) { Source = source, Mode = BindingMode.TwoWay },
-        new Binding(nameof(source.Length)) { Source = source, Mode = BindingMode.TwoWay },
-        new Binding(nameof(source.Width)) { Source = source, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.Height)) { Source = source, Mode = BindingMode.TwoWay, NotifyOnSourceUpdated = true },
+        new Binding(nameof(source.Length)) { Source = source, Mode = BindingMode.TwoWay, NotifyOnSourceUpdated = true },
+        new Binding(nameof(source.Width)) { Source = source, Mode = BindingMode.TwoWay, NotifyOnSourceUpdated = true });
 
     [NotNull]
     [ItemNotNull]
@@ -170,17 +168,36 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
         new Binding(nameof(source.RadiusX)) { Source = source, Mode = BindingMode.TwoWay },
         new Binding(nameof(source.RadiusY)) { Source = source, Mode = BindingMode.TwoWay });
 
-    /*private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source) =>
+    [NotNull]
+    [ItemNotNull]
+    private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source) =>
       Tuple.Create(
         new Binding("RadiusZ") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("RadiusX") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("WidthY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
 
+    [NotNull]
+    [ItemNotNull]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] TruncatedConeVisual3D source) =>
       Tuple.Create(
         new Binding("Height") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
         new Binding("RadiusX") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("WidthY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });*/
+        new Binding("WidthY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
+
+    #endregion
+
+    #region Reset Transform - Ugly but it works!
+
+    private static void DimensionChanged(DependencyObject @object, DependencyPropertyChangedEventArgs args) =>
+      ((ResizeManipulator)@object).DimensionChanged(args);
+
+    private void DimensionChanged(DependencyPropertyChangedEventArgs args) => TransformBinding?.UpdateTarget();
+
+    #endregion
+
+    #region Private Fields
+
+    private BindingExpressionBase TransformBinding;
 
     #endregion
   }
