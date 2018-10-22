@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using MoreLinq;
 
 namespace Hymperia.Facade
@@ -13,6 +14,8 @@ namespace Hymperia.Facade
     ///   Deferred action equivalent to <see cref="Enumerable.Select{T, T}(IEnumerable{T}, Func{T, T})"/> with added guarantee of
     ///   receiving the same object back like <see cref="MoreEnumerable.ForEach{T}(IEnumerable{T}, Action{T})"/> but deferred and chainable.
     /// </remarks>
+    [NotNull]
+    [LinqTunnel]
     public static IEnumerable<T> DeferredForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
     {
       foreach (var item in enumerable)
@@ -28,6 +31,8 @@ namespace Hymperia.Facade
     ///   Deferred action equivalent to <see cref="Enumerable.Select{T, T}(IEnumerable{T}, Func{T, T, int})"/> with added guarantee of
     ///   receiving the same object back like <see cref="MoreEnumerable.ForEach{T}(IEnumerable{T}, Action{T, int})"/> but deferred and chainable.
     /// </remarks>
+    [NotNull]
+    [LinqTunnel]
     public static IEnumerable<T> DeferredForEach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
     {
       int index = 0;
@@ -39,6 +44,8 @@ namespace Hymperia.Facade
     }
 
     /// <summary>Specific reverse implementation for <see cref="LinkedList{T}"/>.</summary>
+    [NotNull]
+    [LinqTunnel]
     public static IEnumerable<T> Reverse<T>(this LinkedList<T> collection)
     {
       var item = collection.Last;

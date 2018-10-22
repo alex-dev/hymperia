@@ -30,7 +30,7 @@ namespace Hymperia.Facade.Views.Editeur
     protected override void RegionContextChanged(object sender, PropertyChangedEventArgs e)
     {
       base.RegionContextChanged(sender, e);
-      
+
       if (RegionContext is IProjetViewModel context)
       {
         context.PropertyChanged += ProjetChanged;
@@ -47,6 +47,11 @@ namespace Hymperia.Facade.Views.Editeur
             if (!(context.Formes is null))
             {
               context.Formes.CollectionChanged += FormesChanged;
+              foreach (FormeWrapper forme in context.Formes)
+              {
+                forme.PropertyChanged += FormeChanged;
+              }
+
               Update();
             }
             break;
@@ -56,15 +61,12 @@ namespace Hymperia.Facade.Views.Editeur
 
     private void FormesChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-      if (sender == (RegionContext as IProjetViewModel)?.Formes)
+      foreach (FormeWrapper forme in (IEnumerable)e.NewItems ?? Enumerable.Empty<FormeWrapper>())
       {
-        foreach (FormeWrapper forme in (IEnumerable)e.NewItems ?? Enumerable.Empty<FormeWrapper>())
-        {
-          forme.PropertyChanged += FormeChanged;
-        }
-
-        Update();
+        forme.PropertyChanged += FormeChanged;
       }
+
+      Update();
     }
 
     private void FormeChanged(object sender, PropertyChangedEventArgs e) => Update();

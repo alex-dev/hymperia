@@ -12,10 +12,4 @@
   <agg:MinAggregateConverter x:Key="MinAggregate" />
   <pth:HeightToPointsConverter x:Key="HeightToPoints" />
   <pth:PointsToHeightConverter x:Key="PointsToHeight" />
-  <aggregator:AggregatorMultiValueConverter x:Key="MinimalScaling">
-    <aggregator:AggregatorMultiValueConverter.Converter>
-      <aggregator:MultiValueConverterData Converter="{StaticResource MinAggregate}" />
-    </aggregator:AggregatorMultiValueConverter.Converter>
-    <aggregator:ValueConverterData Converter="{StaticResource Linear}" ConverterParameter="0.5" />
-  </aggregator:AggregatorMultiValueConverter>
 </ResourceDictionary>

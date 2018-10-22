@@ -20,7 +20,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     /// <seealso cref=Radius/>
     public static readonly DependencyProperty RadiusProperty =
-      DependencyProperty.Register(nameof(Radius), typeof(double), typeof(CombinedManipulator), new PropertyMetadata(2d));
+      DependencyProperty.Register(nameof(Radius), typeof(double), typeof(CombinedManipulator), new PropertyMetadata(2.0));
 
     #endregion
 
@@ -49,7 +49,7 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       Justification = @"The call is known and needed to perform proper initialization.")]
     public CombinedManipulator()
     {
-      var binding = new Binding("Transform") { Source = this };
+      var binding = new Binding(nameof(Transform)) { Source = this };
 
       foreach (var manipulator in GenerateManipulators())
       {

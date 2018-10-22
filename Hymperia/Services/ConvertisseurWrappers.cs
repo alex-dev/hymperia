@@ -77,10 +77,10 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private TruncatedConeVisual3D Lier([NotNull] TruncatedConeVisual3D forme, [NotNull] ConeWrapper source)
     {
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding("RayonBase") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding("RayonTop") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.HeightProperty, new Binding(nameof(source.Hauteur)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.BaseRadiusProperty, new Binding(nameof(source.RayonBase)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.TopRadiusProperty, new Binding(nameof(source.RayonTop)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, TruncatedConeVisual3D.ThetaDivProperty, new Binding(nameof(source.ThetaDiv)) { Source = source, Mode = BindingMode.TwoWay });
 
       return (TruncatedConeVisual3D)_Lier(forme, source);
     }
@@ -88,14 +88,14 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private PipeVisual3D Lier([NotNull] PipeVisual3D forme, [NotNull] CylindreWrapper source)
     {
-      var hauteur_binding_top = new Binding("Hauteur")
+      var hauteur_binding_top = new Binding(nameof(source.Hauteur))
       {
         Source = source,
         Converter = PointToHauteurConverter,
         ConverterParameter = PointOrientation.Top,
         Mode = BindingMode.TwoWay
       };
-      var hauteur_binding_bottom = new Binding("Hauteur")
+      var hauteur_binding_bottom = new Binding(nameof(source.Hauteur))
       {
         Source = source,
         Converter = PointToHauteurConverter,
@@ -105,9 +105,9 @@ namespace Hymperia.Facade.Services
 
       BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, hauteur_binding_top);
       BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, hauteur_binding_bottom);
-      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding("Diametre") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding("InnerDiametre") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding(nameof(source.Diametre)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding(nameof(source.InnerDiametre)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding(nameof(source.ThetaDiv)) { Source = source, Mode = BindingMode.TwoWay });
 
       return (PipeVisual3D)_Lier(forme, source);
     }
@@ -115,11 +115,11 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private EllipsoidVisual3D Lier([NotNull] EllipsoidVisual3D forme, [NotNull] EllipsoideWrapper source)
     {
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding("RayonX") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding("RayonY") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding("RayonZ") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding("PhiDiv") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding("ThetaDiv") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusXProperty, new Binding(nameof(source.RayonX)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusYProperty, new Binding(nameof(source.RayonY)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.RadiusZProperty, new Binding(nameof(source.RayonZ)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.PhiDivProperty, new Binding(nameof(source.PhiDiv)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, EllipsoidVisual3D.ThetaDivProperty, new Binding(nameof(source.ThetaDiv)) { Source = source, Mode = BindingMode.TwoWay });
 
       return (EllipsoidVisual3D)_Lier(forme, source);
     }
@@ -127,9 +127,9 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private BoxVisual3D Lier([NotNull] BoxVisual3D forme, [NotNull] PrismeRectangulaireWrapper source)
     {
-      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding("Hauteur") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding("Longueur") { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding("Largeur") { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, BoxVisual3D.HeightProperty, new Binding(nameof(source.Hauteur)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, BoxVisual3D.LengthProperty, new Binding(nameof(source.Longueur)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, BoxVisual3D.WidthProperty, new Binding(nameof(source.Largeur)) { Source = source, Mode = BindingMode.TwoWay });
 
       return (BoxVisual3D)_Lier(forme, source);
     }
@@ -137,15 +137,16 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private MeshElement3D _Lier([NotNull] MeshElement3D forme, [NotNull] FormeWrapper source)
     {
-      var bindings = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
-      bindings.Bindings.AddRange(new Binding[]
+      var fill = new Binding($"{ nameof(source.Materiau) }.{ nameof(source.Materiau.Fill) }") { Source = source, Mode = BindingMode.OneWay };
+      var transform = new MultiBinding() { Converter = TransformConverter, Mode = BindingMode.TwoWay };
+      transform.Bindings.AddRange(new Binding[]
       {
-        new Binding("Origine") { Source = source, Mode = BindingMode.TwoWay },
-        new Binding("Rotation") { Source = source, Mode = BindingMode.TwoWay }
+        new Binding(nameof(source.Origine)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Rotation)) { Source = source, Mode = BindingMode.TwoWay }
       });
 
-      BindingOperations.SetBinding(forme, MeshElement3D.TransformProperty, bindings);
-      BindingOperations.SetBinding(forme, MeshElement3D.FillProperty, new Binding("Materiau.Fill") { Source = source, Mode = BindingMode.OneWay });
+      BindingOperations.SetBinding(forme, MeshElement3D.TransformProperty, transform);
+      BindingOperations.SetBinding(forme, MeshElement3D.FillProperty, fill);
 
       return forme;
     }

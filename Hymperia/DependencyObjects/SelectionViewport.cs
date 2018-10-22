@@ -21,7 +21,7 @@ namespace Hymperia.Facade.DependencyObjects
 
     /// <seealso cref="SelectedItems"/>
     public static readonly DependencyProperty SelectedItemsProperty =
-      DependencyProperty.Register("SelectedItems", typeof(BulkObservableCollection<MeshElement3D>), typeof(SelectionViewport),
+      DependencyProperty.Register(nameof(SelectedItems), typeof(BulkObservableCollection<MeshElement3D>), typeof(SelectionViewport),
         new PropertyMetadata(new BulkObservableCollection<MeshElement3D>(), OnSelectedItemsChanged));
 
     #endregion
