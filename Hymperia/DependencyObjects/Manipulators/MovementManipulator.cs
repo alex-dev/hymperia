@@ -39,9 +39,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       switch (manipulator)
       {
         case TranslateManipulator translate:
-          BindToTranslateManipulator(translate); break;
+          base.BindToManipulator(translate); break;
         case RotateManipulator rotate:
-          BindToRotationManipulator(rotate); break;
+          base.BindToManipulator(rotate); break;
       }
     }
 

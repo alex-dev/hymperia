@@ -71,7 +71,32 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Binding to Manipulators Size
 
-    protected void BindToTranslateManipulator([NotNull] TranslateManipulator manipulator)
+    protected void BindToManipulator([NotNull] RotateManipulator manipulator)
+    {
+      SetBinding(manipulator, RotateManipulator.DiameterProperty, new Binding(nameof(Radius))
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 2.15,
+        Mode = BindingMode.OneWay
+      });
+      SetBinding(manipulator, RotateManipulator.InnerDiameterProperty, new Binding(nameof(Radius))
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 2.1,
+        Mode = BindingMode.OneWay
+      });
+      SetBinding(manipulator, RotateManipulator.LengthProperty, new Binding(nameof(Radius))
+      {
+        Source = this,
+        Converter = LinearConverter,
+        ConverterParameter = 0.15,
+        Mode = BindingMode.OneWay
+      });
+    }
+
+    protected void BindToManipulator([NotNull] TranslateManipulator manipulator)
     {
       SetBinding(manipulator, TranslateManipulator.LengthProperty, new Binding(nameof(Radius))
       {
@@ -89,23 +114,16 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       });
     }
 
-    protected void BindToRotationManipulator([NotNull] RotateManipulator manipulator)
+    protected void BindToManipulator([NotNull] ScaleManipulator manipulator)
     {
-      SetBinding(manipulator, RotateManipulator.DiameterProperty, new Binding(nameof(Radius))
+      SetBinding(manipulator, ScaleManipulator.LengthProperty, new Binding(nameof(Radius))
       {
         Source = this,
         Converter = LinearConverter,
-        ConverterParameter = 2.15,
+        ConverterParameter = 1.5,
         Mode = BindingMode.OneWay
       });
-      SetBinding(manipulator, RotateManipulator.InnerDiameterProperty, new Binding(nameof(Radius))
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 2.1,
-        Mode = BindingMode.OneWay
-      });
-      SetBinding(manipulator, RotateManipulator.LengthProperty, new Binding(nameof(Radius))
+      SetBinding(manipulator, ScaleManipulator.DiameterProperty, new Binding(nameof(Radius))
       {
         Source = this,
         Converter = LinearConverter,
