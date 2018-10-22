@@ -77,14 +77,14 @@ namespace Hymperia.Facade.BaseClasses
 
     #endregion
 
-    /// <summary>Trigger <see cref="ObservableCollection{T}.CollectionChanged"/> with <paramref name="args"/>.</summary>
+    /// <summary>Trigger <see cref="ObservableCollection{T}.CollectionChanged"/> with <paramref name="e"/>.</summary>
     /// <remarks>
     ///   Rather than overriding <see cref="OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs)"/>, override
     ///   <see cref="Handle(NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs)"/> to add exception to
     ///   <see cref="NotifyCollectionChangedEventHandler"/> or <see cref="HandleCollectionView(NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs)"/>
     ///   to add fonctionnalities to <see cref="CollectionView"/>.
     /// </remarks>
-    protected void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs args)
+    protected void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
       if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
       {
@@ -92,26 +92,26 @@ namespace Hymperia.Facade.BaseClasses
         {
           foreach (NotifyCollectionChangedEventHandler handler in handlers.TraverseRecursively())
           {
-            Handle(handler, args);
+            Handle(handler, e);
           }
         }
       }
     }
 
     /// <summary>Handle each <see cref="NotifyCollectionChangedEventHandler"/>.</summary>
-    protected virtual void Handle(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs args)
+    protected virtual void Handle(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs e)
     {
       switch (handler.Target)
       {
         case CollectionView view:
-          HandleCollectionView(handler, args); break;
+          HandleCollectionView(handler, e); break;
         default:
-          handler(this, args); break;
+          handler(this, e); break;
       }
     }
 
     /// <summary>Handle <see cref="NotifyCollectionChangedEventHandler"/> for a <see cref="CollectionView"/>.</summary>
-    protected virtual void HandleCollectionView(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs args)
+    protected virtual void HandleCollectionView(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs e)
     {
       void HandleMultiple(NotifyCollectionChangedAction action, IList items)
       {
@@ -124,16 +124,16 @@ namespace Hymperia.Facade.BaseClasses
         }
       }
 
-      switch (args.Action)
+      switch (e.Action)
       {
         case NotifyCollectionChangedAction.Add:
-          HandleMultiple(NotifyCollectionChangedAction.Add, args.NewItems); break;
+          HandleMultiple(NotifyCollectionChangedAction.Add, e.NewItems); break;
         case NotifyCollectionChangedAction.Remove:
-          HandleMultiple(NotifyCollectionChangedAction.Remove, args.OldItems); break;
+          HandleMultiple(NotifyCollectionChangedAction.Remove, e.OldItems); break;
         case NotifyCollectionChangedAction.Replace:
         case NotifyCollectionChangedAction.Move:
         case NotifyCollectionChangedAction.Reset:
-          handler(this, args); break;
+          handler(this, e); break;
       }
     }
 

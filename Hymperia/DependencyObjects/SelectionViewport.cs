@@ -64,27 +64,27 @@ namespace Hymperia.Facade.DependencyObjects
     /// <param name="single">Si le handler n'accepte qu'une seule forme sélectionnée ou plusieurs.</param>
     /// <param name="clear">Si le handler doit vider <see cref="SelectedItems"/> ou pas.</param>
     [NotNull]
-    private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, args) =>
+    private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, e) =>
     {
-      args = new VisualsSelectedEventArgs(
-        args.SelectedVisuals.OfType<MeshElement3D>().Distinct().Except(SelectedItems).ToList<Visual3D>(),
-        args.AreSortedByDistanceAscending);
+      e = new VisualsSelectedEventArgs(
+        e.SelectedVisuals.OfType<MeshElement3D>().Distinct().Except(SelectedItems).ToList<Visual3D>(),
+        e.AreSortedByDistanceAscending);
 
       if (clear)
       {
         SelectedItems.Clear();
       }
 
-      if (args.SelectedVisuals.Count > 0)
+      if (e.SelectedVisuals.Count > 0)
       {
         if (single)
         {
-          args = args.AreSortedByDistanceAscending
-            ? new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.First() }, true)
-            : new VisualsSelectedEventArgs(new List<Visual3D> { args.SelectedVisuals.Last() }, false);
+          e = e.AreSortedByDistanceAscending
+            ? new VisualsSelectedEventArgs(new List<Visual3D> { e.SelectedVisuals.First() }, true)
+            : new VisualsSelectedEventArgs(new List<Visual3D> { e.SelectedVisuals.Last() }, false);
         }
 
-        SelectionHandler(sender, args);
+        SelectionHandler(sender, e);
       }
     };
 
@@ -122,11 +122,11 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    protected virtual void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs args)
+    protected virtual void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs e)
     {
-      SelectMaterial(args.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
-      UnselectMaterial(args.Action != NotifyCollectionChangedAction.Reset
-        ? (IEnumerable<MeshElement3D>)args.OldItems ?? Enumerable.Empty<MeshElement3D>()
+      SelectMaterial(e.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
+      UnselectMaterial(e.Action != NotifyCollectionChangedAction.Reset
+        ? (IEnumerable<MeshElement3D>)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
         : from mesh in Children.OfType<MeshElement3D>()
           where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
           select mesh);
@@ -148,13 +148,13 @@ namespace Hymperia.Facade.DependencyObjects
       newvalue.CollectionChanged += OnSelectedItemsCollectionChanged;
     }
 
-    private static void OnSelectedItemsChanged([NotNull] DependencyObject self, [NotNull] DependencyPropertyChangedEventArgs args)
+    private static void OnSelectedItemsChanged([NotNull] DependencyObject sender, [NotNull] DependencyPropertyChangedEventArgs e)
     {
-      if (args.Property == SelectedItemsProperty)
+      if (e.Property == SelectedItemsProperty)
       {
-        ((SelectionViewport)self).OnSelectedItemsChanged(
-          (ObservableCollection<MeshElement3D>)args.OldValue,
-          (ObservableCollection<MeshElement3D>)args.NewValue);
+        ((SelectionViewport)sender).OnSelectedItemsChanged(
+          (ObservableCollection<MeshElement3D>)e.OldValue,
+          (ObservableCollection<MeshElement3D>)e.NewValue);
       }
     }
 

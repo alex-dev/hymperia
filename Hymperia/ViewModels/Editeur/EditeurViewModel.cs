@@ -284,7 +284,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
+    private void FormeHasChanged(object sender, PropertyChangedEventArgs e)
     {
       HasBeenModified(null, null);
     }
@@ -330,7 +330,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    private void HasBeenModified(object sender, NotifyCollectionChangedEventArgs args) => IsModified = true;
+    private void HasBeenModified(object sender, NotifyCollectionChangedEventArgs e) => IsModified = true;
 
     #endregion
 

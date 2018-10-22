@@ -12,15 +12,6 @@ namespace Hymperia.Facade.Services
   /// <summary>Convertit des <see cref="FormeWrapper"/> en <see cref="MeshElement3D"/> et les binds aux <see cref="FormeWrapper"/>.</summary>
   public class ConvertisseurWrappers
   {
-    #region Services
-
-    [NotNull]
-    private readonly TransformConverter TransformConverter;
-    [NotNull]
-    private readonly HeightToPointsConverter PointToHauteurConverter;
-
-    #endregion
-
     public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] HeightToPointsConverter pointToHauteur)
     {
       TransformConverter = transform;
@@ -72,8 +63,8 @@ namespace Hymperia.Facade.Services
       {
         case TruncatedConeVisual3D cone:
           return Lier(cone, (ConeWrapper)source);
-         case PipeVisual3D cylindre:
-           return Lier(cylindre, (CylindreWrapper)source);
+        case PipeVisual3D cylindre:
+          return Lier(cylindre, (CylindreWrapper)source);
         case EllipsoidVisual3D ellipsoide:
           return Lier(ellipsoide, (EllipsoideWrapper)source);
         case BoxVisual3D prisme:
@@ -158,6 +149,15 @@ namespace Hymperia.Facade.Services
 
       return forme;
     }
+
+    #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly TransformConverter TransformConverter;
+    [NotNull]
+    private readonly HeightToPointsConverter PointToHauteurConverter;
 
     #endregion
   }

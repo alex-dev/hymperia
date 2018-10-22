@@ -38,11 +38,11 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Region Context Changes Handlers
 
-    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
-      ((RegionContextAwareUserControl)sender).RegionContextChanged(args);
+    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) =>
+      ((RegionContextAwareUserControl)sender).RegionContextChanged(e);
 
     [Obsolete]
-    protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs e)
     {
       if (!IsBusy())
       {
@@ -54,7 +54,7 @@ namespace Hymperia.Facade.BaseClasses
     }
 
     [Obsolete]
-    protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs args)
+    protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs e)
     {
       if (!IsBusy())
       {

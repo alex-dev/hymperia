@@ -28,13 +28,13 @@ namespace Hymperia.Facade
     protected override Window CreateShell() => Container.Resolve<FenetrePrincipale>();
 
     /// <summary>Force le language de l'application.</summary>
-    protected override void OnStartup(StartupEventArgs args)
+    protected override void OnStartup(StartupEventArgs e)
     {
       var culture = CreateAppCulture();
       var language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
 
       FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
-      base.OnStartup(args);
+      base.OnStartup(e);
     }
 
     /// <summary>Crée une culture basé sur la culture courante.</summary>

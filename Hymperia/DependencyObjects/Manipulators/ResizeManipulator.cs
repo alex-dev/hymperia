@@ -188,10 +188,10 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Reset Transform - Ugly but it works!
 
-    private static void DimensionChanged(DependencyObject @object, DependencyPropertyChangedEventArgs args) =>
-      ((ResizeManipulator)@object).DimensionChanged(args);
+    private static void DimensionChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) =>
+      ((ResizeManipulator)sender).DimensionChanged(e);
 
-    private void DimensionChanged(DependencyPropertyChangedEventArgs args) => TransformBinding?.UpdateTarget();
+    private void DimensionChanged(DependencyPropertyChangedEventArgs e) => TransformBinding?.UpdateTarget();
 
     #endregion
 

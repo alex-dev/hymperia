@@ -66,9 +66,9 @@ namespace Hymperia.Facade.DependencyObjects
     #endregion
 
     /// inheritdoc/>
-    protected override void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs args)
+    protected override void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs e)
     {
-      base.OnSelectedItemsCollectionChanged(sender, args);
+      base.OnSelectedItemsCollectionChanged(sender, e);
       RemoveManipulator();
 
       if (SelectedItems.Count == 1)

@@ -16,9 +16,9 @@ namespace Hymperia.Facade.Views.Editeur
       Binding.AddTargetUpdatedHandler(ListBox, ListBoxUpdated);
     }
 
-    private void ListBoxUpdated(object sender, DataTransferEventArgs args)
+    private void ListBoxUpdated(object sender, DataTransferEventArgs e)
     {
-      if (args.TargetObject == ListBox && args.Property == ItemsControl.ItemsSourceProperty)
+      if (e.TargetObject == ListBox && e.Property == ItemsControl.ItemsSourceProperty)
       {
         ListBox.SelectedItem = ListBox.ItemsSource?.OfType<KeyValuePair<Type, string>>()
           ?.First(forme => forme.Key == (DataContext as FormesSelectionViewModel)?.DefaultForme);

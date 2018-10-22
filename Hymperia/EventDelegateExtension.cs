@@ -8,39 +8,39 @@ namespace Hymperia.Facade
     #region INotifyPropertyChanged
 
     /// <summary>Add <paramref name="handler"/> to <see cref="INotifyPropertyChanged.PropertyChanged"/> with null check.</summary>
-    public static void Add(this INotifyPropertyChanged @object, PropertyChangedEventHandler handler)
+    public static void Add(this INotifyPropertyChanged sender, PropertyChangedEventHandler handler)
     {
-      if (@object is null)
+      if (sender is null)
         return;
 
-      @object.PropertyChanged += handler;
+      sender.PropertyChanged += handler;
     }
 
     /// <summary>Remove <paramref name="handler"/> to <see cref="INotifyPropertyChanged.PropertyChanged"/> with null check.</summary>
-    public static void Remove(this INotifyPropertyChanged @object, PropertyChangedEventHandler handler)
+    public static void Remove(this INotifyPropertyChanged sender, PropertyChangedEventHandler handler)
     {
-      if (@object is null)
+      if (sender is null)
         return;
 
-      @object.PropertyChanged -= handler;
+      sender.PropertyChanged -= handler;
     }
 
     /// <summary>Add <paramref name="handler"/> to <see cref="INotifyPropertyChanging.PropertyChanging"/> with null check.</summary>
-    public static void Add(this INotifyPropertyChanging @object, PropertyChangingEventHandler handler)
+    public static void Add(this INotifyPropertyChanging sender, PropertyChangingEventHandler handler)
     {
-      if (@object is null)
+      if (sender is null)
         return;
 
-      @object.PropertyChanging += handler;
+      sender.PropertyChanging += handler;
     }
 
     /// <summary>Remove <paramref name="handler"/> to <see cref="INotifyPropertyChanging.PropertyChanging"/> with null check.</summary>
-    public static void Remove(this INotifyPropertyChanging @object, PropertyChangingEventHandler handler)
+    public static void Remove(this INotifyPropertyChanging sender, PropertyChangingEventHandler handler)
     {
-      if (@object is null)
+      if (sender is null)
         return;
 
-      @object.PropertyChanging -= handler;
+      sender.PropertyChanging -= handler;
     }
 
     #endregion

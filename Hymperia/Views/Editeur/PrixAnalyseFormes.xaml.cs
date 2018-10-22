@@ -27,9 +27,9 @@ namespace Hymperia.Facade.Views.Editeur
       PrixTotal.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
     }
 
-    protected override void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    protected override void RegionContextChanged(object sender, PropertyChangedEventArgs e)
     {
-      base.RegionContextChanged(sender, args);
+      base.RegionContextChanged(sender, e);
       
       if (RegionContext is IProjetViewModel context)
       {
@@ -37,11 +37,11 @@ namespace Hymperia.Facade.Views.Editeur
       }
     }
 
-    private void ProjetChanged(object sender, PropertyChangedEventArgs args)
+    private void ProjetChanged(object sender, PropertyChangedEventArgs e)
     {
       if (sender is IProjetViewModel context)
       {
-        switch (args.PropertyName)
+        switch (e.PropertyName)
         {
           case "Formes":
             if (!(context.Formes is null))
@@ -54,11 +54,11 @@ namespace Hymperia.Facade.Views.Editeur
       }
     }
 
-    private void FormesChanged(object sender, NotifyCollectionChangedEventArgs args)
+    private void FormesChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (sender == (RegionContext as IProjetViewModel)?.Formes)
       {
-        foreach (FormeWrapper forme in (IEnumerable)args.NewItems ?? Enumerable.Empty<FormeWrapper>())
+        foreach (FormeWrapper forme in (IEnumerable)e.NewItems ?? Enumerable.Empty<FormeWrapper>())
         {
           forme.PropertyChanged += FormeChanged;
         }
@@ -67,7 +67,7 @@ namespace Hymperia.Facade.Views.Editeur
       }
     }
 
-    private void FormeChanged(object sender, PropertyChangedEventArgs args) => Update();
+    private void FormeChanged(object sender, PropertyChangedEventArgs e) => Update();
 
     #endregion
   }
