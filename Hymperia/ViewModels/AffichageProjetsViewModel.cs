@@ -4,6 +4,7 @@
 */ 
 
 using System;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -50,6 +51,7 @@ namespace Hymperia.Facade.ViewModels
     #region Commands
 
     public ICommand NavigateToProjet { get; private set; }
+    public ICommand SupprimerProjet { get; private set; }
 
     #endregion
 
@@ -88,8 +90,7 @@ namespace Hymperia.Facade.ViewModels
     {
       ContextFactory = factory;
       Manager = manager;
-      NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet, CanNavigateToProjet)
-        .ObservesProperty(() => SelectionMode);
+      NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
     }
 
     #endregion
@@ -101,10 +102,6 @@ namespace Hymperia.Facade.ViewModels
       {
         { NavigationParameterKeys.Projet, projet }
       });
-
-    private bool CanNavigateToProjet(Projet projet) =>
-      SelectionMode != System.Windows.Controls.SelectionMode.Extended
-        || SelectionMode != System.Windows.Controls.SelectionMode.Multiple;
 
     #endregion
 
