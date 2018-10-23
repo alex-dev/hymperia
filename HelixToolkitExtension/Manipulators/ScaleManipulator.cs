@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using HelixToolkit.Wpf;
 using JetBrains.Annotations;
 
-namespace Hymperia.Facade.DependencyObjects.Manipulators
+namespace HelixToolkit.Wpf
 {
   /// <summary>Represents a visual element that contains a manipulator that can scale along an axis.</summary>
   public class ScaleManipulator : Manipulator

@@ -41,12 +41,17 @@ namespace Hymperia.Facade.Views.Editeur
       {
         switch (e.PropertyName)
         {
-          case "Projet":
-            Update();
-            break;
           case "Formes":
-            context.Formes.CollectionChanged += FormesChanged;
-            Update();
+            if (!(context.Formes is null))
+            {
+              context.Formes.CollectionChanged += FormesChanged;
+              foreach (FormeWrapper forme in context.Formes)
+              {
+                forme.PropertyChanged += FormeChanged;
+              }
+
+              Update();
+            }
             break;
         }
       }

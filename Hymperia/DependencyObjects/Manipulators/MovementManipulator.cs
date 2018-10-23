@@ -29,19 +29,19 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       }
 
         return (from manipulator in Generate()
-                select manipulator).DeferredForEach(BindToManipulator);
+                select manipulator).DeferredForEach(BindTo);
     }
 
     #region Manipulator Size Bindings
 
-    private void BindToManipulator([NotNull] Manipulator manipulator)
+    protected void BindTo([NotNull] Manipulator manipulator)
     {
       switch (manipulator)
       {
         case TranslateManipulator translate:
-          base.BindToManipulator(translate); break;
+          BindToManipulator(translate); break;
         case RotateManipulator rotate:
-          base.BindToManipulator(rotate); break;
+          BindToManipulator(rotate); break;
       }
     }
 

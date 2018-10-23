@@ -2,14 +2,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:helix="http://helix-toolkit.org/wpf"
     xmlns:main="clr-namespace:Hymperia.Facade.Converters"
     xmlns:agg="clr-namespace:Hymperia.Facade.Converters.AggregateConverters"
-    xmlns:aggregator="clr-namespace:Hymperia.Facade.Converters.AggregatorConverters"
-    xmlns:pth="clr-namespace:Hymperia.Facade.Converters.PointsToHeightConverters">
+    xmlns:aggregator="clr-namespace:Hymperia.Facade.Converters.AggregatorConverters">
   <helix:LinearConverter x:Key="Linear" M="1" />
   <main:ManipulatorRadiusConverter x:Key="ManipulatorRadius" />
   <main:Point3DToPointConverter x:Key="Point3DToPoint" />
   <main:TransformConverter x:Key="Transform" />
   <agg:MaxAggregateConverter x:Key="MaxAggregate" />
   <agg:MinAggregateConverter x:Key="MinAggregate" />
-  <pth:HeightToPointsConverter x:Key="HeightToPoints" />
-  <pth:PointsToHeightConverter x:Key="PointsToHeight" />
 </ResourceDictionary>

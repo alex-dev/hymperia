@@ -8,7 +8,6 @@ using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.Converters;
 using Hymperia.Facade.Converters.AggregateConverters;
-using Hymperia.Facade.Converters.PointsToHeightConverters;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators
@@ -162,8 +161,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
           return CreateBindings(box);
         case EllipsoidVisual3D ellipsoid:
           return CreateBindings(ellipsoid);
-        case PipeVisual3D pipe:
-          return CreateBindings(pipe);
+        case CylinderVisual3D cylinder:
+          return CreateBindings(cylinder);
         case TruncatedConeVisual3D cone:
           return CreateBindings(cone);
         default:
@@ -210,16 +209,10 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     [NotNull]
     [ItemNotNull]
-    private IEnumerable<Binding> CreateBindings([NotNull] PipeVisual3D source)
+    private IEnumerable<Binding> CreateBindings([NotNull] CylinderVisual3D source)
     {
       yield return new Binding(nameof(source.Diameter)) { Source = source, Mode = BindingMode.OneWay };
-      yield return new Binding(nameof(source.Point2))
-      {
-        Source = source,
-        Converter = PointsToHeightConverter,
-        ConverterParameter = PointOrientation.Top,
-        Mode = BindingMode.TwoWay
-      };
+      yield return new Binding(nameof(source.Height)) { Source = source, Mode = BindingMode.OneWay };
     }
 
     [NotNull]
@@ -282,9 +275,6 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
     [NotNull]
     protected static readonly LinearConverter LinearConverter =
       (LinearConverter)Application.Current.Resources["Linear"];
-    [NotNull]
-    protected static readonly PointsToHeightConverter PointsToHeightConverter =
-      (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
 
     #endregion
   }

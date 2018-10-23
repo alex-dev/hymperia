@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -134,6 +135,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     [NotNull]
     [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] ModelVisual3D source)
     {
       switch (source)
@@ -142,8 +145,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
           return CreateBindings(box);
         case EllipsoidVisual3D ellipsoid:
           return CreateBindings(ellipsoid);
-        case PipeVisual3D pipe:
-          return CreateBindings(pipe);
+        case CylinderVisual3D cylinder:
+          return CreateBindings(cylinder);
         case TruncatedConeVisual3D cone:
           return CreateBindings(cone);
         default:
@@ -154,14 +157,18 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     [NotNull]
     [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] BoxVisual3D source) =>
       Tuple.Create(
-        new Binding(nameof(source.Height)) { Source = source, Mode = BindingMode.TwoWay },
-        new Binding(nameof(source.Length)) { Source = source, Mode = BindingMode.TwoWay },
-        new Binding(nameof(source.Width)) { Source = source, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.Height)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Length)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Width)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay });
 
     [NotNull]
     [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] EllipsoidVisual3D source) =>
       Tuple.Create(
         new Binding(nameof(source.RadiusZ)) { Source = source, Mode = BindingMode.TwoWay },
@@ -170,18 +177,22 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     [NotNull]
     [ItemNotNull]
-    private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source)
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
+    private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] CylinderVisual3D source)
     {
       var diameter = new Binding(nameof(source.Diameter)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay };
 
       return Tuple.Create(
-        new Binding("RadiusZ") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Height)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay },
         diameter,
         diameter);
     }
 
     [NotNull]
     [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] TruncatedConeVisual3D source)
     {
       var radius = new Binding(nameof(source.BaseRadius)) { Source = source, Mode = BindingMode.TwoWay };

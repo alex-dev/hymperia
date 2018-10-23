@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.ModelWrappers;
-using Hymperia.Facade.Converters.PointsToHeightConverters;
 using JetBrains.Annotations;
 using Hymperia.Facade.Converters;
 
@@ -12,10 +11,9 @@ namespace Hymperia.Facade.Services
   /// <summary>Convertit des <see cref="FormeWrapper"/> en <see cref="MeshElement3D"/> et les binds aux <see cref="FormeWrapper"/>.</summary>
   public class ConvertisseurWrappers
   {
-    public ConvertisseurWrappers([NotNull] TransformConverter transform, [NotNull] HeightToPointsConverter pointToHauteur)
+    public ConvertisseurWrappers([NotNull] TransformConverter transform)
     {
       TransformConverter = transform;
-      PointToHauteurConverter = pointToHauteur;
     }
 
     #region Convertir
@@ -43,7 +41,7 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private TruncatedConeVisual3D Convertir([NotNull] ConeWrapper forme) => Lier(new TruncatedConeVisual3D(), forme);
     [NotNull]
-    private PipeVisual3D Convertir([NotNull] CylindreWrapper forme) => Lier(new PipeVisual3D(), forme);
+    private CylinderVisual3D Convertir([NotNull] CylindreWrapper forme) => Lier(new CylinderVisual3D(), forme);
     [NotNull]
     private EllipsoidVisual3D Convertir([NotNull] EllipsoideWrapper forme) => Lier(new EllipsoidVisual3D(), forme);
     [NotNull]
@@ -63,8 +61,8 @@ namespace Hymperia.Facade.Services
       {
         case TruncatedConeVisual3D cone:
           return Lier(cone, (ConeWrapper)source);
-        case PipeVisual3D cylindre:
-          return Lier(cylindre, (CylindreWrapper)source);
+        case CylinderVisual3D cylinder:
+          return Lier(cylinder, (CylindreWrapper)source);
         case EllipsoidVisual3D ellipsoide:
           return Lier(ellipsoide, (EllipsoideWrapper)source);
         case BoxVisual3D prisme:
@@ -86,30 +84,15 @@ namespace Hymperia.Facade.Services
     }
 
     [NotNull]
-    private PipeVisual3D Lier([NotNull] PipeVisual3D forme, [NotNull] CylindreWrapper source)
+    private CylinderVisual3D Lier([NotNull] CylinderVisual3D forme, [NotNull] CylindreWrapper source)
     {
-      var hauteur_binding_top = new Binding(nameof(source.Hauteur))
-      {
-        Source = source,
-        Converter = PointToHauteurConverter,
-        ConverterParameter = PointOrientation.Top,
-        Mode = BindingMode.TwoWay
-      };
-      var hauteur_binding_bottom = new Binding(nameof(source.Hauteur))
-      {
-        Source = source,
-        Converter = PointToHauteurConverter,
-        ConverterParameter = PointOrientation.Bottom,
-        Mode = BindingMode.TwoWay
-      };
+      BindingOperations.SetBinding(forme, CylinderVisual3D.OriginProperty, new Binding(nameof(source.Origine)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, CylinderVisual3D.HeightProperty, new Binding(nameof(source.Hauteur)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, CylinderVisual3D.DiameterProperty, new Binding(nameof(source.Diametre)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, CylinderVisual3D.InnerDiameterProperty, new Binding(nameof(source.InnerDiametre)) { Source = source, Mode = BindingMode.TwoWay });
+      BindingOperations.SetBinding(forme, CylinderVisual3D.ThetaDivProperty, new Binding(nameof(source.ThetaDiv)) { Source = source, Mode = BindingMode.TwoWay });
 
-      BindingOperations.SetBinding(forme, PipeVisual3D.Point1Property, hauteur_binding_top);
-      BindingOperations.SetBinding(forme, PipeVisual3D.Point2Property, hauteur_binding_bottom);
-      BindingOperations.SetBinding(forme, PipeVisual3D.DiameterProperty, new Binding(nameof(source.Diametre)) { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, PipeVisual3D.InnerDiameterProperty, new Binding(nameof(source.InnerDiametre)) { Source = source, Mode = BindingMode.TwoWay });
-      BindingOperations.SetBinding(forme, PipeVisual3D.ThetaDivProperty, new Binding(nameof(source.ThetaDiv)) { Source = source, Mode = BindingMode.TwoWay });
-
-      return (PipeVisual3D)_Lier(forme, source);
+      return (CylinderVisual3D)_Lier(forme, source);
     }
 
     [NotNull]
@@ -157,8 +140,6 @@ namespace Hymperia.Facade.Services
 
     [NotNull]
     private readonly TransformConverter TransformConverter;
-    [NotNull]
-    private readonly HeightToPointsConverter PointToHauteurConverter;
 
     #endregion
   }

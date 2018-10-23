@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXOperations", "DirectXOperations\DirectXOperations.vcxproj", "{D4BA22BD-7CBD-4F40-ABDC-F4F115083284}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelixToolkitExtension", "HelixToolkitExtension\HelixToolkitExtension.csproj", "{53118FAE-B39C-4137-ACFF-4F89E6579EF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -70,6 +72,14 @@ Global
 		{D4BA22BD-7CBD-4F40-ABDC-F4F115083284}.Release|x64.Build.0 = Release|x64
 		{D4BA22BD-7CBD-4F40-ABDC-F4F115083284}.Release|x86.ActiveCfg = Release|Win32
 		{D4BA22BD-7CBD-4F40-ABDC-F4F115083284}.Release|x86.Build.0 = Release|Win32
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Debug|x64.Build.0 = Debug|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Debug|x86.Build.0 = Debug|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x64.ActiveCfg = Release|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x64.Build.0 = Release|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x86.ActiveCfg = Release|Any CPU
+		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

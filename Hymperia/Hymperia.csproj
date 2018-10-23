@@ -220,7 +220,6 @@
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
-    <Compile Include="DependencyObjects\Manipulators\ScaleManipulator.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="EventDelegateExtension.cs" />
@@ -239,9 +238,6 @@
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Converters\Point3DToPointConverter.cs" />
-    <Compile Include="Converters\PointsToHeightConverters\HeightToPointsConverter.cs" />
-    <Compile Include="Converters\PointsToHeightConverters\PointsToHeightStaticConverter.cs" />
-    <Compile Include="Converters\PointsToHeightConverters\PointsToHeightConverter.cs" />
     <Compile Include="Converters\TransformConverter.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
@@ -374,6 +370,10 @@
     <ProjectReference Include="..\DirectXOperations\DirectXOperations.vcxproj">
       <Project>{d4ba22bd-7cbd-4f40-abdc-f4f115083284}</Project>
       <Name>DirectXOperations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HelixToolkitExtension\HelixToolkitExtension.csproj">
+      <Project>{53118fae-b39c-4137-acff-4f89e6579ef3}</Project>
+      <Name>HelixToolkitExtension</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{77e58132-639f-4902-bf07-0e57ba979cfc}</Project>

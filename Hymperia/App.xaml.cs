@@ -4,7 +4,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 using Hymperia.Facade.Converters;
-using Hymperia.Facade.Converters.PointsToHeightConverters;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;
 using Prism.Ioc;
@@ -17,8 +16,6 @@ namespace Hymperia.Facade
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)
     {
-      registry.RegisterInstance((HeightToPointsConverter)Resources["HeightToPoints"]);
-      registry.RegisterInstance((PointsToHeightConverter)Resources["PointsToHeight"]);
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
       registry.RegisterForNavigation<Editeur>("Editeur");
