@@ -1,39 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
-using Hymperia.Facade.Services.PointsToHeightConverters;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators
 {
+  /// <summary>Manipulateur de redimensionnement.</summary>
   public class ResizeManipulator : CombinedManipulator
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty HeightProperty;
-    public static readonly DependencyProperty LengthProperty;
-    public static readonly DependencyProperty WidthProperty;
+    /// <seealso cref="Height"/>
+    public static readonly DependencyProperty HeightProperty =
+      DependencyProperty.Register(nameof(Height), typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2.0));
+    /// <seealso cref="Length"/>
+    public static readonly DependencyProperty LengthProperty =
+      DependencyProperty.Register(nameof(Length), typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2.0));
+    /// <seealso cref="Width"/>
+    public static readonly DependencyProperty WidthProperty =
+      DependencyProperty.Register(nameof(Width), typeof(double), typeof(ResizeManipulator), new PropertyMetadata(2.0));
 
     #endregion
 
     #region Properties
 
+    /// <summary>La taille en Z de la source.</summary>
     public double Height
     {
       get => (double)GetValue(HeightProperty);
       set => SetValue(HeightProperty, value);
     }
 
+    /// <summary>La taille en X de la source.</summary>
     public double Length
     {
       get => (double)GetValue(LengthProperty);
       set => SetValue(LengthProperty, value);
     }
 
+    /// <summary>La taille en Y de la source.</summary>
     public double Width
     {
       get => (double)GetValue(WidthProperty);
@@ -44,129 +54,89 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
 
     #region Constructors
 
-    static ResizeManipulator()
-    {
-      LinearConverter = new LinearConverter() { M = 1 };
-      PointsToHeightConverter = (PointsToHeightConverter)Application.Current.Resources["PointsToHeight"];
-      WidthProperty = DependencyProperty.Register("Width", typeof(double), typeof(ResizeManipulator));
-      HeightProperty = DependencyProperty.Register("Height", typeof(double), typeof(ResizeManipulator));
-      LengthProperty = DependencyProperty.Register("Length", typeof(double), typeof(ResizeManipulator));
-    }
-
-    public ResizeManipulator() : base() { }
-
+    /// <inheritdoc/>
     [NotNull]
     [ItemNotNull]
-    protected override IEnumerable<Tuple<Manipulator, Action<Manipulator>>> GenerateManipulators()
+    protected override IEnumerable<Manipulator> GenerateManipulators()
     {
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red },
-        BindToLengthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green },
-        BindToWidthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue },
-        BindToHeightManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(-1, 0, 0), Color = Colors.Red },
-        BindToLengthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, -1, 0), Color = Colors.Green },
-        BindToWidthManipulator);
-      yield return Tuple.Create<Manipulator, Action<Manipulator>>(
-        new TranslateManipulator { Direction = new Vector3D(0, 0, -1), Color = Colors.Blue },
-        BindToHeightManipulator);
+      {
+        var manipulator = new ScaleManipulator { Direction = new Vector3D(1, 0, 0), Color = Colors.Red, BindLengthToValue = false };
+        BindToLengthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new ScaleManipulator { Direction = new Vector3D(0, 1, 0), Color = Colors.Green, BindLengthToValue = false };
+        BindToWidthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new ScaleManipulator { Direction = new Vector3D(0, 0, 1), Color = Colors.Blue, BindLengthToValue = false };
+        BindToHeightManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new ScaleManipulator { Direction = new Vector3D(-1, 0, 0), Color = Colors.Red, BindLengthToValue = false };
+        BindToLengthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new ScaleManipulator { Direction = new Vector3D(0, -1, 0), Color = Colors.Green, BindLengthToValue = false };
+        BindToWidthManipulator(manipulator);
+        yield return manipulator;
+      }
+      {
+        var manipulator = new ScaleManipulator { Direction = new Vector3D(0, 0, -1), Color = Colors.Blue, BindLengthToValue = false };
+        BindToHeightManipulator(manipulator);
+        yield return manipulator;
+      }
     }
 
     #region Manipulator Size Bindings
 
-    private void BindToHeightManipulator(Manipulator manipulator)
+    private void BindToHeightManipulator([NotNull] Manipulator manipulator) =>
+      BindTo(nameof(Height), (ScaleManipulator)manipulator);
+    private void BindToLengthManipulator([NotNull] Manipulator manipulator) =>
+      BindTo(nameof(Length), (ScaleManipulator)manipulator);
+    private void BindToWidthManipulator([NotNull] Manipulator manipulator) =>
+      BindTo(nameof(Width), (ScaleManipulator)manipulator);
+    private void BindTo([NotNull] string dimension, [NotNull] ScaleManipulator manipulator)
     {
-      var binding = new Binding("Height")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 1.1,
-        Mode = BindingMode.OneWay
-      };
-
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
-      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Height")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.12,
-        Mode = BindingMode.OneWay
-      });
-    }
-    private void BindToLengthManipulator(Manipulator manipulator)
-    {
-      var binding = new Binding("Length")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 1.1,
-        Mode = BindingMode.OneWay
-      };
-
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
-      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Length")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.12,
-        Mode = BindingMode.OneWay
-      });
-    }
-
-    private void BindToWidthManipulator(Manipulator manipulator)
-    {
-      var binding = new Binding("Width")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 1.1,
-        Mode = BindingMode.OneWay
-      };
-
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.LengthProperty, binding);
-      BindingOperations.SetBinding(manipulator, Manipulator.ValueProperty, binding);
-      BindingOperations.SetBinding(manipulator, TranslateManipulator.DiameterProperty, new Binding("Width")
-      {
-        Source = this,
-        Converter = LinearConverter,
-        ConverterParameter = 0.12,
-        Mode = BindingMode.OneWay
-      });
+      SetBinding(manipulator, Manipulator.ValueProperty, new Binding(dimension) { Source = this, Mode = BindingMode.TwoWay });
+      BindToManipulator(manipulator);
     }
 
     #endregion
 
     #endregion
 
-    #region Binding to Source
+    #region Binding from Source
 
+    /// <inheritdoc/>
     public override void Bind([NotNull] ModelVisual3D source)
     {
-      (Binding height, Binding length, Binding width) = CreateBindings(source);
+      var (height, length, width) = CreateBindings(source);
 
-      BindingOperations.SetBinding(this, HeightProperty, height);
-      BindingOperations.SetBinding(this, LengthProperty, length);
-      BindingOperations.SetBinding(this, WidthProperty, width);
-      BindingOperations.SetBinding(this, TransformProperty, new Binding("Transform") { Source = source, Mode = BindingMode.OneWay });
+      base.Bind(source);
+      SetBinding(HeightProperty, height);
+      SetBinding(LengthProperty, length);
+      SetBinding(WidthProperty, width);
+      SetBinding(TransformProperty, new Binding(nameof(source.Transform)) { Source = source, Mode = BindingMode.OneWay });
     }
 
+    /// <inheritdoc/>
     public override void Unbind()
     {
-      BindingOperations.ClearBinding(this, HeightProperty);
-      BindingOperations.ClearBinding(this, LengthProperty);
-      BindingOperations.ClearBinding(this, WidthProperty);
-      BindingOperations.ClearBinding(this, TransformProperty);
+      base.Unbind();
+      ClearBinding(HeightProperty);
+      ClearBinding(LengthProperty);
+      ClearBinding(WidthProperty);
+      ClearBinding(TransformProperty);
     }
 
+    [NotNull]
+    [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] ModelVisual3D source)
     {
       switch (source)
@@ -175,11 +145,9 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
           return CreateBindings(box);
         case EllipsoidVisual3D ellipsoid:
           return CreateBindings(ellipsoid);
-        case PipeVisual3D pipe:
-          throw new NotImplementedException();
-          return CreateBindings(pipe);
+        case CylinderVisual3D cylinder:
+          return CreateBindings(cylinder);
         case TruncatedConeVisual3D cone:
-          throw new NotImplementedException();
           return CreateBindings(cone);
         default:
           string err = $"This manipulator only support { nameof(BoxVisual3D) }, { nameof(EllipsoidVisual3D) }, { nameof(PipeVisual3D) } and { nameof(TruncatedConeVisual3D) }.";
@@ -187,36 +155,53 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
       }
     }
 
+    [NotNull]
+    [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] BoxVisual3D source) =>
       Tuple.Create(
-        new Binding("Height") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("Length") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("Width") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.Height)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Length)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.Width)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay });
 
+    [NotNull]
+    [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
     private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] EllipsoidVisual3D source) =>
       Tuple.Create(
-        new Binding("RadiusZ") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
-        new Binding("RadiusX") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay },
-        new Binding("RadiusY") { Source = source, Converter = LinearConverter, ConverterParameter = 2, Mode = BindingMode.TwoWay });
+        new Binding(nameof(source.RadiusZ)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.RadiusX)) { Source = source, Mode = BindingMode.TwoWay },
+        new Binding(nameof(source.RadiusY)) { Source = source, Mode = BindingMode.TwoWay });
 
-    /*private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] PipeVisual3D source) =>
-      Tuple.Create(
-        new Binding("RadiusZ") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("RadiusX") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("WidthY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });
+    [NotNull]
+    [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
+    private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] CylinderVisual3D source)
+    {
+      var diameter = new Binding(nameof(source.Diameter)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay };
 
-    private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] TruncatedConeVisual3D source) =>
-      Tuple.Create(
-        new Binding("Height") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("RadiusX") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay },
-        new Binding("WidthY") { Source = source, Converter = LinearConverter, Mode = BindingMode.TwoWay });*/
+      return Tuple.Create(
+        new Binding(nameof(source.Height)) { Source = source, Converter = LinearConverter, ConverterParameter = 0.5, Mode = BindingMode.TwoWay },
+        diameter,
+        diameter);
+    }
 
-    #endregion
+    [NotNull]
+    [ItemNotNull]
+    [SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods",
+      Justification = @"Hiding is on private methods.")]
+    private Tuple<Binding, Binding, Binding> CreateBindings([NotNull] TruncatedConeVisual3D source)
+    {
+      var radius = new Binding(nameof(source.BaseRadius)) { Source = source, Mode = BindingMode.TwoWay };
 
-    #region Static Services
-
-    private static readonly LinearConverter LinearConverter;
-    private static readonly PointsToHeightConverter PointsToHeightConverter;
+      return Tuple.Create(
+        new Binding(nameof(source.Height)) { Source = source, Mode = BindingMode.TwoWay },
+        radius,
+        radius);
+    }
 
     #endregion
   }

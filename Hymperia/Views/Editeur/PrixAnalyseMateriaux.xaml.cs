@@ -25,9 +25,9 @@ namespace Hymperia.Facade.Views.Editeur
       PrixTotal.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
     }
 
-    protected override void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    protected override void RegionContextChanged(object sender, PropertyChangedEventArgs e)
     {
-      base.RegionContextChanged(sender, args);
+      base.RegionContextChanged(sender, e);
 
       if (!IsBusy() && RegionContext is IProjetViewModel context)
       {
@@ -35,28 +35,33 @@ namespace Hymperia.Facade.Views.Editeur
       }
     }
 
-    private void ProjetChanged(object sender, PropertyChangedEventArgs args)
+    private void ProjetChanged(object sender, PropertyChangedEventArgs e)
     {
       if (sender == RegionContext && sender is IProjetViewModel context)
       {
-        switch (args.PropertyName)
+        switch (e.PropertyName)
         {
-          case "Projet":
-            Update();
-            break;
           case "Formes":
-            context.Formes.CollectionChanged += FormesChanged;
-            Update();
+            if (!(context.Formes is null))
+            {
+              context.Formes.CollectionChanged += FormesChanged;
+              foreach (FormeWrapper forme in context.Formes)
+              {
+                forme.PropertyChanged += FormeChanged;
+              }
+
+              Update();
+            }
             break;
         }
       }
     }
 
-    private void FormesChanged(object sender, NotifyCollectionChangedEventArgs args)
+    private void FormesChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (sender == (RegionContext as IProjetViewModel)?.Formes)
       {
-        foreach (FormeWrapper forme in args.NewItems)
+        foreach (FormeWrapper forme in e.NewItems)
         {
           forme.PropertyChanged += FormeChanged;
         }
@@ -65,7 +70,7 @@ namespace Hymperia.Facade.Views.Editeur
       }
     }
 
-    private void FormeChanged(object sender, PropertyChangedEventArgs args)
+    private void FormeChanged(object sender, PropertyChangedEventArgs e)
     {
       if ((RegionContext as IProjetViewModel)?.Formes?.Contains(sender as FormeWrapper) ?? false)
       {

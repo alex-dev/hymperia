@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Media.Media3D;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SuccincT.Functional;
 using Hymperia.Facade;
-using Hymperia.Facade.Services;
+using Hymperia.Facade.Converters;
+using JetBrains.Annotations;
 
 namespace UnitTests.ServiceTests
 {
   [TestClass]
   public class TransformConverterTest
   {
+    [NotNull]
     private readonly Random Random;
     private TransformConverter Converter { get; set; }
 
@@ -22,7 +23,7 @@ namespace UnitTests.ServiceTests
     [TestInitialize]
     public void Initialize()
     {
-      Converter = TransformConverter.Instance;
+      Converter = new TransformConverter();
     }
 
     [TestMethod]

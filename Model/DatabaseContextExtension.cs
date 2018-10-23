@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Hymperia.Model
 {
@@ -45,18 +44,14 @@ namespace Hymperia.Model
     /// <summary>Inclus explicitement les formes et les matériaux dans la query.</summary>
     [NotNull]
     [ItemNotNull]
-    public static IQueryable<Projet> IncludeFormes([NotNull][ItemNotNull] this IQueryable<Projet> projets)
-    {
-      return projets.Include(projet => projet._Formes).ThenInclude(forme => forme.Materiau);
-    }
+    public static IQueryable<Projet> IncludeFormes([NotNull][ItemNotNull] this IQueryable<Projet> projets) =>
+      projets.Include(projet => projet._Formes).ThenInclude(forme => forme.Materiau);
 
     /// <summary>Inclus explicitement les accès dans la query.</summary>
     [NotNull]
     [ItemNotNull]
-    public static IQueryable<Utilisateur> IncludeAcces([NotNull][ItemNotNull] this IQueryable<Utilisateur> projets)
-    {
-      return projets.Include(utilisateur => utilisateur._Acces).ThenInclude(acces => acces.Projet);
-    }
+    public static IQueryable<Utilisateur> IncludeAcces([NotNull][ItemNotNull] this IQueryable<Utilisateur> projets) =>
+      projets.Include(utilisateur => utilisateur._Acces).ThenInclude(acces => acces.Projet);
 
     #endregion
 

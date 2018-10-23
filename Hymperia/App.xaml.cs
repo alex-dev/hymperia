@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
-using Hymperia.Facade.Services;
-using Hymperia.Facade.Services.PointsToHeightConverters;
+using Hymperia.Facade.Converters;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;
 using Prism.Ioc;
@@ -17,8 +16,6 @@ namespace Hymperia.Facade
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)
     {
-      registry.RegisterInstance((HeightToPointsConverter)Resources["HeightToPoints"]);
-      registry.RegisterInstance((PointsToHeightConverter)Resources["PointsToHeight"]);
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
       registry.RegisterForNavigation<Editeur>("Editeur");
@@ -28,13 +25,13 @@ namespace Hymperia.Facade
     protected override Window CreateShell() => Container.Resolve<FenetrePrincipale>();
 
     /// <summary>Force le language de l'application.</summary>
-    protected override void OnStartup(StartupEventArgs args)
+    protected override void OnStartup(StartupEventArgs e)
     {
       var culture = CreateAppCulture();
       var language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
 
       FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
-      base.OnStartup(args);
+      base.OnStartup(e);
     }
 
     /// <summary>Crée une culture basé sur la culture courante.</summary>

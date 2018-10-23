@@ -9,7 +9,7 @@ namespace Hymperia.Model.Modeles
   {
     #region Attribute
 
-    public int ThetaDiv { get; set; }
+    public int ThetaDiv { get; set; } = 60;
 
     #endregion
 
@@ -31,12 +31,9 @@ namespace Hymperia.Model.Modeles
 
     #region Constructors
 
-    /// <inheritdoc />
+    /// inheritdoc/>
     public ThetaDivForme([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default) 
-      : base(materiau, point, quaternion)
-    {
-      ThetaDiv = 60;
-    }
+      : base(materiau, point, quaternion) { }
 
     #endregion
 

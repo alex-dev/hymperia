@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +11,7 @@ using JetBrains.Annotations;
 namespace Hymperia.Facade.BaseClasses
 {
   /// <summary>Implement bulk changes for <see cref="ObservableCollection{T}"/>.</summary>
-  /// <inheritdoc />
+  /// inheritdoc/>
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
     /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> acquired through reflection. Avoid using if not needed.</summary>
@@ -20,11 +19,11 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Constructors
 
-    /// <inheritdoc />
-    public BulkObservableCollection() : base() { }
-    /// <inheritdoc />
+    /// inheritdoc/>
+    public BulkObservableCollection() { }
+    /// inheritdoc/>
     public BulkObservableCollection([NotNull] List<T> list) : base(list) { }
-    /// <inheritdoc />
+    /// inheritdoc/>
     public BulkObservableCollection([NotNull] IEnumerable<T> collection) : base(collection) { }
 
     #endregion
@@ -78,14 +77,14 @@ namespace Hymperia.Facade.BaseClasses
 
     #endregion
 
-    /// <summary>Trigger <see cref="ObservableCollection{T}.CollectionChanged"/> with <paramref name="args"/>.</summary>
+    /// <summary>Trigger <see cref="ObservableCollection{T}.CollectionChanged"/> with <paramref name="e"/>.</summary>
     /// <remarks>
     ///   Rather than overriding <see cref="OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs)"/>, override
     ///   <see cref="Handle(NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs)"/> to add exception to
     ///   <see cref="NotifyCollectionChangedEventHandler"/> or <see cref="HandleCollectionView(NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs)"/>
     ///   to add fonctionnalities to <see cref="CollectionView"/>.
     /// </remarks>
-    protected void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs args)
+    protected void OnMultipleCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
       if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
       {
@@ -93,26 +92,26 @@ namespace Hymperia.Facade.BaseClasses
         {
           foreach (NotifyCollectionChangedEventHandler handler in handlers.TraverseRecursively())
           {
-            Handle(handler, args);
+            Handle(handler, e);
           }
         }
       }
     }
 
     /// <summary>Handle each <see cref="NotifyCollectionChangedEventHandler"/>.</summary>
-    protected virtual void Handle(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs args)
+    protected virtual void Handle(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs e)
     {
       switch (handler.Target)
       {
         case CollectionView view:
-          HandleCollectionView(handler, args); break;
+          HandleCollectionView(handler, e); break;
         default:
-          handler(this, args); break;
+          handler(this, e); break;
       }
     }
 
     /// <summary>Handle <see cref="NotifyCollectionChangedEventHandler"/> for a <see cref="CollectionView"/>.</summary>
-    protected virtual void HandleCollectionView(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs args)
+    protected virtual void HandleCollectionView(NotifyCollectionChangedEventHandler handler, NotifyCollectionChangedEventArgs e)
     {
       void HandleMultiple(NotifyCollectionChangedAction action, IList items)
       {
@@ -125,16 +124,16 @@ namespace Hymperia.Facade.BaseClasses
         }
       }
 
-      switch (args.Action)
+      switch (e.Action)
       {
         case NotifyCollectionChangedAction.Add:
-          HandleMultiple(NotifyCollectionChangedAction.Add, args.NewItems); break;
+          HandleMultiple(NotifyCollectionChangedAction.Add, e.NewItems); break;
         case NotifyCollectionChangedAction.Remove:
-          HandleMultiple(NotifyCollectionChangedAction.Remove, args.OldItems); break;
+          HandleMultiple(NotifyCollectionChangedAction.Remove, e.OldItems); break;
         case NotifyCollectionChangedAction.Replace:
         case NotifyCollectionChangedAction.Move:
         case NotifyCollectionChangedAction.Reset:
-          handler(this, args); break;
+          handler(this, e); break;
       }
     }
 
@@ -147,17 +146,13 @@ namespace Hymperia.Facade.BaseClasses
 
     private class EventDelegate
     {
-      public static readonly BindingFlags Flags;
+      public static readonly BindingFlags Flags =
+        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
       #region Constructors
 
       public static EventDelegate LoadCollectionChanged(ObservableCollection<T> owner) =>
         new EventDelegate(typeof(ObservableCollection<T>).GetField(nameof(CollectionChanged), Flags), owner);
-
-      static EventDelegate()
-      {
-        Flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-      }
 
       private EventDelegate(FieldInfo field, ObservableCollection<T> owner)
       {
@@ -171,7 +166,9 @@ namespace Hymperia.Facade.BaseClasses
 
       #region Private Fields
 
+      [NotNull]
       private readonly FieldInfo Field;
+      [NotNull]
       private readonly ObservableCollection<T> Owner;
 
       #endregion

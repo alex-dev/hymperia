@@ -70,7 +70,6 @@ namespace Hymperia.Model.Modeles
     /// <param name="nom">Le nom du matériau.</param>
     public Materiau([NotNull] string nom, byte r, byte g, byte b, byte a)
     {
-      Id = default;
       Nom = nom;
       R = r;
       G = g;
@@ -82,7 +81,6 @@ namespace Hymperia.Model.Modeles
     /// <param name="nom">Le nom du matériau.</param>
     public Materiau([NotNull] SolidColorBrush fill, [NotNull] string nom)
     {
-      Id = default;
       Fill = fill;
       Nom = nom;
     }

@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  /// <inheritdoc />
+  /// inheritdoc/>
   public class CylindreWrapper : ThetaDivFormeWrapper
   {
     #region Attributs

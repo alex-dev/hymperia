@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Hymperia.Facade.ModelWrappers
 {
-  /// <inheritdoc />
+  /// inheritdoc/>
   public class ConeWrapper : ThetaDivFormeWrapper
   {
     #region Attributs
@@ -23,7 +23,7 @@ namespace Hymperia.Facade.ModelWrappers
       get => ((Cone)Forme).RayonBase;
       set
       {
-        ((Cone)Forme).Hauteur = value;
+        ((Cone)Forme).RayonBase = value;
         OnPropertyChanged();
       }
     }
@@ -33,7 +33,7 @@ namespace Hymperia.Facade.ModelWrappers
       get => ((Cone)Forme).RayonTop;
       set
       {
-        ((Cone)Forme).Hauteur = value;
+        ((Cone)Forme).RayonTop = value;
         OnPropertyChanged();
       }
     }

@@ -8,13 +8,13 @@ using R = Prism.Regions;
 
 namespace Hymperia.Facade.BaseClasses
 {
-  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
   [Obsolete("Cette base classes sera retiré lorsque l'application passera d'un modèle basé sur les régions à un modèle basé sur l'eventaggregator")]
   public abstract class RegionContextAwareUserControl : UserControl
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty RegionContextProperty;
+    public static readonly DependencyProperty RegionContextProperty =
+      DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
 
     #endregion
 
@@ -27,11 +27,6 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Constructors
 
-    static RegionContextAwareUserControl()
-    {
-      RegionContextProperty = DependencyProperty.Register("RegionContext", typeof(object), typeof(RegionContextAwareUserControl), new PropertyMetadata(RegionContextChanged));
-    }
-
     protected RegionContextAwareUserControl()
     {
       Monitor = new SimpleMonitor();
@@ -43,10 +38,11 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Region Context Changes Handlers
 
-    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) =>
-      ((RegionContextAwareUserControl)sender).RegionContextChanged(args);
+    private static void RegionContextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) =>
+      ((RegionContextAwareUserControl)sender).RegionContextChanged(e);
 
-    protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs args)
+    [Obsolete]
+    protected virtual void RegionContextChanged(object sender, PropertyChangedEventArgs e)
     {
       if (!IsBusy())
       {
@@ -57,7 +53,8 @@ namespace Hymperia.Facade.BaseClasses
       }
     }
 
-    protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs args)
+    [Obsolete]
+    protected virtual void RegionContextChanged(DependencyPropertyChangedEventArgs e)
     {
       if (!IsBusy())
       {
@@ -70,11 +67,17 @@ namespace Hymperia.Facade.BaseClasses
 
     #region Block Reentrancy
 
+    [Pure]
     protected bool IsBusy() => Monitor.Busy;
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+      Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
+    [NotNull]
     private readonly SimpleMonitor Monitor;
 
     private class SimpleMonitor : IDisposable
     {
+      public bool Busy { get; private set; }
+
       [NotNull]
       public SimpleMonitor Enter()
       {
@@ -82,8 +85,8 @@ namespace Hymperia.Facade.BaseClasses
         return this;
       }
 
+      [Pure]
       public void Dispose() => Busy = false;
-      public bool Busy { get; private set; }
     }
 
     #endregion

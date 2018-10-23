@@ -14,17 +14,17 @@ namespace Hymperia.Model.Modeles
     /// <summary>La clé primaire du projet.</summary>
     public int Id { get; private set; }
 
+    /// <summary>Les formes dans le projet.</summary>
+    /// <remarks>Modifiable, mais privé.</remarks>
+    [ItemNotNull]
+    internal List<Forme> _Formes { get; private set; } = new List<Forme> { };
+
     /// <summary>Le nom du projet.</summary>
     /// <remarks>Alternate Key</remarks>
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du projet ne peut pas être vide.")]
     public string Nom { get; private set; }
-
-    /// <summary>Les formes dans le projet.</summary>
-    /// <remarks>Modifiable, mais privé.</remarks>
-    [ItemNotNull]
-    internal List<Forme> _Formes { get; set; }
 
     #endregion
 
@@ -60,7 +60,6 @@ namespace Hymperia.Model.Modeles
      /// <param name="name">Le nom du projet.</param>
     public Projet([NotNull] string nom)
     {
-      Id = default;
       Nom = nom;
     }
 

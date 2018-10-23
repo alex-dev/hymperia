@@ -13,18 +13,18 @@ namespace Hymperia.Model.Modeles
     /// <summary>La clé primaire de la forme.</summary>
     public int Id { get; private set; }
 
+    [NotNull]
+    [Required]
+    internal JsonObject<Point> _Origine { get; private set; } = new JsonObject<Point>();
+
+    [NotNull]
+    [Required]
+    internal JsonObject<Quaternion> _Rotation { get; private set; } = new JsonObject<Quaternion>();
+
     /// <summary>Le matériau de la forme.</summary>
     [NotNull]
     [Required]
     public Materiau Materiau { get; set; }
-
-    [NotNull]
-    [Required]
-    internal JsonObject<Point> _Origine { get; set; }
-
-    [NotNull]
-    [Required]
-    internal JsonObject<Quaternion> _Rotation { get; set; }
 
     #endregion
 
@@ -61,10 +61,9 @@ namespace Hymperia.Model.Modeles
     /// <param name="materiau">Le matériau composant la forme.</param>
     public Forme([NotNull] Materiau materiau, [NotNull] Point point = default, [NotNull] Quaternion quaternion = default)
     {
-      Id = default;
       Materiau = materiau;
-      _Origine = new JsonObject<Point>(point ?? Point.Center);
-      _Rotation = new JsonObject<Quaternion>(quaternion ?? Quaternion.Identity);
+      Origine = point ?? Point.Center;
+      Rotation = quaternion ?? Quaternion.Identity;
     }
 
     #endregion

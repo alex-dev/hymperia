@@ -14,7 +14,7 @@ namespace Hymperia.Model.Migrations
   internal sealed class Initializer
   {
     [NotNull]
-    private Random Random { get; set; }
+    private readonly Random Random = new Random();
 
     [NotNull]
     [ItemNotNull]
@@ -59,11 +59,6 @@ namespace Hymperia.Model.Migrations
       };
     }
 
-    public Initializer()
-    {
-      Random = new Random();
-    }
-
     /// <summary>Initialise la base de données aléatoirement.</summary>
     /// <param name="context">Le <see cref="DatabaseContext"/> de la base de données à initialiser.</param>
     /// <param name="token">Un token d'annulation.</param>
@@ -103,6 +98,13 @@ namespace Hymperia.Model.Migrations
     }
 
     [NotNull]
+    private Projet InitializeFormes([NotNull][ItemNotNull] Materiau[] materiaux, [NotNull] Projet projet)
+    {
+      projet._Formes.AddRange(InitializeFormes(materiaux));
+      return projet;
+    }
+
+    [NotNull]
     [ItemNotNull]
     private IEnumerable<Forme> InitializeFormes([NotNull][ItemNotNull] Materiau[] materiaux)
     {
@@ -119,9 +121,9 @@ namespace Hymperia.Model.Migrations
     [ItemNotNull]
     private IEnumerable<Projet> InitializeProjets([NotNull][ItemNotNull] Materiau[] materiaux)
     {
-      yield return new Projet("Projet 1") { _Formes = InitializeFormes(materiaux).ToList() };
-      yield return new Projet("Projet 2") { _Formes = InitializeFormes(materiaux).ToList() };
-      yield return new Projet("Projet 3") { _Formes = InitializeFormes(materiaux).ToList() };
+      yield return InitializeFormes(materiaux, new Projet("Projet 1"));
+      yield return InitializeFormes(materiaux, new Projet("Projet 2"));
+      yield return InitializeFormes(materiaux, new Projet("Projet 3"));
     }
 
     [NotNull]
