@@ -3,15 +3,27 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
-  <StackPanel>
-    <ListBox x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
-        SelectionMode="{Binding SelectionMode, Mode=OneWay}">
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="SelectionChanged">
-          <i:InvokeCommandAction Command="{Binding NavigateToProjet}"
-              CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
-    </ListBox>
+  <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Vertical">
+      <ListBox x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
+          SelectionMode="Extended">
+        <!--<i:Interaction.Triggers>
+          <i:EventTrigger EventName="SelectionChanged">
+            <i:InvokeCommandAction Command="{Binding NavigateToProjet}"
+                CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>-->
+        <!--<ListBox.InputBindings>
+          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
+        </ListBox.InputBindings>-->
+      </ListBox>
+    </StackPanel>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+      <Button Content="Effacer projet" />
+      <StackPanel Orientation="Horizontal">
+        <Label Content="Supprimé actif : "></Label>
+        <TextBlock Text="Non"></TextBlock>
+      </StackPanel>
+    </StackPanel>
   </StackPanel>
 </UserControl>
