@@ -217,6 +217,7 @@
     <Compile Include="Converters\AggregatorConverters\MultiValueConverterData.cs" />
     <Compile Include="Converters\AggregatorConverters\ValueConverterData.cs" />
     <Compile Include="Converters\ManipulatorRadiusConverter.cs" />
+    <Compile Include="DependencyObjects\ImageHelper.cs" />
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
@@ -342,6 +343,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FenetrePrincipale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\FormesSelectionStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

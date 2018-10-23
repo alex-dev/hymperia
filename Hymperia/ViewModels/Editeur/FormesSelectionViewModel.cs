@@ -7,7 +7,7 @@ using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-#pragma warning disable 4014 
+#pragma warning disable 4014
   public class FormesSelectionViewModel : BindableBase
   {
     #region Properties
@@ -40,10 +40,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       await Task.Run(() => Formes = new Dictionary<Type, string>
       {
-        { typeof(PrismeRectangulaire), @"pack://application:,,,/Images/PrismeRectangulaire.png" },
-        { typeof(Cone), @"pack://application:,,,/Images/Cone.png" },
-        { typeof(Cylindre), @"pack://application:,,,/Images/Cylindre.png" },
-        { typeof(Ellipsoide), @"pack://application:,,,/Images/Ellipsoide.png" }
+        { typeof(PrismeRectangulaire), "PrismeRectangulaire" },
+        { typeof(Cone), "Cone" },
+        { typeof(Cylindre), "Cylindre" },
+        { typeof(Ellipsoide), "Ellipsoide" }
       });
     }
 
