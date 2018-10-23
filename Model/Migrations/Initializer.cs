@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Hymperia.Model.Modeles;
+using Hymperia.Model.Modeles.JsonObject;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Hymperia.Model.Modeles;
-using Hymperia.Model.Modeles.JsonObject;
-using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.Model.Migrations
 {
-  /// <summary>Initialiseur de la base de données.</summary>
-  internal sealed class Initializer
+    /// <summary>Initialiseur de la base de données.</summary>
+    internal sealed class Initializer
   {
     [NotNull]
     private readonly Random Random = new Random();
@@ -70,7 +70,7 @@ namespace Hymperia.Model.Migrations
       await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token)), token);
       await context.SaveChangesAsync(token);
 
-      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token));
+      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token)).ToArray();
       await context.SaveChangesAsync(token);
     }
 
