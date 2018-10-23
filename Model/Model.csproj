@@ -62,12 +62,18 @@
     <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="DoubleExtension.cs" />
     <Compile Include="IIdentity.cs" />
+    <Compile Include="LocalizationContext.cs" />
     <Compile Include="Migrations\20181005183822_InitialDatabase.cs" />
     <Compile Include="Migrations\20181005183822_InitialDatabase.designer.cs">
       <DependentUpon>20181005183822_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />
+    <Compile Include="Migrations\20181023181750_Localization.cs" />
+    <Compile Include="Migrations\20181023181750_Localization.designer.cs">
+      <DependentUpon>20181023181750_Localization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\LocalizationContextModelSnapshot.cs" />
     <Compile Include="Modeles\Acces.cs" />
     <Compile Include="Modeles\Cone.cs" />
     <Compile Include="Modeles\Cylindre.cs" />
@@ -75,6 +81,7 @@
     <Compile Include="Modeles\Forme.cs" />
     <Compile Include="Modeles\JsonObject\Quaternion.cs" />
     <Compile Include="Modeles\JsonObject\Vector.cs" />
+    <Compile Include="Localization\LocalizedMateriau.cs" />
     <Compile Include="Modeles\Materiau.cs" />
     <Compile Include="Modeles\JsonObject\Point.cs" />
     <Compile Include="Modeles\PrismeRectangulaire.cs" />

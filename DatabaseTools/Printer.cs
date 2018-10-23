@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 
 namespace Hymperia.DatabaseTools
@@ -16,6 +17,14 @@ namespace Hymperia.DatabaseTools
       foreach (var item in data)
       {
         Console.WriteLine(item);
+      }
+    }
+
+    public static void PrintLocalizedMateriau(IEnumerable<Tuple<Materiau, string>> data)
+    {
+      foreach (var (item, nom) in data)
+      {
+        Console.WriteLine($"{ item.Id} - { nom }: { item.Prix }");
       }
     }
   }
