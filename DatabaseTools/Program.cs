@@ -6,7 +6,7 @@ namespace Hymperia.DatabaseTools
 {
   internal static class Program
   {
-    private const string Culture = "fr-CA";
+    private const string Culture = "en-US";
 
     public static int Main(string[] args)
     {

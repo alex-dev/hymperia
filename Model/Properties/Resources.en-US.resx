@@ -117,31 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccesToString" xml:space="preserve">
-    <value>{username} - {project}: {acces}</value>
-  </data>
   <data name="Cone" xml:space="preserve">
     <value>Cone</value>
   </data>
   <data name="Cylinder" xml:space="preserve">
-    <value>Cylindre</value>
+    <value>Cylinder</value>
   </data>
   <data name="Ellipsoid" xml:space="preserve">
-    <value>Ellipsoïde</value>
-  </data>
-  <data name="FormeToString" xml:space="preserve">
-    <value>{type} #{id}: {origin} - {rotation}</value>
-  </data>
-  <data name="MateriauToString" xml:space="preserve">
-    <value>{id} - {nom}: {prix:C}</value>
+    <value>Ellipsoid</value>
   </data>
   <data name="Prism" xml:space="preserve">
-    <value>Prisme rectangulaire</value>
-  </data>
-  <data name="ProjetToString" xml:space="preserve">
-    <value>{id} - {nom}</value>
-  </data>
-  <data name="UtilisateurToString" xml:space="preserve">
-    <value>{id} - {nom}</value>
+    <value>Rectangular prism</value>
   </data>
 </root>

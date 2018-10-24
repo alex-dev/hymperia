@@ -92,6 +92,9 @@
   <ItemGroup>
     <None Include="Properties\app.config" />
     <None Include="Properties\packages.config" />
+    <EmbeddedResource Include="Properties\Resources.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
