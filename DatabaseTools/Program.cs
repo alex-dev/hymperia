@@ -1,12 +1,18 @@
-﻿using Microsoft.Extensions.CommandLineUtils;
+﻿using System.Globalization;
+using System.Threading;
+using Microsoft.Extensions.CommandLineUtils;
 
 namespace Hymperia.DatabaseTools
 {
   internal static class Program
   {
+    private const string Culture = "fr-CA";
+
     public static int Main(string[] args)
     {
+      SetAppCulture(CultureInfo.CreateSpecificCulture(Culture));
       var app = CreateApp();
+
       try
       {
         return app.Execute(args);
@@ -16,6 +22,12 @@ namespace Hymperia.DatabaseTools
         app.ShowHelp();
         return 0;
       }
+    }
+
+    private static void SetAppCulture(CultureInfo culture)
+    {
+      Thread.CurrentThread.CurrentCulture = culture;
+      Thread.CurrentThread.CurrentUICulture = culture;
     }
 
     private static CommandLineApplication CreateApp()

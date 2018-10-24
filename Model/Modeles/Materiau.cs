@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Windows.Media;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -91,7 +92,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => $"{ Id } - { Nom }: { Prix }";
+    public override string ToString() => Resources.MateriauToString(Id, Nom, Prix);
 
     #endregion
   }

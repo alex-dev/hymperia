@@ -175,7 +175,9 @@
     <Compile Include="Query.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="connections.config" />
+    <None Include="connections.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\app.config" />
     <None Include="Properties\packages.config" />
   </ItemGroup>

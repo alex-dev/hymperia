@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -81,7 +82,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => $"{ Id } - { Nom }";
+    public override string ToString() => Resources.ProjetToString(Id, Nom);
 
     #endregion
   }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hymperia.Model.Modeles.JsonObject;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -40,7 +41,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => $"Ellipsoïde { Id }: { Origine } - { Materiau }";
+    public override string ToString() => ResourcesExtension.EllipsoidToString(Id, Origine, Rotation);
 
     #endregion
   }

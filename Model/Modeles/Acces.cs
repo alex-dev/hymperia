@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -60,7 +61,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => $"{ Utilisateur.Nom } - { Projet.Nom }: { DroitDAcces }";
+    public override string ToString() => Resources.AccesToString(Utilisateur.Nom, Projet.Nom, DroitDAcces);
 
     #endregion
   }
