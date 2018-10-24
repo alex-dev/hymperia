@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hymperia.Model.Migrations
 {
-    /// <summary>Initialiseur de la base de données.</summary>
-    internal sealed class Initializer
+  /// <summary>Initialiseur de la base de données.</summary>
+  internal sealed class Initializer
   {
     [NotNull]
     private readonly Random Random = new Random();
