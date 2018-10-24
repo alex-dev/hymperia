@@ -39,6 +39,7 @@ namespace Hymperia.DatabaseTools
     private static CommandLineApplication CreateApp()
     {
       var app = new CommandLineApplication(true);
+      Culture = app.Option("-c|--culture", "Détermine la culture à utiliser pour l'affichage du résultat. Supporte : fr-CA, en-US.", CommandOptionType.SingleValue);
       app.HelpOption("-h|--help");
       app.Command("deployer", Migrate, true);
       app.Command("materiaux", Materiaux, true);
@@ -72,7 +73,6 @@ namespace Hymperia.DatabaseTools
     private static void Materiaux(CommandLineApplication command)
     {
       var option = command.Option("-m|--migration", "Réinitialise la base de données.", CommandOptionType.NoValue);
-      var localize = command.Option("-l|--localize", $"Localise les valeurs selon la base de données de localisation.", CommandOptionType.SingleValue);
       option.ShowInHelpText = true;
       command.Description = $"Retourne les objets de la table 'Materiaux' la base de donnée ciblée par la connection { MainConfiguration } du fichier connections.config.";
       command.ShowInHelpText = true;
@@ -80,20 +80,16 @@ namespace Hymperia.DatabaseTools
 
       command.OnExecute(async () =>
       {
+        SetAppCulture(Culture.HasValue() ? Culture.Value() : "fr-CA");
+        var key = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
         await Deploy.Migrate(option.HasValue());
         var materiaux = await Query.QueryMateriaux();
 
-        if (localize.HasValue())
-        {
-          Printer.PrintLocalizedMateriau(from materiau in materiaux
-                                         join local in await Query.QueryLocalizedMateriaux(localize.Value())
-                                           on materiau.Nom equals local.StringKey
-                                         select Tuple.Create(materiau, local.Nom));
-        }
-        else
-        {
-          Printer.Print(materiaux);
-        }
+        Printer.PrintLocalizedMateriau(from materiau in materiaux
+                                       join local in await Query.QueryLocalizedMateriaux(key)
+                                         on materiau.Nom equals local.StringKey
+                                       select Tuple.Create(materiau, local.Nom));
 
         return 0;
       });

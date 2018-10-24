@@ -29,14 +29,14 @@ namespace Hymperia.Model.Migrations
         new string[] { "Id", "StringKey", "CultureKey", "Nom" },
         new object[,]
         {
-                { 1, "Bois", "fr_CA", "Bois" },
-                { 2, "Acier", "fr_CA", "Acier" },
-                { 3, "Cuivre", "fr_CA", "Cuivre" },
-                { 4, "Or", "fr_CA", "Or" },
-                { 5, "Bois", "en_US", "Wood" },
-                { 6, "Acier", "en_US", "Steel" },
-                { 7, "Cuivre", "en_US", "Copper" },
-                { 8, "Or", "en_US", "Gold" }
+                { 1, "Bois", "fr", "Bois" },
+                { 2, "Acier", "fr", "Acier" },
+                { 3, "Cuivre", "fr", "Cuivre" },
+                { 4, "Or", "fr", "Or" },
+                { 5, "Bois", "en", "Wood" },
+                { 6, "Acier", "en", "Steel" },
+                { 7, "Cuivre", "en", "Copper" },
+                { 8, "Or", "en", "Gold" }
         });
     }
 
