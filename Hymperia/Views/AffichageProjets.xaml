@@ -12,10 +12,11 @@
             <i:InvokeCommandAction Command="{Binding NavigateToProjet}"
                 CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
           </i:EventTrigger>
-        </i:Interaction.Triggers>-->
-        <!--<ListBox.InputBindings>
-          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
-        </ListBox.InputBindings>-->
+        </i:Interaction.Triggers> -->
+        <ListBox.InputBindings>
+          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}"
+              CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
+        </ListBox.InputBindings>
 
         <!--<ListBox.ItemTemplate>
           <DataTemplate>
@@ -27,6 +28,7 @@
         </ListBox.ItemTemplate>-->
       </ListBox>
     </StackPanel>
+    <ListBox ItemsSource="{Binding SelectedItems}" />
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
       <Button x:Name="btnSuppression" Content="Effacer projet" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
