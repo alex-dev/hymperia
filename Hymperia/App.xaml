@@ -8,6 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/RadioButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/MaterialsSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValueConverters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/ListBoxProjets.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/FormesSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/Images.xaml" />
       </ResourceDictionary.MergedDictionaries>
