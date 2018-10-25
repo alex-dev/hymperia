@@ -43,11 +43,5 @@ namespace Hymperia.Facade.Views
     {
 
     }
-
-    /*private void ListBoxItemSelected(object sender, RoutedEventArgs e)
-    {
-      ListBoxItem item = e.Source as ListBoxItem;
-      object dc = item.DataContext;
-    }*/
   }
 }
