@@ -5,8 +5,8 @@
     xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Horizontal">
     <StackPanel Orientation="Vertical">
-      <ListBox x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
-          SelectionMode="Extended">
+      <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
+          SelectionMode="Multiple">
         <!--<i:Interaction.Triggers>
           <i:EventTrigger EventName="SelectionChanged">
             <i:InvokeCommandAction Command="{Binding NavigateToProjet}"
