@@ -64,7 +64,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => ResourcesExtension.ConeToString(Id, Origine, Rotation);
+    public override string ToString() => Resources.ConeToString(Id, Origine, Rotation);
 
     #endregion
   }

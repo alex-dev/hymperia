@@ -82,6 +82,172 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BaseClasses\BulkObservableCollection.cs" />
+    <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
+    <Compile Include="BaseClasses\SelectionMode.cs" />
+    <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
+    <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
+    <Compile Include="Converters\AggregatorConverters\BaseAggregatorConverter.cs" />
+    <Compile Include="Converters\AggregatorConverters\MultiValueConverterData.cs" />
+    <Compile Include="Converters\AggregatorConverters\ValueConverterData.cs" />
+    <Compile Include="Converters\ManipulatorRadiusConverter.cs" />
+    <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
+    <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
+    <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
+    <Compile Include="DependencyObjects\SelectionViewport.cs" />
+    <Compile Include="DependencyObjects\Viewport.cs" />
+    <Compile Include="EventDelegateExtension.cs" />
+    <Compile Include="EventHandlerExtension.cs" />
+    <Compile Include="GeometryExtension.cs" />
+    <Compile Include="LINQExtension.cs" />
+    <Compile Include="ModelWrappers\ConeWrapper.cs" />
+    <Compile Include="ModelWrappers\CylindreWrapper.cs" />
+    <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
+    <Compile Include="ModelWrappers\FormeWrapper.cs" />
+    <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
+    <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
+    <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
+    <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
+    <Compile Include="Services\ContextFactory.cs" />
+    <Compile Include="Services\ConvertisseurFormes.cs" />
+    <Compile Include="Services\ConvertisseurWrappers.cs" />
+    <Compile Include="Converters\Point3DToPointConverter.cs" />
+    <Compile Include="Converters\TransformConverter.cs" />
+    <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
+    <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
+    <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
+    <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
+      <DependentUpon>FormesProperties.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
+      <DependentUpon>FormesSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
+      <DependentUpon>MateriauxSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PrixAnalyseFormes.xaml.cs">
+      <DependentUpon>PrixAnalyseFormes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
+      <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\SelectionMode.xaml.cs">
+      <DependentUpon>SelectionMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\Viewport.xaml.cs">
+      <DependentUpon>Viewport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\Editeur.xaml.cs">
+      <DependentUpon>Editeur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FenetrePrincipale.xaml.cs">
+      <DependentUpon>FenetrePrincipale.xaml</DependentUpon>
+    </Compile>
+	<Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.Designer.tt</DependentUpon>
+    </Compile>
+	<Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="WPFResources\ValueConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\FormesProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\FormesSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\MateriauxSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PrixAnalyseFormes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PrixAnalyseMateriaux.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\SelectionMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\Viewport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\Editeur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FenetrePrincipale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\ListBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <None Include="connections.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\app.config" />
+    <None Include="Properties\packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Resources.Designer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cone.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cylindre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Ellipsoide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\PrismeRectangulaire.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -200,161 +366,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="BaseClasses\BulkObservableCollection.cs" />
-    <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
-    <Compile Include="BaseClasses\SelectionMode.cs" />
-    <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
-    <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
-    <Compile Include="Converters\AggregatorConverters\BaseAggregatorConverter.cs" />
-    <Compile Include="Converters\AggregatorConverters\MultiValueConverterData.cs" />
-    <Compile Include="Converters\AggregatorConverters\ValueConverterData.cs" />
-    <Compile Include="Converters\ManipulatorRadiusConverter.cs" />
-    <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
-    <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
-    <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
-    <Compile Include="DependencyObjects\SelectionViewport.cs" />
-    <Compile Include="DependencyObjects\Viewport.cs" />
-    <Compile Include="EventDelegateExtension.cs" />
-    <Compile Include="EventHandlerExtension.cs" />
-    <Compile Include="GeometryExtension.cs" />
-    <Compile Include="LINQExtension.cs" />
-    <Compile Include="ModelWrappers\ConeWrapper.cs" />
-    <Compile Include="ModelWrappers\CylindreWrapper.cs" />
-    <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
-    <Compile Include="ModelWrappers\FormeWrapper.cs" />
-    <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
-    <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
-    <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
-    <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
-    <Compile Include="Services\ContextFactory.cs" />
-    <Compile Include="Services\ConvertisseurFormes.cs" />
-    <Compile Include="Services\ConvertisseurWrappers.cs" />
-    <Compile Include="Converters\Point3DToPointConverter.cs" />
-    <Compile Include="Converters\TransformConverter.cs" />
-    <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
-    <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
-    <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
-      <DependentUpon>FormesProperties.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
-      <DependentUpon>FormesSelection.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
-      <DependentUpon>MateriauxSelection.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\PrixAnalyseFormes.xaml.cs">
-      <DependentUpon>PrixAnalyseFormes.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
-      <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\SelectionMode.xaml.cs">
-      <DependentUpon>SelectionMode.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\Viewport.xaml.cs">
-      <DependentUpon>Viewport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\Editeur.xaml.cs">
-      <DependentUpon>Editeur.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
-    <Compile Include="Views\FenetrePrincipale.xaml.cs">
-      <DependentUpon>FenetrePrincipale.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="connections.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Properties\packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="WPFResources\ValueConverters.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\FormesProperties.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\FormesSelection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\MateriauxSelection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\PrixAnalyseFormes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\PrixAnalyseMateriaux.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\SelectionMode.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\Viewport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\Editeur.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FenetrePrincipale.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WPFResources\ListBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 et x64%29</ProductName>
@@ -381,19 +392,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Cone.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Cylindre.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Ellipsoide.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\PrismeRectangulaire.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace Hymperia.Model.Properties
 {
   /// <summary>This class wraps <see cref="ResourceManager" /> to ease usage.</summary>
-  public static class Resources
+  public static partial class Resources
   {
     private static readonly ResourceManager manager =
       new ResourceManager("Hymperia.Model.Properties.Resources", typeof(Resources).GetTypeInfo().Assembly);
@@ -23,17 +23,17 @@ namespace Hymperia.Model.Properties
         username, project, acces);
 
     /// <summary>
-    ///   cone
+    ///   Cone
     /// </summary>
     public static string Cone => GetString("Cone");
 
     /// <summary>
-    ///   cylindre
+    ///   Cylindre
     /// </summary>
     public static string Cylinder => GetString("Cylinder");
 
     /// <summary>
-    ///   ellipsoïde
+    ///   Ellipsoïde
     /// </summary>
     public static string Ellipsoid => GetString("Ellipsoid");
 
@@ -54,7 +54,7 @@ namespace Hymperia.Model.Properties
         id, nom, prix);
 
     /// <summary>
-    ///   prisme rectangulaire
+    ///   Prisme rectangulaire
     /// </summary>
     public static string Prism => GetString("Prism");
 

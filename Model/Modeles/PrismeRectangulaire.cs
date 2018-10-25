@@ -38,7 +38,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => ResourcesExtension.PrismToString(Id, Origine, Rotation);
+    public override string ToString() => Resources.PrismToString(Id, Origine, Rotation);
 
     #endregion
   }

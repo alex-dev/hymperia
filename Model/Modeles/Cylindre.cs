@@ -42,7 +42,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => ResourcesExtension.CylinderToString(Id, Origine, Rotation);
+    public override string ToString() => Resources.CylinderToString(Id, Origine, Rotation);
 
     #endregion
   }

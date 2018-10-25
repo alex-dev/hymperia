@@ -41,7 +41,7 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-    public override string ToString() => ResourcesExtension.EllipsoidToString(Id, Origine, Rotation);
+    public override string ToString() => Resources.EllipsoidToString(Id, Origine, Rotation);
 
     #endregion
   }
