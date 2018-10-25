@@ -17,10 +17,15 @@ namespace Hymperia.Model.Modeles
     /// <summary>La clé primaire du projet.</summary>
     public int Id { get; private set; }
 
+    /// <summary>Les acces du projet.</summary>
+    /// <remarks>Modifiable, mais privé.</remarks>
+    [ItemNotNull]
+    internal List<Acces> _Acces { get; } = new List<Acces> { };
+
     /// <summary>Les formes dans le projet.</summary>
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
-    internal List<Forme> _Formes { get; private set; } = new List<Forme> { };
+    internal List<Forme> _Formes { get; } = new List<Forme> { };
 
     /// <summary>Le nom du projet.</summary>
     /// <remarks>Alternate Key</remarks>
@@ -69,6 +74,14 @@ namespace Hymperia.Model.Modeles
     #endregion
 
     #region Methods
+
+    internal void Supprimer()
+    {
+      foreach (var acces in _Acces)
+      {
+        acces.Utilisateur.RecevoirProjet(acces.Projet);
+      }
+    }
 
     /// <summary></summary>
     /// <param name="forme"></param>

@@ -16,14 +16,20 @@
         <!--<ListBox.InputBindings>
           <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
         </ListBox.InputBindings>-->
+
+        <!--<ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <CheckBox />
+              <TextBlock ></TextBlock>
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>-->
       </ListBox>
     </StackPanel>
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-      <Button Content="Effacer projet" />
-      <StackPanel Orientation="Horizontal">
-        <Label Content="Supprimé actif : "></Label>
-        <TextBlock Text="Non"></TextBlock>
-      </StackPanel>
+      <Button x:Name="btnSuppression" Content="Effacer projet" Command="{Binding SupprimerProjet}"
+          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
     </StackPanel>
   </StackPanel>
 </UserControl>

@@ -1,10 +1,11 @@
 ﻿/*
  * Auteur : Antoine Mailhot 
  * Date de création : 2018-10-19
-*/ 
+*/
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -91,6 +92,9 @@ namespace Hymperia.Facade.ViewModels
       ContextFactory = factory;
       Manager = manager;
       NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
+      SupprimerProjet = new DelegateCommand<IList>(
+        projets => Loading = _SupprimerProjets(projets?.Cast<Projet>()),
+        projets => CanSupprimerProjets(projets?.Cast<Projet>()));
     }
 
     #endregion
@@ -102,6 +106,28 @@ namespace Hymperia.Facade.ViewModels
       {
         { NavigationParameterKeys.Projet, projet }
       });
+
+    #endregion
+
+    #region Command SupprimerProjet
+    private async Task _SupprimerProjets(IEnumerable<Projet> projets)
+    {
+      await (Loading ?? Task.CompletedTask);
+
+      using (var context = ContextFactory.GetContext())
+      {
+        context.Attach(Utilisateur);
+
+        foreach (var projet in projets)
+        {
+          Utilisateur.RetirerProjet(projet);
+        }
+
+        await context.SaveChangesAsync();
+      }
+    }
+
+    private bool CanSupprimerProjets(IEnumerable<Projet> projets) => projets is IEnumerable<Projet> && projets.Count() > 0;
 
     #endregion
 
@@ -118,7 +144,6 @@ namespace Hymperia.Facade.ViewModels
         using (var context = ContextFactory.GetContext())
         {
           context.Attach(_utilisateur);
-
           await context.LoadProjetsAsync(_utilisateur);
         }
 
