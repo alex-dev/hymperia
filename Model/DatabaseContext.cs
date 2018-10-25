@@ -154,7 +154,7 @@ namespace Hymperia.Model
       builder.Entity<Projet>().ToTable("Projets");
       builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
       builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne()
-        .HasForeignKey("IdProjet");
+        .HasForeignKey("IdProjet").OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<Acces>().ToTable("Acces");
       builder.Entity<Acces>().Property<int>("IdProjet");
@@ -162,10 +162,10 @@ namespace Hymperia.Model
       builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
         .HasConversion<string>();
       builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany()
-        .HasForeignKey("IdProjet");
+        .HasForeignKey("IdProjet").OnDelete(DeleteBehavior.Cascade);
       builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
         .HasForeignKey("IdUtilisateur");
-      builder.Entity<Acces>().HasKey("IdProjet", "IdUtilisateur");
+      builder.Entity<Acces>().HasAlternateKey("IdProjet", "IdUtilisateur");
 
       base.OnModelCreating(builder);
     }

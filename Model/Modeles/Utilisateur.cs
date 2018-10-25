@@ -82,19 +82,17 @@ namespace Hymperia.Model.Modeles
     {
       var acces = Acces.SingleOrDefault(a => a.Projet == projet);
       _Acces.Remove(acces);
-      projet._Acces.Remove(acces);
-
-      if (acces is Acces && acces.EstPropriétaire)
-      {
-        projet.Supprimer();
-      }
     }
 
     /// <summary></summary>
     /// <param name="projet"></param>
     /// <returns></returns>
     [Pure]
-    public bool EstPropietaireDe([NotNull] Projet projet) => throw new System.NotImplementedException();
+    public bool EstPropietaireDe([NotNull] Projet projet)
+    {
+      var acces = Acces.FirstOrDefault(_acces => _acces.Projet.Id == projet.Id);
+      return acces is Acces && acces.EstPropriétaire;
+    }
 
     /// <summary></summary>
     /// <param name="projet"></param>
