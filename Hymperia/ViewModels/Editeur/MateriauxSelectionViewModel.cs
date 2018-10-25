@@ -31,7 +31,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public ICommand RefreshItems { get; private set; }
+    public ICommand RefreshItems { get; }
 
     #endregion
 

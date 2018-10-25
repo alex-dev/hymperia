@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
@@ -86,10 +87,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public ICommand AjouterForme { get; private set; }
-    public ICommand SupprimerForme { get; private set; }
-    public ICommand Sauvegarder { get; private set; }
-    public ICommand Revert { get; private set; }
+    public ICommand AjouterForme { get; }
+    public ICommand SupprimerForme { get; }
+    public ICommand Sauvegarder { get; }
+    public ICommand Revert { get; }
 
     #endregion
 
@@ -159,7 +160,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       else if (SelectedForme == typeof(Cylindre))
         return new Cylindre(SelectedMateriau) { Origine = point };
       else
-        throw new InvalidOperationException("Seems like something broke. Blame the devs.");
+        throw new InvalidOperationException(Resources.ImpossibleInstantiation(SelectedForme));
     }
 
     private void _AjouterForme(Point point)
@@ -244,7 +245,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task QueryProjet(Projet _projet, Action onChanged)
     {
-      SetProperty(ref projet, null, onChanged, "Projet");
+      SetProperty(ref projet, null, onChanged, nameof(Projet));
 
       if (_projet is Projet)
       {
@@ -257,7 +258,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
           await context.LoadFormesAsync(_projet);
         }
 
-        SetProperty(ref projet, _projet, onChanged, "Projet");
+        SetProperty(ref projet, _projet, onChanged, nameof(Projet));
       }
     }
 

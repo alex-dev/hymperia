@@ -153,13 +153,14 @@
     <Compile Include="Views\FenetrePrincipale.xaml.cs">
       <DependentUpon>FenetrePrincipale.xaml</DependentUpon>
     </Compile>
-	<Compile Include="Properties\AssemblyInfo.cs" />
-	<Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.Designer.tt</DependentUpon>
     </Compile>
-	<Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -218,6 +219,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.en-US.resx" />
     <EmbeddedResource Include="Properties\Resources.resx" />
     <None Include="connections.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

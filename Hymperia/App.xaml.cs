@@ -38,7 +38,8 @@ namespace Hymperia.Facade
     [Obsolete("va être déplacer vers un service prochainement pour i18n.")]
     private CultureInfo CreateAppCulture()
     {
-      var culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.LCID);
+      //var culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.LCID);
+      var culture = CultureInfo.CreateSpecificCulture("en-US");
       culture.NumberFormat.CurrencySymbol = "$";
       return culture;
     }

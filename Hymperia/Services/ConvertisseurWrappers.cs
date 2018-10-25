@@ -5,6 +5,7 @@ using HelixToolkit.Wpf;
 using Hymperia.Facade.ModelWrappers;
 using JetBrains.Annotations;
 using Hymperia.Facade.Converters;
+using Hymperia.Facade.Properties;
 
 namespace Hymperia.Facade.Services
 {
@@ -34,7 +35,7 @@ namespace Hymperia.Facade.Services
         case PrismeRectangulaireWrapper prisme:
           return Convertir(prisme);
         default:
-          throw new ArgumentException($"Unknown child of { nameof(FormeWrapper) }.", nameof(forme));
+          throw new ArgumentException(Resources.UnknownChild(nameof(FormeWrapper)), nameof(forme));
       }
     }
 
@@ -68,7 +69,7 @@ namespace Hymperia.Facade.Services
         case BoxVisual3D prisme:
           return Lier(prisme, (PrismeRectangulaireWrapper)source);
         default:
-          throw new ArgumentException($"Unknown child of { nameof(MeshElement3D) }.", nameof(forme));
+          throw new ArgumentException(Resources.UnknownChild(nameof(MeshElement3D)), nameof(forme));
       }
     }
 

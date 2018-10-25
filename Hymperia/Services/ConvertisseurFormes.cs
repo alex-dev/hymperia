@@ -1,5 +1,6 @@
 ﻿using System;
 using Hymperia.Facade.ModelWrappers;
+using Hymperia.Facade.Properties;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 
@@ -25,7 +26,7 @@ namespace Hymperia.Facade.Services
         case PrismeRectangulaire prisme:
           return new PrismeRectangulaireWrapper(prisme);
         default:
-          throw new ArgumentException("Unknown child of Form.", nameof(forme));
+          throw new ArgumentException(Resources.UnknownChild(nameof(Forme)), nameof(forme));
       }
     }
   }

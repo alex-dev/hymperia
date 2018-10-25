@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
+using Hymperia.Facade.Properties;
 
 namespace Hymperia.Facade.Converters.AggregateConverters
 {
@@ -15,7 +16,7 @@ namespace Hymperia.Facade.Converters.AggregateConverters
 
     /// inheritdoc/>
     public object[] ConvertBack(object value, Type[] targets, object parameter = null, CultureInfo culture = default) =>
-      throw new NotImplementedException();
+      throw new NotImplementedException(Resources.DestructiveConversion);
 
     private object ChangeType(object value, Type target) => System.Convert.ChangeType(value, target);
   }

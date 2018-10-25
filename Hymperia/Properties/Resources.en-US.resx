@@ -118,36 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="And" xml:space="preserve">
-    <value>et</value>
+    <value>and</value>
   </data>
   <data name="CanOnlyConvertFrom" xml:space="preserve">
-    <value>Peut seulement convertir depuis {origins}.</value>
+    <value>Can only convert from {origins}.</value>
   </data>
   <data name="CanOnlyConvertTo" xml:space="preserve">
-    <value>Peut seulement convertir vers {targets}.</value>
+    <value>Can onyl convert to {targets}.</value>
   </data>
   <data name="DestructiveConversion" xml:space="preserve">
-    <value>Impossible d'inverser un processus détérioratif.</value>
+    <value>Destructive processes cannot be reversed.</value>
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
-    <value>N'as pas pu convertir {value} en {targets}.</value>
+    <value>Could not convert {value} to {targets}.</value>
   </data>
   <data name="ImpossibleInstantiation" xml:space="preserve">
-    <value>N'a pas pu instantier un {type}.</value>
+    <value>Could not instantiate a {type}.</value>
   </data>
   <data name="ManipulatorSupport" xml:space="preserve">
-    <value>Ce manipulateur ne supporte que les {visuals}.</value>
+    <value>This manipulator only supports {visuals}.</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Sauvegarder</value>
+    <value>Save</value>
   </data>
   <data name="UnknownChild" xml:space="preserve">
-    <value>Enfant inconnu de {parent}.</value>
+    <value>Unknown child of {parent}.</value>
   </data>
   <data name="ViewportManipulatorSupport" xml:space="preserve">
-    <value>Ce viewport ne support que les manipulateurs de {types}.</value>
+    <value>This viewport only supports {types} manipulators.</value>
   </data>
 </root>
