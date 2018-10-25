@@ -155,7 +155,7 @@ namespace Hymperia.Model
         .HasForeignKey("IdProjet").OnDelete(DeleteBehavior.Cascade);
       builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
         .HasForeignKey("IdUtilisateur");
-      builder.Entity<Acces>().HasKey("IdProjet", "IdUtilisateur");
+      builder.Entity<Acces>().HasAlternateKey("IdProjet", "IdUtilisateur");
 
       base.OnModelCreating(builder);
     }
