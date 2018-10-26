@@ -281,6 +281,15 @@
     <Compile Include="Views\Editeur\Editeur.xaml.cs">
       <DependentUpon>Editeur.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AffichageProjets.xaml.cs">
+      <DependentUpon>AffichageProjets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
+      <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
     <Compile Include="Views\FenetrePrincipale.xaml.cs">
       <DependentUpon>FenetrePrincipale.xaml</DependentUpon>
     </Compile>
@@ -300,6 +309,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AffichageProjets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Popups\EntitySuppressionPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

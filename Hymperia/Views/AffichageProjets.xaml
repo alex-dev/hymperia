@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Horizontal">
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Horizontal">
       <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
           SelectionMode="Multiple">
         <!--<i:Interaction.Triggers>
