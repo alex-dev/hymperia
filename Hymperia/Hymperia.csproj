@@ -135,9 +135,6 @@
     <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
       <DependentUpon>MateriauxSelection.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PrixAnalyseFormes.xaml.cs">
-      <DependentUpon>PrixAnalyseFormes.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
       <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
     </Compile>
@@ -154,7 +151,7 @@
       <DependentUpon>FenetrePrincipale.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-	<Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Resources.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,10 +183,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Editeur\MateriauxSelection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Editeur\PrixAnalyseFormes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -391,6 +384,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{77e58132-639f-4902-bf07-0e57ba979cfc}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismExtension\PrismExtension.csproj">
+      <Project>{4c129296-e3d3-46f6-a179-b94e3404db0a}</Project>
+      <Name>PrismExtension</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

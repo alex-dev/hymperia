@@ -43,7 +43,7 @@ namespace Hymperia.Facade.Views.Editeur
       manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
       manager.RegisterViewWithRegion("FormesSelectionRegion", typeof(FormesSelection));
       manager.RegisterViewWithRegion("MateriauxSelectionRegion", typeof(MateriauxSelection));
-      manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(PrixAnalyseFormes));
+      manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(PrixAnalyseMateriaux));
       manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
       manager.RegisterViewWithRegion("SelectionModeRegion", typeof(SelectionMode));
     }

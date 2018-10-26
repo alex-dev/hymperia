@@ -30,6 +30,8 @@ namespace Hymperia.Facade
       var culture = CreateAppCulture();
       var language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
 
+      Thread.CurrentThread.CurrentCulture = culture;
+      Thread.CurrentThread.CurrentUICulture = culture;
       FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
       base.OnStartup(e);
     }
@@ -39,7 +41,7 @@ namespace Hymperia.Facade
     private CultureInfo CreateAppCulture()
     {
       //var culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.LCID);
-      var culture = CultureInfo.CreateSpecificCulture("en-US");
+      var culture = CultureInfo.CreateSpecificCulture("fr-FR");
       culture.NumberFormat.CurrencySymbol = "$";
       return culture;
     }

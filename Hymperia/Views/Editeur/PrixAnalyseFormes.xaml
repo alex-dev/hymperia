@@ -1,12 +1,13 @@
 ﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.PrixAnalyseFormes"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
+    xmlns:b="clr-namespace:Prism.Bindings" xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses"
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
   <DockPanel>
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
       <TextBlock Text="Prix total :" />
       <TextBlock Name="PrixTotal"
-          Text="{Binding Projet.Prix, StringFormat={}{0:c}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
+          Text="{b:CultureAwareBinding Projet.Prix, StringFormat={}{0:C}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
     </StackPanel>
     <ItemsControl Name="MateriauxPrix"
         ItemsSource="{Binding Projet.PrixFormes, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"

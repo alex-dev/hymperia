@@ -70,9 +70,39 @@ namespace Hymperia.Facade.Properties
         visuals);
 
     /// <summary>
+    ///   Matériau
+    /// </summary>
+    public static string Material => GetString("Material");
+
+    /// <summary>
+    ///   Prix du matériau
+    /// </summary>
+    public static string MaterialPrice => GetString("MaterialPrice");
+
+    /// <summary>
+    ///   Déplacement
+    /// </summary>
+    public static string Movement => GetString("Movement");
+
+    /// <summary>
+    ///   Prix
+    /// </summary>
+    public static string Price => GetString("Price");
+
+    /// <summary>
     ///   Sauvegarder
     /// </summary>
     public static string Save => GetString("Save");
+
+    /// <summary>
+    ///   Redimensionnement
+    /// </summary>
+    public static string Scaling => GetString("Scaling");
+
+    /// <summary>
+    ///   Prix Total
+    /// </summary>
+    public static string TotalPrice => GetString("TotalPrice");
 
     /// <summary>
     ///   Enfant inconnu de {parent}.
@@ -89,6 +119,11 @@ namespace Hymperia.Facade.Properties
       => string.Format(
         GetString("ViewportManipulatorSupport", nameof(types)),
         types);
+
+    /// <summary>
+    ///   Volume
+    /// </summary>
+    public static string Volume => GetString("Volume");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),

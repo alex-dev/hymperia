@@ -141,13 +141,34 @@
   <data name="ManipulatorSupport" xml:space="preserve">
     <value>Ce manipulateur ne supporte que les {visuals}.</value>
   </data>
+  <data name="Material" xml:space="preserve">
+    <value>Matériau</value>
+  </data>
+  <data name="MaterialPrice" xml:space="preserve">
+    <value>Prix du matériau</value>
+  </data>
+  <data name="Movement" xml:space="preserve">
+    <value>Déplacement</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Prix</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Sauvegarder</value>
+  </data>
+  <data name="Scaling" xml:space="preserve">
+    <value>Redimensionnement</value>
+  </data>
+  <data name="TotalPrice" xml:space="preserve">
+    <value>Prix Total</value>
   </data>
   <data name="UnknownChild" xml:space="preserve">
     <value>Enfant inconnu de {parent}.</value>
   </data>
   <data name="ViewportManipulatorSupport" xml:space="preserve">
     <value>Ce viewport ne support que les manipulateurs de {types}.</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
   </data>
 </root>
