@@ -39,6 +39,7 @@
       </ListBox>
     </StackPanel>
     <ListBox ItemsSource="{Binding SelectedItems}" />
+    <ListBox ItemsSource="{Binding SelectedItems, ElementName=ListBox}"/>
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
       <Button x:Name="btnSuppression" Content="Effacer projet" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
