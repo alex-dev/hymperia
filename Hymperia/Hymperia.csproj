@@ -81,6 +81,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo_Hymperia.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
@@ -164,6 +167,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -211,7 +215,7 @@
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
     <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
-	<Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
+    <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
@@ -319,6 +323,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPFResources\ListBoxProjets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFResources\ValueConverters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -404,6 +412,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Logo_Hymperia.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
