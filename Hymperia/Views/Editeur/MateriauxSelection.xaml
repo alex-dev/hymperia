@@ -31,8 +31,8 @@
             <RowDefinition Height="60" />
             <RowDefinition Height="20" />
           </Grid.RowDefinitions>
-          <TextBlock Style="{StaticResource MaterialTextStyle}" />
-          <Rectangle Style="{StaticResource MaterialRectangleStyle}" />
+          <TextBlock Style="{StaticResource MaterialTextStyle}" Text="{Binding Nom}" />
+          <Rectangle Style="{StaticResource MaterialRectangleStyle}" Fill="{Binding Fill}"/>
         </Grid>
       </DataTemplate>
     </ListBox.ItemTemplate>
