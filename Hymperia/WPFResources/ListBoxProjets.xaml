@@ -10,7 +10,7 @@
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="ListBoxItem">
+        <ControlTemplate TargetType="{x:Type ListBoxItem}">
           <DockPanel LastChildFill="True" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch"
               VerticalAlignment="Center">
             <CheckBox IsChecked="{TemplateBinding IsSelected}" Focusable="False" VerticalAlignment="Center"
@@ -20,7 +20,7 @@
                 ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
                 HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" IsHitTestVisible="False" />
+                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
           </DockPanel>
         </ControlTemplate>
       </Setter.Value>

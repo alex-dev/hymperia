@@ -1,7 +1,6 @@
-﻿<UserControl x:Class="Hymperia.Facade.Views.AffichageProjets"
+﻿<UserControl x:Class="Hymperia.Facade.Views.AffichageProjets" x:Name="View"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Horizontal">
     <StackPanel Orientation="Vertical">
@@ -13,10 +12,21 @@
                 CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
           </i:EventTrigger>
         </i:Interaction.Triggers> -->
-        <ListBox.InputBindings>
-          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}"
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding .}">
+              <TextBlock.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick"
+                    Command="{Binding DataContext.NavigateToProjet, ElementName=View}"
+                    CommandParameter="{Binding .}" />
+              </TextBlock.InputBindings>
+            </TextBlock>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+        <!--<ListBox.InputBindings>
+          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}" 
               CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
-        </ListBox.InputBindings>
+        </ListBox.InputBindings>-->
 
         <!--<ListBox.ItemTemplate>
           <DataTemplate>
