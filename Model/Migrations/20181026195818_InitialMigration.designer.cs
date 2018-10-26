@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hymperia.Model.Migrations
 {
   [DbContext(typeof(DatabaseContext))]
-  [Migration("20181025211842_InitialDatabase")]
-  partial class InitialDatabase
+  [Migration("20181026195818_InitialMigration")]
+  partial class InitialMigration
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
@@ -21,19 +21,14 @@ namespace Hymperia.Model.Migrations
 
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
           {
-            b.Property<int>("Id")
-                      .ValueGeneratedOnAdd();
-
-            b.Property<string>("DroitDAcces")
-                      .IsRequired();
-
             b.Property<int>("IdProjet");
 
             b.Property<int>("IdUtilisateur");
 
-            b.HasKey("Id");
+            b.Property<string>("DroitDAcces")
+                      .IsRequired();
 
-            b.HasAlternateKey("IdProjet", "IdUtilisateur");
+            b.HasKey("IdProjet", "IdUtilisateur");
 
             b.HasIndex("IdUtilisateur");
 
@@ -200,7 +195,7 @@ namespace Hymperia.Model.Migrations
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
           {
             b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
-                      .WithMany("_Acces")
+                      .WithMany()
                       .HasForeignKey("IdProjet")
                       .OnDelete(DeleteBehavior.Cascade);
 
@@ -219,7 +214,8 @@ namespace Hymperia.Model.Migrations
 
             b.HasOne("Hymperia.Model.Modeles.Projet")
                       .WithMany("_Formes")
-                      .HasForeignKey("IdProjet");
+                      .HasForeignKey("IdProjet")
+                      .OnDelete(DeleteBehavior.Cascade);
           });
 #pragma warning restore 612, 618
     }

@@ -10,9 +10,6 @@ namespace Hymperia.Model.Modeles
 
     #region Properties
 
-    /// <summary>La clé primaire de l'accès.</summary>
-    public int Id { get; private set; }
-
     /// <summary>Le projet protégé par ce droit d'accès.</summary>
     [NotNull]
     [Required]

@@ -19,19 +19,14 @@ namespace Hymperia.Model.Migrations
 
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
           {
-            b.Property<int>("Id")
-                      .ValueGeneratedOnAdd();
-
-            b.Property<string>("DroitDAcces")
-                      .IsRequired();
-
             b.Property<int>("IdProjet");
 
             b.Property<int>("IdUtilisateur");
 
-            b.HasKey("Id");
+            b.Property<string>("DroitDAcces")
+                      .IsRequired();
 
-            b.HasAlternateKey("IdProjet", "IdUtilisateur");
+            b.HasKey("IdProjet", "IdUtilisateur");
 
             b.HasIndex("IdUtilisateur");
 
@@ -198,7 +193,7 @@ namespace Hymperia.Model.Migrations
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
           {
             b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
-                      .WithMany("_Acces")
+                      .WithMany()
                       .HasForeignKey("IdProjet")
                       .OnDelete(DeleteBehavior.Cascade);
 

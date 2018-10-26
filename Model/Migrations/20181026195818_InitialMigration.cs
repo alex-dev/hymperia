@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hymperia.Model.Migrations
 {
-  public partial class InitialDatabase : Migration
+  public partial class InitialMigration : Migration
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
@@ -102,23 +102,20 @@ namespace Hymperia.Model.Migrations
                       column: x => x.IdProjet,
                       principalTable: "Projets",
                       principalColumn: "Id",
-                      onDelete: ReferentialAction.Restrict);
+                      onDelete: ReferentialAction.Cascade);
           });
 
       migrationBuilder.CreateTable(
           name: "Acces",
           columns: table => new
           {
-            Id = table.Column<int>(nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             IdProjet = table.Column<int>(nullable: false),
             IdUtilisateur = table.Column<int>(nullable: false),
             DroitDAcces = table.Column<string>(nullable: false)
           },
           constraints: table =>
           {
-            table.PrimaryKey("PK_Acces", x => x.Id);
-            table.UniqueConstraint("AK_Acces_IdProjet_IdUtilisateur", x => new { x.IdProjet, x.IdUtilisateur });
+            table.PrimaryKey("PK_Acces", x => new { x.IdProjet, x.IdUtilisateur });
             table.ForeignKey(
                       name: "FK_Acces_Projets_IdProjet",
                       column: x => x.IdProjet,
@@ -149,15 +146,15 @@ namespace Hymperia.Model.Migrations
           column: "IdProjet");
 
       migrationBuilder.InsertData(
-        "Materiaux",
-        new string[] { "Id", "Nom", "Prix", "R", "G", "B", "A" },
-        new object[,]
-        {
-                { 1, "Bois", 10.55, wood.R, wood.G, wood.B, wood.A },
-                { 2, "Acier", 50.55, steel.R, steel.G, steel.B, steel.A },
-                { 3, "Cuivre", 505.53, copper.R, copper.G, copper.B, copper.A },
-                { 4, "Or", 10485.68, gold.R, gold.G, gold.B, gold.A }
-        });
+          "Materiaux",
+          new string[] { "Id", "Nom", "Prix", "R", "G", "B", "A" },
+          new object[,]
+          {
+            { 1, "Bois", 10.55, wood.R, wood.G, wood.B, wood.A },
+            { 2, "Acier", 50.55, steel.R, steel.G, steel.B, steel.A },
+            { 3, "Cuivre", 505.53, copper.R, copper.G, copper.B, copper.A },
+            { 4, "Or", 10485.68, gold.R, gold.G, gold.B, gold.A }
+          });
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
