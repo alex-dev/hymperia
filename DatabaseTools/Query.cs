@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hymperia.Model;
-using Hymperia.Model.Localization;
+﻿using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hymperia.DatabaseTools
 {
-  internal static class Query
+    internal static class Query
   {
     [NotNull]
     [ItemNotNull]
@@ -38,16 +36,6 @@ namespace Hymperia.DatabaseTools
       using (var context = new DatabaseContext())
       {
         return await context.Utilisateurs.IncludeAcces().ToListAsync();
-      }
-    }
-
-    [NotNull]
-    [ItemNotNull]
-    public static async Task<IEnumerable<LocalizedMateriau>> QueryLocalizedMateriaux(string key)
-    {
-      using (var context = new LocalizationContext())
-      {
-        return await context.Materiaux.Where(materiau => materiau.CultureKey == key).ToListAsync();
       }
     }
   }

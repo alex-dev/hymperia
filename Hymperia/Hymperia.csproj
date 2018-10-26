@@ -217,6 +217,7 @@
     <None Include="connections.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\app.config" />
     <None Include="Properties\packages.config" />
     <None Include="Properties\Settings.settings">
