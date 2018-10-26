@@ -81,21 +81,16 @@ namespace Hymperia.Model.Migrations
     [ItemNotNull]
     private IEnumerable<Acces> InitializeAcces([NotNull][ItemNotNull] Utilisateur[] utilisateurs, [NotNull][ItemNotNull] Projet[] projets)
     {
-      var array = new Acces.Droit?[] { null, Acces.Droit.Lecture, Acces.Droit.LectureEcriture };
+      IEnumerable<Acces> Generate()
+      {
+        yield return new Acces(projets[0], utilisateurs[1], Acces.Droit.Possession);
+        yield return new Acces(projets[1], utilisateurs[1], Acces.Droit.LectureEcriture);
+        yield return new Acces(projets[1], utilisateurs[2], Acces.Droit.Possession);
+      }
 
-      for (int i = 0; i < projets.Length; ++i)
-        for (int j = 0; j < utilisateurs.Length; ++j)
-        {
-          var droit = i == j ? Acces.Droit.Possession : array[Random.Next(array.Length)];
-
-          if (droit is Acces.Droit _droit)
-          {
-            var acces = new Acces(projets[i], utilisateurs[j], _droit);
-            utilisateurs[j]._Acces.Add(acces);
-
-            yield return acces;
-          }
-        }
+      foreach (var acces in Generate())
+        acces.Utilisateur._Acces.Add(acces);
+        yield return acces;
     }
 
     [NotNull]
@@ -122,7 +117,6 @@ namespace Hymperia.Model.Migrations
     {
       yield return InitializeFormes(materiaux, new Projet("Projet 1"));
       yield return InitializeFormes(materiaux, new Projet("Projet 2"));
-      yield return InitializeFormes(materiaux, new Projet("Projet 3"));
     }
 
     [NotNull]

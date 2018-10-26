@@ -64,18 +64,16 @@
     <Compile Include="Identity\LocalizedIdentityEqualityComparer.cs" />
     <Compile Include="DatabaseResources\ResourceManager.cs" />
     <Compile Include="DoubleExtension.cs" />
-<<<<<<< HEAD
     <Compile Include="Identity\IIdentity.cs" />
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="Identity\ILocalizedIdentity.cs" />
     <Compile Include="Migrations\20181027032045_Initial.cs" />
     <Compile Include="Migrations\20181027032045_Initial.designer.cs">
       <DependentUpon>20181027032045_Initial.cs</DependentUpon>
-=======
     <Compile Include="IIdentity.cs" />
-    <Compile Include="Migrations\20181025211842_InitialDatabase.cs" />
-    <Compile Include="Migrations\20181025211842_InitialDatabase.designer.cs">
-      <DependentUpon>20181025211842_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\20181026195818_InitialMigration.cs" />
+    <Compile Include="Migrations\20181026195818_InitialMigration.designer.cs">
+      <DependentUpon>20181026195818_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\20181025220832_Cascade.cs" />
     <Compile Include="Migrations\20181025220832_Cascade.designer.cs">
