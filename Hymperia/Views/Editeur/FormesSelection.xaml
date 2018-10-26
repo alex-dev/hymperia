@@ -27,7 +27,6 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="15" />
           </Grid.RowDefinitions>
-          <TextBlock Style="{StaticResource FormeTextStyle}" Text="{Binding Key.Nom}" />
           <Image Style="{StaticResource FormeImageStyle}" do:ImageHelper.SourceResourceKey="{Binding Value}" />
         </Grid>
       </DataTemplate>
