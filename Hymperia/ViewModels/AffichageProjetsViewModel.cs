@@ -1,10 +1,11 @@
 ﻿/*
  * Auteur : Antoine Mailhot 
  * Date de création : 2018-10-19
-*/ 
+*/
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -86,11 +87,14 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructors
 
-    public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
+    public AffichageProjetsViewModel([NotNull] DatabaseContext context, [NotNull] IRegionManager manager)
     {
-      ContextFactory = factory;
+      Context = context;
       Manager = manager;
       NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
+      SupprimerProjet = new DelegateCommand<IList>(
+        projets => Loading = _SupprimerProjets(projets?.Cast<Projet>()),
+        projets => CanSupprimerProjets(projets?.Cast<Projet>()));
     }
 
     #endregion
@@ -105,6 +109,33 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
+    #region Command SupprimerProjet
+    private async Task _SupprimerProjets(IEnumerable<Projet> projets)
+    {
+      await (Loading ?? Task.CompletedTask);
+
+      foreach (var projet in projets)
+      {
+        if (Utilisateur.EstPropietaireDe(projet))
+        {
+          Context.Remove(projet);
+        }
+        else
+        {
+          Context.Remove(Utilisateur.Acces.First(acces => acces.Projet.Id == projet.Id));
+        }
+
+        Utilisateur.RetirerProjet(projet);
+      }
+
+      Projets.RemoveRange(projets);
+      await Context.SaveChangesAsync();
+    }
+
+    private bool CanSupprimerProjets(IEnumerable<Projet> projets) => projets is IEnumerable<Projet> && projets.Count() > 0;
+
+    #endregion
+
     #region Queries
 
     private async Task QueryUtilisateur(Utilisateur _utilisateur, Action onChanged)
@@ -115,12 +146,8 @@ namespace Hymperia.Facade.ViewModels
       {
         await (Loading ?? Task.CompletedTask);
 
-        using (var context = ContextFactory.GetContext())
-        {
-          context.Attach(_utilisateur);
-
-          await context.LoadProjetsAsync(_utilisateur);
-        }
+        Context.Attach(_utilisateur);
+        await Context.LoadProjetsAsync(_utilisateur);
 
         SetProperty(ref utilisateur, _utilisateur, onChanged, nameof(Utilisateur));
       }
@@ -139,7 +166,7 @@ namespace Hymperia.Facade.ViewModels
     #region Services
 
     [NotNull]
-    private readonly ContextFactory ContextFactory;
+    private readonly DatabaseContext Context;
     [NotNull]
     private readonly IRegionManager Manager;
 

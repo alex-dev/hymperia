@@ -4,7 +4,7 @@
     prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Horizontal">
     <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
-        SelectionMode="Multiple">
+        SelectionMode="Extended" SelectionChanged="RaiseSelectionChanged">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <TextBlock Text="{Binding .}">
@@ -16,5 +16,9 @@
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+      <Button x:Name="btnSuppression" Content="Supprimer" Command="{Binding SupprimerProjet}"
+          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
+    </StackPanel>
   </StackPanel>
 </UserControl>

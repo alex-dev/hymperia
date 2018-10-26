@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using System.Collections;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Hymperia.Model.Modeles;
+using Prism.Commands;
 using Prism.Regions;
 
 namespace Hymperia.Facade.Views
@@ -39,9 +41,7 @@ namespace Hymperia.Facade.Views
 
     #endregion
 
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
+    private void RaiseSelectionChanged(object sender, SelectionChangedEventArgs e) =>
+      (btnSuppression.Command as DelegateCommand<IList>)?.RaiseCanExecuteChanged();
   }
 }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MoreLinq;
 
 namespace Hymperia.Model
 {

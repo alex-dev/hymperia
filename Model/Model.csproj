@@ -62,9 +62,13 @@
     <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="DoubleExtension.cs" />
     <Compile Include="IIdentity.cs" />
-    <Compile Include="Migrations\20181005183822_InitialDatabase.cs" />
-    <Compile Include="Migrations\20181005183822_InitialDatabase.designer.cs">
-      <DependentUpon>20181005183822_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\20181025211842_InitialDatabase.cs" />
+    <Compile Include="Migrations\20181025211842_InitialDatabase.designer.cs">
+      <DependentUpon>20181025211842_InitialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20181025220832_Cascade.cs" />
+    <Compile Include="Migrations\20181025220832_Cascade.designer.cs">
+      <DependentUpon>20181025220832_Cascade.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />
@@ -145,6 +149,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MoreLinq, Version=3.0.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.3.0.0\lib\net451\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="MySqlConnector, Version=0.46.1.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
       <HintPath>..\packages\MySqlConnector.0.46.1\lib\net461\MySqlConnector.dll</HintPath>
     </Reference>
@@ -187,6 +194,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -271,6 +279,11 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

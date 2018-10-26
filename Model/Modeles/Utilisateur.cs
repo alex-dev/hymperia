@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -76,16 +77,22 @@ namespace Hymperia.Model.Modeles
 
     /// <summary></summary>
     /// <param name="projet"></param>
+    /// <remarks>Si l'utilisateur n'est pas track par <see cref="DatabaseContext"/>, il est impossible de supprimer ses acces.</remarks>
     public void RetirerProjet([NotNull] Projet projet)
     {
-      throw new System.NotImplementedException();
+      var acces = Acces.SingleOrDefault(a => a.Projet == projet);
+      _Acces.Remove(acces);
     }
 
     /// <summary></summary>
     /// <param name="projet"></param>
     /// <returns></returns>
     [Pure]
-    public bool EstPropietaireDe([NotNull] Projet projet) => throw new System.NotImplementedException();
+    public bool EstPropietaireDe([NotNull] Projet projet)
+    {
+      var acces = Acces.FirstOrDefault(_acces => _acces.Projet.Id == projet.Id);
+      return acces is Acces && acces.EstPropriétaire;
+    }
 
     /// <summary></summary>
     /// <param name="projet"></param>

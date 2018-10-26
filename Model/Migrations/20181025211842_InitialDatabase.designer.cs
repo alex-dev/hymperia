@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hymperia.Model.Migrations
 {
   [DbContext(typeof(DatabaseContext))]
-  [Migration("20181005183822_InitialDatabase")]
+  [Migration("20181025211842_InitialDatabase")]
   partial class InitialDatabase
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,14 +21,19 @@ namespace Hymperia.Model.Migrations
 
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
           {
-            b.Property<int>("IdProjet");
-
-            b.Property<int>("IdUtilisateur");
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
             b.Property<string>("DroitDAcces")
                       .IsRequired();
 
-            b.HasKey("IdProjet", "IdUtilisateur");
+            b.Property<int>("IdProjet");
+
+            b.Property<int>("IdUtilisateur");
+
+            b.HasKey("Id");
+
+            b.HasAlternateKey("IdProjet", "IdUtilisateur");
 
             b.HasIndex("IdUtilisateur");
 
@@ -195,7 +200,7 @@ namespace Hymperia.Model.Migrations
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
           {
             b.HasOne("Hymperia.Model.Modeles.Projet", "Projet")
-                      .WithMany()
+                      .WithMany("_Acces")
                       .HasForeignKey("IdProjet")
                       .OnDelete(DeleteBehavior.Cascade);
 
