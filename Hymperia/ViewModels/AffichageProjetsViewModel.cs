@@ -15,6 +15,7 @@ using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -56,6 +57,12 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
+    #region Interaction Requests
+
+    public InteractionRequest<IConfirmation> SupprimerProjetRequest { get; } = new InteractionRequest<IConfirmation>();
+
+    #endregion
+
     #region Asynchronous Loading
 
     [CanBeNull]
@@ -93,7 +100,7 @@ namespace Hymperia.Facade.ViewModels
       Manager = manager;
       NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
       SupprimerProjet = new DelegateCommand<IList>(
-        projets => Loading = _SupprimerProjets(projets?.Cast<Projet>()),
+        projets => _SupprimerProjets(projets?.Cast<Projet>()),
         projets => CanSupprimerProjets(projets?.Cast<Projet>()));
     }
 
@@ -110,7 +117,25 @@ namespace Hymperia.Facade.ViewModels
     #endregion
 
     #region Command SupprimerProjet
-    private async Task _SupprimerProjets(IEnumerable<Projet> projets)
+
+    private void _SupprimerProjets(IEnumerable<Projet> projets)
+    {
+      void Execute(IConfirmation context)
+      {
+        if (context.Confirmed)
+        {
+          Loading = ConfirmedSupprimerProjets(projets);
+        }
+      }
+
+      SupprimerProjetRequest.Raise(new Confirmation
+      {
+        Title = "Supprimer les projets ?",
+        Content = projets
+      }, Execute);
+    }
+
+    private async Task ConfirmedSupprimerProjets(IEnumerable<Projet> projets)
     {
       await (Loading ?? Task.CompletedTask);
 
