@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using Hymperia.Model.Identity;
+using Hymperia.Model.Localization;
 using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
@@ -20,7 +22,7 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du matériau ne peut pas être vide.")]
-    public string Nom { get; private set; }
+    internal string _Nom { get; private set; }
 
     /// <summary>Le prix du matériaux par volume.</summary>
     public double Prix { get; private set; }
@@ -33,6 +35,19 @@ namespace Hymperia.Model.Modeles
     #endregion
 
     #region Not Mapped Properties
+
+    /// <summary>Le nom localisé du matériau.</summary>
+    [NotNull]
+    [NotMapped]
+    public string Nom
+    {
+      get
+      {
+        var task = GetNom();
+        task.Wait();
+        return task.Result;
+      }
+    }
 
     [CanBeNull]
     [NotMapped]
@@ -73,7 +88,7 @@ namespace Hymperia.Model.Modeles
     /// <param name="nom">Le nom du matériau.</param>
     public Materiau([NotNull] string nom, byte r, byte g, byte b, byte a)
     {
-      Nom = nom;
+      _Nom = nom;
       R = r;
       G = g;
       B = b;
@@ -85,8 +100,19 @@ namespace Hymperia.Model.Modeles
     public Materiau([NotNull] SolidColorBrush fill, [NotNull] string nom)
     {
       Fill = fill;
-      Nom = nom;
+      _Nom = nom;
     }
+
+    #endregion
+
+    #region Localization
+
+    private LocalizedMateriau Localized;
+
+    private async Task<string> GetNom() => (await GetLocalization())?.Nom ?? _Nom;
+
+    private async Task<LocalizedMateriau> GetLocalization() =>
+      Localized ?? (Localized = await Resources.GetMateriau(_Nom));
 
     #endregion
 
@@ -103,11 +129,10 @@ namespace Hymperia.Model.Modeles
     [Pure]
     public override bool Equals(object obj) => Equals(obj as Materiau);
     [Pure]
-    public bool Equals(Materiau other) => IdentityEqualityComparer<Materiau>.StaticEquals(this, other) && Nom == other.Nom;
+    public bool Equals(Materiau other) => IdentityEqualityComparer<Materiau>.StaticEquals(this, other) && _Nom == other._Nom;
     [Pure]
     public override int GetHashCode() => IdentityEqualityComparer<Materiau>.StaticGetHashCode(this);
 
     #endregion
-
   }
 }

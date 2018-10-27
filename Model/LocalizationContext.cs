@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Model.Localization;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +15,7 @@ namespace Hymperia.Model
 
     [NotNull]
     public const string ConfigurationName = "LocalizationDatabase";
-    [CanBeNull]
-    private readonly string Connection;
+    private readonly bool UseSettings;
 
     #endregion
 
@@ -28,17 +27,17 @@ namespace Hymperia.Model
 
     [NotNull]
     [ItemNotNull]
-    public DbSet<LocalizedMateriau> Materiaux
-    {
-      get => materiaux ?? (materiaux = Set<LocalizedMateriau>());
-    }
+    public DbSet<LocalizedMateriau> Materiaux => materiaux ?? (materiaux = Set<LocalizedMateriau>());
 
     #endregion
 
     #region Constructors
 
     /// <summary>Initialise le contexte selon les options par défaut.</summary>
-    public LocalizationContext() { }
+    public LocalizationContext()
+    {
+      UseSettings = true;
+    }
 
     /// <summary>Initialise le contexte selon les options passées.</summary>
     /// <param name="options">Les options préconfigurées passées au contexte.</param>
@@ -47,9 +46,9 @@ namespace Hymperia.Model
 
     /// <summary>Initialise le base de donnée selon la connection string passée.</summary>
     /// <param name="connection">Connection string.</param>
-    public LocalizationContext([NotNull] string connection)
+    public LocalizationContext(bool useSettings)
     {
-      Connection = connection;
+      UseSettings = useSettings;
     }
 
     #endregion
@@ -73,7 +72,7 @@ namespace Hymperia.Model
     {
       builder.Entity<LocalizedMateriau>().ToTable("Materiaux");
       builder.Entity<LocalizedMateriau>()
-        .HasAlternateKey(materiau => new { materiau.StringKey, materiau.CultureKey });
+        .HasKey(materiau => new { materiau.StringKey, materiau.CultureKey });
       builder.Entity<LocalizedMateriau>()
         .HasAlternateKey(materiau => new { materiau.CultureKey, materiau.Nom });
 
@@ -83,27 +82,16 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
-      builder.UseMySql(string.IsNullOrWhiteSpace(Connection) ? GetConnectionString() : Connection);
-      builder.EnableRichDataErrorHandling();
+      builder.UseMySql(UseSettings ? GetConnectionString() : RandomConnection());
+      builder.EnableDetailedErrors();
       builder.EnableSensitiveDataLogging();
       base.OnConfiguring(builder);
     }
 
     [NotNull]
-    protected static string GetConnectionString()
-    {
-      string connection = $"Server=localhost; SslMode=Preferred; Database=hymperia_localization_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";
-
-      try
-      {
-        return ConfigurationManager.ConnectionStrings[ConfigurationName]?.ConnectionString
-          ?? connection;
-      }
-      catch (ConfigurationErrorsException)
-      {
-        return connection;
-      }
-    }
+    protected static string GetConnectionString() => Settings.Default.LocalizationDatabase ?? RandomConnection();
+    [NotNull]
+    protected static string RandomConnection() => $"Server=localhost; SslMode=Preferred; Database=hymperia_localization_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";
 
     #endregion
   }

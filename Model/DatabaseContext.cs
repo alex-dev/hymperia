@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Model.Migrations;
 using Hymperia.Model.Modeles;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +15,7 @@ namespace Hymperia.Model
 
     [NotNull]
     public const string ConfigurationName = "MainDatabase";
-    [CanBeNull]
-    private readonly string Connection;
+    private readonly bool UseSettings;
 
     #endregion
 
@@ -39,10 +38,7 @@ namespace Hymperia.Model
     /// </remarks>
     [NotNull]
     [ItemNotNull]
-    public DbSet<Acces> Acces
-    {
-      get => acces ?? (acces = Set<Acces>());
-    }
+    public DbSet<Acces> Acces => acces ?? (acces = Set<Acces>());
 
     /// <summary>Retourne le <see cref="DbSet{Materiau}"/>.</summary>
     /// <remarks>
@@ -54,10 +50,7 @@ namespace Hymperia.Model
     /// </remarks>
     [NotNull]
     [ItemNotNull]
-    public DbSet<Materiau> Materiaux
-    {
-      get => materiaux ?? (materiaux = Set<Materiau>());
-    }
+    public DbSet<Materiau> Materiaux => materiaux ?? (materiaux = Set<Materiau>());
 
     /// <summary>Retourne le <see cref="DbSet{Projet}"/>.</summary>
     /// <remarks>
@@ -69,10 +62,7 @@ namespace Hymperia.Model
     /// </remarks>
     [NotNull]
     [ItemNotNull]
-    public DbSet<Projet> Projets
-    {
-      get => projets ?? (projets = Set<Projet>());
-    }
+    public DbSet<Projet> Projets => projets ?? (projets = Set<Projet>());
 
     /// <summary>Retourne le <see cref="DbSet{Utilisateur}"/>.</summary>
     /// <remarks>
@@ -84,17 +74,17 @@ namespace Hymperia.Model
     /// </remarks>
     [NotNull]
     [ItemNotNull]
-    public DbSet<Utilisateur> Utilisateurs
-    {
-      get => utilisateurs ?? (utilisateurs = Set<Utilisateur>());
-    }
+    public DbSet<Utilisateur> Utilisateurs => utilisateurs ?? (utilisateurs = Set<Utilisateur>());
 
     #endregion
 
     #region Constructors
 
     /// <summary>Initialise le contexte selon les options par défaut.</summary>
-    public DatabaseContext() { }
+    public DatabaseContext()
+    {
+      UseSettings = true;
+    }
 
     /// <summary>Initialise le contexte selon les options passées.</summary>
     /// <param name="options">Les options préconfigurées passées au contexte.</param>
@@ -103,9 +93,9 @@ namespace Hymperia.Model
 
     /// <summary>Initialise le base de donnée selon la connection string passée.</summary>
     /// <param name="connection">Connection string.</param>
-    public DatabaseContext([NotNull] string connection)
+    public DatabaseContext(bool useSettings)
     {
-      Connection = connection;
+      UseSettings = useSettings;
     }
 
     #endregion
@@ -132,19 +122,20 @@ namespace Hymperia.Model
     {
       builder.Entity<Utilisateur>().ToTable("Utilisateurs");
       builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
-    
+
       builder.Entity<Materiau>().ToTable("Materiaux");
-      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
+      builder.Entity<Materiau>().Property(materiau => materiau._Nom).HasColumnName("Nom");
       builder.Entity<Materiau>().Property(materiau => materiau.R).HasConversion<int>();
       builder.Entity<Materiau>().Property(materiau => materiau.G).HasConversion<int>();
       builder.Entity<Materiau>().Property(materiau => materiau.B).HasConversion<int>();
       builder.Entity<Materiau>().Property(materiau => materiau.A).HasConversion<int>();
+      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau._Nom);
 
       builder.Entity<Forme>().ToTable("Formes");
-      builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
-        .HasForeignKey("IdMateriau");
       builder.Entity<Forme>().Property(forme => forme._Origine).HasColumnName("Origine");
       builder.Entity<Forme>().Property(forme => forme._Rotation).HasColumnName("Rotation");
+      builder.Entity<Forme>().HasOne(forme => forme.Materiau).WithMany()
+        .HasForeignKey("IdMateriau");
       builder.Entity<ThetaDivForme>().HasBaseType<Forme>();
       builder.Entity<Cone>().HasBaseType<ThetaDivForme>();
       builder.Entity<Cylindre>().HasBaseType<ThetaDivForme>();
@@ -154,7 +145,7 @@ namespace Hymperia.Model
       builder.Entity<Projet>().ToTable("Projets");
       builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
       builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne()
-        .HasForeignKey("IdProjet");
+        .HasForeignKey("IdProjet").OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<Acces>().ToTable("Acces");
       builder.Entity<Acces>().Property<int>("IdProjet");
@@ -162,7 +153,7 @@ namespace Hymperia.Model
       builder.Entity<Acces>().Property(acces => acces.DroitDAcces)
         .HasConversion<string>();
       builder.Entity<Acces>().HasOne(acces => acces.Projet).WithMany()
-        .HasForeignKey("IdProjet");
+        .HasForeignKey("IdProjet").OnDelete(DeleteBehavior.Cascade);
       builder.Entity<Acces>().HasOne(acces => acces.Utilisateur).WithMany(utilisateur => utilisateur._Acces)
         .HasForeignKey("IdUtilisateur");
       builder.Entity<Acces>().HasKey("IdProjet", "IdUtilisateur");
@@ -173,27 +164,16 @@ namespace Hymperia.Model
     /// <inheritdoc/>
     protected override void OnConfiguring([NotNull] DbContextOptionsBuilder builder)
     {
-      builder.UseMySql(string.IsNullOrWhiteSpace(Connection) ? GetConnectionString() : Connection);
-      builder.EnableRichDataErrorHandling();
+      builder.UseMySql(UseSettings ? GetConnectionString() : RandomConnection());
+      builder.EnableDetailedErrors();
       builder.EnableSensitiveDataLogging();
       base.OnConfiguring(builder);
     }
 
     [NotNull]
-    protected static string GetConnectionString()
-    {
-      string connection = $"Server=localhost; SslMode=Preferred; Database=hymperia_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";
-
-      try
-      {
-        return ConfigurationManager.ConnectionStrings[ConfigurationName]?.ConnectionString
-          ?? connection;
-      }
-      catch (ConfigurationErrorsException)
-      {
-        return connection;
-      }
-    }
+    protected static string GetConnectionString() => Settings.Default.MainDatabase ?? RandomConnection();
+    [NotNull]
+    protected static string RandomConnection() => $"Server=localhost; SslMode=Preferred; Database=hymperia_{ Guid.NewGuid().ToString("N") }; Username=root; Password=;";
 
     #endregion
   }
