@@ -2,11 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
+using Hymperia.Model.Identity;
 using Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Model.Modeles
 {
-  public abstract class Forme : IIdentity
+  public abstract class Forme : IIdentity, IEquatable<Forme>
   {
     #region Properties
 
@@ -73,6 +74,17 @@ namespace Hymperia.Model.Modeles
     [Pure]
     [NotNull]
     public abstract override string ToString();
+
+    #endregion
+
+    #region IEquatable<Forme>
+
+    [Pure]
+    public override bool Equals(object obj) => Equals(obj as Forme);
+    [Pure]
+    public bool Equals(Forme other) => IdentityEqualityComparer<Forme>.StaticEquals(this, other) && Origine == other?.Origine && Rotation == other?.Rotation;
+    [Pure]
+    public override int GetHashCode() => IdentityEqualityComparer<Forme>.StaticGetHashCode(this);
 
     #endregion
   }

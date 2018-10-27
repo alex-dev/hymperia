@@ -19,24 +19,23 @@ namespace Hymperia.Model.Migrations
           },
           constraints: table =>
           {
-            table.PrimaryKey("PK_Materiaux", x => x.Id);
+            table.PrimaryKey("PK_Materiaux", x => new { x.StringKey, x.CultureKey });
             table.UniqueConstraint("AK_Materiaux_CultureKey_Nom", x => new { x.CultureKey, x.Nom });
-            table.UniqueConstraint("AK_Materiaux_StringKey_CultureKey", x => new { x.StringKey, x.CultureKey });
           });
 
       migrationBuilder.InsertData(
         "Materiaux",
-        new string[] { "Id", "StringKey", "CultureKey", "Nom" },
+        new string[] { "StringKey", "CultureKey", "Nom" },
         new object[,]
         {
-                { 1, "Bois", "fr", "Bois" },
-                { 2, "Acier", "fr", "Acier" },
-                { 3, "Cuivre", "fr", "Cuivre" },
-                { 4, "Or", "fr", "Or" },
-                { 5, "Bois", "en", "Wood" },
-                { 6, "Acier", "en", "Steel" },
-                { 7, "Cuivre", "en", "Copper" },
-                { 8, "Or", "en", "Gold" }
+                { "Bois", "fr", "Bois" },
+                { "Acier", "fr", "Acier" },
+                { "Cuivre", "fr", "Cuivre" },
+                { "Or", "fr", "Or" },
+                { "Bois", "en", "Wood" },
+                { "Acier", "en", "Steel" },
+                { "Cuivre", "en", "Copper" },
+                { "Or", "en", "Gold" }
         });
     }
 

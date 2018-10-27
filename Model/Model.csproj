@@ -60,9 +60,14 @@
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="DatabaseContextExtension.cs" />
+    <Compile Include="Identity\IdentityEqualityComparer.cs" />
+    <Compile Include="Identity\LocalizedIdentityEqualityComparer.cs" />
+    <Compile Include="DatabaseResources\ResourceManager.cs" />
+    <Compile Include="DatabaseResources\ResourceSet.cs" />
     <Compile Include="DoubleExtension.cs" />
-    <Compile Include="IIdentity.cs" />
+    <Compile Include="Identity\IIdentity.cs" />
     <Compile Include="LocalizationContext.cs" />
+    <Compile Include="Identity\ILocalizedIdentity.cs" />
     <Compile Include="Migrations\20181005183822_InitialDatabase.cs" />
     <Compile Include="Migrations\20181005183822_InitialDatabase.designer.cs">
       <DependentUpon>20181005183822_InitialDatabase.cs</DependentUpon>
@@ -90,6 +95,7 @@
     <Compile Include="Modeles\Utilisateur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Resources.Database.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,6 +103,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\app.config" />
     <None Include="Properties\packages.config" />
     <EmbeddedResource Include="Properties\Resources.en-US.resx">
@@ -105,7 +112,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-	<None Include="Properties\Resources.Designer.tt">
+    <None Include="Properties\Resources.Designer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </None>
@@ -195,6 +202,11 @@
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.NonGeneric.4.3.0\lib\net46\System.Collections.NonGeneric.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

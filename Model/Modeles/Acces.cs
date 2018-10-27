@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public class Acces
+  public class Acces : IEquatable<Acces>
   {
     public enum Droit { Lecture, LectureEcriture, Possession }
 
@@ -55,6 +57,12 @@ namespace Hymperia.Model.Modeles
       DroitDAcces = droit;
     }
 
+    public Acces(Projet projet, Utilisateur utilisateur)
+    {
+      Projet = projet;
+      Utilisateur = utilisateur;
+    }
+
     #endregion
 
     #region ToString
@@ -62,6 +70,23 @@ namespace Hymperia.Model.Modeles
     [Pure]
     [NotNull]
     public override string ToString() => Resources.AccesToString(Utilisateur.Nom, Projet.Nom, DroitDAcces);
+
+    #endregion
+
+    #region IEquatable<Acces>
+
+    [Pure]
+    public override bool Equals(object obj) => Equals(obj as Acces);
+    [Pure]
+    public bool Equals(Acces other) => Projet.Equals(other?.Projet) && Utilisateur.Equals(other?.Utilisateur);
+    [Pure]
+    public override int GetHashCode()
+    {
+      var hashCode = -155109889;
+      hashCode = hashCode * -1521134295 + Projet.GetHashCode();
+      hashCode = hashCode * -1521134295 + Utilisateur.GetHashCode();
+      return hashCode;
+    }
 
     #endregion
   }

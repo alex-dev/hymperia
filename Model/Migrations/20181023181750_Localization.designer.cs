@@ -20,9 +20,6 @@ namespace Hymperia.Model.Migrations
 
       modelBuilder.Entity("Hymperia.Model.Localization.LocalizedMateriau", b =>
           {
-            b.Property<int>("Id")
-                      .ValueGeneratedOnAdd();
-
             b.Property<string>("CultureKey")
                       .IsRequired();
 
@@ -32,11 +29,9 @@ namespace Hymperia.Model.Migrations
             b.Property<string>("StringKey")
                       .IsRequired();
 
-            b.HasKey("Id");
+            b.HasKey("StringKey", "CultureKey");
 
             b.HasAlternateKey("CultureKey", "Nom");
-
-            b.HasAlternateKey("StringKey", "CultureKey");
 
             b.ToTable("Materiaux");
           });
