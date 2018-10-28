@@ -23,7 +23,7 @@ namespace Hymperia.Model.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username" +
             "=Hymperia; Password=infoH25978;")]
@@ -31,15 +31,21 @@ namespace Hymperia.Model.Properties {
             get {
                 return ((string)(this["MainDatabase"]));
             }
+            set {
+                this["MainDatabase"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_localization_test_dep" +
             "loy; Username=Hymperia; Password=infoH25978;")]
         public string LocalizationDatabase {
             get {
                 return ((string)(this["LocalizationDatabase"]));
+            }
+            set {
+                this["LocalizationDatabase"] = value;
             }
         }
     }

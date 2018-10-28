@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
   <ListBox Name="ListBox" 
-      ItemsSource="{Binding Formes, Mode=OneWay,NotifyOnTargetUpdated=True}" SelectedValuePath="Key"
+      ItemsSource="{Binding Formes, Mode=OneWay, NotifyOnTargetUpdated=True}" SelectedValuePath="Key"
       SelectedValue="{Binding RegionContext, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
       SelectionMode="Single">
     <ListBox.ItemsPanel>

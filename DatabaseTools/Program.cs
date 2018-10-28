@@ -98,7 +98,7 @@ namespace Hymperia.DatabaseTools
       {
         SetAppCulture(Culture.HasValue() ? Culture.Value() : "fr-CA");
         await Deploy.Migrate(option.HasValue());
-        Printer.Print(await Query.QueryMateriaux());
+        await Printer.PrintMateriaux(await Query.QueryMateriaux());
         return 0;
       });
     }

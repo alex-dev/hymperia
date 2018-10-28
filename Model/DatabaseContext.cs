@@ -124,12 +124,11 @@ namespace Hymperia.Model
       builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
 
       builder.Entity<Materiau>().ToTable("Materiaux");
-      builder.Entity<Materiau>().Property(materiau => materiau._Nom).HasColumnName("Nom");
       builder.Entity<Materiau>().Property(materiau => materiau.R).HasConversion<int>();
       builder.Entity<Materiau>().Property(materiau => materiau.G).HasConversion<int>();
       builder.Entity<Materiau>().Property(materiau => materiau.B).HasConversion<int>();
       builder.Entity<Materiau>().Property(materiau => materiau.A).HasConversion<int>();
-      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau._Nom);
+      builder.Entity<Materiau>().HasAlternateKey(materiau => materiau.Nom);
 
       builder.Entity<Forme>().ToTable("Formes");
       builder.Entity<Forme>().Property(forme => forme._Origine).HasColumnName("Origine");

@@ -19,7 +19,7 @@ namespace Hymperia.Model.DatabaseResources
 
       if (Materiaux is null || Materiaux.First().Value.CultureKey != lang)
       {
-        Materiaux = await Load<LocalizedMateriau, Materiau>(lang);
+        await LoadMateriaux();
       }
 
       return Materiaux[key];
@@ -40,6 +40,9 @@ namespace Hymperia.Model.DatabaseResources
           .SingleOrDefaultAsync(localized => localized.StringKey == key && localized.CultureKey == culture);
       }
     }
+
+    public async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux() => Materiaux =
+      await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
 
     [NotNull]
     [ItemNotNull]

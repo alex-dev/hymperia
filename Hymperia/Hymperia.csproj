@@ -108,6 +108,7 @@
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
     <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
     <Compile Include="ModelWrappers\FormeWrapper.cs" />
+    <Compile Include="ModelWrappers\MateriauWrapper.cs" />
     <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
     <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
@@ -137,9 +138,6 @@
     </Compile>
     <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
       <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Editeur\SelectionMode.xaml.cs">
-      <DependentUpon>SelectionMode.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
@@ -185,10 +183,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\SelectionMode.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Editeur\Viewport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -209,7 +203,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.en-US.resx" />
     <EmbeddedResource Include="Properties\Resources.resx" />
-    <None Include="app.config" />
     <None Include="connections.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -62,6 +62,14 @@ namespace Hymperia.Facade.Properties
         type);
 
     /// <summary>
+    ///   Clé de localisation {key} est invalide pour l'entité {entity}.
+    /// </summary>
+    public static string InvalidLocalizationKey([CanBeNull] object key, [CanBeNull] object entity)
+      => string.Format(
+        GetString("InvalidLocalizationKey", nameof(key), nameof(entity)),
+        key, entity);
+
+    /// <summary>
     ///   Ce manipulateur ne supporte que les {visuals}.
     /// </summary>
     public static string ManipulatorSupport([CanBeNull] object visuals)

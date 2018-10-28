@@ -114,6 +114,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\app.config" />
     <None Include="Properties\Resources.Designer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

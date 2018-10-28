@@ -1,11 +1,11 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Hymperia.Facade.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Hymperia.Model.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="MainDatabase" Type="System.String" Scope="Application">
+    <Setting Name="MainDatabase" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_test_deploy; Username=Hymperia; Password=infoH25978;</Value>
     </Setting>
-    <Setting Name="LocalizationDatabase" Type="System.String" Scope="Application">
+    <Setting Name="LocalizationDatabase" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_localization_test_deploy; Username=Hymperia; Password=infoH25978;</Value>
     </Setting>
   </Settings>
