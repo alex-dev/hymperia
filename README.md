@@ -5,7 +5,7 @@
  - Guillaume Le Blanc
 
 ## Configuration
-Les `ConnectionString` des bases de données sont dans les fichiers de config respectif à chaque .exe.
+Les `ConnectionString` des bases de données sont dans les fichiers de config respectifs à chaque .exe.
 
 ## DatabaseTools - Application console
 - `./DatabaseTools.exe --help`  affiche l'aide de la commande.
