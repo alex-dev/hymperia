@@ -1,4 +1,4 @@
-﻿namespace Hymperia.Model
+﻿namespace Hymperia.Model.Identity
 {
   /// <summary>Possède un clé unique de type <see cref="int"/>.</summary>
   public interface IIdentity

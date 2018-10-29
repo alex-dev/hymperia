@@ -174,7 +174,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     private bool PeutAjouterForme(Point point) =>
-      point is Point && Projet is Projet && SelectedMateriau is Materiau && SelectedForme.IsSubclassOf(typeof(Forme));
+      point is Point && Projet is Projet
+      && SelectedMateriau is Materiau
+      && SelectedForme is Type && SelectedForme.IsSubclassOf(typeof(Forme));
 
     #endregion
 

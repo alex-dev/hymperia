@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Hymperia.Model;
+﻿using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hymperia.DatabaseTools
 {
-  internal static class Query
+    internal static class Query
   {
-    public const string ConfigurationName = DatabaseContext.ConfigurationName;
-
+    [NotNull]
     [ItemNotNull]
     public static async Task<IEnumerable<Materiau>> QueryMateriaux()
     {
@@ -20,6 +19,7 @@ namespace Hymperia.DatabaseTools
       }
     }
 
+    [NotNull]
     [ItemNotNull]
     public static async Task<IEnumerable<Projet>> QueryProjets()
     {
@@ -29,6 +29,7 @@ namespace Hymperia.DatabaseTools
       }
     }
 
+    [NotNull]
     [ItemNotNull]
     public static async Task<IEnumerable<Utilisateur>> QueryUtilisateurs()
     {

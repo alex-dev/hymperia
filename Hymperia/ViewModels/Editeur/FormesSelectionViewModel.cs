@@ -20,9 +20,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref formes, value);
     }
 
-    [NotNull]
-    public Type DefaultForme => typeof(PrismeRectangulaire);
-
     #endregion
 
     #region Constructors
@@ -36,16 +33,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Queries
 
-    private async Task QueryFormes()
+    private async Task QueryFormes() => Formes = await Task.Run(() => new Dictionary<Type, string>
     {
-      await Task.Run(() => Formes = new Dictionary<Type, string>
-      {
-        { typeof(PrismeRectangulaire), @"pack://application:,,,/Images/PrismeRectangulaire.png" },
-        { typeof(Cone), @"pack://application:,,,/Images/Cone.png" },
-        { typeof(Cylindre), @"pack://application:,,,/Images/Cylindre.png" },
-        { typeof(Ellipsoide), @"pack://application:,,,/Images/Ellipsoide.png" }
-      });
-    }
+      { typeof(PrismeRectangulaire), @"pack://application:,,,/Images/PrismeRectangulaire.png" },
+      { typeof(Cone), @"pack://application:,,,/Images/Cone.png" },
+      { typeof(Cylindre), @"pack://application:,,,/Images/Cylindre.png" },
+      { typeof(Ellipsoide), @"pack://application:,,,/Images/Ellipsoide.png" }
+    });
 
     #endregion
 

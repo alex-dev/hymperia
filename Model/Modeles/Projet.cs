@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using Hymperia.Model.Identity;
 using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public class Projet : IIdentity
+  public class Projet : IIdentity, IEquatable<Projet>
   {
     #region Properties
 
@@ -56,9 +58,9 @@ namespace Hymperia.Model.Modeles
 
     #endregion
 
-     #region Constructors
+    #region Constructors
 
-     /// <param name="name">Le nom du projet.</param>
+    /// <param name="name">Le nom du projet.</param>
     public Projet([NotNull] string nom)
     {
       Nom = nom;
@@ -85,5 +87,17 @@ namespace Hymperia.Model.Modeles
     public override string ToString() => Resources.ProjetToString(Id, Nom);
 
     #endregion
+
+    #region IEquatable<Projet>
+
+    [Pure]
+    public override bool Equals(object obj) => Equals(obj as Projet);
+    [Pure]
+    public bool Equals(Projet other) => IdentityEqualityComparer<Projet>.StaticEquals(this, other) && Nom == other.Nom;
+    [Pure]
+    public override int GetHashCode() => IdentityEqualityComparer<Projet>.StaticGetHashCode(this);
+
+    #endregion
+
   }
 }

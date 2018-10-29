@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 using System.Windows.Media;
+using Hymperia.Model.Identity;
+using Hymperia.Model.Localization;
 using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
 {
-  public class Materiau : IIdentity
+  public class Materiau : IIdentity, IEquatable<Materiau>
   {
     #region Properties
 
@@ -93,6 +97,17 @@ namespace Hymperia.Model.Modeles
     [Pure]
     [NotNull]
     public override string ToString() => Resources.MateriauToString(Id, Nom, Prix);
+
+    #endregion
+
+    #region IEquatable<Materiau>
+
+    [Pure]
+    public override bool Equals(object obj) => Equals(obj as Materiau);
+    [Pure]
+    public bool Equals(Materiau other) => IdentityEqualityComparer<Materiau>.StaticEquals(this, other) && Nom == other.Nom;
+    [Pure]
+    public override int GetHashCode() => IdentityEqualityComparer<Materiau>.StaticGetHashCode(this);
 
     #endregion
   }

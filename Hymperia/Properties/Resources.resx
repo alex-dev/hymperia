@@ -138,6 +138,9 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>N'a pas pu instantier un {type}.</value>
   </data>
+  <data name="InvalidLocalizationKey" xml:space="preserve">
+    <value>Clé de localisation {key} est invalide pour l'entité {entity}.</value>
+  </data>
   <data name="ManipulatorSupport" xml:space="preserve">
     <value>Ce manipulateur ne supporte que les {visuals}.</value>
   </data>
