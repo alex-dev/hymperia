@@ -8,6 +8,7 @@ using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.Converters;
 using Hymperia.Facade.Converters.AggregateConverters;
+using Hymperia.Facade.Properties;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators
@@ -166,8 +167,8 @@ namespace Hymperia.Facade.DependencyObjects.Manipulators
         case TruncatedConeVisual3D cone:
           return CreateBindings(cone);
         default:
-          string err = $"This manipulator only support { nameof(BoxVisual3D) }, { nameof(EllipsoidVisual3D) }, { nameof(PipeVisual3D) } and { nameof(TruncatedConeVisual3D) }.";
-          throw new InvalidOperationException(err);
+          throw new InvalidOperationException(
+            Resources.ManipulatorSupport(nameof(BoxVisual3D), nameof(EllipsoidVisual3D), nameof(PipeVisual3D), nameof(TruncatedConeVisual3D)));
       }
     }
 

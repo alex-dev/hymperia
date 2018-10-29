@@ -1,37 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
-using Hymperia.Model.Modeles;
+using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using Prism.Commands;
+using Prism;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class MateriauxSelectionViewModel : BindableBase
+  public class MateriauxSelectionViewModel : BindableBase, IActiveAware
   {
     #region Properties
-
-    [NotNull]
-    public string DefaultName => "Bois";
 
     #region Bindings
 
     [CanBeNull]
     [ItemNotNull]
-    public ICollection<Materiau> Materiaux
+    public ICollection<MateriauWrapper> Materiaux
     {
       get => materiaux;
       private set => SetProperty(ref materiaux, value);
     }
-
-    #endregion
-
-    #region Commands
-
-    public ICommand RefreshItems { get; private set; }
 
     #endregion
 
@@ -69,26 +62,49 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public MateriauxSelectionViewModel([NotNull] ContextFactory factory)
     {
       Factory = factory;
-      RefreshItems = new DelegateCommand(() => Loading = RefreshMateriaux())
-        .ObservesCanExecute(() => IsLoading);
-
-      RefreshItems.Execute(null);
     }
 
     #endregion
 
     #region Queries
 
-    private async Task RefreshMateriaux()
+    private async Task QueryMateriaux()
     {
       if (!IsLoading)
       {
         using (var context = Factory.GetContext())
         {
-          Materiaux = await context.Materiaux.ToArrayAsync();
+          Materiaux = await (from materiau in context.Materiaux.AsNoTracking()
+                             join localized in await Resources.LoadMateriaux()
+                               on materiau.Nom equals localized.Key
+                             select new MateriauWrapper(materiau, localized.Value)).ToArrayAsync();
         }
       }
     }
+
+    #endregion
+
+    #region IActiveAware
+
+    public event EventHandler IsActiveChanged;
+
+    public bool IsActive
+    {
+      get => isActive;
+      set
+      {
+        isActive = value;
+
+        if (isActive)
+        {
+          OnActivation();
+        }
+
+        IsActiveChanged?.Invoke(this, null);
+      }
+    }
+
+    private void OnActivation() => Loading = QueryMateriaux();
 
     #endregion
 
@@ -101,9 +117,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private bool isActive;
     private Task loading;
     private bool isLoading;
-    private ICollection<Materiau> materiaux;
+    private ICollection<MateriauWrapper> materiaux;
 
     #endregion
   }

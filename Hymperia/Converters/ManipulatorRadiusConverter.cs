@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
+using Hymperia.Facade.Properties;
 
 namespace Hymperia.Facade.Converters
 {
@@ -32,7 +33,7 @@ namespace Hymperia.Facade.Converters
     /// inheritdoc/>
     /// <remarks>Vers le modèle.</remarks>
     public object[] ConvertBack(object value, Type[] targets, object parameter = null, CultureInfo culture = default) =>
-      throw new NotImplementedException("Destructive process, impossible to convert back.");
+      throw new NotImplementedException(Resources.DestructiveConversion);
 
     private static double ChangeType(object value) => System.Convert.ToDouble(value);
   }

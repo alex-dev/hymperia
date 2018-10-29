@@ -53,7 +53,8 @@ namespace Hymperia.Facade.DependencyObjects
         case SelectionMode.Transformation:
           return new ResizeManipulator();
         default:
-          throw new InvalidOperationException("You forgot to implement stuff!!");
+          throw new InvalidOperationException
+            (Properties.Resources.ViewportManipulatorSupport(SelectionMode.Deplacement, SelectionMode.Transformation));
       }
     }
 

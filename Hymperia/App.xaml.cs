@@ -6,6 +6,7 @@ using System.Windows.Markup;
 using Hymperia.Facade.Converters;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;
+using Hymperia.Model.Properties;
 using Prism.Ioc;
 using Prism.Ninject;
 
@@ -30,6 +31,8 @@ namespace Hymperia.Facade
       var culture = CreateAppCulture();
       var language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
 
+      Thread.CurrentThread.CurrentCulture = culture;
+      Thread.CurrentThread.CurrentUICulture = culture;
       FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
       base.OnStartup(e);
     }
@@ -38,7 +41,7 @@ namespace Hymperia.Facade
     [Obsolete("va être déplacer vers un service prochainement pour i18n.")]
     private CultureInfo CreateAppCulture()
     {
-      var culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.LCID);
+      var culture = CultureInfo.CreateSpecificCulture(Settings.Default.Culture);
       culture.NumberFormat.CurrencySymbol = "$";
       return culture;
     }

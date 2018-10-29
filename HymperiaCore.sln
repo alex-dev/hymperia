@@ -8,13 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTools", "DatabaseTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hymperia", "Hymperia\Hymperia.csproj", "{4745B556-160E-40F5-9F5D-1FDE36877E43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelIntegrationTests", "ModelIntegrationTests\ModelIntegrationTests.csproj", "{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A0DD62A4-7000-425E-B671-9C5D7C2FBD61}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXOperations", "DirectXOperations\DirectXOperations.vcxproj", "{D4BA22BD-7CBD-4F40-ABDC-F4F115083284}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelixToolkitExtension", "HelixToolkitExtension\HelixToolkitExtension.csproj", "{53118FAE-B39C-4137-ACFF-4F89E6579EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrismExtension", "PrismExtension\PrismExtension.csproj", "{4C129296-E3D3-46F6-A179-B94E3404DB0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,14 +48,6 @@ Global
 		{4745B556-160E-40F5-9F5D-1FDE36877E43}.Release|x64.Build.0 = Release|x64
 		{4745B556-160E-40F5-9F5D-1FDE36877E43}.Release|x86.ActiveCfg = Release|x86
 		{4745B556-160E-40F5-9F5D-1FDE36877E43}.Release|x86.Build.0 = Release|x86
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Debug|x64.ActiveCfg = Debug|x64
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Debug|x64.Build.0 = Debug|x64
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Debug|x86.ActiveCfg = Debug|x86
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Debug|x86.Build.0 = Debug|x86
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Release|x64.ActiveCfg = Release|x64
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Release|x64.Build.0 = Release|x64
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Release|x86.ActiveCfg = Release|x86
-		{F9F13B66-CF3C-442C-9156-785C9E6CAEEA}.Release|x86.Build.0 = Release|x86
 		{A0DD62A4-7000-425E-B671-9C5D7C2FBD61}.Debug|x64.ActiveCfg = Debug|x64
 		{A0DD62A4-7000-425E-B671-9C5D7C2FBD61}.Debug|x64.Build.0 = Debug|x64
 		{A0DD62A4-7000-425E-B671-9C5D7C2FBD61}.Debug|x86.ActiveCfg = Debug|x86
@@ -80,6 +72,14 @@ Global
 		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x64.Build.0 = Release|x64
 		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x86.ActiveCfg = Release|x86
 		{53118FAE-B39C-4137-ACFF-4F89E6579EF3}.Release|x86.Build.0 = Release|x86
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Release|x64.Build.0 = Release|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C129296-E3D3-46F6-A179-B94E3404DB0A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
