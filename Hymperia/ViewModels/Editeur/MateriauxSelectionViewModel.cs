@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
-using Hymperia.Model;
 using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
