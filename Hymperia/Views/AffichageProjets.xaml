@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hymperia.Facade.Views.AffichageProjets" x:Name="View"
+﻿<UserControl x:Class="Hymperia.Facade.Views.AffichageProjets" x:Name="view"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -20,13 +20,14 @@
         <DataTemplate>
           <TextBlock Text="{Binding .}">
             <TextBlock.InputBindings>
-              <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=View}"
+              <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
                   CommandParameter="{Binding .}" />
             </TextBlock.InputBindings>
           </TextBlock>
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
+    <ListBox ItemsSource="{Binding SelectedItems, ElementName=ListBox}"/>
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
       <Button x:Name="btnSuppression" Content="Supprimer" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
