@@ -14,16 +14,16 @@
     <Setter Property="Height" Value="50" />
     <Setter Property="Width" Value="70" />
     <Setter Property="MaxWidth" Value="300" />
-    <Setter Property="Grid.Column" Value="1" />
-    <Setter Property="Grid.ColumnSpan" Value="2" />
-    <Setter Property="Grid.Row" Value="0" />
-    <Setter Property="Grid.RowSpan" Value="1" />
   </Style>
   <Style x:Key="MaterialRectangleStyle" TargetType="{x:Type Rectangle}">
     <Setter Property="Height" Value="150" />
     <Setter Property="Width" Value="150" />
-    <Setter Property="Grid.Column" Value="1" />
-    <Setter Property="Grid.ColumnSpan" Value="2" />
-    <Setter Property="Grid.Row" Value="1" />
+  </Style>
+  <Style x:Key="MaterialSelectionPanel" TargetType="{x:Type StackPanel}">
+    
+  </Style>
+  <Style x:Key="MaterialSelection" TargetType="{x:Type ListBox}">
+    <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Setter Property="ItemContainerStyle" Value="{StaticResource MaterialSelectionPanel}"/>
   </Style>
 </ResourceDictionary>

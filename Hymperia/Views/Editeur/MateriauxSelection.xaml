@@ -14,21 +14,10 @@
     <ListBox.ItemTemplate>
       <DataTemplate>
         <!-- To make better -->
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="40" />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="20" />
-          </Grid.RowDefinitions>
+        <VirtualizingStackPanel>
           <TextBlock Style="{StaticResource MaterialTextStyle}" Text="{Binding Nom}" />
           <Rectangle Style="{StaticResource MaterialRectangleStyle}" Fill="{Binding Fill}"/>
-        </Grid>
+        </VirtualizingStackPanel>
       </DataTemplate>
     </ListBox.ItemTemplate>
   </ListBox>
