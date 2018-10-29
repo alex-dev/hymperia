@@ -5,18 +5,16 @@
  - Guillaume Le Blanc
 
 ## Configuration
-La `ConnectionString` de la base de données est dans `connections.config`
+Les `ConnectionString` des bases de données sont dans les fichiers de config respectif à chaque .exe.
 
 ## DatabaseTools - Application console
 - `./DatabaseTools.exe --help`  affiche l'aide de la commande.
 - `./DatabaseTools.exe deployer` pour déployer les migrations.
   - `--initialisation` initialise la base de données avec des données aléatoires.
+- `./DatabaseTools.exe formes` affiche les formes de l'application.
 - `./DatabaseTools.exe mateiaux` affiche les materiaux de l'application.
 - `./DatabaseTools.exe projets` affiche les projets de l'application.
 - `./DatabaseTools.exe utilisateurs` affiche les utilisateurs de l'application.
-
-## Hymperia - Application WPF
-- Les manipulateurs de redimensionnement ne sont pas fonctionnels. En conséquent, aucun manipulateur n'est afficher lors d'une sélection de redimensionnement.
 
 ### Contrôles de caméra
 - Right Click (Hold): Rotation et inclinaison;

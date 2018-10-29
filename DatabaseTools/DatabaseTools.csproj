@@ -100,10 +100,7 @@
     <Compile Include="Query.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="connections.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Properties\app.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">

@@ -8,5 +8,8 @@
     <Setting Name="LocalizationDatabase" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_localization_test_deploy; Username=Hymperia; Password=infoH25978;</Value>
     </Setting>
+    <Setting Name="Culture" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fr-CA</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
