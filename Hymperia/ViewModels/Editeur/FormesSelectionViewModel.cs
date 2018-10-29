@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
@@ -20,12 +22,21 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref formes, value);
     }
 
+    [CanBeNull]
+    public Type SelectedForme
+    {
+      get => selected;
+      set => SetProperty(ref selected, value, () => RaiseSelectedChanged(value));
+    }
+
     #endregion
 
     #region Constructors
 
-    public FormesSelectionViewModel()
+    public FormesSelectionViewModel([NotNull] IEventAggregator aggregator)
     {
+      SelectedChanged = aggregator.GetEvent<SelectedFormeChanged>();
+      SelectedChanged.Subscribe(OnSelectedChanged, FilterSelectedChanged);
       QueryFormes();
     }
 
@@ -43,9 +54,33 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
+    #region SelectedChanged Handling
+
+    protected virtual void OnSelectedChanged(Type type)
+    {
+      if (type != SelectedForme)
+      {
+        SelectedForme = type;
+      }
+    }
+
+    protected virtual bool FilterSelectedChanged(Type type) => type != SelectedForme;
+
+    protected virtual void RaiseSelectedChanged(Type type) => SelectedChanged.Publish(type);
+
+    #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly SelectedFormeChanged SelectedChanged;
+
+    #endregion
+
     #region Private Fields
 
     private IDictionary<Type, string> formes;
+    private Type selected;
 
     #endregion
   }

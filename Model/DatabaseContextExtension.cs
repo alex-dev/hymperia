@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Hymperia.Model.Identity;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
@@ -10,35 +9,6 @@ namespace Hymperia.Model
 {
   public static class DatabaseContextExtension
   {
-    #region Find By Id
-
-    /// <summary>Query le <typeparamref name="T"/> avec une clé primaire <paramref name="id"/>.</summary>
-    /// <exception cref="InvalidOperationException">Aucun <typeparamref name="T"/> n'a été trouvé.</exception>
-    [NotNull]
-    public static T FindById<T>([NotNull] this IQueryable<T> data, int id) where T : IIdentity =>
-      data.Where(item => item.Id == id).First();
-
-    /// <summary>Query asynchronement le <typeparamref name="T"/> avec une clé primaire <paramref name="id"/>.</summary>
-    /// <exception cref="InvalidOperationException">Aucun <typeparamref name="T"/> n'a été trouvé.</exception>
-    [NotNull]
-    public static Task<T> FindByIdAsync<T>([NotNull] this IQueryable<T> data, int id, [NotNull] CancellationToken token = default) where T : IIdentity =>
-      data.Where(item => item.Id == id).FirstAsync(token);
-
-    /// <summary>Query asynchronement le <typeparamref name="T"/> avec une clé primaire <paramref name="id"/>.</summary>
-    /// <exception cref="ArgumentNullException"><paramref name="id"/> est <see cref="null"/>.</exception>
-    [CanBeNull]
-    public static T FindByIdOrDefault<T>([NotNull] this IQueryable<T> data, int id) where T : IIdentity =>
-      data.Where(item => item.Id == id).FirstOrDefault();
-
-    /// <summary>Query asynchronement le <typeparamref name="T"/> avec une clé primaire <paramref name="id"/>.</summary>
-    /// <returns>Le <typeparamref name="T"/> trouvé ou <see cref="null"/>.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="id"/> est <see cref="null"/>.</exception>
-    [CanBeNull]
-    public static Task<T> FindByIdOrDefaultAsync<T>([NotNull] this IQueryable<T> data, int id, [NotNull] CancellationToken token = default) where T : IIdentity =>
-      data.Where(item => item.Id == id).FirstOrDefaultAsync(token);
-
-    #endregion
-
     #region Includes
 
     /// <summary>Inclus explicitement les formes et les matériaux dans la query.</summary>

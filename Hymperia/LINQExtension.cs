@@ -12,7 +12,7 @@ namespace Hymperia.Facade
     /// <exception cref="ArgumentNullException"><paramref name="enumerable"/> or <paramref name="predicate"/> are <see cref="null"/>.</exception>
     /// <exception cref="InvalidOperationException"><paramref name="enumerable"/> is empty or no matches were found.</exception>
     [NotNull]
-    public static T SingleOrFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate)
+    public static T SingleOrFirst<T>(this IEnumerable<T> enumerable, Predicate<T> predicate)
     {
       if (enumerable is null)
         throw new ArgumentNullException(nameof(enumerable));

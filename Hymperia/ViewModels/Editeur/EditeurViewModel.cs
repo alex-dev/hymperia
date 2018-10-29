@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
@@ -17,6 +18,7 @@ using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
 using MoreLinq;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
@@ -127,9 +129,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors",
     Justification = @"The call is known and needed to perform proper initialization.")]
-    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes)
+    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] IEventAggregator aggregator, [NotNull] ConvertisseurFormes formes)
     {
       ContextFactory = factory;
+      aggregator.GetEvent<SelectedFormeChanged>().Subscribe(forme => SelectedForme = forme);
+      aggregator.GetEvent<SelectedMateriauChanged>().Subscribe(async materiau => SelectedMateriau = await QueryMateriau(materiau));
       ConvertisseurFormes = formes;
       AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
@@ -261,6 +265,16 @@ namespace Hymperia.Facade.ViewModels.Editeur
         }
 
         SetProperty(ref projet, _projet, onChanged, nameof(Projet));
+      }
+    }
+
+    public async Task<Materiau> QueryMateriau(int key)
+    {
+      await (Loading ?? Task.CompletedTask);
+
+      using (var context = ContextFactory.GetContext())
+      {
+        return await context.Materiaux.FindAsync(key);
       }
     }
 

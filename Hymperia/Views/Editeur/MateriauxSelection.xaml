@@ -1,11 +1,8 @@
-﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.MateriauxSelection"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" prism:ViewModelLocator.AutoWireViewModel="True">
+﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.MateriauxSelection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" prism:ViewModelLocator.AutoWireViewModel="True">
   <ListBox x:Name="ListBox" ItemsSource="{Binding Materiaux, Mode=OneWay, NotifyOnTargetUpdated=True}"
-      SelectedValuePath="Materiau"
-      SelectedValue="{Binding RegionContext, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
-      SelectionMode="Single">
+      SelectedValuePath="Materiau" SelectedValue="{Binding SelectedMateriau, Mode=TwoWay}" SelectionMode="Single">
     <ListBox.ItemsPanel>
       <ItemsPanelTemplate>
         <WrapPanel Orientation="Vertical" />
@@ -27,9 +24,9 @@
             <RowDefinition Height="20" />
           </Grid.RowDefinitions>
           <TextBlock Style="{StaticResource MaterialTextStyle}" Text="{Binding Nom}" />
-          <Rectangle Style="{StaticResource MaterialRectangleStyle}" Fill="{Binding Fill}"/>
+          <Rectangle Style="{StaticResource MaterialRectangleStyle}" Fill="{Binding Fill}" />
         </Grid>
       </DataTemplate>
     </ListBox.ItemTemplate>
   </ListBox>
-</base:RegionContextAwareUserControl>
+</UserControl>

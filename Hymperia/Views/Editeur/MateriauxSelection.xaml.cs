@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.ModelWrappers;
 
 namespace Hymperia.Facade.Views.Editeur
 {
-  public partial class MateriauxSelection : RegionContextAwareUserControl
+  public partial class MateriauxSelection : UserControl
   {
     public MateriauxSelection() : base()
     {
