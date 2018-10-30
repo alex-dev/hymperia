@@ -5,9 +5,9 @@
   <DockPanel>
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
       <TextBlock Text="{x:Static prop:Resources.TotalPrice}" />
-      <TextBlock x:Name="Total" Text="{b:CultureAwareBinding Projet.Prix, StringFormat={}{0:C}, Mode=OneWay}" />
+      <TextBlock Text="{b:CultureAwareBinding Projet.Prix, StringFormat={}{0:C}, Mode=OneWay}" />
     </StackPanel>
-    <ItemsControl x:Name="Materiaux" ItemsSource="{Binding Analyse, Mode=OneWay}">
+    <ItemsControl ItemsSource="{Binding Analyse, Mode=OneWay}">
       <ItemsControl.Template>
         <ControlTemplate>
           <ScrollViewer Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}">
