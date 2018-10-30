@@ -26,7 +26,7 @@
                     <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
                         ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
                         ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Height="90"
-                        Width="140">
+                        Width="140" Canvas.Bottom="0" Canvas.Left="0" Canvas.Right="0" Panel.ZIndex="0">
                       <ContentPresenter.Style>
                         <Style>
                           <Style.Resources>
