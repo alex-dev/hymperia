@@ -94,16 +94,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         isActive = value;
 
-        if (isActive)
-        {
+        if (value)
           OnActivation();
-        }
+        else
+          OnDeactivation();
 
         IsActiveChanged?.Invoke(this, null);
       }
     }
 
-    private void OnActivation() => MateriauxLoader.Loading = QueryMateriaux();
+    protected virtual void OnActivation() => MateriauxLoader.Loading = QueryMateriaux();
+    protected virtual void OnDeactivation() { }
 
     #endregion
 

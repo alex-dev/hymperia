@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Binding
 
     /// <summary>Les formes affichables.</summary>
-    [CanBeNull]
+    [NotNull]
     public SelectionMode? SelectionMode
     {
       get => mode;
@@ -35,11 +36,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     [CanBeNull]
     [ItemNotNull]
-    public BulkObservableCollection<MeshElement3D> Formes
-    {
-      get => formes;
-      private set => SetProperty(ref formes, value, () => FormesSelectionnees.Clear());
-    }
+    public BulkObservableCollection<MeshElement3D> Formes { get; } =
+      new BulkObservableCollection<MeshElement3D>();
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [CanBeNull]
@@ -52,7 +50,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Commands
 
     public AddFormeCommand AjouterForme { get; }
-    public DeleteFormeCommand SupprimerForme { get; }
+    public DelegateCommand<ICollection<MeshElement3D>> SupprimerFormes { get; }
+    private DeleteFormesCommand InnerSupprimerFormes { get; }
 
     #endregion
 
@@ -65,17 +64,61 @@ namespace Hymperia.Facade.ViewModels.Editeur
       ConvertisseurWrappers = wrappers;
 
       AjouterForme = commands.GetCommand<AddFormeCommand>();
-      SupprimerForme = commands.GetCommand<DeleteFormeCommand>();
+      SupprimerFormes = new DelegateCommand<ICollection<MeshElement3D>>(_SupprimerFormes, CanSupprimerFormes);
+      InnerSupprimerFormes = commands.GetCommand<DeleteFormesCommand>();
+
       SelectedChanged = events.GetEvent<SelectedFormesChanged>();
+      SelectedChanged.Subscribe(OnSelectedChanged, FilterSelectedChanged);
       events.GetEvent<SelectionModeChanged>().Subscribe(OnSelectionModeChanged);
       events.GetEvent<FormesChanged>().Subscribe(OnFormesChanged);
+
+      Formes.CollectionChanged += 
+      FormesSelectionnees.CollectionChanged += RaiseSelectedChanged;
+    }
+
+    #endregion
+
+    #region Command SupprimerForme
+
+    private void _SupprimerFormes(ICollection<MeshElement3D> meshes)
+    {
+      var formes = (from mesh in meshes
+                    let wrapper = (FormeWrapper)BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)
+                      ?.Bindings?.OfType<Binding>()?.First()?.Source
+                    where wrapper is FormeWrapper
+                    select wrapper).ToArray();
+
+      if (InnerSupprimerFormes.CanExecute(formes))
+      {
+        InnerSupprimerFormes.Execute(formes);
+      }
+    }
+
+    private bool CanSupprimerFormes(ICollection<MeshElement3D> meshes) => meshes.Any();
+
+    #endregion
+
+    #region Inner Event Handlers
+
+    protected virtual void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      var newitems = from MeshElement3D mesh in (IEnumerable)e.NewItems ?? Enumerable.Empty<MeshElement3D>()
+                     let wrapper = ConvertisseurWrappers.Convertir(mesh)
+                     where wrapper is FormeWrapper
+                     select wrapper;
+      var olditems = from MeshElement3D mesh in (IEnumerable)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
+                     let wrapper = ConvertisseurWrappers.Convertir(mesh)
+                     where wrapper is FormeWrapper
+                     select wrapper;
+
+      RaiseSelectedChanged(new NotifyCollectionChangedEventArgs(e.Action, newitems, olditems));
     }
 
     #endregion
 
     #region Aggregated Event Handlers
 
-    private void OnSelectionModeChanged(SelectionMode? mode) => SelectionMode = mode;
+    protected virtual void OnSelectionModeChanged(SelectionMode? mode) => SelectionMode = mode;
 
     private void OnFormesChanged(NotifyCollectionChangedEventArgs e)
     {
@@ -83,7 +126,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
                      select ConvertisseurWrappers.Convertir(forme);
       var olditems = from FormeWrapper wrapper in (IEnumerable)e.OldItems ?? Enumerable.Empty<FormeWrapper>()
                      join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
-                       on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
+                       on wrapper equals ConvertisseurWrappers.Convertir(mesh)
                      select mesh;
 
       switch (e.Action)
@@ -93,24 +136,34 @@ namespace Hymperia.Facade.ViewModels.Editeur
         case NotifyCollectionChangedAction.Remove:
           Formes.RemoveRange(olditems); break;
         case NotifyCollectionChangedAction.Replace:
-          Formes[Formes.IndexOf(olditems.Single())] = newitems.Single(); break;
+          if (e.NewItems.Count > 1 || e.OldItems.Count > 1)
+          {
+            Formes.RemoveRange(olditems);
+            Formes.AddRange(newitems);
+          }
+          else
+          {
+            Formes[Formes.IndexOf(olditems.Single())] = newitems.Single();
+          }
+
+          break;
         case NotifyCollectionChangedAction.Reset:
           Formes.Clear(); break;
       }
     }
 
-    private void OnSelectedChanged(object sender, NotifyCollectionChangedEventArgs e)
+    protected virtual void OnSelectedChanged(NotifyCollectionChangedEventArgs e)
     {
       if (IsBusy())
         return;
 
       var newitems = from FormeWrapper wrapper in (IEnumerable)e.NewItems ?? Enumerable.Empty<MeshElement3D>()
                      join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
-                       on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
+                       on wrapper equals ConvertisseurWrappers.Convertir(mesh)
                      select mesh;
       var olditems = from FormeWrapper wrapper in (IEnumerable)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
                      join MeshElement3D mesh in FormesSelectionnees ?? Enumerable.Empty<MeshElement3D>()
-                       on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
+                       on wrapper equals ConvertisseurWrappers.Convertir(mesh)
                      select mesh;
 
       using (Monitor.Enter())
@@ -122,33 +175,33 @@ namespace Hymperia.Facade.ViewModels.Editeur
           case NotifyCollectionChangedAction.Remove:
             FormesSelectionnees.RemoveRange(olditems); break;
           case NotifyCollectionChangedAction.Replace:
-            FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single(); break;
+            if (e.NewItems.Count > 1 || e.OldItems.Count > 1)
+            {
+              FormesSelectionnees.RemoveRange(olditems);
+              FormesSelectionnees.AddRange(newitems);
+            }
+            else
+            {
+              FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
+            }
+
+            break;
           case NotifyCollectionChangedAction.Reset:
             FormesSelectionnees.Clear(); break;
         }
       }
     }
 
-    private void RaiseSelectedChanged(object sender, NotifyCollectionChangedEventArgs e)
+    protected virtual bool FilterSelectedChanged(NotifyCollectionChangedEventArgs e) => IsBusy();
+
+    protected virtual void RaiseSelectedChanged(NotifyCollectionChangedEventArgs args)
     {
       if (IsBusy())
         return;
 
-      /*var formes = ((EditeurViewModel)RegionContext).Formes;
-      var selection = ((EditeurViewModel)RegionContext).FormesSelectionnees;
-      var newitems = from MeshElement3D mesh in (IEnumerable)e.NewItems ?? Enumerable.Empty<MeshElement3D>()
-                     join FormeWrapper wrapper in formes ?? Enumerable.Empty<FormeWrapper>()
-                       on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
-                     select wrapper;
-      var olditems = from MeshElement3D mesh in (IEnumerable)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
-                     join FormeWrapper wrapper in selection ?? Enumerable.Empty<FormeWrapper>()
-                       on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
-                     select wrapper;*/
-
-
       using (Monitor.Enter())
       {
-        SelectedChanged.Publish(e);
+        SelectedChanged.Publish(args);
       }
     }
 

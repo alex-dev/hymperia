@@ -6,6 +6,9 @@ using Hymperia.Facade.ModelWrappers;
 using JetBrains.Annotations;
 using Hymperia.Facade.Converters;
 using Hymperia.Facade.Properties;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Media.Media3D;
 
 namespace Hymperia.Facade.Services
 {
@@ -16,6 +19,16 @@ namespace Hymperia.Facade.Services
     {
       TransformConverter = transform;
     }
+
+    #region Inverser
+
+    /// <summary>Obtient le <see cref="FormeWrapper"/> lié à <paramref name="mesh"/>.</summary>
+    [CanBeNull]
+    public FormeWrapper Convertir([NotNull] MeshElement3D mesh) =>
+      (FormeWrapper)BindingOperations.GetMultiBinding(mesh, ModelVisual3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source;
+
+
+    #endregion
 
     #region Convertir
 

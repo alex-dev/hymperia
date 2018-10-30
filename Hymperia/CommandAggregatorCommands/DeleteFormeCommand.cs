@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using Hymperia.Facade.ModelWrappers;
 using Prism.Commands;
 
 namespace Hymperia.Facade.CommandAggregatorCommands
 {
-  public class DeleteFormeCommand : DelegateCommand
+  public class DeleteFormesCommand : DelegateCommand<ICollection<FormeWrapper>>
   {
     /// <inheritdoc />
-    public DeleteFormeCommand(Action execute) : base(execute) { }
+    public DeleteFormesCommand(Action<ICollection<FormeWrapper>> execute) : base(execute) { }
 
     /// <inheritdoc />
-    public DeleteFormeCommand(Action execute, Func<bool> canExecute) : base(execute, canExecute) { }
+    public DeleteFormesCommand(Action<ICollection<FormeWrapper>> execute, Func<ICollection<FormeWrapper>, bool> canExecute) : base(execute, canExecute) { }
   }
 }
