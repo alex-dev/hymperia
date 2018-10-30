@@ -54,12 +54,14 @@ namespace Hymperia.Facade.ViewModels
 
     public ICommand NavigateToProjet { get; private set; }
     public ICommand SupprimerProjet { get; private set; }
+    public ICommand AjouterProjet { get; private set; }
 
     #endregion
 
     #region Interaction Requests
 
     public InteractionRequest<IConfirmation> SupprimerProjetRequest { get; } = new InteractionRequest<IConfirmation>();
+    public InteractionRequest<IConfirmation> AjouterProjetRequest { get; } = new InteractionRequest<IConfirmation>();
 
     #endregion
 
