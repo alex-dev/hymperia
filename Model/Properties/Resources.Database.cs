@@ -11,7 +11,9 @@ namespace Hymperia.Model.Properties
     private static readonly ResourceManager DBManager = new ResourceManager();
 
     [CanBeNull]
-    public static async Task<LocalizedMateriau> GetMateriau([NotNull] string key) => await DBManager.GetMateriau(key);
-    public static async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux() => await DBManager.LoadMateriaux();
+    public static async Task<LocalizedMateriau> GetMateriau([NotNull] string key) =>
+      await DBManager.GetMateriau(key).ConfigureAwait(false);
+    public static async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux() =>
+      await DBManager.LoadMateriaux().ConfigureAwait(false);
   }
 }

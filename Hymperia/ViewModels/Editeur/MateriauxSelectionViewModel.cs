@@ -66,8 +66,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       using (var context = Factory.GetContext())
       {
-        return Materiaux =
-          await (await ConvertisseurMateriaux.Convertir(context.Materiaux.AsNoTracking())).ToArrayAsync();
+        return Materiaux = await ConvertisseurMateriaux.Convertir(context.Materiaux.AsNoTracking());
       }
     }
 

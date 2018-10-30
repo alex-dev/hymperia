@@ -64,14 +64,17 @@ namespace Hymperia.Model.Migrations
     /// <param name="token">Un token d'annulation.</param>
     public async Task Initialize([NotNull] DatabaseContext context, [NotNull] CancellationToken token = default)
     {
-      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token);
+      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token).ConfigureAwait(false);
+      await context.SaveChangesAsync(token).ConfigureAwait(false);
+
+      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token).ConfigureAwait(false)), token);
       await context.SaveChangesAsync(token);
 
-      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token)), token);
-      await context.SaveChangesAsync(token);
-
-      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token)).ToArray();
-      await context.SaveChangesAsync(token);
+      InitializeAcces(
+        await context.Utilisateurs.ToArrayAsync(token).ConfigureAwait(false),
+        await context.Projets.ToArrayAsync(token).ConfigureAwait(false))
+        .ToArray();
+      await context.SaveChangesAsync(token).ConfigureAwait(false);
     }
 
     [NotNull]

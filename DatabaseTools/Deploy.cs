@@ -9,14 +9,14 @@ namespace Hymperia.DatabaseTools
     {
       await Task.WhenAll(
         MigrateMain(initialize),
-        MigrateLocalized(initialize));
+        MigrateLocalized(initialize)).ConfigureAwait(false);
     }
 
     private static async Task MigrateMain(bool intialize)
     {
       using (var context = new DatabaseContext())
       {
-        await context.Migrate(intialize);
+        await context.Migrate(intialize).ConfigureAwait(false);
       }
     }
 
@@ -24,7 +24,7 @@ namespace Hymperia.DatabaseTools
     {
       using (var context = new LocalizationContext())
       {
-        await context.Migrate(intialize);
+        await context.Migrate(intialize).ConfigureAwait(false);
       }
     }
   }

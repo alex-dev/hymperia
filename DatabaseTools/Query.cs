@@ -15,7 +15,7 @@ namespace Hymperia.DatabaseTools
     {
       using (var context = new DatabaseContext())
       {
-        return await context.Materiaux.ToListAsync();
+        return await context.Materiaux.ToListAsync().ConfigureAwait(false);
       }
     }
 
@@ -25,7 +25,7 @@ namespace Hymperia.DatabaseTools
     {
       using (var context = new DatabaseContext())
       {
-        return await context.Projets.ToListAsync();
+        return await context.Projets.ToListAsync().ConfigureAwait(false);
       }
     }
 
@@ -35,7 +35,7 @@ namespace Hymperia.DatabaseTools
     {
       using (var context = new DatabaseContext())
       {
-        return await context.Utilisateurs.IncludeAcces().ToListAsync();
+        return await context.Utilisateurs.IncludeAcces().ToListAsync().ConfigureAwait(false);
       }
     }
   }

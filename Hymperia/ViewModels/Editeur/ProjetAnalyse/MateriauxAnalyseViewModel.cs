@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
-using Hymperia.Model.Properties;
 using JetBrains.Annotations;
-using MoreLinq;
 using Prism.Events;
 
 namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
@@ -17,6 +15,12 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
     #region Properties
 
     #region Bindings
+
+    public double Prix
+    {
+      get => prix;
+      private set => SetProperty(ref prix, value);
+    }
 
     /// <remarks>Cannot use magic tuples here because I need bindable values.</remarks>
     public IDictionary<MateriauWrapper, Tuple<double, double>> Analyse
@@ -41,17 +45,13 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
 
     #region Analyse
 
-    protected async Task MakeAnalyse() =>
-      // C# doesn't support deconstruction in from/let clause... Yet!
-      // Analyse = (from (materiau, prix) in Projet.PrixMateriaux
-      Analyse = (from pair in Projet.PrixMateriaux
-                   let materiau = pair.Key
-                   let prix = pair.Value
-                 join localized in await Resources.LoadMateriaux()
-                   on materiau.Nom equals localized.Key
-                 select new KeyValuePair<MateriauWrapper, Tuple<double, double>>(
-                   new MateriauWrapper(materiau, localized.Value),
-                   Tuple.Create(prix / materiau.Prix, prix))).ToDictionary();
+    protected async Task MakeAnalyse()
+    {
+      Analyse = await ConvertisseurMateriaux.Convertir(Projet.PrixMateriaux);
+      // Rather than forcing a full enumeration of the dataset, better optimize a bit and do the sum right here.
+      // Anyway, we gotta affect something to Prix so bindings can update.
+      Prix = Analyse.Sum(pair => pair.Value.Item2);
+    }
 
     #endregion
 
@@ -74,6 +74,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
 
     #region Private Fields
 
+    private double prix;
     private IDictionary<MateriauWrapper, Tuple<double, double>> analyse;
 
     #endregion
