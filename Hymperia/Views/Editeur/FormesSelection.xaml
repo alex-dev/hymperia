@@ -3,18 +3,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
     prism:ViewModelLocator.AutoWireViewModel="True">
-  <ListBox x:Name="ListBox" ItemsSource="{Binding Formes, Mode=OneWay,NotifyOnTargetUpdated=True}" SelectedValuePath="Key"
-      SelectedValue="{Binding RegionContext, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
-      SelectionMode="Single">
-    <ListBox.ItemsPanel>
-      <ItemsPanelTemplate>
-        <WrapPanel Orientation="Horizontal" />
-      </ItemsPanelTemplate>
-    </ListBox.ItemsPanel>
-    <ListBox.ItemTemplate>
-      <DataTemplate>
-        <Image Style="{StaticResource FormeImageStyle}" do:ImageHelper.SourceResourceKey="{Binding Value}" />
-      </DataTemplate>
-    </ListBox.ItemTemplate>
-  </ListBox>
+  <StackPanel Orientation="Horizontal">
+    <ListBox x:Name="ListBox" Style="{StaticResource FormeSelection}" ItemsSource="{Binding Formes, Mode=OneWay,NotifyOnTargetUpdated=True}"
+        SelectedValuePath="Key"
+        SelectedValue="{Binding RegionContext, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}"
+        SelectionMode="Single">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <VirtualizingStackPanel>
+            <Image do:ImageHelper.SourceResourceKey="{Binding Value}" />
+          </VirtualizingStackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </StackPanel>
 </base:RegionContextAwareUserControl>
