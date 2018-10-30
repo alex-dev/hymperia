@@ -129,6 +129,7 @@
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Converters\Point3DToPointConverter.cs" />
     <Compile Include="Converters\TransformConverter.cs" />
+    <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />

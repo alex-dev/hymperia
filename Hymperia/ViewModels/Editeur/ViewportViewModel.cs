@@ -59,8 +59,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public ViewportViewModel([NotNull] ConvertisseurWrappers wrappers, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public ViewportViewModel([NotNull] NotifyCollectionChangedCopyFactory copy, [NotNull] ConvertisseurWrappers wrappers, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
+      NotifyCollectionChangedCopyFactory = copy;
       ConvertisseurWrappers = wrappers;
 
       AjouterForme = commands.GetCommand<AddFormeCommand>();
@@ -72,8 +73,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       events.GetEvent<SelectionModeChanged>().Subscribe(OnSelectionModeChanged);
       events.GetEvent<FormesChanged>().Subscribe(OnFormesChanged);
 
-      Formes.CollectionChanged += 
-      FormesSelectionnees.CollectionChanged += RaiseSelectedChanged;
+      Formes.CollectionChanged += OnFormesChanged;
+      FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
     }
 
     #endregion
@@ -100,19 +101,20 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Inner Event Handlers
 
-    protected virtual void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    protected virtual void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-      var newitems = from MeshElement3D mesh in (IEnumerable)e.NewItems ?? Enumerable.Empty<MeshElement3D>()
-                     let wrapper = ConvertisseurWrappers.Convertir(mesh)
-                     where wrapper is FormeWrapper
-                     select wrapper;
-      var olditems = from MeshElement3D mesh in (IEnumerable)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
-                     let wrapper = ConvertisseurWrappers.Convertir(mesh)
-                     where wrapper is FormeWrapper
-                     select wrapper;
-
-      RaiseSelectedChanged(new NotifyCollectionChangedEventArgs(e.Action, newitems, olditems));
+      if (e.Action == NotifyCollectionChangedAction.Reset)
+      {
+        FormesSelectionnees.Clear();
+      }
+      else if (e.OldItems is IEnumerable old)
+      {
+        FormesSelectionnees.RemoveRange(old.Cast<MeshElement3D>());
+      }
     }
+
+    protected virtual void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e) =>
+      RaiseSelectedChanged(NotifyCollectionChangedCopyFactory.Copy<MeshElement3D, FormeWrapper>(e, ConvertisseurWrappers.Convertir));
 
     #endregion
 
@@ -209,6 +211,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Services
 
+    [NotNull]
+    private readonly NotifyCollectionChangedCopyFactory NotifyCollectionChangedCopyFactory;
     [NotNull]
     private readonly ConvertisseurWrappers ConvertisseurWrappers;
     [NotNull]
