@@ -56,13 +56,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region SelectedChanged Handling
 
-    protected virtual void OnSelectedChanged(Type type)
-    {
-      if (type != SelectedForme)
-      {
-        SelectedForme = type;
-      }
-    }
+    protected virtual void OnSelectedChanged(Type type) => SelectedForme = type;
 
     protected virtual bool FilterSelectedChanged(Type type) => type != SelectedForme;
 

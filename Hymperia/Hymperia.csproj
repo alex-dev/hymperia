@@ -101,6 +101,8 @@
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
+    <Compile Include="DictionaryExtension.cs" />
+    <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedMateriauChanged.cs" />
     <Compile Include="EventDelegateExtension.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
+    <Compile Include="Services\ConvertisseurMateriaux.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Converters\Point3DToPointConverter.cs" />
     <Compile Include="Converters\TransformConverter.cs" />
@@ -127,6 +130,8 @@
     <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
     <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
@@ -139,8 +144,8 @@
     <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
       <DependentUpon>MateriauxSelection.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
-      <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\ProjetAnalyse\MateriauxAnalyse.xaml.cs">
+      <DependentUpon>MateriauxAnalyse.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
@@ -178,7 +183,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PrixAnalyseMateriaux.xaml">
+    <Page Include="Views\Editeur\ProjetAnalyse\MateriauxAnalyse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -326,5 +331,6 @@
       <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

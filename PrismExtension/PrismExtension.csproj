@@ -48,9 +48,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncLoader.cs" />
+    <Compile Include="AsyncLoader{T}.cs" />
     <Compile Include="Bindings\CultureAwareBinding.cs" />
     <Compile Include="Events\PubSubEventExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations">
+      <Version>2018.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Ninject">
+      <Version>7.1.0.431</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mvvm\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

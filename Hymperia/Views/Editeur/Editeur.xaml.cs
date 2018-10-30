@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Hymperia.Facade.Views.Editeur.ProjetAnalyse;
 using Hymperia.Model.Modeles;
 using Prism.Regions;
 
@@ -43,7 +44,7 @@ namespace Hymperia.Facade.Views.Editeur
       manager.RegisterViewWithRegion("FormesSelectionRegion", typeof(FormesSelection));
       manager.RegisterViewWithRegion("MateriauxSelectionRegion", typeof(MateriauxSelection));
       manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
-      manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(PrixAnalyseMateriaux));
+      manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(MateriauxAnalyse));
       manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
     }
 

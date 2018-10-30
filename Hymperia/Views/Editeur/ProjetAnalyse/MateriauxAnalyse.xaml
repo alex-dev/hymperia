@@ -1,16 +1,13 @@
-﻿<base:RegionContextAwareUserControl x:Class="Hymperia.Facade.Views.Editeur.PrixAnalyseMateriaux"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:b="clr-namespace:Prism.Bindings;assembly=PrismExtension" xmlns:base="clr-namespace:Hymperia.Facade.BaseClasses"
-    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.ProjetAnalyse.MateriauxAnalyse"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
+    xmlns:b="clr-namespace:Prism.Bindings;assembly=PrismExtension" prism:ViewModelLocator.AutoWireViewModel="True">
   <DockPanel>
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
       <TextBlock Text="{x:Static prop:Resources.TotalPrice}" />
-      <TextBlock Name="PrixTotal"
-          Text="{b:CultureAwareBinding Projet.Prix, StringFormat={}{0:C}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}" />
+      <TextBlock x:Name="Total" Text="{b:CultureAwareBinding Projet.Prix, StringFormat={}{0:C}, Mode=OneWay}" />
     </StackPanel>
-    <ItemsControl Name="MateriauxPrix"
-        ItemsSource="{Binding Projet.PrixMateriaux, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type base:RegionContextAwareUserControl}}}">
+    <ItemsControl x:Name="Materiaux" ItemsSource="{Binding Analyse, Mode=OneWay}">
       <ItemsControl.Template>
         <ControlTemplate>
           <ScrollViewer Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}">
@@ -30,13 +27,16 @@
               <TextBlock Text="{b:CultureAwareBinding Key.Prix, StringFormat={}{0:C}}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{x:Static prop:Resources.Volume}" />
+              <TextBlock Text="{Binding Value.Item1, StringFormat={}{0:N}}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
               <TextBlock Text="{x:Static prop:Resources.Price}" />
-              <TextBlock Text="{b:CultureAwareBinding Value, StringFormat={}{0:C}}" />
+              <TextBlock Text="{b:CultureAwareBinding Value.Item2, StringFormat={}{0:C}}" />
             </StackPanel>
           </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
   </DockPanel>
-
-</base:RegionContextAwareUserControl>
+</UserControl>

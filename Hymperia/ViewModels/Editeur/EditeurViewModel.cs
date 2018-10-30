@@ -127,6 +127,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
+    private readonly ProjetChanged ProjetChanged;
+
     [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors",
     Justification = @"The call is known and needed to perform proper initialization.")]
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] IEventAggregator aggregator, [NotNull] ConvertisseurFormes formes)
@@ -134,6 +136,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       ContextFactory = factory;
       aggregator.GetEvent<SelectedFormeChanged>().Subscribe(forme => SelectedForme = forme);
       aggregator.GetEvent<SelectedMateriauChanged>().Subscribe(async materiau => SelectedMateriau = await QueryMateriau(materiau));
+      ProjetChanged = aggregator.GetEvent<ProjetChanged>();
       ConvertisseurFormes = formes;
       AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
@@ -299,11 +302,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
         Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
         ResetChangeTracker();
       }
+
+      ProjetChanged.Publish(Projet);
     }
 
     private void FormeHasChanged(object sender, PropertyChangedEventArgs e)
     {
       HasBeenModified(null, null);
+      ProjetChanged.Publish(Projet);
     }
 
     #endregion

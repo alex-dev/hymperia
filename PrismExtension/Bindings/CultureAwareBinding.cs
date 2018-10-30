@@ -12,7 +12,7 @@ namespace Prism.Bindings
       ConverterCulture = CultureInfo.CurrentCulture;
     }
 
-    public CultureAwareBinding(string path)
+    public CultureAwareBinding(string path) : base(path)
     {
       ConverterCulture = CultureInfo.CurrentCulture;
     }

@@ -6,7 +6,6 @@ using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
-using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Prism;
@@ -40,28 +39,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Asynchronous Loading
 
-    [CanBeNull]
-    private Task Loading
-    {
-      get => loading;
-      set => SetProperty(ref loading, value, () =>
-      {
-        IsLoading = true;
-        value
-          .ContinueWith(
-            result => throw result.Exception.Flatten(),
-            default,
-            TaskContinuationOptions.OnlyOnFaulted,
-            TaskScheduler.FromCurrentSynchronizationContext())
-          .ContinueWith(result => IsLoading = false, TaskScheduler.FromCurrentSynchronizationContext());
-      });
-    }
-
-    public bool IsLoading
-    {
-      get => isLoading;
-      private set => SetProperty(ref isLoading, value);
-    }
+    public AsyncLoader<ICollection<MateriauWrapper>> MateriauxLoader { get; } = new AsyncLoader<ICollection<MateriauWrapper>>();
 
     #endregion
 
@@ -69,9 +47,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public MateriauxSelectionViewModel([NotNull] ContextFactory factory, [NotNull] IEventAggregator aggregator)
+    public MateriauxSelectionViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurMateriaux convertisseur, [NotNull] IEventAggregator aggregator)
     {
       Factory = factory;
+      ConvertisseurMateriaux = convertisseur;
       SelectedChanged = aggregator.GetEvent<SelectedMateriauChanged>();
       SelectedChanged.Subscribe(OnSelectedChanged, FilterSelectedChanged);
     }
@@ -80,17 +59,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Queries
 
-    private async Task QueryMateriaux()
+    private async Task<ICollection<MateriauWrapper>> QueryMateriaux()
     {
-      if (!IsLoading)
+      if (MateriauxLoader.IsLoading)
+        return await MateriauxLoader.Loading;
+
+      using (var context = Factory.GetContext())
       {
-        using (var context = Factory.GetContext())
-        {
-          Materiaux = await (from materiau in context.Materiaux.AsNoTracking()
-                             join localized in await Resources.LoadMateriaux()
-                               on materiau.Nom equals localized.Key
-                             select new MateriauWrapper(materiau, localized.Value)).ToArrayAsync();
-        }
+        return Materiaux =
+          await (await ConvertisseurMateriaux.Convertir(context.Materiaux.AsNoTracking())).ToArrayAsync();
       }
     }
 
@@ -98,13 +75,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region SelectedChanged Handling
 
-    protected virtual void OnSelectedChanged(int key)
-    {
-      if (key != SelectedMateriau.Id)
-      {
-        SelectedMateriau = Materiaux.Single(materiau => materiau.Materiau.Id == key).Materiau;
-      }
-    }
+    protected virtual void OnSelectedChanged(int key) =>
+      SelectedMateriau = Materiaux.Single(materiau => materiau.Materiau.Id == key).Materiau;
 
     protected virtual bool FilterSelectedChanged(int key) => key != SelectedMateriau.Id;
 
@@ -132,7 +104,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    private void OnActivation() => Loading = QueryMateriaux();
+    private void OnActivation() => MateriauxLoader.Loading = QueryMateriaux();
 
     #endregion
 
@@ -142,14 +114,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private readonly ContextFactory Factory;
     [NotNull]
     private readonly SelectedMateriauChanged SelectedChanged;
+    [NotNull]
+    private readonly ConvertisseurMateriaux ConvertisseurMateriaux;
 
     #endregion
 
     #region Private Fields
 
     private bool isActive;
-    private Task loading;
-    private bool isLoading;
     private ICollection<MateriauWrapper> materiaux;
     private Materiau selected;
 
