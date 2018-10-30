@@ -1,6 +1,8 @@
 ﻿<UserControl x:Class="Hymperia.Facade.Views.AffichageProjets" x:Name="view"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:popups="clr-namespace:Hymperia.Facade.Views.Popups" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Horizontal">
     <StackPanel Orientation="Horizontal">
@@ -39,10 +41,11 @@
       </ListBox>
     </StackPanel>
     <ListBox ItemsSource="{Binding SelectedItems}" />
-    <ListBox ItemsSource="{Binding SelectedItems, ElementName=ListBox}"/>
+    <ListBox ItemsSource="{Binding SelectedItems, ElementName=ListBox}" />
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-      <Button x:Name="btnSuppression" Content="Effacer projet" Command="{Binding SupprimerProjet}"
+      <Button x:Name="btnSuppression" Content="x:Static prop:Resources.Supprimer" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
+      <Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>
     </StackPanel>
-  </StackPanel>
+    </StackPanel>
 </UserControl>
