@@ -8,6 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValueConverters.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/FormesSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/Images.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/Themes/Dark.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <!--<Style x:Key="ListBox" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Style.Resources>

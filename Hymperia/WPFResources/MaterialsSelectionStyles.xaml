@@ -5,25 +5,56 @@
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Style x:Key="MaterialTextStyle" TargetType="{x:Type TextBlock}">
-    <Setter Property="Foreground" Value="DarkCyan" />
-    <Setter Property="FontSize" Value="25" />
-    <Setter Property="TextAlignment" Value="Center" />
-    <Setter Property="VerticalAlignment" Value="Top" />
-    <Setter Property="MaxHeight" Value="1000" />
-    <Setter Property="Height" Value="50" />
-    <Setter Property="Width" Value="70" />
-    <Setter Property="MaxWidth" Value="300" />
-  </Style>
-  <Style x:Key="MaterialRectangleStyle" TargetType="{x:Type Rectangle}">
-    <Setter Property="Height" Value="150" />
-    <Setter Property="Width" Value="150" />
-  </Style>
-  <Style x:Key="MaterialSelectionPanel" TargetType="{x:Type StackPanel}">
-    
-  </Style>
+
   <Style x:Key="MaterialSelection" TargetType="{x:Type ListBox}">
-    <Setter Property="OverridesDefaultStyle" Value="True"/>
-    <Setter Property="ItemContainerStyle" Value="{StaticResource MaterialSelectionPanel}"/>
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="ItemContainerStyle">
+      <Setter.Value>
+        <Style TargetType="{x:Type ListBoxItem}">
+          <!--<Setter Property="OverridesDefaultStyle" Value="True" />
+          <Setter Property="SnapsToDevicePixels" Value="True" />
+          <Setter Property="Margin" Value="5" />
+          <Setter Property="Height" Value="100" />
+          <Setter Property="Width" Value="150" />
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                <Border SnapsToDevicePixels="True" BorderThickness="2" CornerRadius="2" BorderBrush="DarkSlateGray"
+                    Background="LightSkyBlue">
+                  <Canvas Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
+                        ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                        ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Height="90"
+                        Width="140" Canvas.Bottom="0" Canvas.Left="0" Canvas.Right="0" Panel.ZIndex="0">
+                      <ContentPresenter.Style>
+                        <Style>
+                          <Style.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                              <Setter Property="Foreground" Value="DarkCyan" />
+                              <Setter Property="FontSize" Value="25" />
+                              <Setter Property="Padding" Value="15,20,15,10" />
+                              <Setter Property="TextAlignment" Value="Center" />
+                              <Setter Property="HorizontalAlignment" Value="Stretch" />
+                              <Setter Property="Panel.ZIndex" Value="1" />
+                            </Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                              <Setter Property="Height" Value="40" />
+                              <Setter Property="Width" Value="80" />
+                              <Setter Property="VerticalAlignment" Value="Top" />
+                              <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                          </Style.Resources>
+                        </Style>
+                      </ContentPresenter.Style>
+                    </ContentPresenter>
+                  </Canvas>
+                </Border>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>-->
+        </Style>
+      </Setter.Value>
+    </Setter>
   </Style>
 </ResourceDictionary>
