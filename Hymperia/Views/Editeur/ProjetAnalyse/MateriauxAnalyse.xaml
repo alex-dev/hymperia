@@ -7,36 +7,17 @@
       <TextBlock Text="{x:Static prop:Resources.TotalPrice}" />
       <TextBlock Text="{b:CultureAwareBinding Prix, StringFormat={}{0:C}, Mode=OneWay}" />
     </StackPanel>
-    <ItemsControl ItemsSource="{Binding Analyse, Mode=OneWay}">
-      <ItemsControl.Template>
-        <ControlTemplate>
-          <ScrollViewer Padding="{TemplateBinding Padding}" Height="{TemplateBinding Height}">
-            <ItemsPresenter />
-          </ScrollViewer>
-        </ControlTemplate>
-      </ItemsControl.Template>
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{x:Static prop:Resources.Material}" />
-              <TextBlock Text="{Binding Key.Nom}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{x:Static prop:Resources.MaterialPrice}" />
-              <TextBlock Text="{b:CultureAwareBinding Key.Prix, StringFormat={}{0:C}}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{x:Static prop:Resources.Volume}" />
-              <TextBlock Text="{Binding Value.Item1, StringFormat={}{0:N}}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{x:Static prop:Resources.Price}" />
-              <TextBlock Text="{b:CultureAwareBinding Value.Item2, StringFormat={}{0:C}}" />
-            </StackPanel>
-          </StackPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <DataGrid ItemsSource="{Binding Analyse, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True"
+        CanUserAddRows="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="{x:Static prop:Resources.Material}" Binding="{Binding Key.Nom}" />
+        <DataGridTextColumn Header="{x:Static prop:Resources.MaterialPrice}"
+            Binding="{b:CultureAwareBinding Key.Prix, StringFormat={}{0:C}}" />
+        <DataGridTextColumn Header="{x:Static prop:Resources.Volume}"
+            Binding="{Binding Value.Item1, StringFormat={}{0:N}}" />
+        <DataGridTextColumn Header="{x:Static prop:Resources.Price}"
+            Binding="{b:CultureAwareBinding Value.Item2, StringFormat={}{0:C}}" />
+      </DataGrid.Columns>
+    </DataGrid>
   </DockPanel>
 </UserControl>
