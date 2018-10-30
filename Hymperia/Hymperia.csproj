@@ -104,6 +104,7 @@
     <Compile Include="DictionaryExtension.cs" />
     <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
+    <Compile Include="EventAggregatorMessages\SelectedFormesChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedMateriauChanged.cs" />
     <Compile Include="EventDelegateExtension.cs" />
     <Compile Include="EventHandlerExtension.cs" />

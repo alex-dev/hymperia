@@ -54,7 +54,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region SelectedChanged Handling
+    #region Aggregated Event Handlers
 
     protected virtual void OnSelectedChanged(Type type) => SelectedForme = type;
 

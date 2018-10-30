@@ -1,5 +1,7 @@
-﻿<prism:PrismApplication x:Class="Hymperia.Facade.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/">
+﻿<prism:PrismExtensionApplication x:Class="Hymperia.Facade.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="clr-namespace:Prism.Ninject;assembly=PrismExtension">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -17,4 +19,4 @@
       </Style>-->
     </ResourceDictionary>
   </Application.Resources>
-</prism:PrismApplication>
+</prism:PrismExtensionApplication>

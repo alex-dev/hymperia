@@ -55,7 +55,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
 
     #endregion
 
-    #region ProjetChanged Handling
+    #region Aggregated Event Handlers
 
     protected override void OnProjetChanged(Projet projet)
     {

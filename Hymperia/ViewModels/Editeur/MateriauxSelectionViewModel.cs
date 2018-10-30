@@ -72,7 +72,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region SelectedChanged Handling
+    #region Aggregated Event Handlers
 
     protected virtual void OnSelectedChanged(int key) =>
       SelectedMateriau = Materiaux.Single(materiau => materiau.Materiau.Id == key).Materiau;

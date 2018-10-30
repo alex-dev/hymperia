@@ -4,20 +4,32 @@ using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Input;
 using HelixToolkit.Wpf;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using JetBrains.Annotations;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class ViewportViewModel : RegionContextAwareViewModel
+  public class ViewportViewModel : BindableBase
   {
     #region Properties
 
     #region Binding
+
+    /// <summary>Les formes affichables.</summary>
+    [CanBeNull]
+    public SelectionMode? SelectionMode
+    {
+      get => mode;
+      private set => SetProperty(ref mode, value);
+    }
 
     /// <summary>Les formes affichables.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
@@ -26,29 +38,20 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public BulkObservableCollection<MeshElement3D> Formes
     {
       get => formes;
-      private set => SetProperty(ref formes, value);
+      private set => SetProperty(ref formes, value, () => FormesSelectionnees.Clear());
     }
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [CanBeNull]
     [ItemNotNull]
-    public BulkObservableCollection<MeshElement3D> FormesSelectionnees
-    {
-      get => selected;
-      private set
-      {
-        selected?.Remove(FormesSelectionneesChanged);
-        value.CollectionChanged += FormesSelectionneesChanged;
-        SetProperty(ref selected, value);
-      }
-    }
+    public BulkObservableCollection<MeshElement3D> FormesSelectionnees { get; } = new BulkObservableCollection<MeshElement3D>();
 
     #endregion
 
     #region Commands
 
-    public ICommand AjouterForme { get; private set; }
-    public ICommand SupprimerForme { get; private set; }
+    public AddFormeCommand AjouterForme { get; }
+    public DeleteFormeCommand SupprimerForme { get; }
 
     #endregion
 
@@ -56,93 +59,24 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public ViewportViewModel([NotNull] ConvertisseurWrappers wrappers)
+    public ViewportViewModel([NotNull] ConvertisseurWrappers wrappers, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
-      Monitor = new SimpleMonitor();
       ConvertisseurWrappers = wrappers;
-      FormesSelectionnees = new BulkObservableCollection<MeshElement3D>();
+
+      AjouterForme = commands.GetCommand<AddFormeCommand>();
+      SupprimerForme = commands.GetCommand<DeleteFormeCommand>();
+      SelectedChanged = events.GetEvent<SelectedFormesChanged>();
+      events.GetEvent<SelectionModeChanged>().Subscribe(OnSelectionModeChanged);
+      events.GetEvent<FormesChanged>().Subscribe(OnFormesChanged);
     }
 
     #endregion
 
-    #region Region Interactions
+    #region EventHandlers Handler
 
-    [Obsolete]
-    protected override void OnRegionContextChanged()
-    {
-      if (!(RegionContext is IEditeurViewModel context))
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
+    private void OnSelectionModeChanged(SelectionMode? mode) => SelectionMode = mode;
 
-      context.PropertyChanged += (sender, args) =>
-      {
-        if (sender == RegionContext)
-        {
-          switch (args.PropertyName)
-          {
-            case nameof(context.Formes):
-              UpdateFormes(); break;
-            case nameof(context.FormesSelectionnees):
-              UpdateFormesSelectionnees(); break;
-          }
-        }
-      };
-
-      UpdateFormes();
-      UpdateFormesSelectionnees();
-      AjouterForme = context.AjouterForme;
-      SupprimerForme = context.SupprimerForme;
-
-      base.OnRegionContextChanged();
-    }
-
-    [Obsolete]
-    private void UpdateFormes()
-    {
-      if (!(RegionContext is IEditeurViewModel context))
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
-
-      if (context.Formes is null)
-      {
-        Formes = null;
-      }
-      else
-      {
-        var enumerable = from forme in context.Formes
-                         select ConvertisseurWrappers.Convertir(forme);
-
-        context.Formes.CollectionChanged += OnFormesChanged;
-        Formes = new BulkObservableCollection<MeshElement3D>(enumerable);
-      }
-    }
-
-    [Obsolete]
-    private void UpdateFormesSelectionnees()
-    {
-      if (!(RegionContext is IEditeurViewModel context))
-        throw new InvalidCastException($"{ nameof(RegionContext) } is not { nameof(IEditeurViewModel) }.");
-
-      if (Formes is null && context.FormesSelectionnees.Count > 0)
-      {
-        throw new InvalidOperationException($"Cannot use an empty { nameof(Formes) } list with a non-empty { nameof(context.FormesSelectionnees) }.");
-      }
-
-      if (Formes is null)
-      {
-        FormesSelectionnees.Clear();
-      }
-      else
-      {
-        var enumerable = from FormeWrapper wrapper in context.FormesSelectionnees
-                         join MeshElement3D mesh in Formes ?? Enumerable.Empty<MeshElement3D>()
-                           on wrapper equals BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
-                         select mesh;
-
-        FormesSelectionnees = new BulkObservableCollection<MeshElement3D>(enumerable);
-        context.FormesSelectionnees.CollectionChanged += OnFormesSelectionneesChanged;
-      }
-    }
-
-    private void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void OnFormesChanged(NotifyCollectionChangedEventArgs e)
     {
       var newitems = from FormeWrapper forme in (IEnumerable)e.NewItems ?? Enumerable.Empty<FormeWrapper>()
                      select ConvertisseurWrappers.Convertir(forme);
@@ -164,7 +98,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    private void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void OnSelectedChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (IsBusy())
         return;
@@ -194,12 +128,12 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    private void FormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void RaiseSelectedChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (IsBusy())
         return;
 
-      var formes = ((EditeurViewModel)RegionContext).Formes;
+      /*var formes = ((EditeurViewModel)RegionContext).Formes;
       var selection = ((EditeurViewModel)RegionContext).FormesSelectionnees;
       var newitems = from MeshElement3D mesh in (IEnumerable)e.NewItems ?? Enumerable.Empty<MeshElement3D>()
                      join FormeWrapper wrapper in formes ?? Enumerable.Empty<FormeWrapper>()
@@ -208,21 +142,12 @@ namespace Hymperia.Facade.ViewModels.Editeur
       var olditems = from MeshElement3D mesh in (IEnumerable)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
                      join FormeWrapper wrapper in selection ?? Enumerable.Empty<FormeWrapper>()
                        on BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source equals wrapper
-                     select wrapper;
+                     select wrapper;*/
+
 
       using (Monitor.Enter())
       {
-        switch (e.Action)
-        {
-          case NotifyCollectionChangedAction.Add:
-            selection.AddRange(newitems); break;
-          case NotifyCollectionChangedAction.Remove:
-            selection.RemoveRange(olditems); break;
-          case NotifyCollectionChangedAction.Replace:
-            selection[selection.IndexOf(olditems.Single())] = newitems.Single(); break;
-          case NotifyCollectionChangedAction.Reset:
-            selection.Clear(); break;
-        }
+        SelectedChanged.Publish(e);
       }
     }
 
@@ -232,13 +157,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     [NotNull]
     private readonly ConvertisseurWrappers ConvertisseurWrappers;
+    [NotNull]
+    private readonly SelectedFormesChanged SelectedChanged;
 
     #endregion
 
     #region Private Fields
 
     private BulkObservableCollection<MeshElement3D> formes;
-    private BulkObservableCollection<MeshElement3D> selected;
+    private SelectionMode? mode;
 
     #endregion
 
@@ -247,6 +174,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <summary><see cref="true"/> si <paramref name="sender"/> est occupé à répondre à une requête de <see cref="this"/>.</summary>
     [Pure]
     protected bool IsBusy() => Monitor.Busy;
+
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
       Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
     [NotNull]
