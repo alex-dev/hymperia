@@ -296,7 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HelixToolkit.Wpf">
-      <Version>2.5.0</Version>
+      <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="JetBrains.Annotations">
       <Version>2018.2.1</Version>
