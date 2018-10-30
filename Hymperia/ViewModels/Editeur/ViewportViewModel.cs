@@ -44,7 +44,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     [CanBeNull]
     [ItemNotNull]
-    public BulkObservableCollection<MeshElement3D> FormesSelectionnees { get; } = new BulkObservableCollection<MeshElement3D>();
+    public BulkObservableCollection<MeshElement3D> FormesSelectionnees { get; } =
+      new BulkObservableCollection<MeshElement3D>();
 
     #endregion
 
@@ -72,7 +73,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region EventHandlers Handler
+    #region Aggregated Event Handlers
 
     private void OnSelectionModeChanged(SelectionMode? mode) => SelectionMode = mode;
 

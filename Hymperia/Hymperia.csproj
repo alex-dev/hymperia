@@ -89,6 +89,8 @@
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
     <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
+    <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
+    <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\BaseAggregatorConverter.cs" />
@@ -102,10 +104,12 @@
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="DictionaryExtension.cs" />
+    <Compile Include="EventAggregatorMessages\FormesChanged.cs" />
     <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormesChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedMateriauChanged.cs" />
+    <Compile Include="EventAggregatorMessages\SelectionModeChanged.cs" />
     <Compile Include="EventDelegateExtension.cs" />
     <Compile Include="EventHandlerExtension.cs" />
     <Compile Include="GeometryExtension.cs" />
@@ -128,8 +132,6 @@
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
