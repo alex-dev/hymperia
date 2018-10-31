@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Hymperia.Facade.Views.Popups.AjouterProjetPopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="50" />
+    </Grid.RowDefinitions>
+    <TextBox />
+    <Button Click="Confirm" Content="Confirmer" Grid.Column="0" Grid.Row="1" />
+    <Button Click="Cancel" Content="Annuler" Grid.Column="1" Grid.Row="1" />
+  </Grid>
+</UserControl>

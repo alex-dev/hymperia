@@ -104,6 +104,7 @@ namespace Hymperia.Facade.ViewModels
       SupprimerProjet = new DelegateCommand<IList>(
         projets => _SupprimerProjets(projets?.Cast<Projet>()),
         projets => CanSupprimerProjets(projets?.Cast<Projet>()));
+      AjouterProjet = new DelegateCommand(_AjouterProjet);
     }
 
     #endregion
@@ -178,6 +179,38 @@ namespace Hymperia.Facade.ViewModels
 
         SetProperty(ref utilisateur, _utilisateur, onChanged, nameof(Utilisateur));
       }
+    }
+
+    #endregion
+
+    #region Command AjouterProjet
+
+    private void _AjouterProjet()
+    {
+
+      void Execute(IConfirmation context)
+      {
+        if (context.Confirmed)
+        {
+          Projet projet = new Projet(context.Content);
+          Loading = ConfirmedAjouterPrlojet(projet);
+        }
+      }
+
+      AjouterProjetRequest.Raise(new Confirmation
+      {
+        Title = "Ajouter un projet ?",
+      }, Execute);
+    }
+
+    private async Task ConfirmedAjouterPrlojet(Projet projet)
+    {
+      await (Loading ?? Task.CompletedTask);
+
+      Projets.Add(projet);
+      await Context.SaveChangesAsync();
+
+      _NavigateToProjet(projet);
     }
 
     #endregion

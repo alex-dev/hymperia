@@ -285,6 +285,9 @@
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popups\AjouterProjetPopup.xaml.cs">
+      <DependentUpon>AjouterProjetPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
       <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AffichageProjets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Popups\AjouterProjetPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

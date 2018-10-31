@@ -45,7 +45,7 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
       <Button x:Name="btnSuppression" Content="x:Static prop:Resources.Supprimer" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
-      <Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>
+      <!--<Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>-->
     </StackPanel>
     </StackPanel>
 </UserControl>
