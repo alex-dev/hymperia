@@ -11,7 +11,8 @@ namespace Hymperia.Facade.Views.Editeur
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty ProjetProperty;
+    public static readonly DependencyProperty ProjetProperty =
+      DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
 
     #endregion
 
@@ -22,11 +23,6 @@ namespace Hymperia.Facade.Views.Editeur
     }
 
     #region Constructors
-
-    static Editeur()
-    {
-      ProjetProperty = DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
-    }
 
     public Editeur(IRegionManager manager)
     {

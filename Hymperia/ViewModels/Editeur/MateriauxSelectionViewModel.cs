@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;
@@ -64,10 +65,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       if (MateriauxLoader.IsLoading)
         return await MateriauxLoader.Loading;
 
-      using (var context = Factory.GetContext())
-      {
-        return Materiaux = await ConvertisseurMateriaux.Convertir(context.Materiaux.AsNoTracking());
-      }
+      using (await AsyncLock.Lock(MateriauxLoader))
+        using (var context = Factory.GetContext())
+          return Materiaux = await ConvertisseurMateriaux.Convertir(context.Materiaux.AsNoTracking());
     }
 
     #endregion

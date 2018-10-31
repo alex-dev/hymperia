@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
@@ -23,6 +24,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
     }
 
     /// <remarks>Cannot use magic tuples here because I need bindable values.</remarks>
+    [CanBeNull]
     public IDictionary<MateriauWrapper, Tuple<double, double>> Analyse
     {
       get => analyse;
@@ -47,10 +49,26 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
 
     protected async Task MakeAnalyse()
     {
-      Analyse = await ConvertisseurMateriaux.Convertir(Projet.PrixMateriaux);
-      // Rather than forcing a full enumeration of the dataset, better optimize a bit and do the sum right here.
-      // Anyway, we gotta affect something to Prix so bindings can update.
-      Prix = Analyse.Sum(pair => pair.Value.Item2);
+      if (Projet is null)
+        return;
+
+      using (await AsyncLock.Lock(AnalysisLoader))
+      {
+        Analyse = await ConvertisseurMateriaux.Convertir(Projet.PrixMateriaux);
+        // Rather than forcing a full enumeration of the dataset, better optimize a bit and do the sum right here.
+        // Anyway, we gotta affect something to Prix so bindings can update.
+        Prix = Analyse.Sum(pair => pair.Value.Item2);
+      }
+    }
+
+    #endregion
+
+    #region Projet Changed
+
+    protected override void Clear()
+    {
+      Analyse = null;
+      Prix = 0;
     }
 
     #endregion

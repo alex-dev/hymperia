@@ -7,7 +7,7 @@ using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
 {
-  public class ProjetAnalyseBase : BindableBase
+  public abstract class ProjetAnalyseBase : BindableBase
   {
     #region Properties
 
@@ -18,7 +18,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
     public Projet Projet
     {
       get => projet;
-      private set => SetProperty(ref projet, value);
+      private set => SetProperty(ref projet, value, Clear);
     }
 
     #endregion
@@ -38,6 +38,12 @@ namespace Hymperia.Facade.ViewModels.Editeur.ProjetAnalyse
       ProjetChanged = aggregator.GetEvent<ProjetChanged>();
       ProjetChanged.Subscribe(OnProjetChanged);
     }
+
+    #endregion
+
+    #region Projet Changed
+
+    protected abstract void Clear();
 
     #endregion
 

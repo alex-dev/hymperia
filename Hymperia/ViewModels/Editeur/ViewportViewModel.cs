@@ -18,6 +18,8 @@ using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
+  [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+    Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
   public class ViewportViewModel : BindableBase
   {
     #region Properties
@@ -153,7 +155,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
                      select mesh;
 
       using (Monitor.Enter())
-      {
         switch (e.Action)
         {
           case NotifyCollectionChangedAction.Add:
@@ -165,7 +166,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
           case NotifyCollectionChangedAction.Reset:
             FormesSelectionnees.Clear(); break;
         }
-      }
     }
 
     protected virtual bool FilterSelectedChanged(NotifyCollectionChangedEventArgs e) => IsBusy();
@@ -176,9 +176,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         return;
 
       using (Monitor.Enter())
-      {
         SelectedChanged.Publish(args);
-      }
     }
 
     #endregion
@@ -207,8 +205,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
     [Pure]
     protected bool IsBusy() => Monitor.Busy;
 
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
-      Justification = @"Disposable field is only used for blocking reentrancy and doesn't manage any disposable resource.")]
     [NotNull]
     private readonly SimpleMonitor Monitor = new SimpleMonitor();
 

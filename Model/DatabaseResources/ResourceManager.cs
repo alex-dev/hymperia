@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Model.Identity;
 using Hymperia.Model.Localization;
@@ -16,11 +17,10 @@ namespace Hymperia.Model.DatabaseResources
     [ItemNotNull]
     public async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux()
     {
-      using (await AsyncLock.Lock(MateriauxLocker))
-      {
+      using (await AsyncLock.Lock(Materiaux).ConfigureAwait(false))
         return Materiaux =
-          await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
-      }
+          await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
+            .ConfigureAwait(false);
     }
 
     [CanBeNull]
@@ -28,7 +28,7 @@ namespace Hymperia.Model.DatabaseResources
     {
       string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
-      if (Materiaux is null || Materiaux.First().Value.CultureKey != lang)
+      if (!Materiaux.Any() || Materiaux.First().Value.CultureKey != lang)
         await LoadMateriaux().ConfigureAwait(false);
 
       return Materiaux[key];
@@ -44,11 +44,9 @@ namespace Hymperia.Model.DatabaseResources
       where TEntity : IIdentity
     {
       using (var context = new LocalizationContext())
-      {
         return await context.Set<TLocalized>()
           .SingleOrDefaultAsync(localized => localized.StringKey == key && localized.CultureKey == culture)
           .ConfigureAwait(false);
-      }
     }
 
     [NotNull]
@@ -58,17 +56,13 @@ namespace Hymperia.Model.DatabaseResources
       where TEntity : IIdentity
     {
       using (var context = new LocalizationContext())
-      {
         return await context.Set<TLocalized>().Where(localized => localized.CultureKey == culture)
           .ToDictionaryAsync(localized => localized.StringKey).ConfigureAwait(false);
-      }
     }
 
-    
-    [CanBeNull]
-    [ItemNotNull]
-    private Dictionary<string, LocalizedMateriau> Materiaux { get; set; }
+
     [NotNull]
-    private readonly object MateriauxLocker = new object();
+    [ItemNotNull]
+    private Dictionary<string, LocalizedMateriau> Materiaux { get; set; } = new Dictionary<string, LocalizedMateriau>();
   }
 }

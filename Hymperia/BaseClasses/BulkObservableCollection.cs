@@ -124,10 +124,8 @@ namespace Hymperia.Facade.BaseClasses
       if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
       {
         using (BlockReentrancy())
-        {
           foreach (NotifyCollectionChangedEventHandler handler in handlers.TraverseRecursively())
             Handle(handler, e);
-        }
       }
     }
 

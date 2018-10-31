@@ -273,6 +273,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AsyncLock\AsyncLock.csproj">
+      <Project>{696AF196-3AEB-459F-87F5-3599151A85B3}</Project>
+      <Name>AsyncLock</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DirectXOperations\DirectXOperations.vcxproj">
       <Project>{d4ba22bd-7cbd-4f40-abdc-f4f115083284}</Project>
       <Name>DirectXOperations</Name>

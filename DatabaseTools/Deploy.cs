@@ -15,17 +15,13 @@ namespace Hymperia.DatabaseTools
     private static async Task MigrateMain(bool intialize)
     {
       using (var context = new DatabaseContext())
-      {
         await context.Migrate(intialize).ConfigureAwait(false);
-      }
     }
 
     private static async Task MigrateLocalized(bool intialize)
     {
       using (var context = new LocalizationContext())
-      {
         await context.Migrate(intialize).ConfigureAwait(false);
-      }
     }
   }
 }
