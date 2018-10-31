@@ -84,7 +84,6 @@ namespace Hymperia.Model.Migrations
       var array = new Acces.Droit?[] { null, Acces.Droit.Lecture, Acces.Droit.LectureEcriture };
 
       for (int i = 0; i < projets.Length; ++i)
-      {
         for (int j = 0; j < utilisateurs.Length; ++j)
         {
           var droit = i == j ? Acces.Droit.Possession : array[Random.Next(array.Length)];
@@ -97,7 +96,6 @@ namespace Hymperia.Model.Migrations
             yield return acces;
           }
         }
-      }
     }
 
     [NotNull]
@@ -115,9 +113,7 @@ namespace Hymperia.Model.Migrations
       int count = Random.Next(50, 250);
 
       for (int i = 0; i < count; ++i)
-      {
         yield return creators[Random.Next(creators.Length)](materiaux);
-      }
     }
 
     [NotNull]

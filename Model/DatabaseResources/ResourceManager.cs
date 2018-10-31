@@ -12,15 +12,24 @@ namespace Hymperia.Model.DatabaseResources
 {
   internal class ResourceManager
   {
+    [NotNull]
+    [ItemNotNull]
+    public async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux()
+    {
+      using (await AsyncLock.Lock(MateriauxLocker))
+      {
+        return Materiaux =
+          await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+      }
+    }
+
     [CanBeNull]
     public async Task<LocalizedMateriau> GetMateriau([NotNull] string key)
     {
       string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
       if (Materiaux is null || Materiaux.First().Value.CultureKey != lang)
-      {
         await LoadMateriaux().ConfigureAwait(false);
-      }
 
       return Materiaux[key];
     }
@@ -42,9 +51,6 @@ namespace Hymperia.Model.DatabaseResources
       }
     }
 
-    public async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux() => Materiaux =
-      await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
-
     [NotNull]
     [ItemNotNull]
     private async Task<Dictionary<string, TLocalized>> Load<TLocalized, TEntity>([NotNull] string culture)
@@ -58,8 +64,11 @@ namespace Hymperia.Model.DatabaseResources
       }
     }
 
+    
     [CanBeNull]
     [ItemNotNull]
     private Dictionary<string, LocalizedMateriau> Materiaux { get; set; }
+    [NotNull]
+    private readonly object MateriauxLocker = new object();
   }
 }

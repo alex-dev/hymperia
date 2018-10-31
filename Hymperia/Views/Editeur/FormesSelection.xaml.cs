@@ -18,10 +18,8 @@ namespace Hymperia.Facade.Views.Editeur
     private void ListBoxUpdated(object sender, DataTransferEventArgs e)
     {
       if (e.Property == ItemsControl.ItemsSourceProperty)
-      {
         ((ListBox)sender).SelectedItem = ((ListBox)sender).ItemsSource?.OfType<KeyValuePair<Type, string>>()
           ?.SingleOrFirst(forme => forme.Key == typeof(PrismeRectangulaire));
-      }
     }
   }
 }

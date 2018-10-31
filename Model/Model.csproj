@@ -58,6 +58,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AsyncLock.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="DatabaseContextExtension.cs" />
     <Compile Include="Identity\IdentityEqualityComparer.cs" />

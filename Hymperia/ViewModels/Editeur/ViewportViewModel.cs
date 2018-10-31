@@ -90,9 +90,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
                     select wrapper).ToArray();
 
       if (InnerSupprimerFormes.CanExecute(formes))
-      {
         InnerSupprimerFormes.Execute(formes);
-      }
     }
 
     private bool CanSupprimerFormes(ICollection<MeshElement3D> meshes) => meshes.Any();
@@ -104,13 +102,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     protected virtual void OnFormesChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (e.Action == NotifyCollectionChangedAction.Reset)
-      {
         FormesSelectionnees.Clear();
-      }
       else if (e.OldItems is IEnumerable old)
-      {
         FormesSelectionnees.RemoveRange(old.Cast<MeshElement3D>());
-      }
     }
 
     protected virtual void OnFormesSelectionneesChanged(object sender, NotifyCollectionChangedEventArgs e) =>
@@ -138,17 +132,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         case NotifyCollectionChangedAction.Remove:
           Formes.RemoveRange(olditems); break;
         case NotifyCollectionChangedAction.Replace:
-          if (e.NewItems.Count > 1 || e.OldItems.Count > 1)
-          {
-            Formes.RemoveRange(olditems);
-            Formes.AddRange(newitems);
-          }
-          else
-          {
-            Formes[Formes.IndexOf(olditems.Single())] = newitems.Single();
-          }
-
-          break;
+          Formes.ReplaceRange(olditems, newitems); break;
         case NotifyCollectionChangedAction.Reset:
           Formes.Clear(); break;
       }
@@ -177,17 +161,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
           case NotifyCollectionChangedAction.Remove:
             FormesSelectionnees.RemoveRange(olditems); break;
           case NotifyCollectionChangedAction.Replace:
-            if (e.NewItems.Count > 1 || e.OldItems.Count > 1)
-            {
-              FormesSelectionnees.RemoveRange(olditems);
-              FormesSelectionnees.AddRange(newitems);
-            }
-            else
-            {
-              FormesSelectionnees[FormesSelectionnees.IndexOf(olditems.Single())] = newitems.Single();
-            }
-
-            break;
+            FormesSelectionnees.ReplaceRange(olditems, newitems); break;
           case NotifyCollectionChangedAction.Reset:
             FormesSelectionnees.Clear(); break;
         }

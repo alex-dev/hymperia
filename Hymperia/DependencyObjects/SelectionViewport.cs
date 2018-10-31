@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -44,6 +44,7 @@ namespace Hymperia.Facade.DependencyObjects
     public SelectionViewport()
     {
       SelectedMaterial.Freeze();
+      SelectedItems.CollectionChanged += OnSelectedItemsCollectionChanged;
 
       InputBindings.Add(new MouseBinding(
         new PointSelectionCommand(Viewport, CreateHandler(true, true)),
@@ -71,18 +72,14 @@ namespace Hymperia.Facade.DependencyObjects
         e.AreSortedByDistanceAscending);
 
       if (clear)
-      {
         SelectedItems.Clear();
-      }
 
       if (e.SelectedVisuals.Count > 0)
       {
         if (single)
-        {
           e = e.AreSortedByDistanceAscending
             ? new VisualsSelectedEventArgs(new List<Visual3D> { e.SelectedVisuals.First() }, true)
             : new VisualsSelectedEventArgs(new List<Visual3D> { e.SelectedVisuals.Last() }, false);
-        }
 
         SelectionHandler(sender, e);
       }
@@ -91,6 +88,21 @@ namespace Hymperia.Facade.DependencyObjects
 
     private void SelectionHandler([NotNull] object sender, [NotNull] VisualsSelectedEventArgs args) =>
       SelectedItems.AddRange(args.SelectedVisuals.Cast<MeshElement3D>());
+
+    #endregion
+
+    #region Items Changed
+
+    protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+    {
+      base.OnItemsChanged(e);
+
+      if (e.Action == NotifyCollectionChangedAction.Reset)
+      {
+        Children.Add(Sunlight);
+        Children.Add(GridLines);
+      }
+    }
 
     #endregion
 
@@ -115,9 +127,7 @@ namespace Hymperia.Facade.DependencyObjects
     private void UnselectMaterial([NotNull][ItemNotNull] IEnumerable<MeshElement3D> models)
     {
       foreach (var model in models)
-      {
         model.Material = CachedMaterials[model];
-      }
     }
 
     #endregion
@@ -126,37 +136,25 @@ namespace Hymperia.Facade.DependencyObjects
     {
       SelectMaterial(e.NewItems?.OfType<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>());
       UnselectMaterial(e.Action != NotifyCollectionChangedAction.Reset
-        ? (IEnumerable<MeshElement3D>)e.OldItems ?? Enumerable.Empty<MeshElement3D>()
+        ? e.OldItems?.Cast<MeshElement3D>() ?? Enumerable.Empty<MeshElement3D>()
         : from mesh in Children.OfType<MeshElement3D>()
           where (mesh.Material as MaterialGroup)?.Children?.Contains(SelectedMaterial) ?? false
           select mesh);
     }
 
-    protected override void OnItemsSourceChanged([NotNull][ItemNotNull] IEnumerable oldValue, [NotNull][ItemNotNull] IEnumerable newValue)
-    {
-      base.OnItemsSourceChanged(oldValue, newValue);
-      Children.Add(Sunlight);
-      Children.Add(GridLines);
-    }
-
     protected virtual void OnSelectedItemsChanged(
       [ItemNotNull] ObservableCollection<MeshElement3D> oldvalue,
-      [NotNull][ItemNotNull] ObservableCollection<MeshElement3D> newvalue)
+      [ItemNotNull] ObservableCollection<MeshElement3D> newvalue)
     {
       CachedMaterials.Clear();
-      oldvalue?.Add(OnSelectedItemsCollectionChanged);
-      newvalue.CollectionChanged += OnSelectedItemsCollectionChanged;
+      oldvalue?.Remove(OnSelectedItemsCollectionChanged);
+      newvalue?.Add(OnSelectedItemsCollectionChanged);
     }
 
-    private static void OnSelectedItemsChanged([NotNull] DependencyObject sender, [NotNull] DependencyPropertyChangedEventArgs e)
-    {
-      if (e.Property == SelectedItemsProperty)
-      {
-        ((SelectionViewport)sender).OnSelectedItemsChanged(
-          (ObservableCollection<MeshElement3D>)e.OldValue,
-          (ObservableCollection<MeshElement3D>)e.NewValue);
-      }
-    }
+    private static void OnSelectedItemsChanged([NotNull] DependencyObject sender, [NotNull] DependencyPropertyChangedEventArgs e) =>
+      ((SelectionViewport)sender).OnSelectedItemsChanged(
+        (ObservableCollection<MeshElement3D>)e.OldValue,
+        (ObservableCollection<MeshElement3D>)e.NewValue);
 
     #endregion
 

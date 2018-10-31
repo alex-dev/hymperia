@@ -87,7 +87,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
-    <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
@@ -131,17 +130,12 @@
     <Compile Include="Converters\TransformConverter.cs" />
     <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
-    <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
-    <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
-      <DependentUpon>FormesProperties.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
       <DependentUpon>FormesSelection.xaml</DependentUpon>
     </Compile>
@@ -175,10 +169,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Editeur\FormesProperties.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Editeur\FormesSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

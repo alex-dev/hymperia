@@ -14,6 +14,11 @@ namespace Hymperia.Model.Properties
     public static async Task<LocalizedMateriau> GetMateriau([NotNull] string key) =>
       await DBManager.GetMateriau(key).ConfigureAwait(false);
     public static async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux() =>
-      await DBManager.LoadMateriaux().ConfigureAwait(false);
+      //await DBManager.LoadMateriaux().ConfigureAwait(false);
+      (await Task.WhenAll(
+        DBManager.LoadMateriaux(),
+        DBManager.LoadMateriaux(),
+        DBManager.LoadMateriaux(),
+        DBManager.LoadMateriaux()).ConfigureAwait(false))[0];
   }
 }

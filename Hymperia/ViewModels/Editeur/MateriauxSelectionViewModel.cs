@@ -99,7 +99,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         else
           OnDeactivation();
 
-        IsActiveChanged?.Invoke(this, null);
+        IsActiveChanged?.Invoke(this, EventArgs.Empty);
       }
     }
 

@@ -27,7 +27,6 @@ namespace Hymperia.Facade
       var result = enumerator.Current;
 
       while (enumerator.MoveNext())
-      {
         if (predicate(enumerator.Current))
         {
           if (predicate(result))
@@ -35,7 +34,6 @@ namespace Hymperia.Facade
 
           result = enumerator.Current;
         }
-      }
 
       return result;
     }

@@ -24,7 +24,7 @@ using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class EditeurViewModel : BindableBase//, IActiveAware
+  public class EditeurViewModel : BindableBase, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -36,15 +36,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public Projet Projet
     {
       get => projet;
-      set
-      {
-        if (Revert.CanExecute(true))
-        {
-          Revert.Execute(true);
-        }
-
-        ProjetLoader.Loading = QueryProjet(value, UpdateFormes);
-      }
+      set => ProjetLoader.Loading = QueryProjet(value, UpdateFormes);
     }
 
     /// <summary>Les formes éditables.</summary>
@@ -67,7 +59,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public SelectionMode SelectedSelectionMode
     {
       get => selection;
-      set => SetProperty(ref selection, value);
+      set => SetProperty(ref selection, value, RaiseSelectionModeChanged);
     }
 
     [CanBeNull]
@@ -91,17 +83,18 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public AddFormeCommand AjouterForme { get; }
     public DeleteFormesCommand SupprimerFormes { get; }
     public ICommand Sauvegarder { get; }
-    public ICommand Revert { get; }
 
     #endregion
 
     #region Asynchronous Loading
 
     public AsyncLoader<Projet> ProjetLoader { get; } = new AsyncLoader<Projet>();
+    public AsyncLoader<Materiau> MateriauLoader { get; } = new AsyncLoader<Materiau>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();
 
     private Task Loaders => Task.WhenAll(
       ProjetLoader.Loading ?? Task.CompletedTask,
+      MateriauLoader.Loading ?? Task.CompletedTask,
       SaveLoader.Loading ?? Task.CompletedTask);
 
     #endregion
@@ -124,8 +117,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
       SupprimerFormes = new DeleteFormesCommand(_SupprimerFormes, CanSupprimerFormes);
       Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _Sauvegarder())
         .ObservesCanExecute(() => IsModified);
-      Revert = new DelegateCommand<bool?>(leaving => _Revert(leaving ?? false))
-        .ObservesCanExecute(() => IsModified);
 
       commands.RegisterCommand(AjouterForme);
       commands.RegisterCommand(SupprimerFormes);
@@ -134,6 +125,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       events.GetEvent<SelectedMateriauChanged>().Subscribe(async materiau => SelectedMateriau = await QueryMateriau(materiau));
       ProjetChanged = events.GetEvent<ProjetChanged>();
       FormesChanged = events.GetEvent<FormesChanged>();
+      SelectionModeChanged = events.GetEvent<SelectionModeChanged>();
     }
 
     #endregion
@@ -157,17 +149,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private void _AjouterForme(Point point)
     {
       var forme = CreerForme(point);
-      var wrapper = ConvertisseurFormes.Convertir(forme);
 
       Projet.AjouterForme(forme);
-      Formes.Add(wrapper);
-      HasBeenModified(null, null);
+      Formes.Add(ConvertisseurFormes.Convertir(forme));
     }
 
     private bool PeutAjouterForme(Point point) =>
       point is Point && Projet is Projet
       && SelectedMateriau is Materiau
-      && SelectedForme is Type && SelectedForme.IsSubclassOf(typeof(Forme));
+      && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
 
     #endregion
 
@@ -179,12 +169,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
                    select forme.Forme;
 
       foreach (var forme in formes)
-      {
         Projet.SupprimerForme(forme);
-      }
 
       Formes.RemoveRange(wrappers);
-      FormesDeleted.AddRange(formes);
     }
 
     private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) => wrappers.Any();
@@ -195,40 +182,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task _Sauvegarder()
     {
-      var projet = Projet;
-      var deleted = FormesDeleted;
-
       await Loaders;
-
-      using (var context = ContextFactory.GetContext())
-      {
-        Populate(context, projet, deleted);
-        ResetChangeTracker(projet, deleted);
-
-        await context.SaveChangesAsync();
-      }
-    }
-
-    #endregion
-
-    #region Command Revert
-
-    private async Task _Revert(bool leaving)
-    {
-      var projet = Projet;
-      var deleted = FormesDeleted;
-
-      await Loaders;
-
-      using (var context = ContextFactory.GetContext())
-      {
-        context.UnloadFormes(projet);
-
-        if (!leaving)
-        {
-          context.LoadFormes(projet);
-        }
-      }
+      await Context.SaveChangesAsync();
     }
 
     #endregion
@@ -237,33 +192,25 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task<Projet> QueryProjet(Projet _projet, Action onChanged)
     {
+      Projet value = null;
+
       SetProperty(ref projet, null, onChanged, nameof(Projet));
 
       if (_projet is Projet)
       {
         await Loaders;
+        value = await Context.Projets.IncludeFormes().FindByIdAsync(_projet.Id);
 
-        using (var context = ContextFactory.GetContext())
-        {
-          context.Attach(_projet);
-
-          await context.LoadFormesAsync(_projet);
-        }
-
-        SetProperty(ref projet, _projet, onChanged, nameof(Projet));
+        SetProperty(ref projet, value, onChanged, nameof(Projet));
       }
 
-      return _projet;
+      return value;
     }
 
     private async Task<Materiau> QueryMateriau(int key)
     {
       await Loaders;
-
-      using (var context = ContextFactory.GetContext())
-      {
-        return await context.Materiaux.FindAsync(key);
-      }
+      return SelectedMateriau = await Context.Materiaux.FindAsync(key);
     }
 
     #endregion
@@ -291,11 +238,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       ProjetChanged.Publish(Projet);
     }
 
-    private void FormeHasChanged(object sender, PropertyChangedEventArgs e)
-    {
-      HasBeenModified(null, null);
-      ProjetChanged.Publish(Projet);
-    }
+    private void FormeHasChanged(object sender, PropertyChangedEventArgs e) => HasBeenModified(null, null);
 
     #endregion
 
@@ -338,16 +281,62 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    private void HasBeenModified(object sender, NotifyCollectionChangedEventArgs e) => IsModified = true;
+    private void HasBeenModified(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      IsModified = true;
+      ProjetChanged.Publish(Projet);
+    }
 
     #endregion
 
     #region Aggregated Event Handlers
 
     private void RaiseFormesChanged(Collection<FormeWrapper> old) =>
-      RaiseFormesChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, Formes, old, 0));
+      RaiseFormesChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, Formes, old));
 
     protected virtual void RaiseFormesChanged(object sender, NotifyCollectionChangedEventArgs e) => FormesChanged.Publish(e);
+
+    protected virtual void RaiseSelectionModeChanged() => SelectionModeChanged.Publish(SelectedSelectionMode);
+
+    #endregion
+
+    #region IActiveAware
+
+    public event EventHandler IsActiveChanged;
+
+    public bool IsActive
+    {
+      get => isActive;
+      set
+      {
+        isActive = value;
+
+        if (value)
+          OnActivation();
+        else
+          OnDeactivation();
+
+        IsActiveChanged?.Invoke(this, EventArgs.Empty);
+      }
+    }
+
+    protected virtual void OnActivation()
+    {
+      Context?.Dispose();
+      Context = ContextFactory.GetContext();
+    }
+
+    protected virtual void OnDeactivation()
+    {
+      Context?.Dispose();
+      Context = null;
+    }
+
+    #endregion
+
+    #region IDisposable
+
+    public void Dispose() => Context?.Dispose();
 
     #endregion
 
@@ -359,6 +348,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private readonly ConvertisseurFormes ConvertisseurFormes;
     [NotNull]
     private readonly FormesChanged FormesChanged;
+    [NotNull]
+    private readonly SelectionModeChanged SelectionModeChanged;
+
+    [NotNull]
+    private DatabaseContext Context;
 
     #endregion
 
@@ -366,13 +360,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private Projet projet;
     private BulkObservableCollection<FormeWrapper> formes;
-    private BulkObservableCollection<FormeWrapper> selected;
+    private readonly BulkObservableCollection<FormeWrapper> selected;
     private SelectionMode selection;
     private Type forme;
     private Materiau materiau;
-    private Task loading;
-    private bool isLoading;
+    private readonly Task loading;
+    private readonly bool isLoading;
     private bool isModified;
+    private bool isActive;
 
     #endregion
   }

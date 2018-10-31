@@ -18,14 +18,12 @@ namespace Hymperia.Facade.Converters
                           select ChangeType(value)).ToArray();
 
       for (int i = 0; i < values.Length; ++i)
-      {
         for (int j = i; j < values.Length; ++j)
         {
           double value = values_[i] * values_[i] + values_[j] * values_[j];
 
           result = value > result ? value : result;
         }
-      }
 
       return Math.Sqrt(result) / 2;
     }

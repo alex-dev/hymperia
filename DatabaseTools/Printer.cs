@@ -12,17 +12,13 @@ namespace Hymperia.DatabaseTools
     public static void Print([ItemNotNull] IEnumerable<object> data)
     {
       foreach (object item in data)
-      {
         Console.WriteLine(item);
-      }
     }
 
     public static async Task PrintMateriaux([ItemNotNull] IEnumerable<Materiau> data)
     {
       foreach (var item in data)
-      {
         Console.WriteLine(Resources.MateriauToString(item.Id, (await Resources.GetMateriau(item.Nom)).Nom, item.Prix));
-      }
     }
 
     public static void PrintFormes()

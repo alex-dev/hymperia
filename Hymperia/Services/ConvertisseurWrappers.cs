@@ -100,7 +100,6 @@ namespace Hymperia.Facade.Services
     [NotNull]
     private CylinderVisual3D Lier([NotNull] CylinderVisual3D forme, [NotNull] CylindreWrapper source)
     {
-      BindingOperations.SetBinding(forme, CylinderVisual3D.OriginProperty, new Binding(nameof(source.Origine)) { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, CylinderVisual3D.HeightProperty, new Binding(nameof(source.Hauteur)) { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, CylinderVisual3D.DiameterProperty, new Binding(nameof(source.Diametre)) { Source = source, Mode = BindingMode.TwoWay });
       BindingOperations.SetBinding(forme, CylinderVisual3D.InnerDiameterProperty, new Binding(nameof(source.InnerDiametre)) { Source = source, Mode = BindingMode.TwoWay });
