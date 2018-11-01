@@ -89,8 +89,10 @@ namespace Hymperia.Model.Migrations
       }
 
       foreach (var acces in Generate())
+      {
         acces.Utilisateur._Acces.Add(acces);
         yield return acces;
+      }
     }
 
     [NotNull]

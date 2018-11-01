@@ -14,6 +14,7 @@ using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

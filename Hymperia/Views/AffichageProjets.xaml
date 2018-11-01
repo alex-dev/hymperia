@@ -23,45 +23,25 @@
   <StackPanel Orientation="Horizontal">
     <StackPanel Orientation="Horizontal">
       <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
-          SelectionMode="Multiple">
-        <!--<i:Interaction.Triggers>
-          <i:EventTrigger EventName="SelectionChanged">
-            <i:InvokeCommandAction Command="{Binding NavigateToProjet}"
-                CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers> -->
+          SelectionMode="Extended" SelectionChanged="OnSelectionChanged">
         <ListBox.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding .}">
               <TextBlock.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick"
-                    Command="{Binding DataContext.NavigateToProjet, ElementName=View}"
+                    Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
                     CommandParameter="{Binding .}" />
               </TextBlock.InputBindings>
             </TextBlock>
           </DataTemplate>
         </ListBox.ItemTemplate>
-        <!--<ListBox.InputBindings>
-          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding NavigateToProjet}" 
-              CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
-        </ListBox.InputBindings>-->
-
-        <!--<ListBox.ItemTemplate>
-          <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-              <CheckBox />
-              <TextBlock ></TextBlock>
-            </StackPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>-->
       </ListBox>
     </StackPanel>
-    <ListBox ItemsSource="{Binding SelectedItems}" />
     <ListBox ItemsSource="{Binding SelectedItems, ElementName=ListBox}" />
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-      <Button x:Name="btnSuppression" Content="x:Static prop:Resources.Supprimer" Command="{Binding SupprimerProjet}"
+      <Button x:Name="btnSuppression" Content="{x:Static prop:Resources.Supprimer}" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
-      <Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>
+      <Button Content="{x:Static prop:Resources.Ajouter}" Command="{Binding AjouterProjet}"/>
     </StackPanel>
     </StackPanel>
 </UserControl>
