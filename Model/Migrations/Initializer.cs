@@ -64,36 +64,34 @@ namespace Hymperia.Model.Migrations
     /// <param name="token">Un token d'annulation.</param>
     public async Task Initialize([NotNull] DatabaseContext context, [NotNull] CancellationToken token = default)
     {
-      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token);
+      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token).ConfigureAwait(false);
+      await context.SaveChangesAsync(token).ConfigureAwait(false);
+
+      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token).ConfigureAwait(false)), token);
       await context.SaveChangesAsync(token);
 
-      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token)), token);
-      await context.SaveChangesAsync(token);
-
-      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token)).ToArray();
-      await context.SaveChangesAsync(token);
+      InitializeAcces(
+        await context.Utilisateurs.ToArrayAsync(token).ConfigureAwait(false),
+        await context.Projets.ToArrayAsync(token).ConfigureAwait(false))
+        .ToArray();
+      await context.SaveChangesAsync(token).ConfigureAwait(false);
     }
 
     [NotNull]
     [ItemNotNull]
     private IEnumerable<Acces> InitializeAcces([NotNull][ItemNotNull] Utilisateur[] utilisateurs, [NotNull][ItemNotNull] Projet[] projets)
     {
-      var array = new Acces.Droit?[] { null, Acces.Droit.Lecture, Acces.Droit.LectureEcriture };
-
-      for (int i = 0; i < projets.Length; ++i)
+      IEnumerable<Acces> Generate()
       {
-        for (int j = 0; j < utilisateurs.Length; ++j)
-        {
-          var droit = i == j ? Acces.Droit.Possession : array[Random.Next(array.Length)];
+        yield return new Acces(projets[0], utilisateurs[1], Acces.Droit.Possession);
+        yield return new Acces(projets[1], utilisateurs[1], Acces.Droit.LectureEcriture);
+        yield return new Acces(projets[1], utilisateurs[2], Acces.Droit.Possession);
+      }
 
-          if (droit is Acces.Droit _droit)
-          {
-            var acces = new Acces(projets[i], utilisateurs[j], _droit);
-            utilisateurs[j]._Acces.Add(acces);
-
-            yield return acces;
-          }
-        }
+      foreach (var acces in Generate())
+      {
+        acces.Utilisateur._Acces.Add(acces);
+        yield return acces;
       }
     }
 
@@ -112,9 +110,7 @@ namespace Hymperia.Model.Migrations
       int count = Random.Next(50, 250);
 
       for (int i = 0; i < count; ++i)
-      {
         yield return creators[Random.Next(creators.Length)](materiaux);
-      }
     }
 
     [NotNull]
@@ -123,7 +119,6 @@ namespace Hymperia.Model.Migrations
     {
       yield return InitializeFormes(materiaux, new Projet("Projet 1"));
       yield return InitializeFormes(materiaux, new Projet("Projet 2"));
-      yield return InitializeFormes(materiaux, new Projet("Projet 3"));
     }
 
     [NotNull]

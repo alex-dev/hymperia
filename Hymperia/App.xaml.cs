@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* 
+ * Auteur : Alexandre
+ * Date de création : 6 septembre 2018
+*/ 
+
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
@@ -12,14 +17,15 @@ using Prism.Ninject;
 
 namespace Hymperia.Facade
 {
-  public partial class App : PrismApplication
+  public partial class App : PrismExtensionApplication
   {
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)
     {
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
-      registry.RegisterForNavigation<Editeur>("Editeur");
+      registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
+      registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>

@@ -13,13 +13,13 @@ namespace Hymperia.Facade.ViewModels
   {
     #region Properties
 
-    public Projet Projet
+    public Utilisateur Utilisateur
     {
-      get => projet;
-      set => SetProperty(ref projet, value);
+      get => utilisateur;
+      set => SetProperty(ref utilisateur, value);
     }
 
-    public ReadOnlyObservableCollection<Projet> Projets { get; private set; }
+    public ReadOnlyObservableCollection<Utilisateur> Utilisateurs { get; private set; }
 
     public ICommand Navigate { get; private set; }
 
@@ -28,28 +28,29 @@ namespace Hymperia.Facade.ViewModels
     public FenetrePrincipaleViewModel(ContextFactory factory, IRegionManager manager)
     {
       Manager = manager;
-      Navigate = new DelegateCommand(NavigateToViewport, () => Projet is Projet).ObservesProperty(() => Projet);
+      Navigate = new DelegateCommand(NavigateToViewport, () => Utilisateur is Utilisateur).ObservesProperty(() => Utilisateur);
 
       using (var context = factory.GetContext())
       {
-        Projets = new ReadOnlyObservableCollection<Projet>(
-          new ObservableCollection<Projet>(context.Projets.ToList()));
+        Utilisateurs = new ReadOnlyObservableCollection<Utilisateur>(
+          new ObservableCollection<Utilisateur>(context.Utilisateurs.ToList()));
       }
     }
 
     private void NavigateToViewport()
     {
-      Manager.RequestNavigate("ContentRegion", "Editeur", new NavigationParameters
+      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
       {
-        { "Projet", Projet }
+        { NavigationParameterKeys.Utilisateur, Utilisateur }
       });
     }
 
     #region Private Fields
 
     private readonly IRegionManager Manager;
-    private Projet projet;
+    private Utilisateur utilisateur;
 
     #endregion
   }
 }
+

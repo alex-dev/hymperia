@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Hymperia.Facade.Views.Editeur.ProjetAnalyse;
 using Hymperia.Model.Modeles;
 using Prism.Regions;
 
@@ -10,7 +11,8 @@ namespace Hymperia.Facade.Views.Editeur
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty ProjetProperty;
+    public static readonly DependencyProperty ProjetProperty =
+      DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
 
     #endregion
 
@@ -21,11 +23,6 @@ namespace Hymperia.Facade.Views.Editeur
     }
 
     #region Constructors
-
-    static Editeur()
-    {
-      ProjetProperty = DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
-    }
 
     public Editeur(IRegionManager manager)
     {
@@ -43,16 +40,16 @@ namespace Hymperia.Facade.Views.Editeur
       manager.RegisterViewWithRegion("FormesSelectionRegion", typeof(FormesSelection));
       manager.RegisterViewWithRegion("MateriauxSelectionRegion", typeof(MateriauxSelection));
       manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
-      manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(PrixAnalyseMateriaux));
-      manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
+      manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(MateriauxAnalyse));
+      //manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
     }
 
     #endregion
 
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => true;
-    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters["Projet"];
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
+    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion

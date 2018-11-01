@@ -7,7 +7,7 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <StackPanel Orientation="Horizontal" Grid.Row="0">
-      <ComboBox ItemsSource="{Binding Projets}" SelectedItem="{Binding Projet, Mode=TwoWay}" />
+      <ComboBox ItemsSource="{Binding Utilisateurs}" SelectedItem="{Binding Utilisateur, Mode=TwoWay}" />
       <Button Name="t" Command="{Binding Navigate}" Content="Ouvrir" />
     </StackPanel>
     <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1"/>

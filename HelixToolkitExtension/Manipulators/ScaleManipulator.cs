@@ -103,9 +103,7 @@ namespace HelixToolkit.Wpf
       var nearest = GetNearestPoint(e.GetPosition(ParentViewport), hitPlaneOrigin, HitPlaneNormal);
 
       if (nearest is Point3D point)
-      {
         lastpoint = ToLocal(point);
-      }
     }
 
     /// <summary>Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.MouseMove" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.</summary>
@@ -114,26 +112,22 @@ namespace HelixToolkit.Wpf
     {
       base.OnMouseMove(e);
 
-      if (IsMouseCaptured)
-      {
-        var hitPlaneOrigin = ToWorld(Position);
-        var nearest = GetNearestPoint(e.GetPosition(ParentViewport), hitPlaneOrigin, HitPlaneNormal);
+      if (!IsMouseCaptured)
+        return;
 
-        if (!(nearest is Point3D point))
-        {
-          return;
-        }
+      var hitPlaneOrigin = ToWorld(Position);
+      var nearest = GetNearestPoint(e.GetPosition(ParentViewport), hitPlaneOrigin, HitPlaneNormal);
 
-        var delta = Vector3D.DotProduct(ToLocal(point) - lastpoint, Direction);
-        Value += delta;
+      if (!(nearest is Point3D point))
+        return;
 
-        if (BindLengthToValue)
-        {
-          Length += delta;
-        }
+      var delta = Vector3D.DotProduct(ToLocal(point) - lastpoint, Direction);
+      Value += delta;
 
-        lastpoint = ToLocal(point);
-      }
+      if (BindLengthToValue)
+        Length += delta;
+
+      lastpoint = ToLocal(point);
     }
 
     /// <summary>Gets the nearest point on the scaling axis.</summary>

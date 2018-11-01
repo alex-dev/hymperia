@@ -27,17 +27,12 @@
       <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Transformation}"
           Content="{x:Static prop:Resources.Scaling}" />
     </ListBox>
-    <ContentControl prism:RegionManager.RegionName="FormesSelectionRegion"
-        prism:RegionManager.RegionContext="{Binding SelectedForme, Mode=OneWayToSource}" Grid.Column="1"
-        Grid.ColumnSpan="2" Grid.Row="1" />
-    <ContentControl prism:RegionManager.RegionName="MateriauxSelectionRegion"
-        prism:RegionManager.RegionContext="{Binding SelectedMateriau, Mode=OneWayToSource}" Grid.Column="0" Grid.Row="2"
+    <ContentControl prism:RegionManager.RegionName="FormesSelectionRegion" Grid.Column="1" Grid.ColumnSpan="2"
+        Grid.Row="1" />
+    <ContentControl prism:RegionManager.RegionName="MateriauxSelectionRegion" Grid.Column="0" Grid.Row="2"
         Grid.RowSpan="3" />
-    <ContentControl prism:RegionManager.RegionName="ViewportRegion"
-        prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" />
-    <ContentControl prism:RegionManager.RegionName="PrixAnalyseRegion"
-        prism:RegionManager.RegionContext="{Binding ., Mode=OneWay}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" />
-    <ContentControl prism:RegionManager.RegionName="FormesPropertiesRegion"
-        prism:RegionManager.RegionContext="{Binding FormesSelectionnees, Mode=OneWay}" Grid.Column="2" Grid.Row="4" />
+    <ContentControl prism:RegionManager.RegionName="ViewportRegion" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" />
+    <ContentControl prism:RegionManager.RegionName="PrixAnalyseRegion" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" />
+    <ContentControl prism:RegionManager.RegionName="FormesPropertiesRegion" Grid.Column="2" Grid.Row="4" />
   </Grid>
 </UserControl>

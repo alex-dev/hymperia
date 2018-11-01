@@ -17,7 +17,7 @@ namespace Hymperia.Facade.DependencyObjects
 
     /// <seealso cref="SelectionMode"/>
     public static readonly DependencyProperty SelectionModeProperty =
-      DependencyProperty.Register(nameof(SelectionMode), typeof(SelectionMode), typeof(Viewport), new PropertyMetadata(SelectionMode.Deplacement));
+      DependencyProperty.Register(nameof(SelectionMode), typeof(SelectionMode), typeof(Viewport), new PropertyMetadata(SelectionMode.Deplacement, OnSelectionModeChanged));
 
     #endregion
 
@@ -32,7 +32,6 @@ namespace Hymperia.Facade.DependencyObjects
 
     #endregion
 
-    #region Selected Items Changed
 
     #region Handle Manipulators
 
@@ -64,18 +63,26 @@ namespace Hymperia.Facade.DependencyObjects
       Children.Remove(Manipulator);
     }
 
+    private void ReloadManipulator()
+    {
+      RemoveManipulator();
+
+      if (SelectedItems.Count != 1)
+        return;
+
+      var model = SelectedItems.Single();
+      AddManipulator(model);
+    }
+
     #endregion
+
+    #region SelectedItems Changed
 
     /// inheritdoc/>
     protected override void OnSelectedItemsCollectionChanged([NotNull] object sender, [NotNull] NotifyCollectionChangedEventArgs e)
     {
       base.OnSelectedItemsCollectionChanged(sender, e);
-      RemoveManipulator();
-
-      if (SelectedItems.Count == 1)
-      {
-        AddManipulator(SelectedItems.Single());
-      }
+      ReloadManipulator();
     }
 
     /// inheritdoc/>
@@ -85,8 +92,15 @@ namespace Hymperia.Facade.DependencyObjects
 
     {
       RemoveManipulator();
-      base.OnSelectedItemsChanged(newvalue, oldvalue);
+      base.OnSelectedItemsChanged(oldvalue, newvalue);
     }
+
+    #endregion
+
+    #region SelectionMode Changed
+
+    private static void OnSelectionModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) =>
+      ((Viewport)d).ReloadManipulator();
 
     #endregion
 

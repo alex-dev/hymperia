@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HelixToolkit.Wpf">
-      <Version>2.5.0</Version>
+      <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="JetBrains.Annotations">
       <Version>2018.2.1</Version>
@@ -112,6 +112,9 @@
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
       <Version>1.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Ninject">
+      <Version>7.1.0.431</Version>
     </PackageReference>
     <PackageReference Include="SuccincT">
       <Version>3.2.0</Version>

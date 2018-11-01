@@ -20,7 +20,7 @@ namespace Hymperia.Model.Modeles
     /// <summary>Les formes dans le projet.</summary>
     /// <remarks>Modifiable, mais privé.</remarks>
     [ItemNotNull]
-    internal List<Forme> _Formes { get; private set; } = new List<Forme> { };
+    internal List<Forme> _Formes { get; } = new List<Forme> { };
 
     /// <summary>Le nom du projet.</summary>
     /// <remarks>Alternate Key</remarks>

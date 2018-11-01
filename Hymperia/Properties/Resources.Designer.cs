@@ -15,6 +15,16 @@ namespace Hymperia.Facade.Properties
       new ResourceManager("Hymperia.Facade.Properties.Resources", typeof(Resources).GetTypeInfo().Assembly);
 
     /// <summary>
+    ///   Ajouter
+    /// </summary>
+    public static string Ajouter => GetString("Ajouter");
+
+    /// <summary>
+    ///   Ajouter un projet
+    /// </summary>
+    public static string AjouterProjet => GetString("AjouterProjet");
+
+    /// <summary>
     ///   et
     /// </summary>
     public static string And => GetString("And");
@@ -106,6 +116,16 @@ namespace Hymperia.Facade.Properties
     ///   Redimensionnement
     /// </summary>
     public static string Scaling => GetString("Scaling");
+
+    /// <summary>
+    ///   Supprimer
+    /// </summary>
+    public static string Supprimer => GetString("Supprimer");
+
+    /// <summary>
+    ///   Supprimer les projets
+    /// </summary>
+    public static string SupprimerProjets => GetString("SupprimerProjets");
 
     /// <summary>
     ///   Prix Total
