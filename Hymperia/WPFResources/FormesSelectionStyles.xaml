@@ -43,7 +43,7 @@
                     <MultiTrigger.Conditions>
                       <Condition Property="IsMouseOver" Value="True" />
                     </MultiTrigger.Conditions>
-                    <Setter TargetName="Border" Value="#FF1986A6" Property="BorderBrush" />
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrush}}" Property="BorderBrush" />
                   </MultiTrigger>
                   <MultiTrigger>
                     <MultiTrigger.Conditions>

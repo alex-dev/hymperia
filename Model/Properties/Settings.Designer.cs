@@ -25,8 +25,11 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymp" +
-            "eria; Password=infoH25978;")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<SerializableConnectionString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <ConnectionString>Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymperia; Password=infoH25978;</ConnectionString>
+  <ProviderName />
+</SerializableConnectionString>")]
         public string MainDatabase {
             get {
                 return ((string)(this["MainDatabase"]));
@@ -38,8 +41,11 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; " +
-            "Username=Hymperia; Password=infoH25978;")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<SerializableConnectionString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <ConnectionString>Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; Username=Hymperia; Password=infoH25978;</ConnectionString>
+  <ProviderName />
+</SerializableConnectionString>")]
         public string LocalizationDatabase {
             get {
                 return ((string)(this["LocalizationDatabase"]));
@@ -58,6 +64,18 @@ namespace Hymperia.Model.Properties {
             }
             set {
                 this["Culture"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        public string Theme {
+            get {
+                return ((string)(this["Theme"]));
+            }
+            set {
+                this["Theme"] = value;
             }
         }
     }

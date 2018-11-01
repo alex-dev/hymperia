@@ -34,6 +34,10 @@ namespace Hymperia.Facade
       Thread.CurrentThread.CurrentCulture = culture;
       Thread.CurrentThread.CurrentUICulture = culture;
       FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
+
+      Application.Current.Resources.MergedDictionaries.Add(CreateTheme());
+
+
       base.OnStartup(e);
     }
 
@@ -45,5 +49,11 @@ namespace Hymperia.Facade
       culture.NumberFormat.CurrencySymbol = "$";
       return culture;
     }
+
+    [Obsolete("Sera un contrôle avec choix pour l'utilisateur dans une version prochaine.")]
+    private ResourceDictionary CreateTheme() => new ResourceDictionary
+    {
+      Source = new Uri($"pack://application:,,,/WPFResources/Themes/{Settings.Default.Theme}.xaml", UriKind.Absolute)
+    };
   }
 }
