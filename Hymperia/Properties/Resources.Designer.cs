@@ -20,6 +20,11 @@ namespace Hymperia.Facade.Properties
     public static string Ajouter => GetString("Ajouter");
 
     /// <summary>
+    ///   Ajouter un projet
+    /// </summary>
+    public static string AjouterProjet => GetString("AjouterProjet");
+
+    /// <summary>
     ///   et
     /// </summary>
     public static string And => GetString("And");
@@ -116,6 +121,11 @@ namespace Hymperia.Facade.Properties
     ///   Supprimer
     /// </summary>
     public static string Supprimer => GetString("Supprimer");
+
+    /// <summary>
+    ///   Supprimer les projets
+    /// </summary>
+    public static string SupprimerProjets => GetString("SupprimerProjets");
 
     /// <summary>
     ///   Prix Total
