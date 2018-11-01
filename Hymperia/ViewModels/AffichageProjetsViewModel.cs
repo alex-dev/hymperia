@@ -14,10 +14,7 @@ using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
-=======
->>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

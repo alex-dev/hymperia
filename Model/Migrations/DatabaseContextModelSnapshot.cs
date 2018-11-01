@@ -72,19 +72,6 @@ namespace Hymperia.Model.Migrations
 
             b.Property<int>("G");
 
-<<<<<<< HEAD
-            b.Property<double>("Prix");
-
-            b.Property<int>("R");
-
-            b.Property<string>("_Nom")
-                      .IsRequired()
-                      .HasColumnName("Nom");
-
-            b.HasKey("Id");
-
-            b.HasAlternateKey("_Nom");
-=======
             b.Property<string>("Nom")
                       .IsRequired();
 
@@ -95,7 +82,6 @@ namespace Hymperia.Model.Migrations
             b.HasKey("Id");
 
             b.HasAlternateKey("Nom");
->>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
 
             b.ToTable("Materiaux");
           });

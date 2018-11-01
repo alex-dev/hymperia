@@ -4,11 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-<<<<<<< HEAD
 using Hymperia.Model.Identity;
 using Hymperia.Model.Properties;
-=======
->>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
 using JetBrains.Annotations;
 
 namespace Hymperia.Model.Modeles
@@ -113,7 +110,6 @@ namespace Hymperia.Model.Modeles
 
     [Pure]
     [NotNull]
-<<<<<<< HEAD
     public override string ToString() => Resources.UtilisateurToString(Id, Nom);
 
     #endregion
@@ -126,9 +122,6 @@ namespace Hymperia.Model.Modeles
     public bool Equals(Utilisateur other) => IdentityEqualityComparer<Utilisateur>.StaticEquals(this, other) && Nom == other.Nom;
     [Pure]
     public override int GetHashCode() => IdentityEqualityComparer<Utilisateur>.StaticGetHashCode(this);
-=======
-    public override string ToString() => $"{ Id } - { Nom }";
->>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
 
     #endregion
   }

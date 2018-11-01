@@ -41,11 +41,7 @@ namespace Hymperia.Facade.Views
 
     #endregion
 
-<<<<<<< HEAD
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e) =>
-=======
-    private void RaiseSelectionChanged(object sender, SelectionChangedEventArgs e) =>
->>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
       (btnSuppression.Command as DelegateCommand<IList>)?.RaiseCanExecuteChanged();
   }
 }

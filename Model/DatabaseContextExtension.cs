@@ -87,10 +87,7 @@ namespace Hymperia.Model
         .LoadAsync(token).ConfigureAwait(false);
 
     /// <summary>Unload les formes du <paramref name="projet"/>.</summary>
-<<<<<<< HEAD
     [Obsolete("Interface replaced by more long lived context and requery inside each context.")]
-=======
->>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
     public static void UnloadFormes([NotNull] this DatabaseContext context, [NotNull] Projet projet)
     {
       var entry = context.Entry(projet);
