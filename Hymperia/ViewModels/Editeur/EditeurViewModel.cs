@@ -228,25 +228,31 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnProjetChanged()
     {
+      void OnProperty(object sender, PropertyChangedEventArgs e) => FormesHasChanged();
+      void OnCollection(object sender, NotifyCollectionChangedEventArgs e) => FormesHasChanged();
+
       if (Projet is null)
       {
-        Formes.ForEach(wrapper => wrapper.PropertyChanged -= FormeHasChanged);
+        Formes.ForEach(wrapper => wrapper.PropertyChanged -= OnProperty);
+        Formes.CollectionChanged -= OnCollection;
         Formes = null;
       }
       else
       {
         var enumerable = (from forme in Projet.Formes
                           select ConvertisseurFormes.Convertir(forme))
-          .DeferredForEach(wrapper => wrapper.PropertyChanged += FormeHasChanged);
+          .DeferredForEach(wrapper => wrapper.PropertyChanged += OnProperty);
 
         Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
+        Formes.CollectionChanged += OnCollection;
       }
 
       HasChanged = false;
       RaiseProjetChanged();
     }
 
-    private void FormeHasChanged(object sender, PropertyChangedEventArgs e)
+
+    private void FormesHasChanged()
     {
       HasChanged = true;
       RaiseProjetChanged();
