@@ -7,11 +7,13 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
+      <RowDefinition Height="50" />
       <RowDefinition Height="*" />
       <RowDefinition Height="50" />
     </Grid.RowDefinitions>
-    <TextBox />
-    <Button Click="Confirm" Content="Confirmer" Grid.Column="0" Grid.Row="1" />
-    <Button Click="Cancel" Content="Annuler" Grid.Column="1" Grid.Row="1" />
+    <TextBlock Text="Merci de saisir le nom du nouveau projet :" Grid.ColumnSpan="2" />
+    <TextBox Text="{Binding Content, Mode=TwoWay}" Grid.ColumnSpan="2" Grid.Row="1" />
+    <Button Click="Confirm" Content="Confirmer" Grid.Column="0" Grid.Row="2" />
+    <Button Click="Cancel" Content="Annuler" Grid.Column="1" Grid.Row="2" />
   </Grid>
 </UserControl>
