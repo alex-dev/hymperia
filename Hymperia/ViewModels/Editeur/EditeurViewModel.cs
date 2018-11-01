@@ -202,8 +202,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task<Projet> QueryProjet(Projet _projet, Action onChanged)
     {
+<<<<<<< HEAD
       Projet value = null;
 
+=======
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
       SetProperty(ref projet, null, onChanged, nameof(Projet));
 
       if (_projet is Projet)
@@ -217,15 +220,24 @@ namespace Hymperia.Facade.ViewModels.Editeur
       return value;
     }
 
+<<<<<<< HEAD
     private async Task<Materiau> QueryMateriau(int key)
     {
       using (await AsyncLock.Lock(Context))
         return SelectedMateriau = await Context.Materiaux.FindAsync(key);
+=======
+        SetProperty(ref projet, _projet, onChanged, nameof(Projet));
+      }
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
     }
 
     #endregion
 
+<<<<<<< HEAD
     #region FormesChanged Event Handlers
+=======
+    #region On Projet Changed
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
 
     private void OnProjetChanged()
     {
@@ -247,12 +259,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
       RaiseProjetChanged();
     }
 
+<<<<<<< HEAD
     private void FormeHasChanged(object sender, PropertyChangedEventArgs e)
     {
       HasChanged = true;
       RaiseProjetChanged();
     }
 
+=======
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
     #endregion
 
     #region Aggregated Event Handlers
@@ -319,6 +334,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       DisposeContext(context);
     }
 
+<<<<<<< HEAD
 #pragma warning restore 4014
 
     #endregion
@@ -339,6 +355,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
       using (await AsyncLock.Lock(Context))
         context.Dispose();
     }
+=======
+    private void FormeHasChanged(object sender, PropertyChangedEventArgs args)
+    {
+      if (sender is FormeWrapper forme && Formes.Contains(forme))
+      {
+        HasBeenModified(null, null);
+      }
+    }
+
+    private void HasBeenModified(object sender, NotifyCollectionChangedEventArgs args) => IsModified = true;
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
 
     #endregion
 

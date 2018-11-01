@@ -21,6 +21,7 @@
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <StackPanel Orientation="Horizontal">
+<<<<<<< HEAD
     <StackPanel Orientation="Horizontal">
       <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
           SelectionMode="Extended" SelectionChanged="OnSelectionChanged">
@@ -42,6 +43,26 @@
       <Button x:Name="btnSuppression" Content="{x:Static prop:Resources.Supprimer}" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
       <Button Content="{x:Static prop:Resources.Ajouter}" Command="{Binding AjouterProjet}"/>
+=======
+    <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
+        SelectionMode="Extended" SelectionChanged="RaiseSelectionChanged">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding .}">
+            <TextBlock.InputBindings>
+              <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
+                  CommandParameter="{Binding .}" />
+            </TextBlock.InputBindings>
+          </TextBlock>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <ListBox ItemsSource="{Binding SelectedItems, ElementName=ListBox}" />
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+      <Button x:Name="btnSuppression" Content="x:Static prop:Resources.Supprimer" Command="{Binding SupprimerProjet}"
+          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
+      <Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
     </StackPanel>
     </StackPanel>
 </UserControl>

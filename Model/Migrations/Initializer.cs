@@ -70,11 +70,16 @@ namespace Hymperia.Model.Migrations
       await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token).ConfigureAwait(false)), token);
       await context.SaveChangesAsync(token);
 
+<<<<<<< HEAD
       InitializeAcces(
         await context.Utilisateurs.ToArrayAsync(token).ConfigureAwait(false),
         await context.Projets.ToArrayAsync(token).ConfigureAwait(false))
         .ToArray();
       await context.SaveChangesAsync(token).ConfigureAwait(false);
+=======
+      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token)).ToArray();
+      await context.SaveChangesAsync(token);
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
     }
 
     [NotNull]

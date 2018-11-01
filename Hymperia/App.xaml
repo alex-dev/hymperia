@@ -9,8 +9,11 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/MaterialsSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValueConverters.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ListBoxProjets.xaml" />
+<<<<<<< HEAD
         <ResourceDictionary Source="pack://application:,,,/WPFResources/FormesSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/Images.xaml" />
+=======
+>>>>>>> 519ce70cd4a21715476741342b0cf1d0fd752e37
       </ResourceDictionary.MergedDictionaries>
       <!--<Style x:Key="ListBox" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Style.Resources>
