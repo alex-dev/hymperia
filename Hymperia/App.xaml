@@ -9,6 +9,8 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/FormesSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/Images.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ButtonStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/ComboBoxStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/Themes/Default.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <!--<Style x:Key="ListBox" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
         <Style.Resources>

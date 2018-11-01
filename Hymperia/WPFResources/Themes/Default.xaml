@@ -5,4 +5,11 @@
   -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style TargetType="{x:Type TextBlock}">
+    <Setter Property="Foreground" Value="White" />
+  </Style>
+  <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF101011" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red"/>
+  <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Black" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.ActiveBorderBrush}" Color="Red" />
 </ResourceDictionary>

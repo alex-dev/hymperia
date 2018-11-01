@@ -10,6 +10,6 @@
       <ComboBox ItemsSource="{Binding Projets}" SelectedItem="{Binding Projet, Mode=TwoWay}" />
       <Button Name="t" Command="{Binding Navigate}" Content="Ouvrir" />
     </StackPanel>
-    <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1" />
+    <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1"/>
   </Grid>
 </Window>
