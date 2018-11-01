@@ -3,30 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" prism:ViewModelLocator.AutoWireViewModel="True">
   <ListBox x:Name="ListBox" ItemsSource="{Binding Materiaux, Mode=OneWay, NotifyOnTargetUpdated=True}"
       SelectedValuePath="Materiau" SelectedValue="{Binding SelectedMateriau, Mode=TwoWay}" SelectionMode="Single">
-    <ListBox.ItemsPanel>
-      <ItemsPanelTemplate>
-        <WrapPanel Orientation="Vertical" />
-      </ItemsPanelTemplate>
-    </ListBox.ItemsPanel>
-    <ListBox.ItemTemplate>
-      <DataTemplate>
-        <!-- To make better -->
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="40" />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="20" />
-          </Grid.RowDefinitions>
-          <TextBlock Style="{StaticResource MaterialTextStyle}" Text="{Binding Nom}" />
-          <Rectangle Style="{StaticResource MaterialRectangleStyle}" Fill="{Binding Fill}" />
-        </Grid>
-      </DataTemplate>
-    </ListBox.ItemTemplate>
-  </ListBox>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <VirtualizingStackPanel>
+            <TextBlock Text="{Binding Nom}" />
+            <Rectangle Fill="{Binding Fill}" />
+          </VirtualizingStackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </StackPanel>
 </UserControl>
