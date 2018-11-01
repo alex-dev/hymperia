@@ -76,13 +76,12 @@ namespace Hymperia.Model.Migrations
 
             b.Property<int>("R");
 
-            b.Property<string>("_Nom")
-                      .IsRequired()
-                      .HasColumnName("Nom");
+            b.Property<string>("Nom")
+                      .IsRequired();
 
             b.HasKey("Id");
 
-            b.HasAlternateKey("_Nom");
+            b.HasAlternateKey("Nom");
 
             b.ToTable("Materiaux");
           });
