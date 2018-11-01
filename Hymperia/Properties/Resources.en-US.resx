@@ -126,17 +126,26 @@
   <data name="And" xml:space="preserve">
     <value>and</value>
   </data>
+  <data name="Annuler" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CanOnlyConvertFrom" xml:space="preserve">
     <value>Can only convert from {origins}.</value>
   </data>
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Can onyl convert to {targets}.</value>
   </data>
+  <data name="Confirmer" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="FieldCannotBeEmpty" xml:space="preserve">
+    <value>Field cannot be empty.</value>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
     <value>Could not convert {value} to {targets}.</value>
@@ -158,6 +167,12 @@
   </data>
   <data name="Movement" xml:space="preserve">
     <value>Movement</value>
+  </data>
+  <data name="NouveauNomProjet" xml:space="preserve">
+    <value>Please enter the name of the new project :</value>
+  </data>
+  <data name="Ouvrir" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>

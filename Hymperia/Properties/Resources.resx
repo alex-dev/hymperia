@@ -126,17 +126,26 @@
   <data name="And" xml:space="preserve">
     <value>et</value>
   </data>
+  <data name="Annuler" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
   <data name="CanOnlyConvertFrom" xml:space="preserve">
     <value>Peut seulement convertir depuis {origins}.</value>
   </data>
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Peut seulement convertir vers {targets}.</value>
   </data>
+  <data name="Confirmer" xml:space="preserve">
+    <value>Confirmer</value>
+  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="FieldCannotBeEmpty" xml:space="preserve">
+    <value>Le champ ne peut pas être vide.</value>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
     <value>N'as pas pu convertir {value} en {targets}.</value>
@@ -158,6 +167,12 @@
   </data>
   <data name="Movement" xml:space="preserve">
     <value>Déplacement</value>
+  </data>
+  <data name="NouveauNomProjet" xml:space="preserve">
+    <value>Merci de saisir le nom du nouveau projet :</value>
+  </data>
+  <data name="Ouvrir" xml:space="preserve">
+    <value>Ouvrir</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>

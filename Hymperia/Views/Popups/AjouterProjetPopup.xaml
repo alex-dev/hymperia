@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="Hymperia.Facade.Views.Popups.AjouterProjetPopup"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
@@ -11,9 +11,30 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="50" />
     </Grid.RowDefinitions>
-    <TextBlock Text="Merci de saisir le nom du nouveau projet :" Grid.ColumnSpan="2" />
-    <TextBox Text="{Binding Content, Mode=TwoWay}" Grid.ColumnSpan="2" Grid.Row="1" />
-    <Button Click="Confirm" Content="Confirmer" Grid.Column="0" Grid.Row="2" />
-    <Button Click="Cancel" Content="Annuler" Grid.Column="1" Grid.Row="2" />
+    <TextBlock Text="{x:Static prop:Resources.NouveauNomProjet}" Grid.ColumnSpan="2" />
+    <TextBox x:Name="txt" Grid.ColumnSpan="2" Grid.Row="1">
+      <TextBox.Text>
+        <Binding Path="Content" Mode="TwoWay">
+          <Binding.ValidationRules>
+            <StaticResource ResourceKey="StringNotNullOrWhiteSpace" />
+          </Binding.ValidationRules>
+        </Binding>
+      </TextBox.Text>
+    </TextBox>
+    <Button Click="Confirm" Content="{x:Static prop:Resources.Confirmer}" IsEnabled="False" Grid.Column="0" Grid.Row="2">
+      <Button.Style>
+        <Style TargetType="{x:Type Button}">
+          <Style.Triggers>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txt}" Value="False" />
+              </MultiDataTrigger.Conditions>
+              <Setter Property="IsEnabled" Value="True" />
+            </MultiDataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Button.Style>
+    </Button>
+    <Button Click="Cancel" Content="{x:Static prop:Resources.Annuler}" Grid.Column="1" Grid.Row="2" />
   </Grid>
 </UserControl>

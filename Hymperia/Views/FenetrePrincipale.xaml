@@ -1,6 +1,6 @@
 ﻿<Window x:Class="Hymperia.Facade.Views.FenetrePrincipale" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    prism:ViewModelLocator.AutoWireViewModel="True" Title="Hymperia">
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True" Title="Hymperia">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="25" />
@@ -8,7 +8,7 @@
     </Grid.RowDefinitions>
     <StackPanel Orientation="Horizontal" Grid.Row="0">
       <ComboBox ItemsSource="{Binding Utilisateurs}" SelectedItem="{Binding Utilisateur, Mode=TwoWay}" />
-      <Button Name="t" Command="{Binding Navigate}" Content="Ouvrir" />
+      <Button Name="t" Command="{Binding Navigate}" Content="{x:Static prop:Resources.Ouvrir}" />
     </StackPanel>
     <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1" />
   </Grid>
