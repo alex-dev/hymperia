@@ -72,12 +72,12 @@ namespace Hymperia.Model.Migrations
 
             b.Property<int>("G");
 
+            b.Property<string>("Nom")
+                      .IsRequired();
+
             b.Property<double>("Prix");
 
             b.Property<int>("R");
-
-            b.Property<string>("Nom")
-                      .IsRequired();
 
             b.HasKey("Id");
 

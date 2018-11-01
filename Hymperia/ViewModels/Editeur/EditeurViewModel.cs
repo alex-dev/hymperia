@@ -203,7 +203,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private async Task<Projet> QueryProjet(Projet _projet, Action onChanged)
     {
       Projet value = null;
-
       SetProperty(ref projet, null, onChanged, nameof(Projet));
 
       if (_projet is Projet)

@@ -48,8 +48,8 @@ namespace Hymperia.Facade.Views.Editeur
 
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => true;
-    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters["Projet"];
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
+    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion

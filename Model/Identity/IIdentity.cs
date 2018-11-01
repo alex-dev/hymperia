@@ -4,5 +4,6 @@
   public interface IIdentity
   {
     int Id { get; }
+    string ToString();
   }
 }

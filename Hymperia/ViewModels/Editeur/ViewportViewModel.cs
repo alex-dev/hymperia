@@ -194,7 +194,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
-    private BulkObservableCollection<MeshElement3D> formes;
     private SelectionMode? mode;
 
     #endregion

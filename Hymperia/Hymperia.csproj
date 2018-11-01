@@ -122,6 +122,8 @@
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
     <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
+    <Compile Include="NavigationKeys.cs" />
+    <Compile Include="NavigationParameterKeys.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurMateriaux.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Converters\Point3DToPointConverter.cs" />
     <Compile Include="Converters\TransformConverter.cs" />
     <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
+    <Compile Include="ViewModels\AffichageProjetsViewModel.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
@@ -136,6 +139,9 @@
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
+    <Compile Include="Views\AffichageProjets.xaml.cs">
+      <DependentUpon>AffichageProjets.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
       <DependentUpon>FormesSelection.xaml</DependentUpon>
     </Compile>
@@ -161,6 +167,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.Designer.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popups\AjouterProjetPopup.xaml.cs">
+      <DependentUpon>AjouterProjetPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
+      <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -169,6 +181,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AffichageProjets.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Editeur\FormesSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +209,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Popups\AjouterProjetPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Popups\EntitySuppressionPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPFResources\FormesSelectionStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,6 +224,10 @@
     <Page Include="WPFResources\Images.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\ListBoxProjets.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WPFResources\MaterialsSelectionStyles.xaml">
       <Generator>MSBuild:Compile</Generator>

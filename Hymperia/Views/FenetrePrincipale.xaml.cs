@@ -8,5 +8,6 @@ namespace Hymperia.Facade.Views
     {
       InitializeComponent();
     }
+
   }
 }
