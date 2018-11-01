@@ -120,6 +120,9 @@
   <data name="Ajouter" xml:space="preserve">
     <value>Ajouter</value>
   </data>
+  <data name="AjouterProjet" xml:space="preserve">
+    <value>Ajouter un projet</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>et</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Supprimer</value>
+  </data>
+  <data name="SupprimerProjets" xml:space="preserve">
+    <value>Supprimer les projets</value>
   </data>
   <data name="TotalPrice" xml:space="preserve">
     <value>Prix Total</value>

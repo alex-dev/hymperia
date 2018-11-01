@@ -312,16 +312,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnActivation()
     {
-      var context = Context;
+      DisposeContext(Context);
       Context = ContextFactory.GetContext();
-      DisposeContext(context);
     }
 
     private void OnDeactivation()
     {
-      var context = Context;
+      DisposeContext(Context);
       Context = null;
-      DisposeContext(context);
     }
 
 #pragma warning restore 4014
@@ -341,7 +339,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       if (context is null)
         return;
 
-      using (await AsyncLock.Lock(Context))
+      using (await AsyncLock.Lock(context))
         context.Dispose();
     }
 

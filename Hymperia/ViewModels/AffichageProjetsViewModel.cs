@@ -7,14 +7,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Prism;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -22,7 +25,7 @@ using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class AffichageProjetsViewModel : BindableBase
+  public class AffichageProjetsViewModel : BindableBase, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -32,7 +35,7 @@ namespace Hymperia.Facade.ViewModels
     public Utilisateur Utilisateur
     {
       get => utilisateur;
-      set => Loading = QueryUtilisateur(value, UpdateProjets);
+      set => UtilisateurLoader.Loading = QueryUtilisateur(value, UpdateProjets);
     }
 
     [CanBeNull]
@@ -40,13 +43,6 @@ namespace Hymperia.Facade.ViewModels
     {
       get => projets;
       set => SetProperty(ref projets, value);
-    }
-
-    [NotNull]
-    public System.Windows.Controls.SelectionMode SelectionMode
-    {
-      get => selection;
-      set => SetProperty(ref selection, value);
     }
 
     #endregion
@@ -68,28 +64,9 @@ namespace Hymperia.Facade.ViewModels
 
     #region Asynchronous Loading
 
-    [CanBeNull]
-    private Task Loading
-    {
-      get => loading;
-      set => SetProperty(ref loading, value, () =>
-      {
-        IsLoading = true;
-        value
-          .ContinueWith(
-            result => throw result.Exception.Flatten(),
-            default,
-            TaskContinuationOptions.OnlyOnFaulted,
-            TaskScheduler.FromCurrentSynchronizationContext())
-          .ContinueWith(result => IsLoading = false, TaskScheduler.FromCurrentSynchronizationContext());
-      });
-    }
-
-    public bool IsLoading
-    {
-      get => isLoading;
-      private set => SetProperty(ref isLoading, value);
-    }
+    public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
+    public AsyncLoader<Projet> AjouterProjetLoader { get; } = new AsyncLoader<Projet>();
+    public AsyncLoader SupprimerProjetLoader { get; } = new AsyncLoader();
 
     #endregion
 
@@ -97,15 +74,16 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructors
 
-    public AffichageProjetsViewModel([NotNull] DatabaseContext context, [NotNull] IRegionManager manager)
+    public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
-      Context = context;
-      Manager = manager;
       NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
       SupprimerProjet = new DelegateCommand<IList>(
         projets => _SupprimerProjets(projets?.Cast<Projet>()),
         projets => CanSupprimerProjets(projets?.Cast<Projet>()));
       AjouterProjet = new DelegateCommand(_AjouterProjet);
+
+      ContextFactory = factory;
+      Manager = manager;
     }
 
     #endregion
@@ -128,7 +106,8 @@ namespace Hymperia.Facade.ViewModels
       {
         if (context.Confirmed)
         {
-          Loading = ConfirmedCreerProjet(context.Content.ToString()).ContinueWith(
+          AjouterProjetLoader.Loading = ConfirmedCreerProjet(context.Content.ToString());
+          AjouterProjetLoader.Loading.ContinueWith(
             result => _NavigateToProjet(result.Result),
             default,
             TaskContinuationOptions.OnlyOnRanToCompletion,
@@ -138,15 +117,22 @@ namespace Hymperia.Facade.ViewModels
 
       AjouterProjetRequest.Raise(new Confirmation
       {
-        Title = "Ajouter un projet ?",
+        Title = Resources.AjouterProjet,
       }, Execute);
     }
 
     private async Task<Projet> ConfirmedCreerProjet(string nom)
     {
+      if (string.IsNullOrWhiteSpace(nom))
+        throw new ArgumentNullException(nameof(nom));
+
       Utilisateur.CreerProjet(nom);
-      await Context.SaveChangesAsync();
-      return await Context.Projets.SingleAsync(projet => projet.Nom == nom);
+
+      using (await AsyncLock.Lock(Context))
+      {
+        await Context.SaveChangesAsync();
+        return await Context.Projets.SingleAsync(projet => projet.Nom == nom);
+      }
     }
 
     #endregion
@@ -159,37 +145,38 @@ namespace Hymperia.Facade.ViewModels
       {
         if (context.Confirmed)
         {
-          Loading = ConfirmedSupprimerProjets(projets);
+          SupprimerProjetLoader.Loading = ConfirmedSupprimerProjets(projets);
         }
       }
 
       SupprimerProjetRequest.Raise(new Confirmation
       {
-        Title = "Supprimer les projets ?",
+        Title = Resources.SupprimerProjets,
         Content = projets
       }, Execute);
     }
 
     private async Task ConfirmedSupprimerProjets(IEnumerable<Projet> projets)
     {
-      await (Loading ?? Task.CompletedTask);
-
-      foreach (var projet in projets)
+      using (await AsyncLock.Lock(Context))
       {
-        if (Utilisateur.EstPropietaireDe(projet))
+        foreach (var projet in projets)
         {
-          Context.Remove(projet);
-        }
-        else
-        {
-          Context.Remove(Utilisateur.Acces.First(acces => acces.Projet.Id == projet.Id));
+          if (Utilisateur.EstPropietaireDe(projet))
+          {
+            Context.Remove(projet);
+          }
+          else
+          {
+            Context.Remove(Utilisateur.Acces.Single(acces => acces.Projet.Id == projet.Id));
+          }
+
+          Utilisateur.RetirerProjet(projet);
         }
 
-        Utilisateur.RetirerProjet(projet);
+        Projets.RemoveRange(projets);
+        await Context.SaveChangesAsync();
       }
-
-      Projets.RemoveRange(projets);
-      await Context.SaveChangesAsync();
     }
 
     private bool CanSupprimerProjets(IEnumerable<Projet> projets) => projets is IEnumerable<Projet> && projets.Count() > 0;
@@ -198,19 +185,20 @@ namespace Hymperia.Facade.ViewModels
 
     #region Queries
 
-    private async Task QueryUtilisateur(Utilisateur _utilisateur, Action onChanged)
+    private async Task<Utilisateur> QueryUtilisateur(Utilisateur _utilisateur, Action onChanged)
     {
+      Utilisateur value = null;
       SetProperty(ref utilisateur, null, onChanged, nameof(Utilisateur));
 
       if (_utilisateur is Utilisateur)
       {
-        await (Loading ?? Task.CompletedTask);
+        using (await AsyncLock.Lock(Context))
+          value = await Context.Utilisateurs.IncludeAcces().FindByIdAsync(_utilisateur.Id);
 
-        Context.Attach(_utilisateur);
-        await Context.LoadProjetsAsync(_utilisateur);
-
-        SetProperty(ref utilisateur, _utilisateur, onChanged, nameof(Utilisateur));
+        SetProperty(ref utilisateur, value, onChanged, nameof(Utilisateur));
       }
+
+      return value;
     }
 
     #endregion
@@ -223,12 +211,71 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
+    #region IActiveAware
+
+    public event EventHandler IsActiveChanged;
+
+    public bool IsActive
+    {
+      get => isActive;
+      set
+      {
+        isActive = value;
+
+        if (value)
+          OnActivation();
+        else
+          OnDeactivation();
+
+        IsActiveChanged?.Invoke(this, EventArgs.Empty);
+      }
+    }
+
+#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
+
+    private void OnActivation()
+    {
+      DisposeContext(Context);
+      Context = ContextFactory.GetContext();
+    }
+
+    private void OnDeactivation()
+    {
+      DisposeContext(Context);
+      Context = null;
+    }
+
+#pragma warning restore 4014
+
+    #endregion
+
+    #region IDisposable
+
+#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
+
+    public void Dispose() => DisposeContext(Context);
+
+#pragma warning restore 4014
+
+    public async Task DisposeContext(DatabaseContext context)
+    {
+      if (context is null)
+        return;
+
+      using (await AsyncLock.Lock(context))
+        context.Dispose();
+    }
+
+    #endregion
+
     #region Services
 
     [NotNull]
-    private readonly DatabaseContext Context;
+    private readonly ContextFactory ContextFactory;
     [NotNull]
     private readonly IRegionManager Manager;
+    [NotNull]
+    private DatabaseContext Context;
 
     #endregion
 
@@ -236,10 +283,7 @@ namespace Hymperia.Facade.ViewModels
 
     private Utilisateur utilisateur;
     private BulkObservableCollection<Projet> projets;
-    private System.Windows.Controls.SelectionMode selection = System.Windows.Controls.SelectionMode.Single;
-    private Task loading;
-    private bool isLoading;
-
+    private bool isActive;
 
     #endregion
   }
