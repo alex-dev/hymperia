@@ -15,9 +15,7 @@ namespace Hymperia.Facade
       IEnumerable<Delegate> handlers = handler.GetInvocationList();
 
       if (handlers.First() != handler)
-      {
         handlers = handlers.SelectMany(h => h.TraverseRecursively());
-      }
 
       return handlers;
     }

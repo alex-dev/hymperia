@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-#pragma warning disable 4014
   public class FormesSelectionViewModel : BindableBase
   {
     #region Properties
@@ -20,14 +21,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
       private set => SetProperty(ref formes, value);
     }
 
+    [CanBeNull]
+    public Type SelectedForme
+    {
+      get => selected;
+      set => SetProperty(ref selected, value, () => RaiseSelectedChanged(value));
+    }
+
     #endregion
 
     #region Constructors
 
-    public FormesSelectionViewModel()
+#pragma warning disable 4014 // Justification: The async call is meant to run after everything is bound. It should not need to be awaited and it cannot fail.
+
+    public FormesSelectionViewModel([NotNull] IEventAggregator aggregator)
     {
+      SelectedChanged = aggregator.GetEvent<SelectedFormeChanged>();
+      SelectedChanged.Subscribe(OnSelectedChanged, FilterSelectedChanged);
       QueryFormes();
     }
+
+#pragma warning restore 4014
 
     #endregion
 
@@ -43,9 +57,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
+    #region Aggregated Event Handlers
+
+    protected virtual void OnSelectedChanged(Type type) => SelectedForme = type;
+
+    protected virtual bool FilterSelectedChanged(Type type) => type != SelectedForme;
+
+    protected virtual void RaiseSelectedChanged(Type type) => SelectedChanged.Publish(type);
+
+    #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly SelectedFormeChanged SelectedChanged;
+
+    #endregion
+
     #region Private Fields
 
     private IDictionary<Type, string> formes;
+    private Type selected;
 
     #endregion
   }

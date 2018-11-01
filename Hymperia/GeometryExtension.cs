@@ -23,9 +23,7 @@ namespace Hymperia.Facade
       var value = new Media.Quaternion(quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
 
       if (!value.IsNormalized)
-      {
         value.Normalize();
-      }
 
       return value;
     }

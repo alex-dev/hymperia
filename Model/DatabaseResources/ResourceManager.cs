@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Model.Identity;
 using Hymperia.Model.Localization;
@@ -12,22 +13,30 @@ namespace Hymperia.Model.DatabaseResources
 {
   internal class ResourceManager
   {
+    [NotNull]
+    [ItemNotNull]
+    public async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux()
+    {
+      using (await AsyncLock.Lock(Materiaux).ConfigureAwait(false))
+        return Materiaux =
+          await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
+            .ConfigureAwait(false);
+    }
+
     [CanBeNull]
     public async Task<LocalizedMateriau> GetMateriau([NotNull] string key)
     {
       string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
-      if (Materiaux is null || Materiaux.First().Value.CultureKey != lang)
-      {
-        await LoadMateriaux();
-      }
+      if (!Materiaux.Any() || Materiaux.First().Value.CultureKey != lang)
+        await LoadMateriaux().ConfigureAwait(false);
 
       return Materiaux[key];
     }
 
     [CanBeNull]
-    public async Task<LocalizedMateriau> GetMateriau([NotNull] string key, [NotNull] CultureInfo culture)
-      => await Load<LocalizedMateriau, Materiau>(key, culture.TwoLetterISOLanguageName);
+    public async Task<LocalizedMateriau> GetMateriau([NotNull] string key, [NotNull] CultureInfo culture) =>
+      await Load<LocalizedMateriau, Materiau>(key, culture.TwoLetterISOLanguageName).ConfigureAwait(false);
 
     [CanBeNull]
     private async Task<TLocalized> Load<TLocalized, TEntity>([NotNull] string key, [NotNull] string culture)
@@ -35,14 +44,10 @@ namespace Hymperia.Model.DatabaseResources
       where TEntity : IIdentity
     {
       using (var context = new LocalizationContext())
-      {
         return await context.Set<TLocalized>()
-          .SingleOrDefaultAsync(localized => localized.StringKey == key && localized.CultureKey == culture);
-      }
+          .SingleOrDefaultAsync(localized => localized.StringKey == key && localized.CultureKey == culture)
+          .ConfigureAwait(false);
     }
-
-    public async Task<IDictionary<string, LocalizedMateriau>> LoadMateriaux() => Materiaux =
-      await Load<LocalizedMateriau, Materiau>(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
 
     [NotNull]
     [ItemNotNull]
@@ -51,14 +56,13 @@ namespace Hymperia.Model.DatabaseResources
       where TEntity : IIdentity
     {
       using (var context = new LocalizationContext())
-      {
         return await context.Set<TLocalized>().Where(localized => localized.CultureKey == culture)
-          .ToDictionaryAsync(localized => localized.StringKey);
-      }
+          .ToDictionaryAsync(localized => localized.StringKey).ConfigureAwait(false);
     }
 
-    [CanBeNull]
+
+    [NotNull]
     [ItemNotNull]
-    private Dictionary<string, LocalizedMateriau> Materiaux { get; set; }
+    private Dictionary<string, LocalizedMateriau> Materiaux { get; set; } = new Dictionary<string, LocalizedMateriau>();
   }
 }

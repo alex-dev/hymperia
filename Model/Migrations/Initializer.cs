@@ -64,14 +64,17 @@ namespace Hymperia.Model.Migrations
     /// <param name="token">Un token d'annulation.</param>
     public async Task Initialize([NotNull] DatabaseContext context, [NotNull] CancellationToken token = default)
     {
-      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token);
+      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token).ConfigureAwait(false);
+      await context.SaveChangesAsync(token).ConfigureAwait(false);
+
+      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token).ConfigureAwait(false)), token);
       await context.SaveChangesAsync(token);
 
-      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token)), token);
-      await context.SaveChangesAsync(token);
-
-      InitializeAcces(await context.Utilisateurs.ToArrayAsync(token), await context.Projets.ToArrayAsync(token)).ToArray();
-      await context.SaveChangesAsync(token);
+      InitializeAcces(
+        await context.Utilisateurs.ToArrayAsync(token).ConfigureAwait(false),
+        await context.Projets.ToArrayAsync(token).ConfigureAwait(false))
+        .ToArray();
+      await context.SaveChangesAsync(token).ConfigureAwait(false);
     }
 
     [NotNull]
@@ -81,7 +84,6 @@ namespace Hymperia.Model.Migrations
       var array = new Acces.Droit?[] { null, Acces.Droit.Lecture, Acces.Droit.LectureEcriture };
 
       for (int i = 0; i < projets.Length; ++i)
-      {
         for (int j = 0; j < utilisateurs.Length; ++j)
         {
           var droit = i == j ? Acces.Droit.Possession : array[Random.Next(array.Length)];
@@ -94,7 +96,6 @@ namespace Hymperia.Model.Migrations
             yield return acces;
           }
         }
-      }
     }
 
     [NotNull]
@@ -112,9 +113,7 @@ namespace Hymperia.Model.Migrations
       int count = Random.Next(50, 250);
 
       for (int i = 0; i < count; ++i)
-      {
         yield return creators[Random.Next(creators.Length)](materiaux);
-      }
     }
 
     [NotNull]

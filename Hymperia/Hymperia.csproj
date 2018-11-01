@@ -87,8 +87,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BaseClasses\BulkObservableCollection.cs" />
-    <Compile Include="BaseClasses\RegionContextAwareUserControl.cs" />
     <Compile Include="BaseClasses\SelectionMode.cs" />
+    <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
+    <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorValueConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\BaseAggregatorConverter.cs" />
@@ -101,6 +102,13 @@
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
+    <Compile Include="DictionaryExtension.cs" />
+    <Compile Include="EventAggregatorMessages\FormesChanged.cs" />
+    <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
+    <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
+    <Compile Include="EventAggregatorMessages\SelectedFormesChanged.cs" />
+    <Compile Include="EventAggregatorMessages\SelectedMateriauChanged.cs" />
+    <Compile Include="EventAggregatorMessages\SelectionModeChanged.cs" />
     <Compile Include="EventDelegateExtension.cs" />
     <Compile Include="EventHandlerExtension.cs" />
     <Compile Include="GeometryExtension.cs" />
@@ -116,29 +124,26 @@
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
+    <Compile Include="Services\ConvertisseurMateriaux.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Converters\Point3DToPointConverter.cs" />
     <Compile Include="Converters\TransformConverter.cs" />
+    <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\FormesPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\IEditeurViewModel.cs" />
-    <Compile Include="ViewModels\Editeur\IProjetViewModel.cs" />
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
-    <Compile Include="BaseClasses\RegionContextAwareViewModel.cs" />
-    <Compile Include="Views\Editeur\FormesProperties.xaml.cs">
-      <DependentUpon>FormesProperties.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Editeur\FormesSelection.xaml.cs">
       <DependentUpon>FormesSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\MateriauxSelection.xaml.cs">
       <DependentUpon>MateriauxSelection.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PrixAnalyseMateriaux.xaml.cs">
-      <DependentUpon>PrixAnalyseMateriaux.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\ProjetAnalyse\MateriauxAnalyse.xaml.cs">
+      <DependentUpon>MateriauxAnalyse.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
@@ -164,10 +169,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Editeur\FormesProperties.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Editeur\FormesSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,7 +177,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PrixAnalyseMateriaux.xaml">
+    <Page Include="Views\Editeur\ProjetAnalyse\MateriauxAnalyse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +273,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AsyncLock\AsyncLock.csproj">
+      <Project>{696AF196-3AEB-459F-87F5-3599151A85B3}</Project>
+      <Name>AsyncLock</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DirectXOperations\DirectXOperations.vcxproj">
       <Project>{d4ba22bd-7cbd-4f40-abdc-f4f115083284}</Project>
       <Name>DirectXOperations</Name>
@@ -294,7 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HelixToolkit.Wpf">
-      <Version>2.5.0</Version>
+      <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="JetBrains.Annotations">
       <Version>2018.2.1</Version>
@@ -324,5 +329,6 @@
       <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,7 +11,8 @@ using JetBrains.Annotations;
 namespace Hymperia.Facade.BaseClasses
 {
   /// <summary>Implement bulk changes for <see cref="ObservableCollection{T}"/>.</summary>
-  /// inheritdoc/>
+  /// <inheritdoc/>
+  /// <remarks>Reflection is used to potential avoid issue described in <a href="https://blogs.msdn.microsoft.com/samng/2007/11/26/virtual-events-in-c/">this post</a>.</remarks>
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
     /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> acquired through reflection. Avoid using if not needed.</summary>
@@ -32,13 +33,11 @@ namespace Hymperia.Facade.BaseClasses
     public void AddRange([NotNull] IEnumerable<T> items)
     {
       CheckReentrancy();
-      var index = Items.Count;
+      int index = Items.Count;
       var _items = items.ToArray();
 
       foreach (var item in _items)
-      {
         Items.Insert(Items.Count, item);
-      }
 
       OnCollectionChanged_Add(_items, index);
     }
@@ -50,11 +49,40 @@ namespace Hymperia.Facade.BaseClasses
       var _items = items.Intersect(Items).ToArray();
 
       foreach (var item in _items)
-      {
         Items.Remove(item);
-      }
 
       OnCollectionChanged_Remove(_items);
+    }
+
+    /// <summary>Replace <paramref name="olditems"/> with <paramref name="newitems"/>.</summary>
+    /// <remarks>This replace all values in <paramref name="olditems"/> with the corresponding in <paramref name="newitems"/>.
+    /// Extra values are then removed or appended.</remarks>
+    public void ReplaceRange([NotNull] IEnumerable<T> olditems, [NotNull] IEnumerable<T> newitems)
+    {
+      CheckReentrancy();
+      var _olditems = olditems.Intersect(Items).ToArray();
+      var _newitems = newitems.ToArray();
+      var oldenumerator = _olditems.Cast<T>().GetEnumerator();
+      var newenumerator = _newitems.Cast<T>().GetEnumerator();
+      bool oldbool, newbool;
+
+      // Evil boolean witchcraft! Gotta ensures both enumerators are always moved before leaving the loop and && shortcircuit...
+      while ((oldbool = oldenumerator.MoveNext()) & (newbool = newenumerator.MoveNext()))
+        Items[Items.IndexOf(oldenumerator.Current)] = newenumerator.Current;
+
+      if (oldbool)
+        do
+        {
+          Items.Remove(oldenumerator.Current);
+        } while (oldenumerator.MoveNext());
+
+      if (newbool)
+        do
+        {
+          Items.Add(newenumerator.Current);
+        } while (newenumerator.MoveNext());
+
+      OnCollectionChanged_Replaced(_olditems, _newitems);
     }
 
     #region On Collection Changed Invokers
@@ -75,6 +103,13 @@ namespace Hymperia.Facade.BaseClasses
       OnMultipleCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
     }
 
+    private void OnCollectionChanged_Replaced(IList olditems, IList newitems)
+    {
+      OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+      OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+      OnMultipleCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newitems, olditems));
+    }
+
     #endregion
 
     /// <summary>Trigger <see cref="ObservableCollection{T}.CollectionChanged"/> with <paramref name="e"/>.</summary>
@@ -89,12 +124,8 @@ namespace Hymperia.Facade.BaseClasses
       if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
       {
         using (BlockReentrancy())
-        {
           foreach (NotifyCollectionChangedEventHandler handler in handlers.TraverseRecursively())
-          {
             Handle(handler, e);
-          }
-        }
       }
     }
 
@@ -119,9 +150,7 @@ namespace Hymperia.Facade.BaseClasses
                         select new NotifyCollectionChangedEventArgs(action, arg);
 
         foreach (var arg in eventArgs)
-        {
           handler(this, arg);
-        }
       }
 
       switch (e.Action)
@@ -131,6 +160,9 @@ namespace Hymperia.Facade.BaseClasses
         case NotifyCollectionChangedAction.Remove:
           HandleMultiple(NotifyCollectionChangedAction.Remove, e.OldItems); break;
         case NotifyCollectionChangedAction.Replace:
+          HandleMultiple(NotifyCollectionChangedAction.Remove, e.OldItems);
+          HandleMultiple(NotifyCollectionChangedAction.Add, e.NewItems);
+          break;
         case NotifyCollectionChangedAction.Move:
         case NotifyCollectionChangedAction.Reset:
           handler(this, e); break;

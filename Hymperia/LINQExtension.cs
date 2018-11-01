@@ -11,8 +11,9 @@ namespace Hymperia.Facade
     /// <summary>Finds the only element matching <paramref name="predicate"/> or return the first element of sequence.</summary>
     /// <exception cref="ArgumentNullException"><paramref name="enumerable"/> or <paramref name="predicate"/> are <see cref="null"/>.</exception>
     /// <exception cref="InvalidOperationException"><paramref name="enumerable"/> is empty or no matches were found.</exception>
+    /// <remarks>The enumerator approach is faster, but impossible to do on a <see cref="IQueryable{T}"/>.</remarks>
     [NotNull]
-    public static T SingleOrFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate)
+    public static T SingleOrFirst<T>(this IEnumerable<T> enumerable, Predicate<T> predicate)
     {
       if (enumerable is null)
         throw new ArgumentNullException(nameof(enumerable));
@@ -26,7 +27,6 @@ namespace Hymperia.Facade
       var result = enumerator.Current;
 
       while (enumerator.MoveNext())
-      {
         if (predicate(enumerator.Current))
         {
           if (predicate(result))
@@ -34,11 +34,9 @@ namespace Hymperia.Facade
 
           result = enumerator.Current;
         }
-      }
 
       return result;
     }
-
 
     /// <summary>Apply <paramref name="action"/> to the collection when evaluated.</summary>
     /// <returns>An enumerable containaig the objects passed.</returns>

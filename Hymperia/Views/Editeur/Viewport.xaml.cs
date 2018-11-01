@@ -1,26 +1,21 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
-using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.Converters;
-using Object = Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
+using Object = Hymperia.Model.Modeles.JsonObject;
 
 namespace Hymperia.Facade.Views.Editeur
 {
-  public partial class Viewport : RegionContextAwareUserControl
+  public partial class Viewport : UserControl
   {
-    public static readonly DependencyProperty CursorPositionProperty;
+    public static readonly DependencyProperty CursorPositionProperty =
+      DependencyProperty.Register("CursorPosition", typeof(Object.Point), typeof(Viewport));
 
     public Object.Point CursorPosition
     {
       get => (Object.Point)GetValue(CursorPositionProperty);
       set => SetValue(CursorPositionProperty, value);
-    }
-
-    static Viewport()
-    {
-      Point3DToPointConverter = (Point3DToPointConverter)Application.Current.Resources["Point3DToPoint"]; ;
-      CursorPositionProperty = DependencyProperty.Register("CursorPosition", typeof(Object.Point), typeof(Viewport));
     }
 
     public Viewport() : base()
@@ -37,7 +32,8 @@ namespace Hymperia.Facade.Views.Editeur
     #region Static Services
 
     [NotNull]
-    private static readonly Point3DToPointConverter Point3DToPointConverter;
+    private static readonly Point3DToPointConverter Point3DToPointConverter =
+      (Point3DToPointConverter)Application.Current.Resources["Point3DToPoint"];
 
     #endregion
   }

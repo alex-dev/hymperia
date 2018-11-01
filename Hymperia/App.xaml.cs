@@ -12,7 +12,7 @@ using Prism.Ninject;
 
 namespace Hymperia.Facade
 {
-  public partial class App : PrismApplication
+  public partial class App : PrismExtensionApplication
   {
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)

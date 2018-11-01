@@ -310,5 +310,11 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AsyncLock\AsyncLock.csproj">
+      <Project>{696AF196-3AEB-459F-87F5-3599151A85B3}</Project>
+      <Name>AsyncLock</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
