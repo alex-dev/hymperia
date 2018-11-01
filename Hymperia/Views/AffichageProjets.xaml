@@ -12,6 +12,13 @@
         </prism:PopupWindowAction.WindowContent>
       </prism:PopupWindowAction>
     </prism:InteractionRequestTrigger>
+    <prism:InteractionRequestTrigger SourceObject="{Binding AjouterProjetRequest}">
+      <prism:PopupWindowAction IsModal="True">
+        <prism:PopupWindowAction.WindowContent>
+          <popups:AjouterProjetPopup />
+        </prism:PopupWindowAction.WindowContent>
+      </prism:PopupWindowAction>
+    </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <StackPanel Orientation="Horizontal">
     <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
@@ -31,7 +38,7 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
       <Button x:Name="btnSuppression" Content="x:Static prop:Resources.Supprimer" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
-      <!--<Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>-->
+      <Button x:Name="btnAjouter" Content="x:Static prop:Resources.Ajouter" Command="{Binding AjouterProjet}"/>
     </StackPanel>
     </StackPanel>
 </UserControl>

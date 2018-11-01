@@ -192,8 +192,11 @@ namespace Hymperia.Facade.ViewModels
       {
         if (context.Confirmed)
         {
-          Projet projet = new Projet(context.Content);
-          Loading = ConfirmedAjouterPrlojet(projet);
+          Loading = ConfirmedCreerProjet(context.Content.ToString()).ContinueWith(
+            result => _NavigateToProjet(result.Result),
+            default,
+            TaskContinuationOptions.OnlyOnRanToCompletion,
+            TaskScheduler.FromCurrentSynchronizationContext());
         }
       }
 
@@ -203,14 +206,11 @@ namespace Hymperia.Facade.ViewModels
       }, Execute);
     }
 
-    private async Task ConfirmedAjouterPrlojet(Projet projet)
+    private async Task<Projet> ConfirmedCreerProjet(string nom)
     {
-      await (Loading ?? Task.CompletedTask);
-
-      Projets.Add(projet);
+      Utilisateur.CreerProjet(nom);
       await Context.SaveChangesAsync();
-
-      _NavigateToProjet(projet);
+      return await Context.Projets.SingleAsync(projet => projet.Nom == nom);
     }
 
     #endregion

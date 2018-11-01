@@ -65,15 +65,16 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     public Projet CreerProjet([NotNull] string nom)
     {
-      throw new System.NotImplementedException();
+      var projet = new Projet(nom);
+      RecevoirProjet(projet);
+
+      return projet;
     }
 
     /// <summary></summary>
     /// <param name="projet"></param>
-    public void RecevoirProjet([NotNull] Projet projet)
-    {
-      throw new System.NotImplementedException();
-    }
+    public void RecevoirProjet([NotNull] Projet projet) =>
+      _Acces.Add(new Acces(projet, this, Modeles.Acces.Droit.Possession));
 
     /// <summary></summary>
     /// <param name="projet"></param>
