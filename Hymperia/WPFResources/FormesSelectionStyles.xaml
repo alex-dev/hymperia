@@ -17,7 +17,8 @@
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type ListBoxItem}">
                 <Border x:Name="Border" SnapsToDevicePixels="True" BorderThickness="1.5" CornerRadius="1"
-                    BorderBrush="#FF97A0A5" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                    BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}"
+                    Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                   <DockPanel>
                     <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
                         ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
@@ -43,7 +44,8 @@
                     <MultiTrigger.Conditions>
                       <Condition Property="IsMouseOver" Value="True" />
                     </MultiTrigger.Conditions>
-                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrush}}" Property="BorderBrush" />
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrush}}"
+                        Property="BorderBrush" />
                   </MultiTrigger>
                   <MultiTrigger>
                     <MultiTrigger.Conditions>
