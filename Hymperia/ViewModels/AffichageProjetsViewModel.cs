@@ -120,6 +120,37 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
+    #region Command AjouterProjet
+
+    private void _AjouterProjet()
+    {
+      void Execute(IConfirmation context)
+      {
+        if (context.Confirmed)
+        {
+          Loading = ConfirmedCreerProjet(context.Content.ToString()).ContinueWith(
+            result => _NavigateToProjet(result.Result),
+            default,
+            TaskContinuationOptions.OnlyOnRanToCompletion,
+            TaskScheduler.FromCurrentSynchronizationContext());
+        }
+      }
+
+      AjouterProjetRequest.Raise(new Confirmation
+      {
+        Title = "Ajouter un projet ?",
+      }, Execute);
+    }
+
+    private async Task<Projet> ConfirmedCreerProjet(string nom)
+    {
+      Utilisateur.CreerProjet(nom);
+      await Context.SaveChangesAsync();
+      return await Context.Projets.SingleAsync(projet => projet.Nom == nom);
+    }
+
+    #endregion
+
     #region Command SupprimerProjet
 
     private void _SupprimerProjets(IEnumerable<Projet> projets)
@@ -180,38 +211,6 @@ namespace Hymperia.Facade.ViewModels
 
         SetProperty(ref utilisateur, _utilisateur, onChanged, nameof(Utilisateur));
       }
-    }
-
-    #endregion
-
-    #region Command AjouterProjet
-
-    private void _AjouterProjet()
-    {
-
-      void Execute(IConfirmation context)
-      {
-        if (context.Confirmed)
-        {
-          Loading = ConfirmedCreerProjet(context.Content.ToString()).ContinueWith(
-            result => _NavigateToProjet(result.Result),
-            default,
-            TaskContinuationOptions.OnlyOnRanToCompletion,
-            TaskScheduler.FromCurrentSynchronizationContext());
-        }
-      }
-
-      AjouterProjetRequest.Raise(new Confirmation
-      {
-        Title = "Ajouter un projet ?",
-      }, Execute);
-    }
-
-    private async Task<Projet> ConfirmedCreerProjet(string nom)
-    {
-      Utilisateur.CreerProjet(nom);
-      await Context.SaveChangesAsync();
-      return await Context.Projets.SingleAsync(projet => projet.Nom == nom);
     }
 
     #endregion
