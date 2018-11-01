@@ -4,7 +4,7 @@
   <Style x:Key="FormeSelection" TargetType="{x:Type ListBox}">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="Background" Value="#FF101011" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
     <Setter Property="ItemContainerStyle">
       <Setter.Value>
         <Style TargetType="{x:Type ListBoxItem}">
@@ -17,7 +17,7 @@
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type ListBoxItem}">
                 <Border x:Name="Border" SnapsToDevicePixels="True" BorderThickness="1.5" CornerRadius="1"
-                    BorderBrush="#FF97A0A5" Background="#FF3F3F3F">
+                    BorderBrush="#FF97A0A5" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                   <DockPanel>
                     <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
                         ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
