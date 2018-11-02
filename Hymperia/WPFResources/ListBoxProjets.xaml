@@ -8,6 +8,7 @@
   <Style x:Key="ListBoxProjets" TargetType="{x:Type ListBox}">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
     <Setter Property="ItemsPanel">
       <Setter.Value>
         <ItemsPanelTemplate>
@@ -26,8 +27,9 @@
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                <Border SnapsToDevicePixels="True" BorderThickness="2" CornerRadius="2" BorderBrush="DarkSlateGray"
-                    Background="LightSkyBlue">
+                <Border x:Name="Border" SnapsToDevicePixels="True" BorderThickness="2" CornerRadius="2"
+                    BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}"
+                    Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                   <Canvas Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                     <CheckBox x:Name="ProjetCheckBox" IsChecked="{TemplateBinding IsSelected}" Focusable="False"
                         IsHitTestVisible="False" Canvas.Left="5" Canvas.Top="5" Panel.ZIndex="1" />
@@ -40,6 +42,8 @@
                           <Style.Resources>
                             <Style TargetType="{x:Type TextBlock}">
                               <Setter Property="FontStyle" Value="Italic" />
+                              <Setter Property="Foreground"
+                                  Value="{DynamicResource {x:Static SystemColors.InfoTextBrush}}" />
                               <Setter Property="TextAlignment" Value="Center" />
                               <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                               <Setter Property="Padding" Value="7,20,7,10" />
@@ -51,6 +55,29 @@
                     </ContentPresenter>
                   </Canvas>
                 </Border>
+                <ControlTemplate.Triggers>
+                  <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                      <Condition Property="IsMouseOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrush}}"
+                        Property="BorderBrush" />
+                  </MultiTrigger>
+                  <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                      <Condition Property="Selector.IsSelectionActive" Value="False" />
+                      <Condition Property="IsSelected" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Property="BorderBrush" />
+                  </MultiTrigger>
+                  <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                      <Condition Property="Selector.IsSelectionActive" Value="True" />
+                      <Condition Property="IsSelected" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Property="BorderBrush" />
+                  </MultiTrigger>
+                </ControlTemplate.Triggers>
               </ControlTemplate>
             </Setter.Value>
           </Setter>
