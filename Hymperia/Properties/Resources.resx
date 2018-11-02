@@ -132,14 +132,6 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Peut seulement convertir vers {targets}.</value>
   </data>
-  <data name="Cone_Height" xml:space="preserve">
-    <value>Hauteur _Cone</value>
-    <comment>AccessKey for labels</comment>
-  </data>
-  <data name="Cylindre_Height" xml:space="preserve">
-    <value>Hauteur</value>
-    <comment>AccessKey for labels</comment>
-  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
   </data>
@@ -151,7 +143,7 @@
     <value>, </value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Hauteur</value>
+    <value>_Hauteur</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
@@ -160,16 +152,8 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>N'a pas pu instantier un {type}.</value>
   </data>
-  <data name="InnerDiametre" xml:space="preserve">
-    <value>Diametre _Interne</value>
-    <comment>AccessKey for labels</comment>
-  </data>
   <data name="InvalidLocalizationKey" xml:space="preserve">
     <value>Clé de localisation {key} est invalide pour l'entité {entity}.</value>
-  </data>
-  <data name="Length" xml:space="preserve">
-    <value>Longueur</value>
-    <comment>AccessKey for labels</comment>
   </data>
   <data name="ManipulatorSupport" xml:space="preserve">
     <value>Ce manipulateur ne supporte que les {visuals}.</value>
@@ -230,12 +214,20 @@
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
   </data>
-  <data name="Width" xml:space="preserve">
-    <value>Largeur</value>
+  <data name="_InnerDiametre" xml:space="preserve">
+    <value>_Diametre Interne</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Length" xml:space="preserve">
+    <value>_Longueur</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Material" xml:space="preserve">
     <value>_Matériau</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Width" xml:space="preserve">
+    <value>L_argeur</value>
     <comment>AccessKey for labels</comment>
   </data>
 </root>

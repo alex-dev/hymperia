@@ -132,27 +132,15 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Can onyl convert to {targets}.</value>
   </data>
-  <data name="Cone_Height" xml:space="preserve">
-    <value>Cone _Height</value>
-    <comment>AccessKey for labels</comment>
-  </data>
-  <data name="Cylindre_Height" xml:space="preserve">
-    <value>Height</value>
-    <comment>AccessKey for labels</comment>
-  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
   </data>
   <data name="Diametre" xml:space="preserve">
-    <value>Diametre</value>
+    <value>_Diametre</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>Height</value>
-    <comment>AccessKey for labels</comment>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
     <value>Could not convert {value} to {targets}.</value>
@@ -160,16 +148,8 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>Could not instantiate a {type}.</value>
   </data>
-  <data name="InnerDiametre" xml:space="preserve">
-    <value>InnerDiametre</value>
-    <comment>AccessKey for labels</comment>
-  </data>
   <data name="InvalidLocalizationKey" xml:space="preserve">
     <value>Localized key {key} is invalid with entity {entity}.</value>
-  </data>
-  <data name="Length" xml:space="preserve">
-    <value>Length</value>
-    <comment>AccessKey for labels</comment>
   </data>
   <data name="ManipulatorSupport" xml:space="preserve">
     <value>This manipulator only supports {visuals}.</value>
@@ -230,12 +210,24 @@
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
   </data>
-  <data name="Width" xml:space="preserve">
-    <value>Width</value>
+  <data name="_Height" xml:space="preserve">
+    <value>_Height</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_InnerDiametre" xml:space="preserve">
+    <value>_Inner Diametre</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Length" xml:space="preserve">
+    <value>_Length</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Material" xml:space="preserve">
     <value>_Material</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Width" xml:space="preserve">
+    <value>_Width</value>
     <comment>AccessKey for labels</comment>
   </data>
 </root>

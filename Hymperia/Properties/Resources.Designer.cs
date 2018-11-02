@@ -46,16 +46,6 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
-    ///   Hauteur _Cone
-    /// </summary>
-    public static string Cone_Height => GetString("Cone_Height");
-
-    /// <summary>
-    ///   Hauteur
-    /// </summary>
-    public static string Cylindre_Height => GetString("Cylindre_Height");
-
-    /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
     /// </summary>
     public static string DestructiveConversion => GetString("DestructiveConversion");
@@ -71,7 +61,7 @@ namespace Hymperia.Facade.Properties
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
 
     /// <summary>
-    ///   Hauteur
+    ///   _Hauteur
     /// </summary>
     public static string Height => GetString("Height");
 
@@ -92,22 +82,12 @@ namespace Hymperia.Facade.Properties
         type);
 
     /// <summary>
-    ///   Diametre _Interne
-    /// </summary>
-    public static string InnerDiametre => GetString("InnerDiametre");
-
-    /// <summary>
     ///   Clé de localisation {key} est invalide pour l'entité {entity}.
     /// </summary>
     public static string InvalidLocalizationKey([CanBeNull] object key, [CanBeNull] object entity)
       => string.Format(
         GetString("InvalidLocalizationKey", nameof(key), nameof(entity)),
         key, entity);
-
-    /// <summary>
-    ///   Longueur
-    /// </summary>
-    public static string Length => GetString("Length");
 
     /// <summary>
     ///   Ce manipulateur ne supporte que les {visuals}.
@@ -209,14 +189,24 @@ namespace Hymperia.Facade.Properties
     public static string Volume => GetString("Volume");
 
     /// <summary>
-    ///   Largeur
+    ///   _Diametre Interne
     /// </summary>
-    public static string Width => GetString("Width");
+    public static string _InnerDiametre => GetString("_InnerDiametre");
+
+    /// <summary>
+    ///   _Longueur
+    /// </summary>
+    public static string _Length => GetString("_Length");
 
     /// <summary>
     ///   _Matériau
     /// </summary>
     public static string _Material => GetString("_Material");
+
+    /// <summary>
+    ///   L_argeur
+    /// </summary>
+    public static string _Width => GetString("_Width");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
