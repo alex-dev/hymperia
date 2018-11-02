@@ -17,16 +17,16 @@
               Background="{TemplateBinding Background}">
             <ContentPresenter Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
           </Border>
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-              <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-            </Trigger>
-          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+      </Trigger>
+    </Style.Triggers>
   </Style>
 </ResourceDictionary>
