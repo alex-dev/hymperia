@@ -131,6 +131,7 @@
     <Compile Include="Converters\Point3DToPointConverter.cs" />
     <Compile Include="Converters\TransformConverter.cs" />
     <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
+    <Compile Include="ValidationRules\StringNotNullOrWhiteSpaceRule.cs" />
     <Compile Include="ViewModels\AffichageProjetsViewModel.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\FormesSelectionViewModel.cs" />
@@ -268,6 +269,14 @@
     <Page Include="WPFResources\RadioButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="WPFResources\DockPanelStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="WPFResources\ValidationRules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPFResources\ValueConverters.xaml">
       <Generator>MSBuild:Compile</Generator>

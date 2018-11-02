@@ -30,6 +30,11 @@ namespace Hymperia.Facade.Properties
     public static string And => GetString("And");
 
     /// <summary>
+    ///   Annuler
+    /// </summary>
+    public static string Annuler => GetString("Annuler");
+
+    /// <summary>
     ///   Peut seulement convertir depuis {origins}.
     /// </summary>
     public static string CanOnlyConvertFrom([CanBeNull] object origins)
@@ -46,6 +51,11 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
+    ///   Confirmer
+    /// </summary>
+    public static string Confirmer => GetString("Confirmer");
+
+    /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
     /// </summary>
     public static string DestructiveConversion => GetString("DestructiveConversion");
@@ -54,6 +64,11 @@ namespace Hymperia.Facade.Properties
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
+
+    /// <summary>
+    ///   Le champ ne peut pas être vide.
+    /// </summary>
+    public static string FieldCannotBeEmpty => GetString("FieldCannotBeEmpty");
 
     /// <summary>
     ///   N'as pas pu convertir {value} en {targets}.
@@ -101,6 +116,16 @@ namespace Hymperia.Facade.Properties
     ///   Déplacement
     /// </summary>
     public static string Movement => GetString("Movement");
+
+    /// <summary>
+    ///   Merci de saisir le nom du nouveau projet :
+    /// </summary>
+    public static string NouveauNomProjet => GetString("NouveauNomProjet");
+
+    /// <summary>
+    ///   Ouvrir
+    /// </summary>
+    public static string Ouvrir => GetString("Ouvrir");
 
     /// <summary>
     ///   Prix

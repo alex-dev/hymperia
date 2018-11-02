@@ -1,0 +1,10 @@
+﻿<!--
+  Auteur : Alexandre Parent
+  Date : 2018-10-17
+  Fichier : ValueConverters.xaml
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:main="clr-namespace:Hymperia.Facade.ValidationRules">
+  <main:StringNotNullOrWhiteSpaceRule x:Key="StringNotNullOrWhiteSpace" />
+</ResourceDictionary>
