@@ -269,10 +269,6 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="WPFResources\DockPanelStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
     <Page Include="WPFResources\ValueConverters.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

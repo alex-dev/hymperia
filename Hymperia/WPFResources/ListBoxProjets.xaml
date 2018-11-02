@@ -68,14 +68,14 @@
                       <Condition Property="Selector.IsSelectionActive" Value="False" />
                       <Condition Property="IsSelected" Value="True" />
                     </MultiTrigger.Conditions>
-                    <Setter TargetName="Border" Value="#FFB64C03" Property="BorderBrush" />
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Property="BorderBrush" />
                   </MultiTrigger>
                   <MultiTrigger>
                     <MultiTrigger.Conditions>
                       <Condition Property="Selector.IsSelectionActive" Value="True" />
                       <Condition Property="IsSelected" Value="True" />
                     </MultiTrigger.Conditions>
-                    <Setter TargetName="Border" Value="#FFB64C03" Property="BorderBrush" />
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Property="BorderBrush" />
                   </MultiTrigger>
                 </ControlTemplate.Triggers>
               </ControlTemplate>

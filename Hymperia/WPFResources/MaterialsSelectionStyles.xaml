@@ -1,7 +1,7 @@
 ﻿<!--
   Auteur : Guillaume Le Blanc
   Date : 2018-10-18
-  Fichier : ListBoxStyles.xaml
+  Fichier : MaterialsSelectionStyles.xaml
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
