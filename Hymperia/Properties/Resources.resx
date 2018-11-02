@@ -135,16 +135,8 @@
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
   </data>
-  <data name="Diametre" xml:space="preserve">
-    <value>_Diametre</value>
-    <comment>AccessKey for labels</comment>
-  </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>_Hauteur</value>
-    <comment>AccessKey for labels</comment>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
     <value>N'as pas pu convertir {value} en {targets}.</value>
@@ -213,6 +205,14 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
+  </data>
+  <data name="_Diametre" xml:space="preserve">
+    <value>_Diametre</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Height" xml:space="preserve">
+    <value>_Hauteur</value>
+    <comment>AccessKey for labels</comment>
   </data>
   <data name="_InnerDiametre" xml:space="preserve">
     <value>_Diametre Interne</value>

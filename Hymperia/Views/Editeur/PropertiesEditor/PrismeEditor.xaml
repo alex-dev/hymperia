@@ -11,11 +11,11 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <Label Target="{Binding ElementName=tbxH}" Content="{x:Static prop:Resources.Height}" Grid.Column="0" Grid.Row="0" />
+    <Label Target="{Binding ElementName=tbxH}" Content="{x:Static prop:Resources._Height}" Grid.Column="0" Grid.Row="0" />
     <TextBox x:Name="tbxH" Text="{Binding Hauteur, Mode=TwoWay, StringFormat={}{0:N}}" Grid.Column="1" Grid.Row="0" />
-    <Label Target="{Binding ElementName=tbxL}" Content="{x:Static prop:Resources.Length}" Grid.Column="0" Grid.Row="1" />
+    <Label Target="{Binding ElementName=tbxL}" Content="{x:Static prop:Resources._Length}" Grid.Column="0" Grid.Row="1" />
     <TextBox x:Name="tbxL" Text="{Binding Longueur, Mode=TwoWay, StringFormat={}{0:N}}" Grid.Column="1" Grid.Row="1" />
-    <Label Target="{Binding ElementName=tbxW}" Content="{x:Static prop:Resources.Width}" Grid.Column="0" Grid.Row="2" />
+    <Label Target="{Binding ElementName=tbxW}" Content="{x:Static prop:Resources._Width}" Grid.Column="0" Grid.Row="2" />
     <TextBox x:Name="tbxW" Text="{Binding Largeur, Mode=TwoWay, StringFormat={}{0:N}}" Grid.Column="1" Grid.Row="2" />
   </Grid>
 </UserControl>

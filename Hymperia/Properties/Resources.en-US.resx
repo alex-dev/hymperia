@@ -135,10 +135,6 @@
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
   </data>
-  <data name="Diametre" xml:space="preserve">
-    <value>_Diametre</value>
-    <comment>AccessKey for labels</comment>
-  </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
   </data>
@@ -209,6 +205,10 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
+  </data>
+  <data name="_Diametre" xml:space="preserve">
+    <value>_Diametre</value>
+    <comment>AccessKey for labels</comment>
   </data>
   <data name="_Height" xml:space="preserve">
     <value>_Height</value>

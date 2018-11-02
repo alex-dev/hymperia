@@ -51,19 +51,9 @@ namespace Hymperia.Facade.Properties
     public static string DestructiveConversion => GetString("DestructiveConversion");
 
     /// <summary>
-    ///   _Diametre
-    /// </summary>
-    public static string Diametre => GetString("Diametre");
-
-    /// <summary>
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
-
-    /// <summary>
-    ///   _Hauteur
-    /// </summary>
-    public static string Height => GetString("Height");
 
     /// <summary>
     ///   N'as pas pu convertir {value} en {targets}.
@@ -187,6 +177,16 @@ namespace Hymperia.Facade.Properties
     ///   Volume
     /// </summary>
     public static string Volume => GetString("Volume");
+
+    /// <summary>
+    ///   _Diametre
+    /// </summary>
+    public static string _Diametre => GetString("_Diametre");
+
+    /// <summary>
+    ///   _Hauteur
+    /// </summary>
+    public static string _Height => GetString("_Height");
 
     /// <summary>
     ///   _Diametre Interne

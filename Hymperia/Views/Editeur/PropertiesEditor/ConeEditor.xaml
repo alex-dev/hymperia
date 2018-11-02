@@ -11,7 +11,7 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <Label Target="{Binding ElementName=tbxH}" Content="{x:Static prop:Resources.Cone_Height}" Grid.Column="0" Grid.Row="0" />
+    <Label Target="{Binding ElementName=tbxH}" Content="{x:Static prop:Resources._Height}" Grid.Column="0" Grid.Row="0" />
     <TextBox x:Name="tbxH" Text="{Binding Hauteur, Mode=TwoWay, StringFormat={}{0:N}}" Grid.Column="1" Grid.Row="0" />
     <Label Target="{Binding ElementName=tbxRB}" Content="{x:Static prop:Resources.Radius_Base}" Grid.Column="0" Grid.Row="1" />
     <TextBox x:Name="tbxRB" Text="{Binding RayonBase, Mode=TwoWay, StringFormat={}{0:N}}" Grid.Column="1" Grid.Row="1" />
