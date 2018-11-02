@@ -7,7 +7,7 @@ namespace Hymperia.Facade.ValidationRules
   public class StringNotNullOrWhiteSpaceRule : ValidationRule
   {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo) =>
-      string.IsNullOrWhiteSpace(value as string)
+       string.IsNullOrWhiteSpace(value as string)
         ? new ValidationResult(false, Resources.FieldCannotBeEmpty)
         : ValidationResult.ValidResult;
   }

@@ -25,7 +25,7 @@ using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class AffichageProjetsViewModel : BindableBase, IActiveAware, IDisposable
+  public sealed class AffichageProjetsViewModel : BindableBase, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -106,7 +106,7 @@ namespace Hymperia.Facade.ViewModels
       {
         if (context.Confirmed)
         {
-          AjouterProjetLoader.Loading = ConfirmedCreerProjet(context.Content.ToString());
+          AjouterProjetLoader.Loading = ConfirmedCreerProjet(context.Content.ToString().Trim());
           AjouterProjetLoader.Loading.ContinueWith(
             result => _NavigateToProjet(result.Result),
             default,

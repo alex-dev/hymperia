@@ -22,7 +22,7 @@ namespace Hymperia.Facade.Views.Popups
     {
       if (Notification is IConfirmation confirmation)
       {
-        confirmation.Confirmed = true;
+        confirmation.Confirmed = !string.IsNullOrWhiteSpace(confirmation.Content?.ToString());
       }
 
       FinishInteraction?.Invoke();
@@ -37,6 +37,5 @@ namespace Hymperia.Facade.Views.Popups
 
       FinishInteraction?.Invoke();
     }
-
   }
 }
