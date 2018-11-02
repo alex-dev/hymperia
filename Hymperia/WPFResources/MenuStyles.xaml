@@ -13,8 +13,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Menu}">
-          <Border Name="Border" CornerRadius="1" BorderThickness="1" SnapsToDevicePixels="True"
-              BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}">
+          <Border Name="Border" SnapsToDevicePixels="True">
             <StackPanel ClipToBounds="True" Orientation="Vertical" IsItemsHost="True" />
           </Border>
         </ControlTemplate>
