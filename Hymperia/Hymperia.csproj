@@ -270,10 +270,6 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="WPFResources\DockPanelStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
     <Page Include="WPFResources\ValidationRules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
