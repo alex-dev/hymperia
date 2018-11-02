@@ -11,7 +11,7 @@
     </ListBox.ItemsPanel>
     <ListBox.ItemTemplate>
       <DataTemplate>
-        <Image Style="{StaticResource FormeImageStyle}" do:ImageHelper.SourceResourceKey="{Binding Value}" />
+        <Image do:ImageHelper.SourceResourceKey="{Binding Value}" />
       </DataTemplate>
     </ListBox.ItemTemplate>
   </ListBox>

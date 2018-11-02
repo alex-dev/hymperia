@@ -51,8 +51,12 @@ namespace Hymperia.Facade.ViewModels.Editeur
       {
         var old = formes;
 
-        formes?.Remove(RaiseFormesChanged);
-        value?.Add(RaiseFormesChanged);
+        old?.ForEach(wrapper => wrapper.PropertyChanged -= OnFormeChanged);
+        old?.Remove(OnFormesCollectionChanged);
+        
+        value?.ForEach(wrapper => wrapper.PropertyChanged += OnFormeChanged);
+        value?.Add(OnFormesCollectionChanged);
+
         SetProperty(ref formes, value, () => RaiseFormesChanged(old));
       }
     }
@@ -228,29 +232,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnProjetChanged()
     {
-      void OnProperty(object sender, PropertyChangedEventArgs e) => FormesHasChanged();
-      void OnCollection(object sender, NotifyCollectionChangedEventArgs e) => FormesHasChanged();
-
-      if (Projet is null)
-      {
-        Formes.ForEach(wrapper => wrapper.PropertyChanged -= OnProperty);
-        Formes.CollectionChanged -= OnCollection;
-        Formes = null;
-      }
-      else
-      {
-        var enumerable = (from forme in Projet.Formes
-                          select ConvertisseurFormes.Convertir(forme))
-          .DeferredForEach(wrapper => wrapper.PropertyChanged += OnProperty);
-
-        Formes = new BulkObservableCollection<FormeWrapper>(enumerable);
-        Formes.CollectionChanged += OnCollection;
-      }
-
+      Formes = Projet is null
+        ? null
+        : new BulkObservableCollection<FormeWrapper>(from forme in Projet.Formes
+                                                     select ConvertisseurFormes.Convertir(forme));
       HasChanged = false;
       RaiseProjetChanged();
     }
 
+    private void OnFormesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      if (e.Action == NotifyCollectionChangedAction.Reset)
+        throw new InvalidOperationException("Detected invalid reset.");
+
+      e.OldItems?.Cast<FormeWrapper>()?.ForEach(forme => forme.PropertyChanged -= OnFormeChanged);
+      e.NewItems?.Cast<FormeWrapper>()?.ForEach(forme => forme.PropertyChanged += OnFormeChanged);
+
+      RaiseFormesChanged(sender, e);
+      FormesHasChanged();
+    }
+
+    void OnFormeChanged(object sender, PropertyChangedEventArgs e) => FormesHasChanged();
 
     private void FormesHasChanged()
     {
@@ -280,6 +282,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       RaiseFormesChanged(this, args);
     }
+
     private void RaiseFormesChanged(object sender, NotifyCollectionChangedEventArgs e) => FormesChanged.Publish(e);
 
     private void RaiseProjetChanged() => ProjetChanged.Publish(Projet);

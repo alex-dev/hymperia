@@ -1,14 +1,16 @@
-﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.Viewport" x:Name="UserControl"
+﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.Viewport" x:Name="view"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Hymperia.Facade.DependencyObjects"
     prism:ViewModelLocator.AutoWireViewModel="True">
   <local:Viewport x:Name="viewport" CalculateCursorPosition="True" ItemsSource="{Binding Formes, Mode=OneWay}"
       SelectedItems="{Binding FormesSelectionnees}" SelectionMode="{Binding SelectionMode, Mode=OneWay}">
     <local:Viewport.InputBindings>
-      <KeyBinding Key="Delete" Command="{Binding SupprimerForme}" />
-      <KeyBinding Key="Backspace" Command="{Binding SupprimerForme}" />
+      <KeyBinding Key="Delete" Command="{Binding SupprimerFormes}"
+          CommandParameter="{Binding SelectedItems, ElementName=viewport}" />
+      <KeyBinding Key="Backspace" Command="{Binding SupprimerFormes}"
+          CommandParameter="{Binding SelectedItems, ElementName=viewport}" />
       <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding AjouterForme}"
-          CommandParameter="{Binding CursorPosition, ElementName=UserControl}" />
+          CommandParameter="{Binding CursorPosition, ElementName=view}" />
     </local:Viewport.InputBindings>
   </local:Viewport>
 </UserControl>
