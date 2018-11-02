@@ -6,17 +6,17 @@
   -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF101011" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrush}" Color="#FF1986A6" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrushKey}" Color="#FFB64C03" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.ActiveBorderBrush}" Color="#FF97A0A5" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrush}" Color="#FF4F4F4F" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF3F3F3F" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.GrayTextBrushKey}" Color="#FF636363" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="Chartreuse" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrush}" Color="Yellow" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrushKey}" Color="HotPink" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.ActiveBorderBrush}" Color="Magenta" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrush}" Color="DodgerBlue" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Red" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.GrayTextBrushKey}" Color="GreenYellow" />
   <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="White" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrush}" Color="White" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrush}" Color="Black" />
   <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrush}" Color="White" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.InfoTextBrush}" Color="White" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.InfoTextBrush}" Color="Black" />
   <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrush}" Color="White" />
-  <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="White" />
+  <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Orange" />
 </ResourceDictionary>
