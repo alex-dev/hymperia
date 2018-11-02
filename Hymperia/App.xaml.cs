@@ -11,6 +11,7 @@ using System.Windows.Markup;
 using Hymperia.Facade.Converters;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;
+using Hymperia.Facade.Views.Editeur.PropertiesEditor;
 using Hymperia.Model.Properties;
 using Prism.Ioc;
 using Prism.Ninject;
@@ -24,8 +25,14 @@ namespace Hymperia.Facade
     {
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
+
       registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
+
+      registry.RegisterForNavigation<EllipsoideEditor>(NavigationKeys.EllipsoideEditor);
+      registry.RegisterForNavigation<ConeEditor>(NavigationKeys.ConeEditor);
+      registry.RegisterForNavigation<CylindreEditor>(NavigationKeys.CylindreEditor);
+      registry.RegisterForNavigation<PrismeEditor>(NavigationKeys.PrismeEditor);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>

@@ -92,6 +92,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       get => isActive;
       set
       {
+        if (isActive == value)
+          return;
+
         isActive = value;
 
         if (value)

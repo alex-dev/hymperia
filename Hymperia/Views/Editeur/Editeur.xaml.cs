@@ -12,7 +12,7 @@ namespace Hymperia.Facade.Views.Editeur
     #region Dependency Properties
 
     public static readonly DependencyProperty ProjetProperty =
-      DependencyProperty.Register("Projet", typeof(Projet), typeof(Editeur));
+      DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Editeur));
 
     #endregion
 
@@ -41,7 +41,7 @@ namespace Hymperia.Facade.Views.Editeur
       manager.RegisterViewWithRegion("MateriauxSelectionRegion", typeof(MateriauxSelection));
       manager.RegisterViewWithRegion("ViewportRegion", typeof(Viewport));
       manager.RegisterViewWithRegion("PrixAnalyseRegion", typeof(MateriauxAnalyse));
-      //manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(FormesProperties));
+      manager.RegisterViewWithRegion("FormesPropertiesRegion", typeof(PropertiesEditor.Editor));
     }
 
     #endregion

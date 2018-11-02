@@ -53,7 +53,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
         old?.ForEach(wrapper => wrapper.PropertyChanged -= OnFormeChanged);
         old?.Remove(OnFormesCollectionChanged);
-        
+
         value?.ForEach(wrapper => wrapper.PropertyChanged += OnFormeChanged);
         value?.Add(OnFormesCollectionChanged);
 
@@ -300,6 +300,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       get => isActive;
       set
       {
+        if (isActive == value)
+          return;
+
         isActive = value;
 
         if (value)
@@ -315,15 +318,14 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnActivation()
     {
-      DisposeContext(Context);
-      Context = ContextFactory.GetContext();
+      if (Context is null)
+        Context = ContextFactory.GetEditorContext();
+      else
+        CancelDispose();
     }
 
-    private void OnDeactivation()
-    {
-      DisposeContext(Context);
-      Context = null;
-    }
+    private void OnDeactivation() => DisposeContext();
+
 
 #pragma warning restore 4014
 
@@ -333,18 +335,27 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
 #pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
 
-    public void Dispose() => DisposeContext(Context);
+    public void Dispose() => DisposeContext();
 
 #pragma warning restore 4014
 
-    public async Task DisposeContext(DatabaseContext context)
+    private async Task DisposeContext()
     {
-      if (context is null)
+      if (Context is null)
         return;
 
-      using (await AsyncLock.Lock(context))
-        context.Dispose();
+      disposeToken = new CancellationTokenSource();
+      using (await AsyncLock.Lock(Context, disposeToken.Token))
+      {
+        if (disposeToken.IsCancellationRequested)
+          return;
+
+        ContextFactory.ReleaseEditorContext();
+        Context = null;
+      }
     }
+
+    private void CancelDispose() => disposeToken.Cancel();
 
     #endregion
 
@@ -375,6 +386,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private Materiau materiau;
     private bool changed;
     private bool isActive;
+    private CancellationTokenSource disposeToken;
 
     #endregion
   }

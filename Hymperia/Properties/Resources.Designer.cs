@@ -46,14 +46,34 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
+    ///   Hauteur _Cone
+    /// </summary>
+    public static string Cone_Height => GetString("Cone_Height");
+
+    /// <summary>
+    ///   Hauteur
+    /// </summary>
+    public static string Cylindre_Height => GetString("Cylindre_Height");
+
+    /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
     /// </summary>
     public static string DestructiveConversion => GetString("DestructiveConversion");
 
     /// <summary>
+    ///   _Diametre
+    /// </summary>
+    public static string Diametre => GetString("Diametre");
+
+    /// <summary>
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
+
+    /// <summary>
+    ///   Hauteur
+    /// </summary>
+    public static string Height => GetString("Height");
 
     /// <summary>
     ///   N'as pas pu convertir {value} en {targets}.
@@ -72,12 +92,22 @@ namespace Hymperia.Facade.Properties
         type);
 
     /// <summary>
+    ///   Diametre _Interne
+    /// </summary>
+    public static string InnerDiametre => GetString("InnerDiametre");
+
+    /// <summary>
     ///   Clé de localisation {key} est invalide pour l'entité {entity}.
     /// </summary>
     public static string InvalidLocalizationKey([CanBeNull] object key, [CanBeNull] object entity)
       => string.Format(
         GetString("InvalidLocalizationKey", nameof(key), nameof(entity)),
         key, entity);
+
+    /// <summary>
+    ///   Longueur
+    /// </summary>
+    public static string Length => GetString("Length");
 
     /// <summary>
     ///   Ce manipulateur ne supporte que les {visuals}.
@@ -106,6 +136,31 @@ namespace Hymperia.Facade.Properties
     ///   Prix
     /// </summary>
     public static string Price => GetString("Price");
+
+    /// <summary>
+    ///   Rayon _Base
+    /// </summary>
+    public static string Radius_Base => GetString("Radius_Base");
+
+    /// <summary>
+    ///   Rayon _Top
+    /// </summary>
+    public static string Radius_Top => GetString("Radius_Top");
+
+    /// <summary>
+    ///   Rayon _X
+    /// </summary>
+    public static string Radius_X => GetString("Radius_X");
+
+    /// <summary>
+    ///   Rayon _Y
+    /// </summary>
+    public static string Radius_Y => GetString("Radius_Y");
+
+    /// <summary>
+    ///   Rayon _Z
+    /// </summary>
+    public static string Radius_Z => GetString("Radius_Z");
 
     /// <summary>
     ///   Sauvegarder
@@ -152,6 +207,16 @@ namespace Hymperia.Facade.Properties
     ///   Volume
     /// </summary>
     public static string Volume => GetString("Volume");
+
+    /// <summary>
+    ///   Largeur
+    /// </summary>
+    public static string Width => GetString("Width");
+
+    /// <summary>
+    ///   _Matériau
+    /// </summary>
+    public static string _Material => GetString("_Material");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),

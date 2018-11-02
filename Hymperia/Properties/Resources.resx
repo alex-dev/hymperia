@@ -132,11 +132,27 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Peut seulement convertir vers {targets}.</value>
   </data>
+  <data name="Cone_Height" xml:space="preserve">
+    <value>Hauteur _Cone</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Cylindre_Height" xml:space="preserve">
+    <value>Hauteur</value>
+    <comment>AccessKey for labels</comment>
+  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
   </data>
+  <data name="Diametre" xml:space="preserve">
+    <value>_Diametre</value>
+    <comment>AccessKey for labels</comment>
+  </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Hauteur</value>
+    <comment>AccessKey for labels</comment>
   </data>
   <data name="ImpossibleCast" xml:space="preserve">
     <value>N'as pas pu convertir {value} en {targets}.</value>
@@ -144,8 +160,16 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>N'a pas pu instantier un {type}.</value>
   </data>
+  <data name="InnerDiametre" xml:space="preserve">
+    <value>Diametre _Interne</value>
+    <comment>AccessKey for labels</comment>
+  </data>
   <data name="InvalidLocalizationKey" xml:space="preserve">
     <value>Clé de localisation {key} est invalide pour l'entité {entity}.</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Longueur</value>
+    <comment>AccessKey for labels</comment>
   </data>
   <data name="ManipulatorSupport" xml:space="preserve">
     <value>Ce manipulateur ne supporte que les {visuals}.</value>
@@ -161,6 +185,26 @@
   </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>
+  </data>
+  <data name="Radius_Base" xml:space="preserve">
+    <value>Rayon _Base</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_Top" xml:space="preserve">
+    <value>Rayon _Top</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_X" xml:space="preserve">
+    <value>Rayon _X</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_Y" xml:space="preserve">
+    <value>Rayon _Y</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_Z" xml:space="preserve">
+    <value>Rayon _Z</value>
+    <comment>AccessKey for labels</comment>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Sauvegarder</value>
@@ -185,5 +229,13 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Largeur</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Material" xml:space="preserve">
+    <value>_Matériau</value>
+    <comment>AccessKey for labels</comment>
   </data>
 </root>
