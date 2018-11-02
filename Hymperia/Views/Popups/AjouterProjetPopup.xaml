@@ -21,7 +21,7 @@
         </Binding>
       </TextBox.Text>
     </TextBox>
-    <Button x:Name="btn" Click="Confirm" Content="{x:Static prop:Resources.Confirmer}" Grid.Column="0" Grid.Row="2">
+    <Button Click="Confirm" Content="{x:Static prop:Resources.Confirmer}" Grid.Column="0" Grid.Row="2">
       <Button.Style>
         <Style TargetType="{x:Type Button}">
           <Style.Triggers>
