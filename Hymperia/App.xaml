@@ -12,13 +12,11 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ListBoxProjets.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/FormesSelectionStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/Images.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/ButtonStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/ComboBoxStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/DataGridStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/MenuStyles.xaml" />
       </ResourceDictionary.MergedDictionaries>
-      <!--<Style x:Key="ListBox" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Style.Resources>
-          <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red" />
-          <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Red" />
-        </Style.Resources>
-      </Style>-->
     </ResourceDictionary>
   </Application.Resources>
 </prism:PrismExtensionApplication>

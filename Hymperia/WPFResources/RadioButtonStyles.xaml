@@ -18,13 +18,14 @@
                 ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
                 HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
           </DockPanel>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
     <Setter Property="FontSize" Value="20" />
     <Setter Property="FontFamily" Value="."/>
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrush}}" />
   </Style>
   <Style x:Key="RadioButtonList" TargetType="{x:Type ListBox}">
     <Style.Resources>
