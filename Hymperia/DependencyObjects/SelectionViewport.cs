@@ -68,7 +68,8 @@ namespace Hymperia.Facade.DependencyObjects
     private EventHandler<VisualsSelectedEventArgs> CreateHandler(bool single, bool clear) => (sender, e) =>
     {
       e = new VisualsSelectedEventArgs(
-        e.SelectedVisuals.OfType<MeshElement3D>().Distinct().Except(SelectedItems).ToList<Visual3D>(),
+        e.SelectedVisuals.OfType<MeshElement3D>().NotOfType<GridLinesVisual3D, MeshElement3D>()
+          .Distinct().Except(SelectedItems).ToList<Visual3D>(),
         e.AreSortedByDistanceAscending);
 
       if (clear)

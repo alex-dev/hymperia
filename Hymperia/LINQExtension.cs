@@ -102,5 +102,17 @@ namespace Hymperia.Facade
         item = item.Previous;
       }
     }
+
+    /// <summary>Filter out all items of type <typeparamref name="TRemoved"/>.</summary>
+    /// <exception cref="ArgumentNullException"><paramref name="enumerable"/> is <see cref="null"/>.</exception>
+    public static IEnumerable<T> NotOfType<TRemoved, T>(this IEnumerable<T> enumerable) where TRemoved : T
+    {
+      if (enumerable is null)
+        throw new ArgumentNullException(nameof(enumerable));
+
+      foreach (var item in enumerable)
+        if (!(item is TRemoved))
+          yield return item;
+    }
   }
 }

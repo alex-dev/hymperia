@@ -133,6 +133,31 @@ namespace Hymperia.Facade.Properties
     public static string Price => GetString("Price");
 
     /// <summary>
+    ///   Rayon _Base
+    /// </summary>
+    public static string Radius_Base => GetString("Radius_Base");
+
+    /// <summary>
+    ///   Rayon _Top
+    /// </summary>
+    public static string Radius_Top => GetString("Radius_Top");
+
+    /// <summary>
+    ///   Rayon _X
+    /// </summary>
+    public static string Radius_X => GetString("Radius_X");
+
+    /// <summary>
+    ///   Rayon _Y
+    /// </summary>
+    public static string Radius_Y => GetString("Radius_Y");
+
+    /// <summary>
+    ///   Rayon _Z
+    /// </summary>
+    public static string Radius_Z => GetString("Radius_Z");
+
+    /// <summary>
     ///   Sauvegarder
     /// </summary>
     public static string Save => GetString("Save");
@@ -177,6 +202,36 @@ namespace Hymperia.Facade.Properties
     ///   Volume
     /// </summary>
     public static string Volume => GetString("Volume");
+
+    /// <summary>
+    ///   _Diametre
+    /// </summary>
+    public static string _Diametre => GetString("_Diametre");
+
+    /// <summary>
+    ///   _Hauteur
+    /// </summary>
+    public static string _Height => GetString("_Height");
+
+    /// <summary>
+    ///   _Diametre Interne
+    /// </summary>
+    public static string _InnerDiametre => GetString("_InnerDiametre");
+
+    /// <summary>
+    ///   _Longueur
+    /// </summary>
+    public static string _Length => GetString("_Length");
+
+    /// <summary>
+    ///   _Matériau
+    /// </summary>
+    public static string _Material => GetString("_Material");
+
+    /// <summary>
+    ///   L_argeur
+    /// </summary>
+    public static string _Width => GetString("_Width");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),

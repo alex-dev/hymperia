@@ -220,6 +220,9 @@ namespace Hymperia.Facade.ViewModels
       get => isActive;
       set
       {
+        if (isActive == value)
+          return;
+
         isActive = value;
 
         if (value)

@@ -177,6 +177,26 @@
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
+  <data name="Radius_Base" xml:space="preserve">
+    <value>Radius _Base</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_Top" xml:space="preserve">
+    <value>Radius _Top</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_X" xml:space="preserve">
+    <value>Radius _X</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_Y" xml:space="preserve">
+    <value>Radius _Y</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Radius_Z" xml:space="preserve">
+    <value>Radius _Z</value>
+    <comment>AccessKey for labels</comment>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -200,5 +220,29 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
+  </data>
+  <data name="_Diametre" xml:space="preserve">
+    <value>_Diametre</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Height" xml:space="preserve">
+    <value>_Height</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_InnerDiametre" xml:space="preserve">
+    <value>_Inner Diametre</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Length" xml:space="preserve">
+    <value>_Length</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Material" xml:space="preserve">
+    <value>_Material</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Width" xml:space="preserve">
+    <value>_Width</value>
+    <comment>AccessKey for labels</comment>
   </data>
 </root>

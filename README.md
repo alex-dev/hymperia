@@ -4,8 +4,16 @@
  - Alexandre Parent
  - Guillaume Le Blanc
 
+## Bugs connu
+- Changer le matériau d'une ou plusieurs formes sélectionnées efface la couleur de sélection. Elles sont toujours sélectionnées.
+  Workaround: Sélectionner un autre forme (Left Click + Left Alt) une fois les modification terminées.
+  Fix: v1.0
+ 
 ## Configuration
-Les `ConnectionString` des bases de données sont dans les fichiers de config respectifs à chaque .exe.
+- Les `ConnectionString` des bases de données sont dans les fichiers de config respectifs à chaque .exe.
+- Hymperia.exe.config
+  - La valeur `Culture` peut prendre les valeurs fr-CA ou en-US.
+  - La valeur `Theme` peut prendre les valeurs Default, Light, Dark ou Eyesore.
 
 ## DatabaseTools - Application console
 - `./DatabaseTools.exe --help`  affiche l'aide de la commande.
