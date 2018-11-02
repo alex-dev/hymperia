@@ -36,6 +36,3 @@ Les `ConnectionString` des bases de données sont dans les fichiers de config re
 ### Contrôles d'édition
 - Double Left Click: Ajout d'une forme au curseur;
 - Delete ou Backspace: Suppression des formes sélectionnées;
-
-### Changement du thème
-- 
