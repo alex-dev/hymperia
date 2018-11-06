@@ -31,7 +31,7 @@ namespace Hymperia.Facade.Loaders
 
     public bool IsCompleted => Loading is Task && Loading.IsCompleted;
     public bool IsFaulted => Loading is Task && (Loading.IsCanceled || Loading.IsFaulted);
-    public bool IsReallyLoading => !IsCompleted && !IsFaulted;
+    public bool IsReallyLoading => Loading is Task && !IsCompleted && !IsFaulted;
     public bool IsLoading => Loading is null || IsReallyLoading;
 
     #region INotifyPropertyChanged
