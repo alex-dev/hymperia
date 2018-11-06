@@ -192,8 +192,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       try
       {
-        using (await AsyncLock.Lock(Context))
-          await Context.SaveChangesAsync();
+        using (await AsyncLock.Lock(ContextWrapper.Context))
+          await ContextWrapper.Context.SaveChangesAsync();
       }
       catch (Exception e)
       {
@@ -213,8 +213,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       if (_projet is Projet)
       {
-        using (await AsyncLock.Lock(Context))
-          value = await Context.Projets.IncludeFormes().FindByIdAsync(_projet.Id);
+        using (await AsyncLock.Lock(ContextWrapper.Context))
+          value = await ContextWrapper.Context.Projets.IncludeFormes().FindByIdAsync(_projet.Id);
 
         SetProperty(ref projet, value, onChanged, nameof(Projet));
       }
@@ -224,8 +224,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task<Materiau> QueryMateriau(int key)
     {
-      using (await AsyncLock.Lock(Context))
-        return SelectedMateriau = await Context.Materiaux.FindAsync(key);
+      using (await AsyncLock.Lock(ContextWrapper.Context))
+        return SelectedMateriau = await ContextWrapper.Context.Materiaux.FindAsync(key);
     }
 
     #endregion
@@ -320,8 +320,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnActivation()
     {
-      if (Context is null)
-        Context = ContextFactory.GetEditorContext();
+      if (ContextWrapper is null)
+        ContextWrapper = ContextFactory.GetEditorContext();
       else
         CancelDispose();
     }
@@ -343,17 +343,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task DisposeContext()
     {
-      if (Context is null)
+      if (ContextWrapper is null)
         return;
 
       disposeToken = new CancellationTokenSource();
-      using (await AsyncLock.Lock(Context, disposeToken.Token))
+      using (await AsyncLock.Lock(ContextWrapper.Context, disposeToken.Token))
       {
         if (disposeToken.IsCancellationRequested)
           return;
 
-        ContextFactory.ReleaseEditorContext();
-        Context = null;
+        ContextWrapper.Dispose();
+        ContextWrapper = null;
       }
     }
 
@@ -375,7 +375,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private readonly SelectionModeChanged SelectionModeChanged;
 
     [NotNull]
-    private DatabaseContext Context;
+    private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
 
     #endregion
 

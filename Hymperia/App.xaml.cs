@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Markup;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Converters;
+using Hymperia.Facade.Services;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;
 using Hymperia.Facade.Views.Editeur.PropertiesEditor;
@@ -26,6 +27,12 @@ namespace Hymperia.Facade
     {
       registry.RegisterInstance((Point3DToPointConverter)Resources["Point3DToPoint"]);
       registry.RegisterInstance((TransformConverter)Resources["Transform"]);
+
+      registry.RegisterSingleton<ContextFactory>();
+      registry.RegisterSingleton<ConvertisseurFormes>();
+      registry.RegisterSingleton<ConvertisseurMateriaux>();
+      registry.RegisterSingleton<ConvertisseurWrappers>();
+      registry.RegisterSingleton<NotifyCollectionChangedCopyFactory>();
 
       registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);

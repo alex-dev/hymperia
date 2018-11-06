@@ -95,16 +95,9 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
     private async Task<ICollection<MateriauWrapper>> QueryMateriaux()
     {
       using (await AsyncLock.Lock(MateriauxLoader))
-      {
-        var context = Factory.GetEditorContext();
-
-        try
-        {
-          using (await AsyncLock.Lock(context))
-            return Materiaux = await ConvertisseurMateriaux.Convertir(context.Materiaux.AsQueryable());
-        }
-        finally { Factory.ReleaseEditorContext(); }
-      }
+        using (var wrapper = Factory.GetEditorContext())
+          using (await AsyncLock.Lock(wrapper.Context))
+            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux.AsQueryable());
     }
 
     #endregion
