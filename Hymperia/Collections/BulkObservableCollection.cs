@@ -6,13 +6,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Data;
+using Hymperia.Facade.Extensions;
 using JetBrains.Annotations;
 
-namespace Hymperia.Facade.BaseClasses
+namespace Hymperia.Facade.Collections
 {
   /// <summary>Implement bulk changes for <see cref="ObservableCollection{T}"/>.</summary>
   /// <inheritdoc/>
-  /// <remarks>Reflection is used to potential avoid issue described in <a href="https://blogs.msdn.microsoft.com/samng/2007/11/26/virtual-events-in-c/">this post</a>.</remarks>
+  /// <remarks>Reflection is used to potential avoid issue described in <a href="https://blogs.msdn.microsoft.com/samng/2007/11/26/virtual-events-in-c/">this post</a>.
+  /// It's ugly, but compiler bugs are annoying... And private backing fields are private.</remarks>
   public class BulkObservableCollection<T> : ObservableCollection<T>
   {
     /// <summary>Backing field for <see cref="ObservableCollection{T}.CollectionChanged"/> acquired through reflection. Avoid using if not needed.</summary>
@@ -124,7 +126,7 @@ namespace Hymperia.Facade.BaseClasses
       if (CollectionChangedEventHandler is NotifyCollectionChangedEventHandler handlers)
       {
         using (BlockReentrancy())
-          foreach (NotifyCollectionChangedEventHandler handler in handlers.TraverseRecursively())
+          foreach (NotifyCollectionChangedEventHandler handler in handlers.Flatten())
             Handle(handler, e);
       }
     }

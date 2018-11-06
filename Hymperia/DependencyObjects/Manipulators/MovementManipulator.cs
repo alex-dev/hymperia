@@ -4,6 +4,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
+using Hymperia.Facade.Extensions;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.DependencyObjects.Manipulators

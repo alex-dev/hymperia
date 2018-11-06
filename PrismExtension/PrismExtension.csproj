@@ -50,8 +50,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncLoader.cs" />
-    <Compile Include="AsyncLoader{T}.cs" />
     <Compile Include="Bindings\CultureAwareBinding.cs" />
     <Compile Include="Commands\CommandAggregator.cs" />
     <Compile Include="Commands\ICommandAggregator.cs" />

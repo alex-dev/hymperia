@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Hymperia.Model;
 using JetBrains.Annotations;
 
 namespace Hymperia.Facade.Services
 {
   /// <summary>Gère la création des <see cref="DatabaseContext"/>.</summary>
-  public class ContextFactory : IDisposable
+  public sealed class ContextFactory : IDisposable
   {
     /// <summary>Wrap <see cref="DatabaseContext()"/>.</summary>
     [NotNull]
@@ -37,6 +37,8 @@ namespace Hymperia.Facade.Services
       public int Count { get; set; }
       public DatabaseContext Context { get; } = new DatabaseContext();
 
+      [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed",
+        Justification = @"Done though the property.")]
       public void Dispose() => Context.Dispose();
     }
 

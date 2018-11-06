@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using HelixToolkit.Wpf;
-using Hymperia.Facade.BaseClasses;
 using Hymperia.Facade.DependencyObjects.Manipulators;
 using JetBrains.Annotations;
 
@@ -31,7 +30,6 @@ namespace Hymperia.Facade.DependencyObjects
     }
 
     #endregion
-
 
     #region Handle Manipulators
 

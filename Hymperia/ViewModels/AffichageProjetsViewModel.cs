@@ -10,7 +10,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.Collections;
+using Hymperia.Facade.Constants;
+using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
@@ -162,16 +164,13 @@ namespace Hymperia.Facade.ViewModels
       {
         foreach (var projet in projets)
         {
-          if (Utilisateur.EstPropietaireDe(projet))
-          {
-            Context.Remove(projet);
-          }
-          else
-          {
-            Context.Remove(Utilisateur.Acces.Single(acces => acces.Projet.Id == projet.Id));
-          }
-
+          bool removal = Utilisateur.EstPropietaireDe(projet);
           Utilisateur.RetirerProjet(projet);
+
+          // Ici, on prend le contrôle de la suppression pour garantir la suppression totale du projet et laisser à
+          // l'ORM la tâche de cleanup en retirant les acces dépendants en cascade.
+          if (removal)
+            Context.Remove(projet);
         }
 
         Projets.RemoveRange(projets);

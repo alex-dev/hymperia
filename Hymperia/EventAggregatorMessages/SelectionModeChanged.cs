@@ -1,5 +1,4 @@
-﻿using Hymperia.Facade.BaseClasses;
-using Prism.Events;
+﻿using Prism.Events;
 
 namespace Hymperia.Facade.EventAggregatorMessages
 {

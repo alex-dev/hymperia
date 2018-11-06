@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Hymperia.Facade.Constants;
 using Hymperia.Facade.ModelWrappers;
 using Prism.Regions;
 

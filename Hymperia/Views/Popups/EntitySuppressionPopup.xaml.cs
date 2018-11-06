@@ -18,9 +18,9 @@ namespace Hymperia.Facade.Views.Popups
     private void Confirm(object sender, RoutedEventArgs e)
     {
       if (Notification is IConfirmation confirmation)
-      {
+
         confirmation.Confirmed = true;
-      }
+
 
       FinishInteraction?.Invoke();
     }
@@ -28,9 +28,9 @@ namespace Hymperia.Facade.Views.Popups
     private void Cancel(object sender, RoutedEventArgs e)
     {
       if (Notification is IConfirmation confirmation)
-      {
+
         confirmation.Confirmed = false;
-      }
+
 
       FinishInteraction?.Invoke();
     }

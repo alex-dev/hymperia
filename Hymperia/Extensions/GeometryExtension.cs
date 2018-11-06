@@ -1,7 +1,7 @@
 ﻿using Media = System.Windows.Media.Media3D;
 using Object = Hymperia.Model.Modeles.JsonObject;
 
-namespace Hymperia.Facade
+namespace Hymperia.Facade.Extensions
 {
   public static class GeometryExtension
   {

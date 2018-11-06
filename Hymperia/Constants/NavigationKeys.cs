@@ -1,4 +1,4 @@
-﻿namespace Hymperia.Facade
+﻿namespace Hymperia.Facade.Constants
 {
   public static class NavigationKeys
   {

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Hymperia.Facade.Constants;
 using Hymperia.Facade.Views.Editeur.ProjetAnalyse;
 using Hymperia.Model.Modeles;
 using Prism.Regions;

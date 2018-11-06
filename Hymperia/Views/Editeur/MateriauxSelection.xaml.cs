@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Hymperia.Facade.Extensions;
 using Hymperia.Facade.ModelWrappers;
 
 namespace Hymperia.Facade.Views.Editeur

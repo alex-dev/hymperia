@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows.Data;
 using HelixToolkit.Wpf;
-using Hymperia.Facade.BaseClasses;
+using Hymperia.Facade.Collections;
 using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;

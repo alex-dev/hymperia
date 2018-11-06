@@ -86,8 +86,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BaseClasses\BulkObservableCollection.cs" />
-    <Compile Include="BaseClasses\SelectionMode.cs" />
+    <Compile Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="Loaders\AsyncLoader.cs" />
+    <Compile Include="Loaders\AsyncLoader{T}.cs" />
+    <Compile Include="SelectionMode.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
@@ -102,7 +104,7 @@
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
-    <Compile Include="DictionaryExtension.cs" />
+    <Compile Include="Extensions\DictionaryExtension.cs" />
     <Compile Include="EventAggregatorMessages\FormesChanged.cs" />
     <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
@@ -110,10 +112,10 @@
     <Compile Include="EventAggregatorMessages\SelectedMateriauChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedSingleFormeChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectionModeChanged.cs" />
-    <Compile Include="EventDelegateExtension.cs" />
-    <Compile Include="EventHandlerExtension.cs" />
-    <Compile Include="GeometryExtension.cs" />
-    <Compile Include="LINQExtension.cs" />
+    <Compile Include="Extensions\EventDelegateExtension.cs" />
+    <Compile Include="Extensions\EventHandlerExtension.cs" />
+    <Compile Include="Extensions\GeometryExtension.cs" />
+    <Compile Include="Extensions\LINQExtension.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
     <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
@@ -123,8 +125,8 @@
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
     <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
-    <Compile Include="NavigationKeys.cs" />
-    <Compile Include="NavigationParameterKeys.cs" />
+    <Compile Include="Constants\NavigationKeys.cs" />
+    <Compile Include="Constants\NavigationParameterKeys.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurMateriaux.cs" />

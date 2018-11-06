@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Hymperia.Facade
+namespace Hymperia.Facade.Extensions
 {
   public static class DictionaryExtension
   {

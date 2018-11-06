@@ -81,7 +81,9 @@ namespace Hymperia.Model.Modeles
 
     /// <summary></summary>
     /// <param name="projet"></param>
-    /// <remarks>Si l'utilisateur n'est pas track par <see cref="DatabaseContext"/>, il est impossible de supprimer ses acces.</remarks>
+    /// <remarks>Si l'utilisateur n'est pas track par <see cref="DatabaseContext"/>, il est impossible de supprimer ses acces. De plus, si le projet est possédé par l'utilisateur et qu'une suppression du projet est désirée, il faut
+    /// indiqué au <see cref="DatabaseContext"/> de le retirer explicitement. Sinon, l'utilisateur perdra l'accès au
+    /// projet, mais les autres utilisateurs en auront toujours une copie.</remarks>
     public void RetirerProjet([NotNull] Projet projet)
     {
       var acces = Acces.SingleOrDefault(a => a.Projet == projet);

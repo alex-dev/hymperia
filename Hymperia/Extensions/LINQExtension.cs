@@ -4,7 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using MoreLinq;
 
-namespace Hymperia.Facade
+namespace Hymperia.Facade.Extensions
 {
   public static class LINQExtension
   {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using Hymperia.Facade.Extensions;
 using M = System.Windows.Media.Media3D;
 using O = Hymperia.Model.Modeles.JsonObject;
 

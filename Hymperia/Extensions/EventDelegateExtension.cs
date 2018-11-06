@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Hymperia.Facade
+namespace Hymperia.Facade.Extensions
 {
   public static class EventDelegateExtension
   {
@@ -48,21 +48,21 @@ namespace Hymperia.Facade
     #region ICollectionChanged
 
     /// <summary>Add <paramref name="handler"/> to <see cref="INotifyCollectionChanged.CollectionChanged"/> with null check.</summary>
-    public static void Add(this INotifyCollectionChanged @object, NotifyCollectionChangedEventHandler handler)
+    public static void Add(this INotifyCollectionChanged sender, NotifyCollectionChangedEventHandler handler)
     {
-      if (@object is null)
+      if (sender is null)
         return;
 
-      @object.CollectionChanged += handler;
+      sender.CollectionChanged += handler;
     }
 
     /// <summary>Remove <paramref name="handler"/> to <see cref="INotifyCollectionChanged.CollectionChanged"/> with null check.</summary>
-    public static void Remove(this INotifyCollectionChanged @object, NotifyCollectionChangedEventHandler handler)
+    public static void Remove(this INotifyCollectionChanged sender, NotifyCollectionChangedEventHandler handler)
     {
-      if (@object is null)
+      if (sender is null)
         return;
 
-      @object.CollectionChanged -= handler;
+      sender.CollectionChanged -= handler;
     }
 
     #endregion

@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Windows.Media.Media3D;
 using DirectXOperations;
 using Hymperia.Facade.Properties;
+using Hymperia.Facade.Extensions;
 using JetBrains.Annotations;
 using Object = Hymperia.Model.Modeles.JsonObject;
 

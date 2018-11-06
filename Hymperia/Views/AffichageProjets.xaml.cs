@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Hymperia.Facade.Constants;
 using Hymperia.Model.Modeles;
 using Prism.Commands;
 using Prism.Regions;

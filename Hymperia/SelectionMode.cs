@@ -1,4 +1,4 @@
-﻿namespace Hymperia.Facade.BaseClasses
+﻿namespace Hymperia.Facade
 {
   public enum SelectionMode { Deplacement, Transformation }
 }

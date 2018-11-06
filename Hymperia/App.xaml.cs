@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using Hymperia.Facade.Constants;
 using Hymperia.Facade.Converters;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;

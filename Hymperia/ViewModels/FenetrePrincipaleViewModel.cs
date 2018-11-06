@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
+using Hymperia.Facade.Constants;
 
 namespace Hymperia.Facade.ViewModels
 {
