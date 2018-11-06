@@ -63,7 +63,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task<ICollection<MateriauWrapper>> QueryMateriaux()
     {
-      if (MateriauxLoader.IsLoading)
+      if (MateriauxLoader.IsReallyLoading)
         return await MateriauxLoader.Loading;
 
       using (await AsyncLock.Lock(MateriauxLoader))
