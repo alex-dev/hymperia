@@ -128,13 +128,12 @@ namespace Hymperia.Facade.ViewModels
       if (string.IsNullOrWhiteSpace(nom))
         throw new ArgumentNullException(nameof(nom));
 
-      Utilisateur.CreerProjet(nom);
+      var projet = Utilisateur.CreerProjet(nom);
 
       using (await AsyncLock.Lock(Context))
-      {
         await Context.SaveChangesAsync();
-        return await Context.Projets.SingleAsync(projet => projet.Nom == nom);
-      }
+
+      return projet;
     }
 
     #endregion
