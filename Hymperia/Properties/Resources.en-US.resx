@@ -138,6 +138,9 @@
   <data name="Confirmer" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Connexion" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
   </data>

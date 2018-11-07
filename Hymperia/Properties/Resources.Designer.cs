@@ -56,6 +56,11 @@ namespace Hymperia.Facade.Properties
     public static string Confirmer => GetString("Confirmer");
 
     /// <summary>
+    ///   Connexion
+    /// </summary>
+    public static string Connexion => GetString("Connexion");
+
+    /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
     /// </summary>
     public static string DestructiveConversion => GetString("DestructiveConversion");

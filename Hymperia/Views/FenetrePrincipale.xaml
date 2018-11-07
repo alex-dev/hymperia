@@ -3,13 +3,16 @@
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True" Title="Hymperia">
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="25" />
-      <RowDefinition Height="*" />
+      <RowDefinition  Height="*" />
+      <RowDefinition  Height="250" />
     </Grid.RowDefinitions>
-    <StackPanel Orientation="Horizontal" Grid.Row="0">
-      <ComboBox ItemsSource="{Binding Utilisateurs}" SelectedItem="{Binding Utilisateur, Mode=TwoWay}" />
-      <Button Name="t" Command="{Binding Navigate}" Content="{x:Static prop:Resources.Ouvrir}" />
+    <StackPanel Orientation="Vertical" Grid.Row="0">
+      <!--<ComboBox ItemsSource="{Binding Utilisateurs}" SelectedItem="{Binding Utilisateur, Mode=TwoWay}" />-->
+      <TextBox Text="{Binding UtilisateurLogin}"/>
+      <TextBox Text="{Binding MotDepasseLogin}"/>
+      <Button Name="t" Command="{Binding Navigate}" Content="{x:Static prop:Resources.Connexion}" />
     </StackPanel>
-    <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1"/>
+    <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1" />
+
   </Grid>
 </Window>
