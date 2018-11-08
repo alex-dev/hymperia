@@ -25,7 +25,7 @@
         SelectionMode="Extended" SelectionChanged="OnSelectionChanged">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding .}">
+          <TextBlock Text="{Binding Projet.Nom}">
             <TextBlock.InputBindings>
               <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
                   CommandParameter="{Binding .}" />

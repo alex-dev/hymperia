@@ -20,12 +20,21 @@ namespace Hymperia.Facade.Views.Editeur
     public static readonly DependencyProperty ProjetProperty =
       DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Editeur));
 
+    public static readonly DependencyProperty DroitProperty =
+      DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur));
+
     #endregion
 
     public Projet Projet
     {
       get => (Projet)GetValue(ProjetProperty);
       set => SetValue(ProjetProperty, value);
+    }
+
+    public Acces.Droit Droit
+    {
+      get => (Acces.Droit)GetValue(DroitProperty);
+      set => SetValue(DroitProperty, value);
     }
 
     #region Constructors
@@ -39,10 +48,11 @@ namespace Hymperia.Facade.Views.Editeur
       InitializeComponent();
 
       BindingOperations.SetBinding(this, ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      BindingOperations.SetBinding(this, DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
-    
+
     #region Views Registration
 
     private void RegisterViews(object sender, RoutedEventArgs e)
@@ -66,8 +76,15 @@ namespace Hymperia.Facade.Views.Editeur
 
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
-    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+    public bool IsNavigationTarget(NavigationContext context) =>
+      context.Parameters[NavigationParameterKeys.Projet] is Projet && context.Parameters[NavigationParameterKeys.Acces] is Acces.Droit;
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+      Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion

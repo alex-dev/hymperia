@@ -11,6 +11,7 @@ using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
+using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Prism.Commands;
 using Prism.Events;
@@ -25,6 +26,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Properties
 
     #region Binding
+
+    /// <summary>L'utilisateur peut modifier le projet.</summary>
+    public bool CanModify
+    {
+      get => modify;
+      private set => SetProperty(ref modify, value);
+    }
 
     /// <summary>Les formes affichables.</summary>
     [NotNull]
@@ -72,6 +80,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       SelectedChanged = events.GetEvent<SelectedFormesChanged>();
       SelectedChanged.Subscribe(OnSelectedChanged, FilterSelectedChanged);
+      events.GetEvent<AccesChanged>().Subscribe(OnAccesChanged);
       events.GetEvent<SelectionModeChanged>().Subscribe(OnSelectionModeChanged);
       events.GetEvent<FormesChanged>().Subscribe(OnFormesChanged);
 
@@ -115,6 +124,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #endregion
 
     #region Aggregated Event Handlers
+
+    private void OnAccesChanged(Acces.Droit droit) => CanModify = droit >= Acces.Droit.LectureEcriture;
 
     protected virtual void OnSelectionModeChanged(SelectionMode? mode) => SelectionMode = mode;
 
@@ -195,6 +206,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Private Fields
 
     private SelectionMode? mode;
+    private bool modify = true;
 
     #endregion
 
