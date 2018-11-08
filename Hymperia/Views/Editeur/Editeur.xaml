@@ -39,3 +39,4 @@
         Grid.Row="4" />
   </Grid>
 </UserControl>
+<!-- https://www.codeproject.com/Articles/1242778/TabControl-with-Pop-Out-Windows -->
