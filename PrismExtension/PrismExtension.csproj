@@ -56,6 +56,8 @@
     <Compile Include="Events\PubSubEventExtension.cs" />
     <Compile Include="Ninject\PrismExtensionApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regions\Behaviors\TabControlItemsSourceSyncBehavior.cs" />
+    <Compile Include="Regions\TabControlRegionAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations">

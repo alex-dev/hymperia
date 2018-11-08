@@ -51,15 +51,15 @@ namespace Hymperia.Facade.Views.Editeur
 
       ViewportRegion = Manager.Regions[RegionKeys.ViewportRegion];
       FormesSelectionRegion = Manager.Regions[RegionKeys.FormesSelectionRegion];
-      MateriauxSelectionRegion = Manager.Regions[RegionKeys.MateriauxSelectionRegion];
+      /*MateriauxSelectionRegion = Manager.Regions[RegionKeys.MateriauxSelectionRegion];
       ProjetAnalyseRegion = Manager.Regions[RegionKeys.ProjetAnalyseRegion];
-      FormesPropertiesRegion = Manager.Regions[RegionKeys.FormesPropertiesRegion];
+      FormesPropertiesRegion = Manager.Regions[RegionKeys.FormesPropertiesRegion];*/
 
       ViewportRegion.Add(Container.Resolve<Viewport>(), ViewKeys.Viewport);
       FormesSelectionRegion.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
-      MateriauxSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
-      ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      FormesPropertiesRegion.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);
+      FormesSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
+      /*ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
+      FormesPropertiesRegion.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);*/
     }
 
     #endregion
