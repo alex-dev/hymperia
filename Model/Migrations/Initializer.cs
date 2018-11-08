@@ -83,6 +83,7 @@ namespace Hymperia.Model.Migrations
     {
       IEnumerable<Acces> Generate()
       {
+        yield return new Acces(projets[0], utilisateurs[0], Acces.Droit.Lecture);
         yield return new Acces(projets[0], utilisateurs[1], Acces.Droit.Possession);
         yield return new Acces(projets[1], utilisateurs[1], Acces.Droit.LectureEcriture);
         yield return new Acces(projets[1], utilisateurs[2], Acces.Droit.Possession);
