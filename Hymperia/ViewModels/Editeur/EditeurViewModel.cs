@@ -128,7 +128,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       commands.RegisterCommand(SupprimerFormes);
 
       events.GetEvent<SelectedFormeChanged>().Subscribe(forme => SelectedForme = forme);
-      events.GetEvent<SelectedMateriauChanged>().Subscribe(async materiau => SelectedMateriau = await QueryMateriau(materiau));
+      events.GetEvent<SelectedMateriauChanged>().Subscribe(materiau => SelectedMateriau = materiau);
       ProjetChanged = events.GetEvent<ProjetChanged>();
       FormesChanged = events.GetEvent<FormesChanged>();
       SelectionModeChanged = events.GetEvent<SelectionModeChanged>();
@@ -220,12 +220,6 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
 
       return value;
-    }
-
-    private async Task<Materiau> QueryMateriau(int key)
-    {
-      using (await AsyncLock.Lock(ContextWrapper.Context))
-        return SelectedMateriau = await ContextWrapper.Context.Materiaux.FindAsync(key);
     }
 
     #endregion

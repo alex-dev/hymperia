@@ -1,6 +1,7 @@
-﻿using Prism.Events;
+﻿using Hymperia.Model.Modeles;
+using Prism.Events;
 
 namespace Hymperia.Facade.EventAggregatorMessages
 {
-  public class SelectedMateriauChanged : PubSubEvent<int> { }
+  public class SelectedMateriauChanged : PubSubEvent<Materiau> { }
 }

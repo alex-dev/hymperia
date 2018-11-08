@@ -92,11 +92,16 @@ namespace Hymperia.Facade.ViewModels
 
     #region Command NavigateToProjet
 
-    private void _NavigateToProjet(Projet projet) =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
-      {
-        { NavigationParameterKeys.Projet, projet }
-      });
+    private void _NavigateToProjet(Projet projet)
+    {
+      // Force la création d'un context d'éditeur pour la durée de la navigation.
+      // De cette façon, toutes les vues peuvent garantir que leur contexte est le même.
+      using (ContextFactory.GetEditorContext())
+        Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
+        {
+          { NavigationParameterKeys.Projet, projet }
+        });
+    }
 
     #endregion
 
