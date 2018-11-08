@@ -56,6 +56,11 @@ namespace Hymperia.Facade.Properties
     public static string Confirmer => GetString("Confirmer");
 
     /// <summary>
+    ///   Connexion
+    /// </summary>
+    public static string Connexion => GetString("Connexion");
+
+    /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
     /// </summary>
     public static string DestructiveConversion => GetString("DestructiveConversion");
@@ -85,6 +90,11 @@ namespace Hymperia.Facade.Properties
       => string.Format(
         GetString("ImpossibleInstantiation", nameof(type)),
         type);
+
+    /// <summary>
+    ///   Vos informations sont invalides.
+    /// </summary>
+    public static string InvalidCredential => GetString("InvalidCredential");
 
     /// <summary>
     ///   Clé de localisation {key} est invalide pour l'entité {entity}.
@@ -227,6 +237,16 @@ namespace Hymperia.Facade.Properties
     ///   _Matériau
     /// </summary>
     public static string _Material => GetString("_Material");
+
+    /// <summary>
+    ///   _Mot de passe
+    /// </summary>
+    public static string _MotDePasse => GetString("_MotDePasse");
+
+    /// <summary>
+    ///   _Nom d'utilisateur
+    /// </summary>
+    public static string _Utilisateur => GetString("_Utilisateur");
 
     /// <summary>
     ///   L_argeur
