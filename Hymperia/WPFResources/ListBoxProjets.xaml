@@ -9,10 +9,12 @@
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+    <Setter Property="Margin" Value="5,0,5,5" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
     <Setter Property="ItemsPanel">
       <Setter.Value>
         <ItemsPanelTemplate>
-          <WrapPanel Orientation="Horizontal" />
+          <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
         </ItemsPanelTemplate>
       </Setter.Value>
     </Setter>
