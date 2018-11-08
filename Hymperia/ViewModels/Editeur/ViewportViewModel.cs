@@ -206,7 +206,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Private Fields
 
     private SelectionMode? mode;
-    private bool modify = true;
+    private bool modify = Acces.Droit.Lecture >= Acces.Droit.LectureEcriture;
 
     #endregion
 
