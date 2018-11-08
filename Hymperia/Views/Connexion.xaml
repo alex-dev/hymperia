@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="Hymperia.Facade.Views.Connexion" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+  <StackPanel Orientation="Vertical" Grid.Row="0">
+    
+    <TextBox x:Name="txtUsername" Text="{Binding Username}" Validation.ErrorTemplate="{x:Null}" />
+    <PasswordBox x:Name="txtPassword" />
+    <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
+        Content="{x:Static prop:Resources.Connexion}" />
+  </StackPanel>
+</UserControl>

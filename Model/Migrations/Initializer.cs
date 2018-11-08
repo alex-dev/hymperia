@@ -125,7 +125,7 @@ namespace Hymperia.Model.Migrations
     [ItemNotNull]
     private IEnumerable<Utilisateur> InitializeUtilisateurs()
     {
-      const string password = "$2y$15$eiI786bZMg0HrJP4BphbveEXb1UHmkkd5p8feoUpDqYwuvgHjik2q";
+      string password = BCrypt.Net.BCrypt.HashPassword("123", 11, true);
 
       yield return new Utilisateur("Alexandre", password);
       yield return new Utilisateur("Guillaume", password);
