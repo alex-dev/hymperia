@@ -1,9 +1,15 @@
-﻿using System;
+﻿/*
+Auteur : Antoine Mailhot
+Date de création : 8 novembre 2018
+*/
+
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using Hymperia.Facade.Constants;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
@@ -52,12 +58,16 @@ namespace Hymperia.Facade.ViewModels
 
     #region INotifyDataErrorInfo
 
-    public bool HasErrors { get; private set; }
+    public bool HasErrors
+    {
+      get => errors;
+      private set => SetProperty(ref errors, value);
+    }
 
     public IEnumerable GetErrors(string propertyName)
     {
       if (HasErrors)
-        yield return "InvalidCredentials";
+        yield return Resources.InvalidCredential;
     }
 
     #endregion
@@ -75,6 +85,7 @@ namespace Hymperia.Facade.ViewModels
 
     #region Private Fields
 
+    private bool errors;
 
     #endregion
   }

@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Loaders\AsyncLoader.cs" />
     <Compile Include="Loaders\AsyncLoader{T}.cs" />
     <Compile Include="SelectionMode.cs" />
@@ -273,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPFResources\DataGridStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\ErrorStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

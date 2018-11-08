@@ -156,6 +156,9 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>Could not instantiate a {type}.</value>
   </data>
+  <data name="InvalidCredential" xml:space="preserve">
+    <value>Invalid credentials.</value>
+  </data>
   <data name="InvalidLocalizationKey" xml:space="preserve">
     <value>Localized key {key} is invalid with entity {entity}.</value>
   </data>
@@ -242,6 +245,14 @@
   </data>
   <data name="_Material" xml:space="preserve">
     <value>_Material</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_MotDePasse" xml:space="preserve">
+    <value>_Password</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Utilisateur" xml:space="preserve">
+    <value>_Username</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Width" xml:space="preserve">

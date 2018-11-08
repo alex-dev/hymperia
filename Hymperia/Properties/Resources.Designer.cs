@@ -92,6 +92,11 @@ namespace Hymperia.Facade.Properties
         type);
 
     /// <summary>
+    ///   Vos informations sont invalides.
+    /// </summary>
+    public static string InvalidCredential => GetString("InvalidCredential");
+
+    /// <summary>
     ///   Clé de localisation {key} est invalide pour l'entité {entity}.
     /// </summary>
     public static string InvalidLocalizationKey([CanBeNull] object key, [CanBeNull] object entity)
@@ -232,6 +237,16 @@ namespace Hymperia.Facade.Properties
     ///   _Matériau
     /// </summary>
     public static string _Material => GetString("_Material");
+
+    /// <summary>
+    ///   _Mot de passe
+    /// </summary>
+    public static string _MotDePasse => GetString("_MotDePasse");
+
+    /// <summary>
+    ///   _Nom d'utilisateur
+    /// </summary>
+    public static string _Utilisateur => GetString("_Utilisateur");
 
     /// <summary>
     ///   L_argeur

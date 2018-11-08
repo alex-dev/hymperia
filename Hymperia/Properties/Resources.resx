@@ -156,6 +156,9 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>N'a pas pu instantier un {type}.</value>
   </data>
+  <data name="InvalidCredential" xml:space="preserve">
+    <value>Vos informations sont invalides.</value>
+  </data>
   <data name="InvalidLocalizationKey" xml:space="preserve">
     <value>Clé de localisation {key} est invalide pour l'entité {entity}.</value>
   </data>
@@ -242,6 +245,14 @@
   </data>
   <data name="_Material" xml:space="preserve">
     <value>_Matériau</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_MotDePasse" xml:space="preserve">
+    <value>_Mot de passe</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Utilisateur" xml:space="preserve">
+    <value>_Nom d'utilisateur</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Width" xml:space="preserve">
