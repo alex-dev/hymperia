@@ -76,6 +76,11 @@ namespace Hymperia.Model.Modeles
     #region IEquatable<Acces>
 
     [Pure]
+    public static bool operator ==(Acces left, Acces right) => left is Acces && right is Acces && left.Equals(right);
+    [Pure]
+    public static bool operator !=(Acces left, Acces right) => !(left == right);
+
+    [Pure]
     public override bool Equals(object obj) => Equals(obj as Acces);
     [Pure]
     public bool Equals(Acces other) => Projet.Equals(other?.Projet) && Utilisateur.Equals(other?.Utilisateur);

@@ -36,11 +36,6 @@ namespace Hymperia.Facade
 
       registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
-
-      registry.RegisterForNavigation<EllipsoideEditor>(NavigationKeys.EllipsoideEditor);
-      registry.RegisterForNavigation<ConeEditor>(NavigationKeys.ConeEditor);
-      registry.RegisterForNavigation<CylindreEditor>(NavigationKeys.CylindreEditor);
-      registry.RegisterForNavigation<PrismeEditor>(NavigationKeys.PrismeEditor);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>
@@ -57,7 +52,6 @@ namespace Hymperia.Facade
       FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
 
       Application.Current.Resources.MergedDictionaries.Add(CreateTheme());
-
 
       base.OnStartup(e);
     }

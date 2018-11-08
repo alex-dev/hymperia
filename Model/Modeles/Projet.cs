@@ -91,6 +91,11 @@ namespace Hymperia.Model.Modeles
     #region IEquatable<Projet>
 
     [Pure]
+    public static bool operator ==(Projet left, Projet right) => left is Projet && right is Projet && left.Equals(right);
+    [Pure]
+    public static bool operator !=(Projet left, Projet right) => !(left == right);
+
+    [Pure]
     public override bool Equals(object obj) => Equals(obj as Projet);
     [Pure]
     public bool Equals(Projet other) => IdentityEqualityComparer<Projet>.StaticEquals(this, other) && Nom == other.Nom;

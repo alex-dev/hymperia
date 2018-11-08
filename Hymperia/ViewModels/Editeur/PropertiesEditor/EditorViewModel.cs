@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Hymperia.Facade.Collections;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.EventAggregatorMessages;
@@ -45,7 +46,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
       get
       {
         var materiau = SelectedFormes.FirstOrDefault()?.Materiau;
-        return SelectedFormes.Skip(1).All(forme => forme.Materiau.Equals(materiau))
+        return SelectedFormes.Skip(1).All(forme => forme.Materiau == materiau)
           ? materiau
           : null;
       }
@@ -97,7 +98,30 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
       using (await AsyncLock.Lock(MateriauxLoader))
         using (var wrapper = Factory.GetEditorContext())
           using (await AsyncLock.Lock(wrapper.Context))
-            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux.AsQueryable());
+            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+    }
+
+    #endregion
+
+    #region Region Activation
+
+    private void Activate(string name, FormeWrapper selected)
+    {
+      var region = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
+      var view = region.GetView(name);
+
+      if (view is UserControl _view)
+        _view.DataContext = selected;
+
+      region.Activate(view);
+    }
+
+    private void Deactivate()
+    {
+      var region = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
+
+      foreach (var view in region.ActiveViews)
+        region.Deactivate(view);
     }
 
     #endregion
@@ -106,34 +130,21 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
 
     private void OnSelectedFormeChanged()
     {
-      var nav = new NavigationParameters
-      {
-        { NavigationParameterKeys.Forme, SelectedForme }
-      };
-
-      SelectedSingleFormeChanged.Publish(SelectedForme);
-
       switch (SelectedForme)
       {
         case EllipsoideWrapper ellipsoide:
-          Manager.RequestNavigate("FormeProperties", NavigationKeys.EllipsoideEditor, nav); break;
+          Activate(ViewKeys.EllipsoideEditor, SelectedForme); break;
         case PrismeRectangulaireWrapper prisme:
-          Manager.RequestNavigate("FormeProperties", NavigationKeys.PrismeEditor, nav); break;
+          Activate(ViewKeys.PrismeRectangulaireEditor, SelectedForme); break;
         case CylindreWrapper cylindre:
-          Manager.RequestNavigate("FormeProperties", NavigationKeys.CylindreEditor, nav); break;
+          Activate(ViewKeys.CylindreEditor, SelectedForme); break;
         case ConeWrapper cone:
-          Manager.RequestNavigate("FormeProperties", NavigationKeys.ConeEditor, nav); break;
+          Activate(ViewKeys.ConeEditor, SelectedForme); break;
         default:
           Deactivate(); break;
       }
-    }
 
-    private void Deactivate()
-    {
-      var region = Manager.Regions["FormeProperties"];
-
-      foreach (var view in region.ActiveViews)
-        region.Remove(view);
+      SelectedSingleFormeChanged.Publish(SelectedForme);
     }
 
     private void OnSelectedFormesChanged(object sender, NotifyCollectionChangedEventArgs e)

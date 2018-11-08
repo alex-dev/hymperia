@@ -9,7 +9,6 @@ using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Prism;
 using Prism.Events;
 using Prism.Mvvm;
@@ -34,7 +33,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public Materiau SelectedMateriau
     {
       get => selected;
-      set => SetProperty(ref selected, value, () => RaiseSelectedChanged(value.Id));
+      set => SetProperty(ref selected, value, RaiseSelectedChanged);
     }
 
     #endregion
@@ -63,24 +62,22 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private async Task<ICollection<MateriauWrapper>> QueryMateriaux()
     {
-      if (MateriauxLoader.IsReallyLoading)
-        return await MateriauxLoader.Loading;
-
       using (await AsyncLock.Lock(MateriauxLoader))
-        using (var context = Factory.GetContext())
-          return Materiaux = await ConvertisseurMateriaux.Convertir(context.Materiaux.AsNoTracking());
+        using (var wrapper = Factory.GetEditorContext())
+          using (await AsyncLock.Lock(wrapper.Context))
+            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
     }
 
     #endregion
 
     #region Aggregated Event Handlers
 
-    protected virtual void OnSelectedChanged(int key) =>
-      SelectedMateriau = Materiaux.Single(materiau => materiau.Materiau.Id == key).Materiau;
+    protected virtual void OnSelectedChanged(Materiau materiau) =>
+      SelectedMateriau = Materiaux.Single(_materiau => _materiau.Materiau == materiau).Materiau;
 
-    protected virtual bool FilterSelectedChanged(int key) => key != SelectedMateriau.Id;
+    protected virtual bool FilterSelectedChanged(Materiau materiau) =>  materiau is Materiau && SelectedMateriau != materiau;
 
-    protected virtual void RaiseSelectedChanged(int key) => SelectedChanged.Publish(key);
+    protected virtual void RaiseSelectedChanged() => SelectedChanged.Publish(SelectedMateriau);
 
     #endregion
 

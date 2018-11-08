@@ -20,9 +20,13 @@
       </prism:PopupWindowAction>
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
-  <StackPanel Orientation="Horizontal">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" MinWidth="150" />
+      <ColumnDefinition MinWidth="150" MaxWidth="250" />
+    </Grid.ColumnDefinitions>
     <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
-        SelectionMode="Extended" SelectionChanged="OnSelectionChanged">
+        SelectionMode="Extended" SelectionChanged="OnSelectionChanged" Grid.Column="0">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <TextBlock Text="{Binding .}">
@@ -34,10 +38,10 @@
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+    <DockPanel LastChildFill="False" Grid.Column="1">
+      <Button Content="{x:Static prop:Resources.Ajouter}" Command="{Binding AjouterProjet}" DockPanel.Dock="Top" />
       <Button x:Name="btnSuppression" Content="{x:Static prop:Resources.Supprimer}" Command="{Binding SupprimerProjet}"
-          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
-      <Button Content="{x:Static prop:Resources.Ajouter}" Command="{Binding AjouterProjet}" />
-    </StackPanel>
-  </StackPanel>
+          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"/>
+    </DockPanel>
+  </Grid>
 </UserControl>
