@@ -34,6 +34,10 @@ namespace Hymperia.Facade.Views
 
     #endregion
 
+    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e) =>
+      (btnSuppression.Command as DelegateCommand<IList>)?.RaiseCanExecuteChanged();
+
+
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
@@ -41,8 +45,5 @@ namespace Hymperia.Facade.Views
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
-
-    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e) =>
-      (btnSuppression.Command as DelegateCommand<IList>)?.RaiseCanExecuteChanged();
   }
 }
