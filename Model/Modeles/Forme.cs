@@ -80,6 +80,11 @@ namespace Hymperia.Model.Modeles
     #region IEquatable<Forme>
 
     [Pure]
+    public static bool operator ==(Forme left, Forme right) => left is Forme && right is Forme && left.Equals(right);
+    [Pure]
+    public static bool operator !=(Forme left, Forme right) => !(left == right);
+
+    [Pure]
     public override bool Equals(object obj) => Equals(obj as Forme);
     [Pure]
     public bool Equals(Forme other) => IdentityEqualityComparer<Forme>.StaticEquals(this, other) && Origine == other?.Origine && Rotation == other?.Rotation;

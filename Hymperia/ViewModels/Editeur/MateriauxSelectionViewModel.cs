@@ -73,9 +73,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Aggregated Event Handlers
 
     protected virtual void OnSelectedChanged(Materiau materiau) =>
-      SelectedMateriau = Materiaux.Single(_materiau => _materiau.Materiau.Equals(materiau)).Materiau;
+      SelectedMateriau = Materiaux.Single(_materiau => _materiau.Materiau == materiau).Materiau;
 
-    protected virtual bool FilterSelectedChanged(Materiau materiau) => !SelectedMateriau.Equals(materiau);
+    protected virtual bool FilterSelectedChanged(Materiau materiau) =>  materiau is Materiau && SelectedMateriau != materiau;
 
     protected virtual void RaiseSelectedChanged() => SelectedChanged.Publish(SelectedMateriau);
 

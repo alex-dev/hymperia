@@ -14,9 +14,6 @@ namespace Hymperia.Facade.Services
   /// <summary>Convertit des <see cref="Materiau"/> en <see cref="MateriauWrapper"/>.</summary>
   public class ConvertisseurMateriaux
   {
-    /// <summary>Permet de convertir une Forme en FormeWrapper.</summary>
-    /// <param name="forme">Une forme.</param>
-    /// <returns>La forme en FormeWrapper</returns>
     [NotNull]
     public async Task<MateriauWrapper> Convertir([NotNull] Materiau materiau) =>
       new MateriauWrapper(materiau, await Resources.GetMateriau(materiau.Nom).ConfigureAwait(false));
@@ -24,10 +21,10 @@ namespace Hymperia.Facade.Services
     [NotNull]
     [ItemNotNull]
     public async Task<MateriauWrapper[]> Convertir([NotNull][ItemNotNull] IQueryable<Materiau> materiaux) =>
-      await (from materiau in materiaux
-             join localized in await Resources.LoadMateriaux().ConfigureAwait(false)
-               on materiau.Nom equals localized.Key
-             select new MateriauWrapper(materiau, localized.Value)).ToArrayAsync().ConfigureAwait(false);
+      (from materiau in await materiaux.ToArrayAsync().ConfigureAwait(false)
+       join localized in await Resources.LoadMateriaux().ConfigureAwait(false)
+         on materiau.Nom equals localized.Key
+       select new MateriauWrapper(materiau, localized.Value)).ToArray();
 
     public async Task<IDictionary<MateriauWrapper, Tuple<double, double>>> Convertir([NotNull][ItemNotNull] IEnumerable<KeyValuePair<Materiau, double>> materiaux) =>
       // C# doesn't support deconstruction in from/let clause... Yet!

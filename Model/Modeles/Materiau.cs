@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using Hymperia.Model.Identity;
-using Hymperia.Model.Localization;
 using Hymperia.Model.Properties;
 using JetBrains.Annotations;
 
@@ -101,6 +99,11 @@ namespace Hymperia.Model.Modeles
     #endregion
 
     #region IEquatable<Materiau>
+
+    [Pure]
+    public static bool operator ==(Materiau left, Materiau right) => left is Materiau && right is Materiau && left.Equals(right);
+    [Pure]
+    public static bool operator !=(Materiau left, Materiau right) => !(left == right);
 
     [Pure]
     public override bool Equals(object obj) => Equals(obj as Materiau);

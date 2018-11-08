@@ -46,7 +46,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
       get
       {
         var materiau = SelectedFormes.FirstOrDefault()?.Materiau;
-        return SelectedFormes.Skip(1).All(forme => forme.Materiau.Equals(materiau))
+        return SelectedFormes.Skip(1).All(forme => forme.Materiau == materiau)
           ? materiau
           : null;
       }

@@ -119,6 +119,11 @@ namespace Hymperia.Model.Modeles
     #region IEquatable<Utilisateur>
 
     [Pure]
+    public static bool operator ==(Utilisateur left, Utilisateur right) => left is Utilisateur && right is Utilisateur && left.Equals(right);
+    [Pure]
+    public static bool operator !=(Utilisateur left, Utilisateur right) => !(left == right);
+
+    [Pure]
     public override bool Equals(object obj) => Equals(obj as Utilisateur);
     [Pure]
     public bool Equals(Utilisateur other) => IdentityEqualityComparer<Utilisateur>.StaticEquals(this, other) && Nom == other.Nom;
