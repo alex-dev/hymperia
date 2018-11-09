@@ -156,6 +156,9 @@
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>N'a pas pu instantier un {type}.</value>
   </data>
+  <data name="Inscription" xml:space="preserve">
+    <value>Inscription</value>
+  </data>
   <data name="InvalidCredential" xml:space="preserve">
     <value>Vos informations sont invalides.</value>
   </data>
@@ -254,6 +257,9 @@
   <data name="_Utilisateur" xml:space="preserve">
     <value>_Nom d'utilisateur</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_VerificationMotDePasse" xml:space="preserve">
+    <value>_Vérification du mot de passe :</value>
   </data>
   <data name="_Width" xml:space="preserve">
     <value>L_argeur</value>

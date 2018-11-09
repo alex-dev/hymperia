@@ -92,6 +92,11 @@ namespace Hymperia.Facade.Properties
         type);
 
     /// <summary>
+    ///   Inscription
+    /// </summary>
+    public static string Inscription => GetString("Inscription");
+
+    /// <summary>
     ///   Vos informations sont invalides.
     /// </summary>
     public static string InvalidCredential => GetString("InvalidCredential");
@@ -247,6 +252,11 @@ namespace Hymperia.Facade.Properties
     ///   _Nom d'utilisateur
     /// </summary>
     public static string _Utilisateur => GetString("_Utilisateur");
+
+    /// <summary>
+    ///   _Vérification du mot de passe :
+    /// </summary>
+    public static string _VerificationMotDePasse => GetString("_VerificationMotDePasse");
 
     /// <summary>
     ///   L_argeur
