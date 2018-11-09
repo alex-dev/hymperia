@@ -5,11 +5,11 @@ using System.Windows.Data;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
 using Hymperia.Facade.Views.Editeur.ProjetAnalyse;
-using Hymperia.Facade.Views.Editeur.PropertiesEditor;
 using Hymperia.Model.Modeles;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
+using P = Hymperia.Facade.Views.Editeur.PropertiesEditeur;
 
 namespace Hymperia.Facade.Views.Editeur
 {
@@ -38,7 +38,7 @@ namespace Hymperia.Facade.Views.Editeur
       Loaded += RegisterViews;
       InitializeComponent();
 
-      BindingOperations.SetBinding(this, ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -59,7 +59,7 @@ namespace Hymperia.Facade.Views.Editeur
       FormesSelectionRegion.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
       MateriauxSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
       ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      FormesPropertiesRegion.Add(Container.Resolve<PropertiesEditeur>(), ViewKeys.PropertiesEditeur);
+      FormesPropertiesRegion.Add(Container.Resolve<P.PropertiesEditeur>(), ViewKeys.PropertiesEditeur);
     }
 
     #endregion

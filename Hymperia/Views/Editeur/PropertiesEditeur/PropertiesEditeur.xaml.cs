@@ -8,7 +8,7 @@ using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 
-namespace Hymperia.Facade.Views.Editeur.PropertiesEditor
+namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
 {
   public partial class PropertiesEditeur : UserControl, IActiveAware
   {
@@ -35,11 +35,11 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditor
       PositionPropertiesRegion = Manager.Regions[RegionKeys.PositionPropertiesRegion];
       SpecificPropertiesRegion = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
 
-      ///////
-      SpecificPropertiesRegion.Add(Container.Resolve<ConeEditor>(), ViewKeys.ConeEditor);
-      SpecificPropertiesRegion.Add(Container.Resolve<CylindreEditor>(), ViewKeys.CylindreEditor);
-      SpecificPropertiesRegion.Add(Container.Resolve<EllipsoideEditor>(), ViewKeys.EllipsoideEditor);
-      SpecificPropertiesRegion.Add(Container.Resolve<PrismeEditor>(), ViewKeys.PrismeRectangulaireEditor);
+      PositionPropertiesRegion.Add(Container.Resolve<PositionEditeur>(), ViewKeys.PositionEditeur);
+      SpecificPropertiesRegion.Add(Container.Resolve<ConeEditeur>(), ViewKeys.ConeEditor);
+      SpecificPropertiesRegion.Add(Container.Resolve<CylindreEditeur>(), ViewKeys.CylindreEditor);
+      SpecificPropertiesRegion.Add(Container.Resolve<EllipsoideEditeur>(), ViewKeys.EllipsoideEditor);
+      SpecificPropertiesRegion.Add(Container.Resolve<PrismeEditeur>(), ViewKeys.PrismeRectangulaireEditor);
 
       SpecificPropertiesRegion?.Deactivate();
     }

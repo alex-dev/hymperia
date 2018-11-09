@@ -180,6 +180,9 @@
   <data name="Ouvrir" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
@@ -202,6 +205,9 @@
   <data name="Radius_Z" xml:space="preserve">
     <value>Radius _Z</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Rotation" xml:space="preserve">
+    <value>Rotation</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>

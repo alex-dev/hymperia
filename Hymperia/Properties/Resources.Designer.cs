@@ -138,6 +138,11 @@ namespace Hymperia.Facade.Properties
     public static string Ouvrir => GetString("Ouvrir");
 
     /// <summary>
+    ///   Position
+    /// </summary>
+    public static string Position => GetString("Position");
+
+    /// <summary>
     ///   Prix
     /// </summary>
     public static string Price => GetString("Price");
@@ -166,6 +171,11 @@ namespace Hymperia.Facade.Properties
     ///   Rayon _Z
     /// </summary>
     public static string Radius_Z => GetString("Radius_Z");
+
+    /// <summary>
+    ///   Rotation
+    /// </summary>
+    public static string Rotation => GetString("Rotation");
 
     /// <summary>
     ///   Sauvegarder

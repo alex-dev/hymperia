@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Hymperia.Facade.Collections;
 using Hymperia.Facade.Constants;
+using Hymperia.Facade.DependencyObjects;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.ModelWrappers;
@@ -109,10 +110,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       void Execute(string viewname, IRegion region)
       {
-        var view = region.GetView(viewname) as UserControl;
+        var view = region.GetView(viewname) as DataUserControl;
 
-        if (view is UserControl)
-          view.DataContext = selected;
+        if (view is DataUserControl)
+          view.Data = selected;
 
         region.Activate(view);
       }
