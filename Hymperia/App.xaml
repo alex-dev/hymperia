@@ -16,6 +16,7 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/DataGridStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/MenuStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/TabControlStyles.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
