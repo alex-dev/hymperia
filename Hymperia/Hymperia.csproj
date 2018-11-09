@@ -146,7 +146,7 @@
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
-    <Compile Include="ViewModels\Editeur\PropertiesEditor\EditorViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
@@ -163,19 +163,19 @@
     <Compile Include="Views\Editeur\ProjetAnalyse\MateriauxAnalyse.xaml.cs">
       <DependentUpon>MateriauxAnalyse.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\Editor.xaml.cs">
-      <DependentUpon>Editor.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\PropertiesEditeur\PropertiesEditeur.xaml.cs">
+      <DependentUpon>PropertiesEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\CylindreEditor.xaml.cs">
+    <Compile Include="Views\Editeur\PropertiesEditeur\CylindreEditor.xaml.cs">
       <DependentUpon>CylindreEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\ConeEditor.xaml.cs">
+    <Compile Include="Views\Editeur\PropertiesEditeur\ConeEditor.xaml.cs">
       <DependentUpon>ConeEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\PrismeEditor.xaml.cs">
+    <Compile Include="Views\Editeur\PropertiesEditeur\PrismeEditor.xaml.cs">
       <DependentUpon>PrismeEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\EllipsoideEditor.xaml.cs">
+    <Compile Include="Views\Editeur\PropertiesEditeur\EllipsoideEditor.xaml.cs">
       <DependentUpon>EllipsoideEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
@@ -228,23 +228,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\Editor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\PropertiesEditeur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\CylindreEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\CylindreEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\ConeEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\ConeEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\PrismeEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\PrismeEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\EllipsoideEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\EllipsoideEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

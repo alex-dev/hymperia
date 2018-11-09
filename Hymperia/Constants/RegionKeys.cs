@@ -7,6 +7,7 @@
     public const string MateriauxSelectionRegion = nameof(MateriauxSelectionRegion);
     public const string ProjetAnalyseRegion = nameof(ProjetAnalyseRegion);
     public const string FormesPropertiesRegion = nameof(FormesPropertiesRegion);
+    public const string PositionPropertiesRegion = nameof(PositionPropertiesRegion);
     public const string SpecificPropertiesRegion = nameof(SpecificPropertiesRegion);
   }
 }

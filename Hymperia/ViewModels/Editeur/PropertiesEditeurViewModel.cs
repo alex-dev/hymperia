@@ -20,9 +20,9 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
+namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class EditorViewModel : BindableBase, IActiveAware
+  public class PropertiesEditeurViewModel : BindableBase, IActiveAware
   {
     #region Properties
 
@@ -78,7 +78,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
 
     #region Constructors
 
-    public EditorViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurMateriaux convertisseur, [NotNull] IRegionManager manager, [NotNull] IEventAggregator events)
+    public PropertiesEditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurMateriaux convertisseur, [NotNull] IRegionManager manager, [NotNull] IEventAggregator events)
     {
       SelectedFormes.CollectionChanged += OnSelectedFormesChanged;
 
@@ -107,21 +107,30 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
 
     private void Activate(string name, FormeWrapper selected)
     {
-      var region = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
-      var view = region.GetView(name);
+      void Execute(string viewname, IRegion region)
+      {
+        var view = region.GetView(viewname) as UserControl;
 
-      if (view is UserControl _view)
-        _view.DataContext = selected;
+        if (view is UserControl)
+          view.DataContext = selected;
 
-      region.Activate(view);
+        region.Activate(view);
+      }
+
+      Execute(ViewKeys.PositionEditeur, Manager.Regions[RegionKeys.PositionPropertiesRegion]);
+      Execute(name, Manager.Regions[RegionKeys.SpecificPropertiesRegion]);
     }
 
     private void Deactivate()
     {
-      var region = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
+      void Execute(IRegion region)
+      {
+        foreach (var view in region.ActiveViews)
+          region.Deactivate(view);
+      }
 
-      foreach (var view in region.ActiveViews)
-        region.Deactivate(view);
+      Execute(Manager.Regions[RegionKeys.PositionPropertiesRegion]);
+      Execute(Manager.Regions[RegionKeys.SpecificPropertiesRegion]);
     }
 
     #endregion

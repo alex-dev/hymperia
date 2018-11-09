@@ -59,7 +59,7 @@ namespace Hymperia.Facade.Views.Editeur
       FormesSelectionRegion.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
       MateriauxSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
       ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      FormesPropertiesRegion.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);
+      FormesPropertiesRegion.Add(Container.Resolve<PropertiesEditeur>(), ViewKeys.PropertiesEditeur);
     }
 
     #endregion
@@ -101,7 +101,7 @@ namespace Hymperia.Facade.Views.Editeur
       FormesSelectionRegion?.Activate(FormesSelectionRegion?.GetView(ViewKeys.FormesSelection));
       MateriauxSelectionRegion?.Activate(MateriauxSelectionRegion?.GetView(ViewKeys.MateriauxSelection));
       ProjetAnalyseRegion?.Activate(ProjetAnalyseRegion?.GetView(ViewKeys.MateriauxAnalyse));
-      FormesPropertiesRegion?.Activate(FormesPropertiesRegion?.GetView(ViewKeys.PropertiesEditor));
+      FormesPropertiesRegion?.Activate(FormesPropertiesRegion?.GetView(ViewKeys.PropertiesEditeur));
     }
 
     private void OnDeactivation()

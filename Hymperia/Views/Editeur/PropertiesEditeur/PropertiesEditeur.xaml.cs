@@ -3,18 +3,20 @@ using System.Windows;
 using System.Windows.Controls;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
+using Hymperia.Facade.ViewModels.Editeur;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 
 namespace Hymperia.Facade.Views.Editeur.PropertiesEditor
 {
-  public partial class Editor : UserControl, IActiveAware
+  public partial class PropertiesEditeur : UserControl, IActiveAware
   {
     #region Constructors
 
-    public Editor(IRegionManager manager, IContainerExtension container)
+    public PropertiesEditeur(PropertiesEditeurViewModel context, IRegionManager manager, IContainerExtension container)
     {
+      DataContext = context;
       Container = container;
       Manager = manager;
 
@@ -30,8 +32,10 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditor
     {
       Loaded -= RegisterViews;
 
+      PositionPropertiesRegion = Manager.Regions[RegionKeys.PositionPropertiesRegion];
       SpecificPropertiesRegion = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
 
+      ///////
       SpecificPropertiesRegion.Add(Container.Resolve<ConeEditor>(), ViewKeys.ConeEditor);
       SpecificPropertiesRegion.Add(Container.Resolve<CylindreEditor>(), ViewKeys.CylindreEditor);
       SpecificPropertiesRegion.Add(Container.Resolve<EllipsoideEditor>(), ViewKeys.EllipsoideEditor);
@@ -66,7 +70,11 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditor
     }
 
     private void OnActivation() { }
-    private void OnDeactivation() => SpecificPropertiesRegion?.Deactivate();
+    private void OnDeactivation()
+    {
+      PositionPropertiesRegion?.Deactivate();
+      SpecificPropertiesRegion?.Deactivate();
+    }
 
     private bool isActive;
 
@@ -76,6 +84,7 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditor
 
     private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
+    private IRegion PositionPropertiesRegion;
     private IRegion SpecificPropertiesRegion;
 
     #endregion
