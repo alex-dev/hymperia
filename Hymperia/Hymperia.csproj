@@ -90,6 +90,7 @@
     <Compile Include="Constants\RegionKeys.cs" />
     <Compile Include="Constants\ViewKeys.cs" />
     <Compile Include="DependencyObjects\FormTab.cs" />
+    <Compile Include="DependencyObjects\TabItemNameBehavior.cs" />
     <Compile Include="Extensions\RegionExtension.cs" />
     <Compile Include="Loaders\AsyncLoader.cs" />
     <Compile Include="Loaders\AsyncLoader{T}.cs" />
