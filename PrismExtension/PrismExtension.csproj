@@ -38,6 +38,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -54,6 +55,7 @@
     <Compile Include="Commands\CommandAggregator.cs" />
     <Compile Include="Commands\ICommandAggregator.cs" />
     <Compile Include="Events\PubSubEventExtension.cs" />
+    <Compile Include="Mvvm\ValidatingBase.cs" />
     <Compile Include="Ninject\PrismExtensionApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,8 +67,6 @@
       <Version>7.1.0.431</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mvvm\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

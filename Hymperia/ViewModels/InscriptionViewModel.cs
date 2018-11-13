@@ -5,12 +5,12 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
-using Hymperia.Facade.ViewModelInterface;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Prism.Commands;
@@ -19,16 +19,29 @@ using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class InscriptionViewModel : BindableBase, INotifyDataErrorInfo, IPasswordHolder
+  public class InscriptionViewModel : ValidatingBase, INotifyDataErrorInfo
   {
     #region Properties
 
-    public string Username { get; set; }
+    [StringLength(500000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    public string Username {
+      get => username;
+      set
+      {
+        if (ValidateProperty(value))
+          SetProperty(ref username, value);
+      }
+    }
 
-    public bool PasswordIsValid
+    [StringLength(500000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    public string Password
     {
       get => password;
-      set => SetProperty(ref password, value, () => RaiseErrorsChanged(nameof(PasswordIsValid)));
+      set
+      {
+        if (ValidateProperty(value))
+          SetProperty(ref password, value);
+      }
     }
 
     public DelegateCommand<PasswordBox> Inscription { get; }
@@ -46,7 +59,7 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
-    private void  _Inscription(PasswordBox password)
+    private void _Inscription(PasswordBox password)
     {
 
     }
@@ -63,22 +76,11 @@ namespace Hymperia.Facade.ViewModels
 
     #region INotifyDataErrorInfo
 
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-    private bool DuplicateUsername;
-
-    public bool HasErrors => DuplicateUsername && !false;
-
-    public IEnumerable GetErrors(string property)
+    protected override void RaiseAllErrorsChanged()
     {
-      if (DuplicateUsername && property == nameof(Username))
-        yield return Resources.InvalidCredential;
-      if (!PasswordIsValid && property == nameof(PasswordIsValid))
-        yield return Resources.InvalidCredential;
+      RaiseErrorsChanged(nameof(Username));
+      RaiseErrorsChanged(nameof(Password));
     }
-
-    protected virtual void RaiseErrorsChanged([CallerMemberName] string property = null) =>
-      ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(property));
 
     #endregion
 
@@ -93,8 +95,8 @@ namespace Hymperia.Facade.ViewModels
 
     #region Private Fields
 
-    private bool duplicateusername;
-    private bool password = true;
+    private string username;
+    private string password;
 
     #endregion
 
