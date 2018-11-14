@@ -2,6 +2,7 @@
 * Auteur : Antoine Mailhot
 * Date de création : 9 novembre 2018
 */
+
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,50 +20,41 @@ namespace Hymperia.Facade.ViewModels
   public class InscriptionViewModel : ValidatingBase, INotifyDataErrorInfo
   {
     #region Properties
-
+ 
     [Required(ErrorMessage = "R1")]
-    [StringLength(1000000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
     public string Username {
       get => username;
-      set
-      {
-        if (ValidateProperty(value))
-          SetProperty(ref username, value);
-      }
+      set => SetProperty(ref username, value);
     }
 
-    [Compare(nameof(Verification), ErrorMessage = "dont match")]
     [Required(ErrorMessage = "R2")]
-    [StringLength(1000000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    [Compare(nameof(Verification), ErrorMessage = "dont match")]
     public string Password
     {
       get => password;
       set
       {
-        if (ValidateProperty(value))
-          SetProperty(ref password, value);
+        if (SetProperty(ref password, value))
+          ValidateProperty(Verification, nameof(Verification));
       }
     }
     
     
-    [Compare(nameof(Password), ErrorMessage = "dont match2")]
     [Required(ErrorMessage = "R3")]
-    [StringLength(1000000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    [Compare(nameof(Password), ErrorMessage = "dont match2")]
     public string Verification
     {
       get => verification;
       set
       {
-        if (ValidateProperty(value))
-          SetProperty(ref verification, value);
+        if (SetProperty(ref verification, value))
+          ValidateProperty(Password, nameof(Password));
       }
     }
 
     public DelegateCommand<PasswordBox> Inscription { get; }
 
     #endregion
-    
-
 
     #region Constructeur
 
@@ -115,6 +107,7 @@ namespace Hymperia.Facade.ViewModels
     private string username;
     private string password;
     private string verification;
+
     #endregion
 
   }
