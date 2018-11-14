@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * Auteur : Antoine Mailhot
+ * Date de création : 13 novembre 2018
+*/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;

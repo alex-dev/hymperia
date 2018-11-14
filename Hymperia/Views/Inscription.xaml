@@ -10,11 +10,15 @@ Date de création : 9 novembre 2018
   <StackPanel Orientation="Vertical">
     <Label Target="{Binding ElementName=txtUsername}" Content="{x:Static prop:Resources._Utilisateur}" />
     <TextBox x:Name="txtUsername" Text="{Binding Username, ValidatesOnDataErrors=True}" />
+
     <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
-    <PasswordBox x:Name="txtPassword" PasswordChar="♦" />
+    <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
+        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+
     <Label Target="{Binding ElementName=txtVerification}" Content="{x:Static prop:Resources._VerificationMotDePasse}" />
-    <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True" do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}"
-        PasswordChar="♦" />
+    <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
+        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+
     <Button Command="{Binding Inscription}" CommandParameter="{Binding ., ElementName=txtPassword}"
         Content="{x:Static prop:Resources.Inscription}">
       <Button.Style>

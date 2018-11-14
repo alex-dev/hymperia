@@ -3,13 +3,10 @@
 * Date de création : 9 novembre 2018
 */
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using Hymperia.Facade.Constants;
-using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
@@ -23,7 +20,8 @@ namespace Hymperia.Facade.ViewModels
   {
     #region Properties
 
-    [StringLength(500000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    [Required(ErrorMessage = "R1")]
+    [StringLength(1000000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
     public string Username {
       get => username;
       set
@@ -33,7 +31,9 @@ namespace Hymperia.Facade.ViewModels
       }
     }
 
-    [StringLength(500000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    [Compare(nameof(Verification), ErrorMessage = "dont match")]
+    [Required(ErrorMessage = "R2")]
+    [StringLength(1000000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
     public string Password
     {
       get => password;
@@ -43,10 +43,26 @@ namespace Hymperia.Facade.ViewModels
           SetProperty(ref password, value);
       }
     }
+    
+    
+    [Compare(nameof(Password), ErrorMessage = "dont match2")]
+    [Required(ErrorMessage = "R3")]
+    [StringLength(1000000, MinimumLength = 3, ErrorMessage = "adfiadusgyfsdyuthgudfgb")]
+    public string Verification
+    {
+      get => verification;
+      set
+      {
+        if (ValidateProperty(value))
+          SetProperty(ref verification, value);
+      }
+    }
 
     public DelegateCommand<PasswordBox> Inscription { get; }
 
     #endregion
+    
+
 
     #region Constructeur
 
@@ -80,6 +96,7 @@ namespace Hymperia.Facade.ViewModels
     {
       RaiseErrorsChanged(nameof(Username));
       RaiseErrorsChanged(nameof(Password));
+      RaiseErrorsChanged(nameof(Verification));
     }
 
     #endregion
@@ -97,7 +114,7 @@ namespace Hymperia.Facade.ViewModels
 
     private string username;
     private string password;
-
+    private string verification;
     #endregion
 
   }
