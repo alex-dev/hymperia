@@ -7,7 +7,9 @@
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
-    <Button Content="{x:Static prop:Resources.Position}" Grid.Column="0" />
+    <TextBox
+        do:MaskingBehavior.Mask="\{[+-]?\d+[.,]?\d*([Ee][+-]?\d+);[+-]?\d+[.,]?\d*([Ee][+-]?\d+);[+-]?\d+[.,]?\d*([Ee][+-]?\d+)\}"
+    <!--<Button Content="{x:Static prop:Resources.Position}" Grid.Column="0" />-->
     <Button Content="{x:Static prop:Resources.Rotation}" Grid.Column="1" />
   </Grid>
 </do:DataUserControl>

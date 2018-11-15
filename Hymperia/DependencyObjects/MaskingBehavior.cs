@@ -30,20 +30,34 @@ namespace Hymperia.Facade.DependencyObjects
       box.GetValue(MaskProperty) as string;
     public static void SetMask(TextBox box, string mask) =>
       box.SetValue(MaskProperty, mask);
+    private static void ClearMask(TextBox box) =>
+      box.ClearValue(MaskProperty);
 
     public static Regex GetMaskExpression(TextBox box) =>
       box.GetValue(MaskExpressionProperty) as Regex;
     private static void SetMaskExpression(TextBox box, Regex regex) =>
       box.SetValue(MaskExpressionPropertyKey, regex);
+    private static void ClearMaskExpression(TextBox box) =>
+      box.ClearValue(MaskExpressionPropertyKey);
 
     private static bool GetIsUpdating(TextBox box) =>
-      box.GetValue(MaskProperty) as bool? ?? false;
-    public static void SetMask(TextBox box, bool mask) =>
-      box.SetValue(MaskProperty, mask);
+      box.GetValue(IsUpdatingProperty) as bool? ?? false;
+    public static void SetIsUpdating(TextBox box, bool mask) =>
+      box.SetValue(IsUpdatingProperty, mask);
+    private static void ClearIsUpdating(TextBox box) =>
+      box.ClearValue(IsUpdatingProperty);
 
+    public static void Clear(TextBox box)
+    {
+      ClearMask(box);
+      ClearMaskExpression(box);
+      ClearIsUpdating(box);
+    }
 
     private static void OnMaskChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
+      const RegexOptions options = RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture;
+
       string mask = e.NewValue as string;
       var box = d as TextBox;
 
@@ -52,125 +66,51 @@ namespace Hymperia.Facade.DependencyObjects
 
       box.PreviewTextInput -= OnTextBoxPreviewText;
       box.PreviewKeyDown -= OnTextBoxPreviewText;
-      DataObject.RemovePastingHandler(box, Pasting);
+      DataObject.RemovePastingHandler(box, OnPasting);
 
-      if (mask == null)
-      {
-        box.ClearValue(MaskProperty);
-        box.ClearValue(MaskExpressionProperty);
-        box.ClearValue(IsUpdatingProperty);
-      }
+      if (mask is null)
+        Clear(box);
       else
       {
-        textBox.SetValue(MaskProperty, mask);
-        SetMaskExpression(textBox, new Regex(mask, RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace));
-        textBox.PreviewTextInput += textBox_PreviewTextInput;
-        textBox.PreviewKeyDown += textBox_PreviewKeyDown;
-        DataObject.AddPastingHandler(textBox, Pasting);
+        SetMaskExpression(box, new Regex(mask, options));
+        box.PreviewTextInput += OnTextBoxPreviewText;
+        box.PreviewKeyDown += OnTextBoxPreviewText;
+        DataObject.AddPastingHandler(box, OnPasting);
       }
     }
 
     private static void OnTextBoxPreviewText(object sender, TextCompositionEventArgs e)
     {
-      var textBox = sender as TextBox;
-      var maskExpression = GetMaskExpression(textBox);
-
-      if (maskExpression == null)
-      {
-        return;
-      }
-
-      var proposedText = GetProposedText(textBox, e.Text);
-
-      if (!maskExpression.IsMatch(proposedText))
-      {
+      if (!GetMaskExpression((TextBox)sender).IsMatch(ConstructProposedText((TextBox)sender, e.Text)))
         e.Handled = true;
-      }
     }
 
-    private static void textBox_PreviewKeyDown(object sender, KeyEventArgs e)
+    private static void OnTextBoxPreviewText(object sender, KeyEventArgs e)
     {
-      var textBox = sender as TextBox;
-      var maskExpression = GetMaskExpression(textBox);
-
-      if (maskExpression == null)
-      {
-        return;
-      }
-
-      //pressing space doesn't raise PreviewTextInput - no idea why, but we need to handle
-      //explicitly here
-      if (e.Key == Key.Space)
-      {
-        var proposedText = GetProposedText(textBox, " ");
-
-        if (!maskExpression.IsMatch(proposedText))
-        {
-          e.Handled = true;
-        }
-      }
+      // Pressing space doesn't raise PreviewTextInput, so we need to handle explicitly here.
+      if (e.Key == Key.Space &&
+        !GetMaskExpression((TextBox)sender).IsMatch(ConstructProposedText((TextBox)sender, " ")))
+        e.Handled = true;
     }
 
-    private static void Pasting(object sender, DataObjectPastingEventArgs e)
+    private static void OnPasting(object sender, DataObjectPastingEventArgs e)
     {
-      var textBox = sender as TextBox;
-      var maskExpression = GetMaskExpression(textBox);
-
-      if (maskExpression == null)
-      {
-        return;
-      }
-
-      if (e.DataObject.GetDataPresent(typeof(string)))
-      {
-        var pastedText = e.DataObject.GetData(typeof(string)) as string;
-        var proposedText = GetProposedText(textBox, pastedText);
-
-        if (!maskExpression.IsMatch(proposedText))
-        {
-          e.CancelCommand();
-        }
-      }
-      else
-      {
+      if (!e.DataObject.GetDataPresent(typeof(string))
+        || !GetMaskExpression((TextBox)sender).IsMatch(
+          ConstructProposedText((TextBox)sender, (string)e.DataObject.GetData(typeof(string)))))
         e.CancelCommand();
-      }
     }
 
-    private static string GetProposedText(TextBox textBox, string newText)
+    private static string ConstructProposedText(TextBox textBox, string newtext)
     {
       var text = textBox.Text;
 
       if (textBox.SelectionStart != -1)
-      {
         text = text.Remove(textBox.SelectionStart, textBox.SelectionLength);
-      }
 
-      text = text.Insert(textBox.CaretIndex, newText);
+      text = text.Insert(textBox.CaretIndex, newtext);
 
       return text;
     }
-
-    #region Disposable Pattern
-
-    private class Monitor : IDisposable
-    {
-      private PasswordBox PasswordBox { get; }
-
-      private Monitor(PasswordBox box)
-      {
-        PasswordBox = box;
-      }
-
-      public static Monitor Create(PasswordBox box)
-      {
-        SetIsUpdating(box, true);
-        return new Monitor(box);
-      }
-
-      public void Dispose() => SetIsUpdating(PasswordBox, false);
-    }
-
-    #endregion
   }
 }
