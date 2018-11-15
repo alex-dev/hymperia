@@ -13,11 +13,10 @@ namespace Hymperia.Facade.DependencyObjects
         typeof(TabItemNameBehavior),
         new PropertyMetadata(string.Empty));
 
-    public static void SetSourceResourceKey(DependencyObject element, string value) =>
+    public static void SetTabItemName(DependencyObject element, string value) =>
       element.SetValue(TabItemNameProperty, value);
 
-    public static string GetSourceResourceKey(DependencyObject element) =>
-      (string)element.GetValue(TabItemNameProperty);
-
+    public static string GetTabItemName(DependencyObject element) =>
+      element.GetValue(TabItemNameProperty) as string;
   }
 }

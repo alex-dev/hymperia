@@ -60,6 +60,7 @@ namespace Hymperia.Facade.Views.Editeur
       FormesSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
       /*ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
       FormesPropertiesRegion.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);*/
+      FormesSelectionRegion.Deactivate(FormesSelectionRegion.GetView(ViewKeys.FormesSelection));
     }
 
     #endregion

@@ -168,6 +168,11 @@ namespace Hymperia.Facade.Properties
     public static string Scaling => GetString("Scaling");
 
     /// <summary>
+    ///   Sélection Formes
+    /// </summary>
+    public static string SelectionForme => GetString("SelectionForme");
+
+    /// <summary>
     ///   Supprimer
     /// </summary>
     public static string Supprimer => GetString("Supprimer");

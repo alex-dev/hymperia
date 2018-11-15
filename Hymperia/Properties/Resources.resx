@@ -203,6 +203,9 @@
   <data name="Scaling" xml:space="preserve">
     <value>Redimensionnement</value>
   </data>
+  <data name="SelectionForme" xml:space="preserve">
+    <value>Sélection Formes</value>
+  </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Supprimer</value>
   </data>
