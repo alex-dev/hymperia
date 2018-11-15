@@ -21,7 +21,7 @@ Date de création : 9 novembre 2018
 
     <Button Command="{Binding Inscription}" CommandParameter="{Binding ., ElementName=txtPassword}"
         Content="{x:Static prop:Resources.Inscription}">
-      <Button.Style>
+      <!--<Button.Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
           <Style.Triggers>
             <DataTrigger Binding="{Binding (Validation.HasError), ElementName=txtUsername}" Value="True">
@@ -32,7 +32,7 @@ Date de création : 9 novembre 2018
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </Button.Style>
+      </Button.Style>-->
     </Button>
   </StackPanel>
 </UserControl>

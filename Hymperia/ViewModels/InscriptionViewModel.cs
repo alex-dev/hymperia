@@ -3,24 +3,28 @@
 * Date de création : 9 novembre 2018
 */
 
-using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Windows.Controls;
+using System.Linq;
+using System.Threading.Tasks;
 using Hymperia.Facade.Constants;
+using Hymperia.Facade.Extensions;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using B = BCrypt.Net;
 
 namespace Hymperia.Facade.ViewModels
 {
   public class InscriptionViewModel : ValidatingBase, INotifyDataErrorInfo
   {
     #region Properties
- 
+
     [Required(ErrorMessage = "R1")]
     public string Username {
       get => username;
@@ -38,8 +42,8 @@ namespace Hymperia.Facade.ViewModels
           ValidateProperty(Verification, nameof(Verification));
       }
     }
-    
-    
+
+
     [Required(ErrorMessage = "R3")]
     [Compare(nameof(Password), ErrorMessage = "dont match2")]
     public string Verification
@@ -52,7 +56,7 @@ namespace Hymperia.Facade.ViewModels
       }
     }
 
-    public DelegateCommand<PasswordBox> Inscription { get; }
+    public DelegateCommand Inscription { get; }
 
     #endregion
 
@@ -62,15 +66,42 @@ namespace Hymperia.Facade.ViewModels
     {
       Factory = factory;
       Manager = manager;
-      Inscription = new DelegateCommand<PasswordBox>(_Inscription);
+      Inscription = new DelegateCommand(_Inscription);
     }
 
     #endregion
 
-    private void _Inscription(PasswordBox password)
+    private async void _Inscription()
     {
+      if (!await ValidateAsync())
+        return;
 
+      var utilisateur = await CreateUtilisateur();
+      Navigate(utilisateur);
     }
+
+    #region Queries
+
+    private async Task<bool> UsernameExists(string username)
+    {
+      using (var context = Factory.GetContext())
+        return await context.Utilisateurs.AnyAsync(utilisateur => utilisateur.Nom == username);
+    }
+
+    private async Task<Utilisateur> CreateUtilisateur()
+    {
+      var utilisateur = new Utilisateur(Username, B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true));
+
+      using (var context = Factory.GetContext())
+      {
+        context.Utilisateurs.Add(utilisateur);
+        await context.SaveChangesAsync();
+      }
+
+      return utilisateur;
+    }
+
+    #endregion
 
     #region Navigation
 
@@ -82,7 +113,29 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
-    #region INotifyDataErrorInfo
+    #region ValidationBase
+
+    private async Task<ValidationResult> ValidateUsernameAsync() =>
+      await UsernameExists(Username)
+        ? new ValidationResult("", new string[] { nameof(Username) })
+        : ValidationResult.Success;
+
+    protected override async Task<bool> ValidateAsync()
+    {
+      var usernameExists = await ValidateUsernameAsync();
+
+      Errors.ClearErrors();
+      InternalValidate();
+
+      if (usernameExists != ValidationResult.Success)
+        Errors.SetErrors(
+          nameof(Username),
+          Errors.GetErrors(nameof(Username)).ContinueWith(usernameExists));
+
+      RaiseAllErrorsChanged();
+
+      return !HasErrors;
+    }
 
     protected override void RaiseAllErrorsChanged()
     {

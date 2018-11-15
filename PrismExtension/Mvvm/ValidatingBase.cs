@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using MoreLinq;
 
 namespace Prism.Mvvm
@@ -69,27 +70,43 @@ namespace Prism.Mvvm
 
     protected bool Validate()
     {
-      var results = new List<ValidationResult>();
-
       Errors.ClearErrors();
-
-      if (!Validator.TryValidateObject(this, Context, results, true))
-        (from result in results
-         from property in result.MemberNames
-         group result by property into pair
-         select new { Property = pair.Key, Results = pair.AsEnumerable() })
-          .ForEach(pair => Errors.SetErrors(pair.Property, pair.Results));
-
+      InternalValidate();
       RaiseAllErrorsChanged();
 
       return !HasErrors;
+    }
+
+#pragma warning disable 1998
+    protected virtual async Task<bool> ValidateAsync() => Validate();
+#pragma warning restore 1998
+
+
+    protected virtual void InternalValidate()
+    {
+      var results = new List<ValidationResult>();
+
+      if (!Validator.TryValidateObject(this, Context, results, true))
+      {
+        var r = (from result in results
+                 from property in result.MemberNames
+                 group result by property into pair
+                 select new { Property = pair.Key, Results = pair.AsEnumerable() });
+        r.ForEach(pair => Errors.SetErrors(pair.Property, pair.Results));
+
+        //(from result in results
+        // from property in result.MemberNames
+        // group result by property into pair
+        // select new { Property = pair.Key, Results = pair.AsEnumerable() })
+        //  .ForEach(pair => Errors.SetErrors(pair.Property, pair.Results));
+      }
     }
 
     protected abstract void RaiseAllErrorsChanged();
     protected virtual void RaiseErrorsChanged([CallerMemberName] string name = null) =>
       ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(name));
 
+    protected ErrorsContainer<ValidationResult> Errors { get; }
     private ValidationContext Context { get; }
-    private ErrorsContainer<ValidationResult> Errors { get; }
   }
 }
