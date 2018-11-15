@@ -1,13 +1,20 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Hymperia.Facade.DependencyObjects
 {
   /// <summary>Provides masking behavior for any <see cref="TextBox"/>.</summary>
   public static class MaskingBehavior
   {
+    const string IsUpdating = nameof(IsUpdating);
     const string MaskExpression = nameof(MaskExpression);
     const string Mask = nameof(Mask);
+
+    private static readonly DependencyProperty IsUpdatingProperty =
+      DependencyProperty.Register(IsUpdating, typeof(bool), typeof(MaskingBehavior));
 
     private static readonly DependencyPropertyKey MaskExpressionPropertyKey =
       DependencyProperty.RegisterAttachedReadOnly(MaskExpression, typeof(Regex), typeof(MaskingBehavior), new FrameworkPropertyMetadata());
@@ -19,83 +26,39 @@ namespace Hymperia.Facade.DependencyObjects
     /// <summary>Identifies the <see cref="MaskExpression"/> dependency property.</summary>
     public static readonly DependencyProperty MaskExpressionProperty = MaskExpressionPropertyKey.DependencyProperty;
 
-    /// <summary>
-    /// Gets the mask for a given <see cref="TextBox"/>.
-    /// </summary>
-    /// <param name="textBox">
-    /// The <see cref="TextBox"/> whose mask is to be retrieved.
-    /// </param>
-    /// <returns>
-    /// The mask, or <see langword="null"/> if no mask has been set.
-    /// </returns>
-    public static string GetMask(TextBox textBox)
+    public static string GetMask(TextBox box) =>
+      box.GetValue(MaskProperty) as string;
+    public static void SetMask(TextBox box, string mask) =>
+      box.SetValue(MaskProperty, mask);
+
+    public static Regex GetMaskExpression(TextBox box) =>
+      box.GetValue(MaskExpressionProperty) as Regex;
+    private static void SetMaskExpression(TextBox box, Regex regex) =>
+      box.SetValue(MaskExpressionPropertyKey, regex);
+
+    private static bool GetIsUpdating(TextBox box) =>
+      box.GetValue(MaskProperty) as bool? ?? false;
+    public static void SetMask(TextBox box, bool mask) =>
+      box.SetValue(MaskProperty, mask);
+
+
+    private static void OnMaskChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-      if (textBox == null)
-      {
-        throw new ArgumentNullException("textBox");
-      }
+      string mask = e.NewValue as string;
+      var box = d as TextBox;
 
-      return textBox.GetValue(MaskProperty) as string;
-    }
+      if (box is null)
+        return;
 
-    /// <summary>
-    /// Sets the mask for a given <see cref="TextBox"/>.
-    /// </summary>
-    /// <param name="textBox">
-    /// The <see cref="TextBox"/> whose mask is to be set.
-    /// </param>
-    /// <param name="mask">
-    /// The mask to set, or <see langword="null"/> to remove any existing mask from <paramref name="textBox"/>.
-    /// </param>
-    public static void SetMask(TextBox textBox, string mask)
-    {
-      if (textBox == null)
-      {
-        throw new ArgumentNullException("textBox");
-      }
-
-      textBox.SetValue(MaskProperty, mask);
-    }
-
-    /// <summary>
-    /// Gets the mask expression for the <see cref="TextBox"/>.
-    /// </summary>
-    /// <remarks>
-    /// This method can be used to retrieve the actual <see cref="Regex"/> instance created as a result of setting the mask on a <see cref="TextBox"/>.
-    /// </remarks>
-    /// <param name="textBox">
-    /// The <see cref="TextBox"/> whose mask expression is to be retrieved.
-    /// </param>
-    /// <returns>
-    /// The mask expression as an instance of <see cref="Regex"/>, or <see langword="null"/> if no mask has been applied to <paramref name="textBox"/>.
-    /// </returns>
-    public static Regex GetMaskExpression(TextBox textBox)
-    {
-      if (textBox == null)
-      {
-        throw new ArgumentNullException("textBox");
-      }
-
-      return textBox.GetValue(MaskExpressionProperty) as Regex;
-    }
-
-    private static void SetMaskExpression(TextBox textBox, Regex regex)
-    {
-      textBox.SetValue(_maskExpressionPropertyKey, regex);
-    }
-
-    private static void OnMaskChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-    {
-      var textBox = dependencyObject as TextBox;
-      var mask = e.NewValue as string;
-      textBox.PreviewTextInput -= textBox_PreviewTextInput;
-      textBox.PreviewKeyDown -= textBox_PreviewKeyDown;
-      DataObject.RemovePastingHandler(textBox, Pasting);
+      box.PreviewTextInput -= OnTextBoxPreviewText;
+      box.PreviewKeyDown -= OnTextBoxPreviewText;
+      DataObject.RemovePastingHandler(box, Pasting);
 
       if (mask == null)
       {
-        textBox.ClearValue(MaskProperty);
-        textBox.ClearValue(MaskExpressionProperty);
+        box.ClearValue(MaskProperty);
+        box.ClearValue(MaskExpressionProperty);
+        box.ClearValue(IsUpdatingProperty);
       }
       else
       {
@@ -107,7 +70,7 @@ namespace Hymperia.Facade.DependencyObjects
       }
     }
 
-    private static void textBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    private static void OnTextBoxPreviewText(object sender, TextCompositionEventArgs e)
     {
       var textBox = sender as TextBox;
       var maskExpression = GetMaskExpression(textBox);
@@ -188,5 +151,26 @@ namespace Hymperia.Facade.DependencyObjects
       return text;
     }
 
+    #region Disposable Pattern
+
+    private class Monitor : IDisposable
+    {
+      private PasswordBox PasswordBox { get; }
+
+      private Monitor(PasswordBox box)
+      {
+        PasswordBox = box;
+      }
+
+      public static Monitor Create(PasswordBox box)
+      {
+        SetIsUpdating(box, true);
+        return new Monitor(box);
+      }
+
+      public void Dispose() => SetIsUpdating(PasswordBox, false);
+    }
+
+    #endregion
   }
 }
