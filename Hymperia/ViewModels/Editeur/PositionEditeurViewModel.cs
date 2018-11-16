@@ -1,7 +1,5 @@
-﻿using System;
-using Hymperia.Facade.ModelWrappers;
+﻿using Hymperia.Facade.ModelWrappers;
 using Hymperia.Model.Modeles.JsonObject;
-using Prism.Commands;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.Views.Editeur
@@ -12,29 +10,35 @@ namespace Hymperia.Facade.Views.Editeur
 
     public FormeWrapper Forme
     {
-
+      get => forme;
+      set => SetProperty(ref forme, value, RaiseAllChanged);
     }
 
-    public Point Position
+    private Point Position
     {
-      get => position;
+      get => Forme.Origine;
       set
       {
-        if (SetProperty(ref position, value))
+        if (Forme.Origine != value)
         {
-          RaisePropertyChanged(nameof(PositionX));
-          RaisePropertyChanged(nameof(PositionY));
-          RaisePropertyChanged(nameof(PositionZ));
+          Forme.Origine = value;
+          RaisePositionChanged();
         }
       }
     }
 
-    public Quaternion Rotation
+    private Quaternion Rotation
     {
-      get => rotation;
-      set => SetProperty(ref rotation, value);
+      get => Forme.Rotation;
+      set
+      {
+        if (Forme.Rotation != value)
+        {
+          Forme.Rotation = value;
+          RaiseRotationChanged();
+        }
+      }
     }
-
 
     public double PositionX
     {
@@ -62,19 +66,19 @@ namespace Hymperia.Facade.Views.Editeur
 
     public double RotationY
     {
-      get => Rotation.X;
+      get => Rotation.Y;
       set => Rotation = new Quaternion(Rotation.X, value, Rotation.Z, Rotation.W);
     }
 
     public double RotationZ
     {
-      get => Rotation.X;
+      get => Rotation.Z;
       set => Rotation = new Quaternion(Rotation.X, Rotation.Y, value, Rotation.W);
     }
 
     public double RotationW
     {
-      get => Rotation.X;
+      get => Rotation.W;
       set => Rotation = new Quaternion(Rotation.X, Rotation.Y, Rotation.Z, value);
     }
 
@@ -88,9 +92,36 @@ namespace Hymperia.Facade.Views.Editeur
 
     #endregion
 
+    #region RaiseChanged
+
+    private void RaiseAllChanged()
+    {
+      RaisePositionChanged();
+      RaiseRotationChanged();
+    }
+
+    private void RaisePositionChanged()
+    {
+      RaisePropertyChanged(nameof(PositionX));
+      RaisePropertyChanged(nameof(PositionY));
+      RaisePropertyChanged(nameof(PositionZ));
+    }
+
+    private void RaiseRotationChanged()
+    {
+      RaisePropertyChanged(nameof(RotationX));
+      RaisePropertyChanged(nameof(RotationY));
+      RaisePropertyChanged(nameof(RotationZ));
+      RaisePropertyChanged(nameof(RotationW));
+    }
+
+
+    #endregion
+
     #region Private Fields
-    private Point position;
-    private Quaternion rotation;
+
+    private FormeWrapper forme;
+
     #endregion
   }
 }

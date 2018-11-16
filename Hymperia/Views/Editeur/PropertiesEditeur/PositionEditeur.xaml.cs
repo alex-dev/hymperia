@@ -1,4 +1,5 @@
-﻿using Hymperia.Facade.DependencyObjects;
+﻿using System.Windows.Data;
+using Hymperia.Facade.DependencyObjects;
 
 namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
 {
@@ -8,6 +9,7 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
     {
       DataContext = context;
       InitializeComponent();
+      SetBinding(DataProperty, new Binding("Forme") { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
   }
 }
