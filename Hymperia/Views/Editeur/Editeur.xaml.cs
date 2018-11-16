@@ -129,5 +129,6 @@ namespace Hymperia.Facade.Views.Editeur
     private IRegion FormesPropertiesRegion;
 
     #endregion
+
   }
 }

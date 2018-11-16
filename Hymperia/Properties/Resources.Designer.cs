@@ -173,6 +173,11 @@ namespace Hymperia.Facade.Properties
     public static string SelectionForme => GetString("SelectionForme");
 
     /// <summary>
+    ///   Sélection Matériaux
+    /// </summary>
+    public static string SelectionMateriau => GetString("SelectionMateriau");
+
+    /// <summary>
     ///   Supprimer
     /// </summary>
     public static string Supprimer => GetString("Supprimer");

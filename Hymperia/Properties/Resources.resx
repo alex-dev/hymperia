@@ -206,6 +206,9 @@
   <data name="SelectionForme" xml:space="preserve">
     <value>Sélection Formes</value>
   </data>
+  <data name="SelectionMateriau" xml:space="preserve">
+    <value>Sélection Matériaux</value>
+  </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Supprimer</value>
   </data>
