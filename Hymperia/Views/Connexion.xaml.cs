@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿/**
+* Auteur : Antoine Mailhot
+* Date de création : 8 novembre 2018
+*/
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Hymperia.Facade.Views
 {
-    /// <summary>
-    /// Logique d'interaction pour Connexion.xaml
-    /// </summary>
-    public partial class Connexion : UserControl
+  /// <summary>
+  /// Logique d'interaction pour Connexion.xaml
+  /// </summary>
+  public partial class Connexion : UserControl
     {
         public Connexion()
         {

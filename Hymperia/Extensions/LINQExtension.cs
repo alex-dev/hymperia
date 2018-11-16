@@ -8,6 +8,19 @@ namespace Hymperia.Facade.Extensions
 {
   public static class LINQExtension
   {
+    [NotNull]
+    [LinqTunnel]
+    public static IEnumerable<T> ContinueWith<T>(this IEnumerable<T> enumerable, T continuation)
+    {
+      if (enumerable is null)
+        throw new ArgumentNullException(nameof(enumerable));
+
+      foreach (var item in enumerable)
+        yield return item;
+
+      yield return continuation;
+    }
+
     /// <summary>Finds the only element matching <paramref name="predicate"/> or return the first element of sequence.</summary>
     /// <exception cref="ArgumentNullException"><paramref name="enumerable"/> or <paramref name="predicate"/> are <see cref="null"/>.</exception>
     /// <exception cref="InvalidOperationException"><paramref name="enumerable"/> is empty or no matches were found.</exception>

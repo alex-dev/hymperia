@@ -14,6 +14,8 @@ namespace Hymperia.Model.Modeles
   {
     #region Properties
 
+    public const int PasswordWorkFactor = 11;
+
     /// <summary>La clé primaire de l'utilisateur.</summary>
     public int Id { get; private set; }
 

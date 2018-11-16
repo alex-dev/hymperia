@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
     <Compile Include="Loaders\AsyncLoader.cs" />
     <Compile Include="Loaders\AsyncLoader{T}.cs" />
     <Compile Include="SelectionMode.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
     <Compile Include="ValidationRules\StringNotNullOrWhiteSpaceRule.cs" />
+    <Compile Include="ViewModelInterface\IPasswordHolder.cs" />
     <Compile Include="ViewModels\AffichageProjetsViewModel.cs" />
     <Compile Include="ViewModels\ConnexionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
     <Compile Include="ViewModels\Editeur\PropertiesEditor\EditorViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
+    <Compile Include="ViewModels\InscriptionViewModel.cs" />
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.Designer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inscription.xaml.cs">
+      <DependentUpon>Inscription.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popups\AjouterProjetPopup.xaml.cs">
       <DependentUpon>AjouterProjetPopup.xaml</DependentUpon>
@@ -257,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FenetrePrincipale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Inscription.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
