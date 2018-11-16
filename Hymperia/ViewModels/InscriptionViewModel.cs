@@ -3,13 +3,11 @@
 * Date de création : 9 novembre 2018
 */
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Hymperia.Facade.Constants;
-using Hymperia.Facade.Extensions;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
@@ -25,38 +23,51 @@ namespace Hymperia.Facade.ViewModels
   {
     #region Properties
 
-    [Required(ErrorMessage = "R1")]
-    public string Username {
+    [Required(
+      ErrorMessageResourceName = nameof(Resources.RequiredUsername),
+      ErrorMessageResourceType = typeof(Resources))]
+    public string Username
+    {
       get => username;
       set => SetProperty(ref username, value);
     }
 
-    [Required(ErrorMessage = "R2")]
-    [Compare(nameof(Verification), ErrorMessage = "dont match")]
+    [Required(
+      ErrorMessageResourceName = nameof(Resources.RequiredPassword),
+      ErrorMessageResourceType = typeof(Resources))]
+    [Compare(nameof(Verification),
+      ErrorMessageResourceName = nameof(Resources.DontMatchPassword),
+      ErrorMessageResourceType = typeof(Resources))]
     public string Password
     {
       get => password;
       set
       {
         if (SetProperty(ref password, value))
-          ValidateProperty(Verification, nameof(Verification));
+          ValidateProperty<string>(nameof(Verification));
       }
     }
 
 
-    [Required(ErrorMessage = "R3")]
-    [Compare(nameof(Password), ErrorMessage = "dont match2")]
+    [Required(
+      ErrorMessageResourceName = nameof(Resources.RequiredVerification),
+      ErrorMessageResourceType = typeof(Resources))]
+    [Compare(nameof(Password),
+      ErrorMessageResourceName = nameof(Resources.DontMatchPassword),
+      ErrorMessageResourceType = typeof(Resources))]
     public string Verification
     {
       get => verification;
       set
       {
         if (SetProperty(ref verification, value))
-          ValidateProperty(Password, nameof(Password));
+          ValidateProperty<string>(nameof(Password));
       }
     }
 
     public DelegateCommand Inscription { get; }
+
+    public DelegateCommand ValidationUsername { get; }
 
     #endregion
 
@@ -64,21 +75,25 @@ namespace Hymperia.Facade.ViewModels
 
     public InscriptionViewModel(ContextFactory factory, IRegionManager manager)
     {
+
       Factory = factory;
       Manager = manager;
       Inscription = new DelegateCommand(_Inscription);
+      ValidationUsername = new DelegateCommand(_ValidateUsername);
     }
 
     #endregion
 
     private async void _Inscription()
     {
-      if (!await ValidateAsync())
+      if (!await Validate())
         return;
 
       var utilisateur = await CreateUtilisateur();
       Navigate(utilisateur);
     }
+
+    private async void _ValidateUsername() => await ValidateUsername();
 
     #region Queries
 
@@ -115,33 +130,19 @@ namespace Hymperia.Facade.ViewModels
 
     #region ValidationBase
 
-    private async Task<ValidationResult> ValidateUsernameAsync() =>
-      await UsernameExists(Username)
-        ? new ValidationResult("", new string[] { nameof(Username) })
-        : ValidationResult.Success;
-
-    protected override async Task<bool> ValidateAsync()
+    private async Task<bool> ValidateUsername() => await ValidateProperty<string>(async v =>
     {
-      var usernameExists = await ValidateUsernameAsync();
-
-      Errors.ClearErrors();
-      InternalValidate();
-
-      if (usernameExists != ValidationResult.Success)
+      if (await UsernameExists(v))
         Errors.SetErrors(
           nameof(Username),
-          Errors.GetErrors(nameof(Username)).ContinueWith(usernameExists));
+          new ValidationResult[] { new ValidationResult(Resources.UsedUsername, new string[] { nameof(Username) }) });
+    }, nameof(Username));
 
-      RaiseAllErrorsChanged();
-
-      return !HasErrors;
-    }
-
-    protected override void RaiseAllErrorsChanged()
+    protected override async Task ValidateAsync()
     {
-      RaiseErrorsChanged(nameof(Username));
-      RaiseErrorsChanged(nameof(Password));
-      RaiseErrorsChanged(nameof(Verification));
+      await ValidateUsername();
+      ValidateProperty<string>(nameof(Password));
+      ValidateProperty<string>(nameof(Verification));
     }
 
     #endregion

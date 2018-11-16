@@ -66,6 +66,11 @@ namespace Hymperia.Facade.Properties
     public static string DestructiveConversion => GetString("DestructiveConversion");
 
     /// <summary>
+    ///   Les mots de passes doivent être identique.
+    /// </summary>
+    public static string DontMatchPassword => GetString("DontMatchPassword");
+
+    /// <summary>
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
@@ -173,6 +178,21 @@ namespace Hymperia.Facade.Properties
     public static string Radius_Z => GetString("Radius_Z");
 
     /// <summary>
+    ///   Un mot de passe est requis.
+    /// </summary>
+    public static string RequiredPassword => GetString("RequiredPassword");
+
+    /// <summary>
+    ///   Un nom d'utilisateur est requis.
+    /// </summary>
+    public static string RequiredUsername => GetString("RequiredUsername");
+
+    /// <summary>
+    ///   Une confirmation du mot de passe est requis.
+    /// </summary>
+    public static string RequiredVerification => GetString("RequiredVerification");
+
+    /// <summary>
     ///   Sauvegarder
     /// </summary>
     public static string Save => GetString("Save");
@@ -204,6 +224,11 @@ namespace Hymperia.Facade.Properties
       => string.Format(
         GetString("UnknownChild", nameof(parent)),
         parent);
+
+    /// <summary>
+    ///   Le nom d'utilisateur est déjà utilisé.
+    /// </summary>
+    public static string UsedUsername => GetString("UsedUsername");
 
     /// <summary>
     ///   Ce viewport ne support que les manipulateurs de {types}.

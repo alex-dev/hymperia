@@ -144,6 +144,9 @@
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
   </data>
+  <data name="DontMatchPassword" xml:space="preserve">
+    <value>Les mots de passes doivent être identique.</value>
+  </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
   </data>
@@ -206,6 +209,15 @@
     <value>Rayon _Z</value>
     <comment>AccessKey for labels</comment>
   </data>
+  <data name="RequiredPassword" xml:space="preserve">
+    <value>Un mot de passe est requis.</value>
+  </data>
+  <data name="RequiredUsername" xml:space="preserve">
+    <value>Un nom d'utilisateur est requis.</value>
+  </data>
+  <data name="RequiredVerification" xml:space="preserve">
+    <value>Une confirmation du mot de passe est requis.</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Sauvegarder</value>
   </data>
@@ -223,6 +235,9 @@
   </data>
   <data name="UnknownChild" xml:space="preserve">
     <value>Enfant inconnu de {parent}.</value>
+  </data>
+  <data name="UsedUsername" xml:space="preserve">
+    <value>Le nom d'utilisateur est déjà utilisé.</value>
   </data>
   <data name="ViewportManipulatorSupport" xml:space="preserve">
     <value>Ce viewport ne support que les manipulateurs de {types}.</value>

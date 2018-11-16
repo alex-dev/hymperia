@@ -32,7 +32,7 @@ namespace Prism.Mvvm
       if (EqualityComparer<T>.Default.Equals(storage, value))
         return false;
 
-      if (ValidateProperty(value, property))
+      if (ValidateForProperty(value, property))
         return base.SetProperty(ref storage, value, property);
 
       storage = value;
@@ -44,23 +44,27 @@ namespace Prism.Mvvm
       if (EqualityComparer<T>.Default.Equals(storage, value))
         return false;
 
-      if (ValidateProperty(value, property))
+      if (ValidateForProperty(value, property))
         return base.SetProperty(ref storage, value, onChanged, property);
 
       storage = value;
       return true;
     }
 
-    protected bool ValidateProperty<T>(T value, [CallerMemberName] string name = null)
+    private bool ValidateForProperty<T>(T value, [CallerMemberName] string name = null) => ValidateForProperty(value, v => { }, name);
+
+    private bool ValidateForProperty<T>(T value, Action<T> validate, [CallerMemberName] string name = null)
     {
       bool error;
       var iserror = Errors.GetErrors(name).Any();
       var infos = GetType().GetProperty(name).GetCustomAttributes(true).OfType<ValidationAttribute>();
 
-      Errors.SetErrors(name, from validation in infos
-                             let result = validation.GetValidationResult(value, Context)
-                             where result != ValidationResult.Success
-                             select result);
+      Errors.ClearErrors(name);
+      validate?.Invoke(value);
+      Errors.SetErrors(name, Errors.GetErrors(name).Union(from validation in infos
+                                                          let result = validation.GetValidationResult(value, Context)
+                                                          where result != ValidationResult.Success
+                                                          select result));
 
       if ((error = Errors.GetErrors(name).Any()) != iserror)
         RaiseErrorsChanged(name);
@@ -68,41 +72,42 @@ namespace Prism.Mvvm
       return !error;
     }
 
-    protected bool Validate()
+    private async Task<bool> ValidateForProperty<T>(T value, Func<T, Task> validate, [CallerMemberName] string name = null)
+    {
+      bool error;
+      var iserror = Errors.GetErrors(name).Any();
+      var infos = GetType().GetProperty(name).GetCustomAttributes(true).OfType<ValidationAttribute>();
+
+      Errors.ClearErrors(name);
+      await validate?.Invoke(value);
+      Errors.SetErrors(name, Errors.GetErrors(name).Union(from validation in infos
+                                                          let result = validation.GetValidationResult(value, Context)
+                                                          where result != ValidationResult.Success
+                                                          select result));
+
+      if ((error = Errors.GetErrors(name).Any()) != iserror)
+        RaiseErrorsChanged(name);
+
+      return !error;
+    }
+
+    protected bool ValidateProperty<T>([CallerMemberName] string name = null) => ValidateProperty<T>(v => { }, name);
+
+    protected bool ValidateProperty<T>(Action<T> validate, [CallerMemberName] string name = null) =>
+      ValidateForProperty((T)GetType().GetProperty(name).GetMethod.Invoke(this, new object[] { }), validate, name);
+
+    protected async Task<bool> ValidateProperty<T>(Func<T, Task> validate, [CallerMemberName] string name = null) =>
+      await ValidateForProperty((T)GetType().GetProperty(name).GetMethod.Invoke(this, new object[] { }), validate, name);
+
+    protected async Task<bool> Validate()
     {
       Errors.ClearErrors();
-      InternalValidate();
-      RaiseAllErrorsChanged();
-
+      await ValidateAsync();
       return !HasErrors;
     }
 
-#pragma warning disable 1998
-    protected virtual async Task<bool> ValidateAsync() => Validate();
-#pragma warning restore 1998
+    protected abstract Task ValidateAsync();
 
-
-    protected virtual void InternalValidate()
-    {
-      var results = new List<ValidationResult>();
-
-      if (!Validator.TryValidateObject(this, Context, results, true))
-      {
-        var r = (from result in results
-                 from property in result.MemberNames
-                 group result by property into pair
-                 select new { Property = pair.Key, Results = pair.AsEnumerable() });
-        r.ForEach(pair => Errors.SetErrors(pair.Property, pair.Results));
-
-        //(from result in results
-        // from property in result.MemberNames
-        // group result by property into pair
-        // select new { Property = pair.Key, Results = pair.AsEnumerable() })
-        //  .ForEach(pair => Errors.SetErrors(pair.Property, pair.Results));
-      }
-    }
-
-    protected abstract void RaiseAllErrorsChanged();
     protected virtual void RaiseErrorsChanged([CallerMemberName] string name = null) =>
       ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(name));
 
