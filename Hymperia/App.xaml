@@ -7,6 +7,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValidationRules.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValueConverters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/NumericTextBoxStyles.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ErrorStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/RadioButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/MaterialsSelectionStyles.xaml" />

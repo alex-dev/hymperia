@@ -7,7 +7,6 @@
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
-    <TextBox Text="{Binding PositionX}" />
-    <Button Content="{x:Static prop:Resources.Rotation}" Grid.Column="1" />
+    <TextBox Style="{StaticResource NumericTextBox}" Text="{Binding PositionX}" />
   </Grid>
 </do:DataUserControl>

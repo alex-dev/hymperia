@@ -22,7 +22,7 @@ Date de création : 8 novembre 2018
     <TextBox x:Name="txtUsername" Text="{Binding Username}" Validation.ErrorTemplate="{x:Null}" />
     <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
     <PasswordBox x:Name="txtPassword" />
-    <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
+    <Button Command="{Binding Connexion}" CommandParameter="{Binding ElementName=txtPassword}"
         Content="{x:Static prop:Resources.Connexion}" />
   </StackPanel>
 </UserControl>
