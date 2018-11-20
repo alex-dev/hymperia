@@ -1,12 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:prop="clr-namespace:Hymperia.Facade.Properties">
   <Style x:Key="BaseTabControl" TargetType="{x:Type TabControl}">
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
     <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
   </Style>
 
   <ContextMenu x:Key="TabHeaderMenu">
-    <MenuItem Header="Close"/>
+    <MenuItem Header="{x:Static prop:Resources.Fermer}"/>
+    <MenuItem Header="{x:Static prop:Resources.OuvrirFenetre}"/>
   </ContextMenu>
 
   <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource BaseTabControl}">
@@ -39,14 +40,4 @@
       </Style>
     </Style.Resources>
   </Style>
-  <!--
-  <TabControl.ItemTemplate>
-        <DataTemplate>
-          <ContextMenu>
-            <MenuItem Header="Close" />
-          </ContextMenu>
-        </DataTemplate>
-      </TabControl.ItemTemplate>
-  
-  -->
 </ResourceDictionary>

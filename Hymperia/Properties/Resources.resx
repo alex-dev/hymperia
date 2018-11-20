@@ -144,6 +144,9 @@
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
   </data>
+  <data name="Fermer" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Le champ ne peut pas être vide.</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Ouvrir" xml:space="preserve">
     <value>Ouvrir</value>
+  </data>
+  <data name="OuvrirFenetre" xml:space="preserve">
+    <value>Ouvrir dans une fenêtre</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>

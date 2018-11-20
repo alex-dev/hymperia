@@ -32,6 +32,8 @@
         Grid.Row="2" Grid.RowSpan="3" />
     <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.FormesSelectionRegion}" Grid.Column="1"
         Grid.ColumnSpan="2" Grid.Row="1" IsSynchronizedWithCurrentItem="True" />
+    <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.MateriauxSelectionRegion}" Grid.Column="0"
+        Grid.ColumnSpan="1" Grid.Row="2" Grid.RowSpan="3" IsSynchronizedWithCurrentItem="True" />
     <!--  
     <ContentControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.FormesSelectionRegion}" Grid.Column="1"
         Grid.ColumnSpan="2" Grid.Row="1" />

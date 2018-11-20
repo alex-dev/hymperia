@@ -50,17 +50,14 @@ namespace Hymperia.Facade.Views.Editeur
       Loaded -= RegisterViews;
 
       ViewportRegion = Manager.Regions[RegionKeys.ViewportRegion];
-      FormesSelectionRegion = Manager.Regions[RegionKeys.FormesSelectionRegion];
-      /*MateriauxSelectionRegion = Manager.Regions[RegionKeys.MateriauxSelectionRegion];
-      ProjetAnalyseRegion = Manager.Regions[RegionKeys.ProjetAnalyseRegion];
-      FormesPropertiesRegion = Manager.Regions[RegionKeys.FormesPropertiesRegion];*/
+      HorizontalTabControl = Manager.Regions[RegionKeys.FormesSelectionRegion];
+      VerticalTabControl = Manager.Regions[RegionKeys.MateriauxSelectionRegion];
+      
 
       ViewportRegion.Add(Container.Resolve<Viewport>(), ViewKeys.Viewport);
-      FormesSelectionRegion.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
-      FormesSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
-      /*ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      FormesPropertiesRegion.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);*/
-      FormesSelectionRegion.Deactivate(FormesSelectionRegion.GetView(ViewKeys.FormesSelection));
+      HorizontalTabControl.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
+      VerticalTabControl.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
+      
     }
 
     #endregion
@@ -99,19 +96,19 @@ namespace Hymperia.Facade.Views.Editeur
     private void OnActivation()
     {
       ViewportRegion?.Activate(ViewportRegion?.GetView(ViewKeys.Viewport));
-      FormesSelectionRegion?.Activate(FormesSelectionRegion?.GetView(ViewKeys.FormesSelection));
-      MateriauxSelectionRegion?.Activate(MateriauxSelectionRegion?.GetView(ViewKeys.MateriauxSelection));
-      ProjetAnalyseRegion?.Activate(ProjetAnalyseRegion?.GetView(ViewKeys.MateriauxAnalyse));
-      FormesPropertiesRegion?.Activate(FormesPropertiesRegion?.GetView(ViewKeys.PropertiesEditor));
+      HorizontalTabControl?.Activate(HorizontalTabControl?.GetView(ViewKeys.FormesSelection));
+      VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.MateriauxSelection));
+      //ProjetAnalyseRegion?.Activate(ProjetAnalyseRegion?.GetView(ViewKeys.MateriauxAnalyse));
+      //FormesPropertiesRegion?.Activate(FormesPropertiesRegion?.GetView(ViewKeys.PropertiesEditor));
     }
 
     private void OnDeactivation()
     {
       ViewportRegion?.Deactivate();
-      FormesSelectionRegion?.Deactivate();
-      MateriauxSelectionRegion?.Deactivate();
-      ProjetAnalyseRegion?.Deactivate();
-      FormesPropertiesRegion?.Deactivate();
+      HorizontalTabControl?.Deactivate();
+      VerticalTabControl?.Deactivate();
+      //ProjetAnalyseRegion?.Deactivate();
+      //FormesPropertiesRegion?.Deactivate();
     }
 
     private bool isActive;
@@ -123,10 +120,8 @@ namespace Hymperia.Facade.Views.Editeur
     private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
     private IRegion ViewportRegion;
-    private IRegion FormesSelectionRegion;
-    private IRegion MateriauxSelectionRegion;
-    private IRegion ProjetAnalyseRegion;
-    private IRegion FormesPropertiesRegion;
+    private IRegion HorizontalTabControl;
+    private IRegion VerticalTabControl;
 
     #endregion
 

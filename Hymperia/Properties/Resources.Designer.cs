@@ -66,6 +66,11 @@ namespace Hymperia.Facade.Properties
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
 
     /// <summary>
+    ///   Fermer
+    /// </summary>
+    public static string Fermer => GetString("Fermer");
+
+    /// <summary>
     ///   Le champ ne peut pas être vide.
     /// </summary>
     public static string FieldCannotBeEmpty => GetString("FieldCannotBeEmpty");
@@ -126,6 +131,11 @@ namespace Hymperia.Facade.Properties
     ///   Ouvrir
     /// </summary>
     public static string Ouvrir => GetString("Ouvrir");
+
+    /// <summary>
+    ///   Ouvrir dans une fenêtre
+    /// </summary>
+    public static string OuvrirFenetre => GetString("OuvrirFenetre");
 
     /// <summary>
     ///   Prix
