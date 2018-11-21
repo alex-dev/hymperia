@@ -52,6 +52,8 @@ namespace Hymperia.Facade.ViewModels
     #region Commands
 
     public ICommand NavigateToProjet { get; private set; }
+    public ICommand NavigateToReglage { get; private set; } 
+
     public ICommand SupprimerProjet { get; private set; }
     public ICommand AjouterProjet { get; private set; }
 
@@ -78,6 +80,7 @@ namespace Hymperia.Facade.ViewModels
 
     public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
+      NavigateToReglage = new DelegateCommand<Utilisateur>(_NavigateToReglage);
       NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
       SupprimerProjet = new DelegateCommand<IList>(
         projets => _SupprimerProjets(projets?.Cast<Projet>()),
@@ -88,7 +91,9 @@ namespace Hymperia.Facade.ViewModels
       Manager = manager;
     }
 
+
     #endregion
+
 
     #region Command NavigateToProjet
 
@@ -96,10 +101,23 @@ namespace Hymperia.Facade.ViewModels
     {
       // Force la création d'un context d'éditeur pour la durée de la navigation.
       // De cette façon, toutes les vues peuvent garantir que leur contexte est le même.
-      using (ContextFactory.GetEditorContext())
+      using (ContextFactory.GetEditeurContext())
         Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
         {
           { NavigationParameterKeys.Projet, projet }
+        });
+    }
+
+    #endregion
+
+    #region Command NavigateToReglage
+
+    private void _NavigateToReglage(Utilisateur utilisateur)
+    {
+      using (ContextFactory.GetReglageUtilisateurContext())
+        Manager.RequestNavigate("ContentRegion", NavigationKeys.ReglageUtilisateur, new NavigationParameters
+        {
+          { NavigationParameterKeys.Utilisateur, utilisateur }
         });
     }
 

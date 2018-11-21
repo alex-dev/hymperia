@@ -1,0 +1,7 @@
+﻿<UserControl x:Class="Hymperia.Facade.Views.Reglages.Utilisateur.Reglage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
+    xmlns:base="clr-namespace:Hymperia.Facade" xmlns:const="clr-namespace:Hymperia.Facade.Constants"
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+  <Button Content="Réglage utilisateur" />
+</UserControl>

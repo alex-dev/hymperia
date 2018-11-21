@@ -135,6 +135,9 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Can onyl convert to {targets}.</value>
   </data>
+  <data name="ChangementDuMotDePasse" xml:space="preserve">
+    <value>Change password :</value>
+  </data>
   <data name="Confirmer" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -208,6 +211,9 @@
   <data name="Radius_Z" xml:space="preserve">
     <value>Radius _Z</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Reglage" xml:space="preserve">
+    <value>Setting</value>
   </data>
   <data name="RequiredPassword" xml:space="preserve">
     <value>Required password.</value>

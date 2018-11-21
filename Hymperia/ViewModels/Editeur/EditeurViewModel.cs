@@ -315,7 +315,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private void OnActivation()
     {
       if (ContextWrapper is null)
-        ContextWrapper = ContextFactory.GetEditorContext();
+        ContextWrapper = ContextFactory.GetEditeurContext();
       else
         CancelDispose();
     }

@@ -151,6 +151,7 @@
     <Compile Include="ViewModels\Editeur\PropertiesEditor\EditorViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Utilisateur\ChangementMotDePasseViewModel.cs" />
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
     </Compile>
@@ -205,6 +206,15 @@
     </Compile>
     <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
       <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Utilisateur\ChangementMotDePasse.xaml.cs">
+      <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Utilisateur\ConnexionAutomatique.xaml.cs">
+      <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Utilisateur\Reglage.xaml.cs">
+      <DependentUpon>Reglage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +287,18 @@
     <Page Include="Views\Popups\EntitySuppressionPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reglages\Utilisateur\ChangementMotDePasse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Utilisateur\ConnexionAutomatique.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Utilisateur\Reglage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPFResources\ButtonStyles.xaml">
       <SubType>Designer</SubType>

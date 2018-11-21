@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using Hymperia.Facade.Constants;
 using Hymperia.Model;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
@@ -13,28 +14,69 @@ namespace Hymperia.Facade.Services
     [NotNull]
     public DatabaseContext GetContext() => new DatabaseContext();
 
-    [NotNull]
-    public IContextWrapper<DatabaseContext> GetEditorContext()
-    {
-      if (EditorContext is null)
-        EditorContext = new Tracker<DatabaseContext>();
+    #region EditeurContext
 
-      ++EditorContext.Count;
-      return new ContextWrapper<DatabaseContext>(EditorContext.Context, () => Release(ref EditorContext));
+    [NotNull]
+    public IContextWrapper<DatabaseContext> GetEditeurContext()
+    {
+      if (EditeurContext is null)
+        EditeurContext = new Tracker<DatabaseContext>();
+
+      ++EditeurContext.Count;
+      return new ContextWrapper<DatabaseContext>(EditeurContext.Context, () => Release(ref EditeurContext));
     }
 
-    #region IDisposable
-
-    public void Dispose() => EditorContext.Dispose();
+    private Tracker<DatabaseContext> EditeurContext;
 
     #endregion
 
-    #region Wrapper
+    #region ReglageEditeurContext
+
+    [NotNull]
+    public IContextWrapper<DatabaseContext> GetReglageEditeurContext()
+    {
+      if (ReglageEditeurContext is null)
+        ReglageEditeurContext = new Tracker<DatabaseContext>();
+
+      ++ReglageEditeurContext.Count;
+      return new ContextWrapper<DatabaseContext>(ReglageEditeurContext.Context, () => Release(ref ReglageEditeurContext));
+    }
+
+    private Tracker<DatabaseContext> ReglageEditeurContext;
+
+    #endregion
+
+    #region ReglageUtilisateurContext
+
+    [NotNull]
+    public IContextWrapper<DatabaseContext> GetReglageUtilisateurContext()
+    {
+      if (ReglageUtilisateurContext is null)
+        ReglageUtilisateurContext = new Tracker<DatabaseContext>();
+
+      ++ReglageUtilisateurContext.Count;
+      return new ContextWrapper<DatabaseContext>(ReglageUtilisateurContext.Context, () => Release(ref ReglageUtilisateurContext));
+    }
+
+    private Tracker<DatabaseContext> ReglageUtilisateurContext;
+
+    #endregion
 
     public interface IContextWrapper<T> : IDisposable where T : DbContext
     {
       T Context { get; }
     }
+
+    #region Dispose
+
+    public void Dispose()
+    {
+      ReglageUtilisateurContext.Dispose();
+      EditeurContext.Dispose();
+      ReglageEditeurContext.Dispose();
+    }
+
+    #region Dispose Wrapper
 
     private sealed class ContextWrapper<T> : IContextWrapper<T> where T : DbContext
     {
@@ -50,10 +92,6 @@ namespace Hymperia.Facade.Services
       public void Dispose() => DisposeAction();
     }
 
-    #endregion
-
-    #region Trackers
-
     private void Release<T>(ref Tracker<T> tracker) where T : DbContext, new()
     {
       if (--tracker.Count == 0)
@@ -63,7 +101,9 @@ namespace Hymperia.Facade.Services
       }
     }
 
-    private Tracker<DatabaseContext> EditorContext;
+    #endregion
+
+    #region Tracker
 
     private sealed class Tracker<T> : IDisposable where T : DbContext, new()
     {
@@ -76,5 +116,8 @@ namespace Hymperia.Facade.Services
     }
 
     #endregion
+
+    #endregion
+
   }
 }

@@ -135,6 +135,9 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Peut seulement convertir vers {targets}.</value>
   </data>
+  <data name="ChangementDuMotDePasse" xml:space="preserve">
+    <value>Changement du mot de passe :</value>
+  </data>
   <data name="Confirmer" xml:space="preserve">
     <value>Confirmer</value>
   </data>
@@ -208,6 +211,9 @@
   <data name="Radius_Z" xml:space="preserve">
     <value>Rayon _Z</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Reglage" xml:space="preserve">
+    <value>Réglage</value>
   </data>
   <data name="RequiredPassword" xml:space="preserve">
     <value>Un mot de passe est requis.</value>

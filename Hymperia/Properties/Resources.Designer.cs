@@ -51,6 +51,11 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
+    ///   Changement du mot de passe :
+    /// </summary>
+    public static string ChangementDuMotDePasse => GetString("ChangementDuMotDePasse");
+
+    /// <summary>
     ///   Confirmer
     /// </summary>
     public static string Confirmer => GetString("Confirmer");
@@ -176,6 +181,11 @@ namespace Hymperia.Facade.Properties
     ///   Rayon _Z
     /// </summary>
     public static string Radius_Z => GetString("Radius_Z");
+
+    /// <summary>
+    ///   Réglage
+    /// </summary>
+    public static string Reglage => GetString("Reglage");
 
     /// <summary>
     ///   Un mot de passe est requis.
