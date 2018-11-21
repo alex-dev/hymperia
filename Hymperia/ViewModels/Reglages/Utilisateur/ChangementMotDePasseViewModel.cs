@@ -55,7 +55,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Utilisateur
       }
     }
 
-    public Utilisateur Utilisateur
+    public Model.Modeles.Utilisateur Utilisateur
     {
       get => utilisateur;
       set
@@ -83,23 +83,22 @@ namespace Hymperia.Facade.ViewModels.Reglages.Utilisateur
       if (!await Validate())
         return;
 
-      //await ModificationUtilisateur();
+      await ModificationUtilisateur();
     }
 
     #region Queries
-    /*
     private async Task ModificationUtilisateur()
     {
-      var utilisateur = new Utilisateur(Username, B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true));
+      //var utilisateur = new Model.Modeles.Utilisateur(Utilisateur.Nom, B.BCrypt.HashPassword(Password, Model.Modeles.Utilisateur.PasswordWorkFactor, true));
+
+      Utilisateur.MotDePasse = B.BCrypt.HashPassword(Password, Model.Modeles.Utilisateur.PasswordWorkFactor,true);
 
       using (var context = ContextFactory.GetContext())
       {
-        context.Utilisateurs.Add(utilisateur);
-        await context.SaveChangesAsync();
+        context.Utilisateurs.Update(Utilisateur);
+        //await context.SaveChangesAsync();
       }
-
-      return utilisateur;
-    }*/
+    }
 
     #endregion
 
@@ -122,7 +121,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Utilisateur
 
     #region Private Fields
 
-    private Utilisateur utilisateur;
+    private Model.Modeles.Utilisateur utilisateur;
     private string password;
     private string verification;
 

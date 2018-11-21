@@ -8,5 +8,8 @@
     public const string ProjetAnalyseRegion = nameof(ProjetAnalyseRegion);
     public const string FormesPropertiesRegion = nameof(FormesPropertiesRegion);
     public const string SpecificPropertiesRegion = nameof(SpecificPropertiesRegion);
+
+    public const string ChangementMotDePasseRegion = nameof(ChangementMotDePasseRegion);
+    public const string ConnexionAutomatiqueRegion = nameof(ConnexionAutomatiqueRegion);
   }
 }
