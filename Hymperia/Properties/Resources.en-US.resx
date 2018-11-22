@@ -141,8 +141,14 @@
   <data name="Confirmer" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Connexion" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
+  </data>
+  <data name="DontMatchPassword" xml:space="preserve">
+    <value>Password should match.</value>
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
@@ -158,6 +164,12 @@
   </data>
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>Could not instantiate a {type}.</value>
+  </data>
+  <data name="Inscription" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="InvalidCredential" xml:space="preserve">
+    <value>Invalid credentials.</value>
   </data>
   <data name="InvalidLocalizationKey" xml:space="preserve">
     <value>Localized key {key} is invalid with entity {entity}.</value>
@@ -179,6 +191,18 @@
   </data>
   <data name="Ouvrir" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="PositionX" xml:space="preserve">
+    <value>Position X</value>
+  </data>
+  <data name="PositionY" xml:space="preserve">
+    <value>Position Y</value>
+  </data>
+  <data name="PositionZ" xml:space="preserve">
+    <value>Position Z</value>
   </data>
   <data name="OuvrirFenetre" xml:space="preserve">
     <value>Open in new window</value>
@@ -209,6 +233,29 @@
     <value>Radius _Z</value>
     <comment>AccessKey for labels</comment>
   </data>
+  <data name="Rotation" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="RotationW" xml:space="preserve">
+    <value>Rotation W</value>
+  </data>
+  <data name="RotationX" xml:space="preserve">
+    <value>Rotation X</value>
+  </data>
+  <data name="RotationY" xml:space="preserve">
+    <value>Rotation Y</value>
+  </data>
+  <data name="RotationZ" xml:space="preserve">
+    <value>Rotation Z</value>
+  <data name="RequiredPassword" xml:space="preserve">
+    <value>Required password.</value>
+  </data>
+  <data name="RequiredUsername" xml:space="preserve">
+    <value>Required username.</value>
+  </data>
+  <data name="RequiredVerification" xml:space="preserve">
+    <value>Required password confirmation.</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -232,6 +279,9 @@
   </data>
   <data name="UnknownChild" xml:space="preserve">
     <value>Unknown child of {parent}.</value>
+  </data>
+  <data name="UsedUsername" xml:space="preserve">
+    <value>Username taken.</value>
   </data>
   <data name="ViewportManipulatorSupport" xml:space="preserve">
     <value>This viewport only supports {types} manipulators.</value>
@@ -258,6 +308,17 @@
   <data name="_Material" xml:space="preserve">
     <value>_Material</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_MotDePasse" xml:space="preserve">
+    <value>_Password</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_Utilisateur" xml:space="preserve">
+    <value>_Username</value>
+    <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_VerificationMotDePasse" xml:space="preserve">
+    <value>_Verify the password :</value>
   </data>
   <data name="_Width" xml:space="preserve">
     <value>_Width</value>

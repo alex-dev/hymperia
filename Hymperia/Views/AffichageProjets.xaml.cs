@@ -29,7 +29,7 @@ namespace Hymperia.Facade.Views
     public AffichageProjets()
     {
       InitializeComponent();
-      BindingOperations.SetBinding(this, UtilisateurProperty, new Binding("Utilisateur") { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(UtilisateurProperty, new Binding("Utilisateur") { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion

@@ -9,13 +9,14 @@
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrush}}" />
     <Setter Property="FontSize" Value="12" />
+    <Setter Property="Margin" Value="5" />
     <Setter Property="Padding" Value="5" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
           <Border CornerRadius="2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}"
               Background="{TemplateBinding Background}">
-            <ContentPresenter Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ContentPresenter Margin="{TemplateBinding Margin}" HorizontalAlignment="Center" VerticalAlignment="Center" />
           </Border>
         </ControlTemplate>
       </Setter.Value>

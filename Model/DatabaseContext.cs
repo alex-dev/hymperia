@@ -142,7 +142,6 @@ namespace Hymperia.Model
       builder.Entity<PrismeRectangulaire>().HasBaseType<Forme>();
 
       builder.Entity<Projet>().ToTable("Projets");
-      builder.Entity<Projet>().HasAlternateKey(projet => projet.Nom);
       builder.Entity<Projet>().HasMany(projet => projet._Formes).WithOne()
         .HasForeignKey("IdProjet").OnDelete(DeleteBehavior.Cascade);
 

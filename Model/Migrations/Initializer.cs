@@ -83,6 +83,7 @@ namespace Hymperia.Model.Migrations
     {
       IEnumerable<Acces> Generate()
       {
+        yield return new Acces(projets[0], utilisateurs[0], Acces.Droit.Lecture);
         yield return new Acces(projets[0], utilisateurs[1], Acces.Droit.Possession);
         yield return new Acces(projets[1], utilisateurs[1], Acces.Droit.LectureEcriture);
         yield return new Acces(projets[1], utilisateurs[2], Acces.Droit.Possession);
@@ -125,7 +126,7 @@ namespace Hymperia.Model.Migrations
     [ItemNotNull]
     private IEnumerable<Utilisateur> InitializeUtilisateurs()
     {
-      const string password = "$2y$15$eiI786bZMg0HrJP4BphbveEXb1UHmkkd5p8feoUpDqYwuvgHjik2q";
+      string password = BCrypt.Net.BCrypt.HashPassword("123", Utilisateur.PasswordWorkFactor, true);
 
       yield return new Utilisateur("Alexandre", password);
       yield return new Utilisateur("Guillaume", password);

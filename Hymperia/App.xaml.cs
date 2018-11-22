@@ -13,7 +13,6 @@ using Hymperia.Facade.Converters;
 using Hymperia.Facade.Services;
 using Hymperia.Facade.Views;
 using Hymperia.Facade.Views.Editeur;
-using Hymperia.Facade.Views.Editeur.PropertiesEditor;
 using Hymperia.Model.Properties;
 using Prism.Ioc;
 using Prism.Ninject;
@@ -36,6 +35,7 @@ namespace Hymperia.Facade
 
       registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
+      registry.RegisterForNavigation<Inscription>(NavigationKeys.Inscription);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>
