@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Hymperia.Facade.Collections;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.DependencyObjects;
@@ -53,6 +52,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
       set
       {
+        if (value is null)
+          return;
+
         SelectedFormes.ForEach(forme => forme.Materiau = value);
       }
     }
@@ -99,12 +101,33 @@ namespace Hymperia.Facade.ViewModels.Editeur
       using (await AsyncLock.Lock(MateriauxLoader))
         using (var wrapper = Factory.GetEditorContext())
           using (await AsyncLock.Lock(wrapper.Context))
-            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+            Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+
+      // Reset interfaces' SelectedItem to proper values once ItemsSource changed.
+      RaisePropertyChanged(nameof(Materiau));
+      return Materiaux;
     }
 
     #endregion
 
     #region Region Activation
+
+    private void Navigate()
+    {
+      switch (SelectedForme)
+      {
+        case EllipsoideWrapper ellipsoide:
+          Activate(ViewKeys.EllipsoideEditor, SelectedForme); break;
+        case PrismeRectangulaireWrapper prisme:
+          Activate(ViewKeys.PrismeRectangulaireEditor, SelectedForme); break;
+        case CylindreWrapper cylindre:
+          Activate(ViewKeys.CylindreEditor, SelectedForme); break;
+        case ConeWrapper cone:
+          Activate(ViewKeys.ConeEditor, SelectedForme); break;
+        default:
+          Deactivate(); break;
+      }
+    }
 
     private void Activate(string name, FormeWrapper selected)
     {
@@ -139,20 +162,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnSelectedFormeChanged()
     {
-      switch (SelectedForme)
-      {
-        case EllipsoideWrapper ellipsoide:
-          Activate(ViewKeys.EllipsoideEditor, SelectedForme); break;
-        case PrismeRectangulaireWrapper prisme:
-          Activate(ViewKeys.PrismeRectangulaireEditor, SelectedForme); break;
-        case CylindreWrapper cylindre:
-          Activate(ViewKeys.CylindreEditor, SelectedForme); break;
-        case ConeWrapper cone:
-          Activate(ViewKeys.ConeEditor, SelectedForme); break;
-        default:
-          Deactivate(); break;
-      }
-
+      Navigate();
       SelectedSingleFormeChanged.Publish(SelectedForme);
     }
 
@@ -223,7 +233,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    protected virtual void OnActivation() => MateriauxLoader.Loading = QueryMateriaux();
+    protected virtual void OnActivation()
+    {
+      MateriauxLoader.Loading = QueryMateriaux();
+      Navigate();
+    }
     protected virtual void OnDeactivation() { }
 
     #endregion

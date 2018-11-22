@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="EventAggregatorMessages\AccesChanged.cs" />
     <Compile Include="SelectionMode.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
