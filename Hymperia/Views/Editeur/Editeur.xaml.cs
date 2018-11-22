@@ -58,7 +58,7 @@ namespace Hymperia.Facade.Views.Editeur
       HorizontalTabControl.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
       HorizontalTabControl.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
       VerticalTabControl.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      VerticalTabControl.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);
+      VerticalTabControl.Add(Container.Resolve<P.PropertiesEditeur>(), ViewKeys.PropertiesEditeur);
 
     }
 
@@ -99,7 +99,7 @@ namespace Hymperia.Facade.Views.Editeur
     {
       ViewportRegion?.Activate(ViewportRegion?.GetView(ViewKeys.Viewport));
       HorizontalTabControl?.Activate(HorizontalTabControl?.GetView(ViewKeys.FormesSelection));
-      VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.PropertiesEditor));
+      VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.PropertiesEditeur));
     }
 
     private void OnDeactivation()

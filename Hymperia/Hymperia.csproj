@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="DependencyObjects\TabItemNameBehavior.cs" />
     <Compile Include="SelectionMode.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
@@ -137,7 +138,6 @@
     <Compile Include="ModelWrappers\MateriauWrapper.cs" />
     <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
-
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurMateriaux.cs" />
