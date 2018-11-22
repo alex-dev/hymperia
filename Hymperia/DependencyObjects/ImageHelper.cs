@@ -5,9 +5,11 @@ namespace Hymperia.Facade.DependencyObjects
 {
   public static class ImageHelper
   {
+    private const string SourceResourceKey = nameof(SourceResourceKey);
+
     public static readonly DependencyProperty SourceResourceKeyProperty =
       DependencyProperty.RegisterAttached(
-        "SourceResourceKey",
+        SourceResourceKey,
         typeof(object),
         typeof(ImageHelper),
         new PropertyMetadata(string.Empty, SourceResourceKeyChanged));

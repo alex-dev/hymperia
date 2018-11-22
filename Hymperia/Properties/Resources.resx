@@ -123,6 +123,9 @@
   <data name="AjouterProjet" xml:space="preserve">
     <value>Ajouter un projet</value>
   </data>
+  <data name="AnalyseMateriau" xml:space="preserve">
+    <value>Analyse Matériaux</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>et</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="Fermer" xml:space="preserve">
+    <value>Fermer</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Le champ ne peut pas être vide.</value>
@@ -186,6 +192,9 @@
   <data name="Ouvrir" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
+  <data name="OuvrirFenetre" xml:space="preserve">
+    <value>Ouvrir dans une fenêtre</value>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
   </data>
@@ -200,6 +209,9 @@
   </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>
+  </data>
+  <data name="ProprieteForme" xml:space="preserve">
+    <value>Propriétés</value>
   </data>
   <data name="Radius_Base" xml:space="preserve">
     <value>Rayon _Base</value>
@@ -249,6 +261,12 @@
   </data>
   <data name="Scaling" xml:space="preserve">
     <value>Redimensionnement</value>
+  </data>
+  <data name="SelectionForme" xml:space="preserve">
+    <value>Sélection Formes</value>
+  </data>
+  <data name="SelectionMateriau" xml:space="preserve">
+    <value>Sélection Matériaux</value>
   </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Supprimer</value>

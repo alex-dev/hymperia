@@ -25,6 +25,11 @@ namespace Hymperia.Facade.Properties
     public static string AjouterProjet => GetString("AjouterProjet");
 
     /// <summary>
+    ///   Analyse Matériaux
+    /// </summary>
+    public static string AnalyseMateriau => GetString("AnalyseMateriau");
+
+    /// <summary>
     ///   et
     /// </summary>
     public static string And => GetString("And");
@@ -74,6 +79,11 @@ namespace Hymperia.Facade.Properties
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
+
+    /// <summary>
+    ///   Fermer
+    /// </summary>
+    public static string Fermer => GetString("Fermer");
 
     /// <summary>
     ///   Le champ ne peut pas être vide.
@@ -168,9 +178,19 @@ namespace Hymperia.Facade.Properties
     public static string PositionZ => GetString("PositionZ");
 
     /// <summary>
+    ///   Ouvrir dans une fenêtre
+    /// </summary>
+    public static string OuvrirFenetre => GetString("OuvrirFenetre");
+
+    /// <summary>
     ///   Prix
     /// </summary>
     public static string Price => GetString("Price");
+
+    /// <summary>
+    ///   Propriétés
+    /// </summary>
+    public static string ProprieteForme => GetString("ProprieteForme");
 
     /// <summary>
     ///   Rayon _Base
@@ -245,6 +265,16 @@ namespace Hymperia.Facade.Properties
     ///   Redimensionnement
     /// </summary>
     public static string Scaling => GetString("Scaling");
+
+    /// <summary>
+    ///   Sélection Formes
+    /// </summary>
+    public static string SelectionForme => GetString("SelectionForme");
+
+    /// <summary>
+    ///   Sélection Matériaux
+    /// </summary>
+    public static string SelectionMateriau => GetString("SelectionMateriau");
 
     /// <summary>
     ///   Supprimer

@@ -123,6 +123,9 @@
   <data name="AjouterProjet" xml:space="preserve">
     <value>Create project</value>
   </data>
+  <data name="AnalyseMateriau" xml:space="preserve">
+    <value>Material Analysis</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>and</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Can only convert from {origins}.</value>
   </data>
   <data name="CanOnlyConvertTo" xml:space="preserve">
-    <value>Can onyl convert to {targets}.</value>
+    <value>Can only convert to {targets}.</value>
   </data>
   <data name="Confirmer" xml:space="preserve">
     <value>Confirm</value>
@@ -149,6 +152,9 @@
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="Fermer" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Field cannot be empty.</value>
@@ -198,8 +204,14 @@
   <data name="PositionZ" xml:space="preserve">
     <value>Position Z</value>
   </data>
+  <data name="OuvrirFenetre" xml:space="preserve">
+    <value>Open in new window</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
+  </data>
+  <data name="ProprieteForme" xml:space="preserve">
+    <value>Properties</value>
   </data>
   <data name="Radius_Base" xml:space="preserve">
     <value>Radius _Base</value>
@@ -249,6 +261,12 @@
   </data>
   <data name="Scaling" xml:space="preserve">
     <value>Scaling</value>
+  </data>
+  <data name="SelectionForme" xml:space="preserve">
+    <value>Shape Selector</value>
+  </data>
+  <data name="SelectionMateriau" xml:space="preserve">
+    <value>Material Selector</value>
   </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Delete</value>

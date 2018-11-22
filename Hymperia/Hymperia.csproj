@@ -87,15 +87,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\BulkObservableCollection.cs" />
-    <Compile Include="DependencyObjects\DataUserControl.cs" />
-    <Compile Include="DependencyObjects\MaskingBehavior.cs" />
-    <Compile Include="DependencyObjects\NumericTextBoxBehavior.cs" />
-    <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
-    <Compile Include="Loaders\AsyncLoader.cs" />
-    <Compile Include="Loaders\AsyncLoader{T}.cs" />
     <Compile Include="SelectionMode.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
+    <Compile Include="Constants\NavigationKeys.cs" />
+    <Compile Include="Constants\NavigationParameterKeys.cs" />
+    <Compile Include="Constants\RegionKeys.cs" />
+    <Compile Include="Constants\ViewKeys.cs" />
     <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
@@ -107,10 +105,14 @@
     <Compile Include="Converters\TransformConverter.cs" />
     <Compile Include="Converters\ManipulatorRadiusConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="DependencyObjects\DataUserControl.cs" />
     <Compile Include="DependencyObjects\ImageHelper.cs" />
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
+    <Compile Include="DependencyObjects\MaskingBehavior.cs" />
+    <Compile Include="DependencyObjects\NumericTextBoxBehavior.cs" />
+    <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
@@ -126,6 +128,8 @@
     <Compile Include="Extensions\GeometryExtension.cs" />
     <Compile Include="Extensions\LINQExtension.cs" />
     <Compile Include="Extensions\RegionExtension.cs" />
+    <Compile Include="Loaders\AsyncLoader.cs" />
+    <Compile Include="Loaders\AsyncLoader{T}.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
     <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
@@ -133,10 +137,7 @@
     <Compile Include="ModelWrappers\MateriauWrapper.cs" />
     <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
-    <Compile Include="Constants\NavigationKeys.cs" />
-    <Compile Include="Constants\NavigationParameterKeys.cs" />
-    <Compile Include="Constants\RegionKeys.cs" />
-    <Compile Include="Constants\ViewKeys.cs" />
+
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurMateriaux.cs" />
@@ -305,7 +306,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPFResources\EditeurStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFResources\MenuStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\TabControlStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
