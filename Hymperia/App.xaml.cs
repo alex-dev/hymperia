@@ -35,6 +35,7 @@ namespace Hymperia.Facade
 
       registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
+      registry.RegisterForNavigation<Inscription>(NavigationKeys.Inscription);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>

@@ -66,6 +66,11 @@ namespace Hymperia.Facade.Properties
     public static string DestructiveConversion => GetString("DestructiveConversion");
 
     /// <summary>
+    ///   Les mots de passes doivent être identique.
+    /// </summary>
+    public static string DontMatchPassword => GetString("DontMatchPassword");
+
+    /// <summary>
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
@@ -90,6 +95,11 @@ namespace Hymperia.Facade.Properties
       => string.Format(
         GetString("ImpossibleInstantiation", nameof(type)),
         type);
+
+    /// <summary>
+    ///   Inscription
+    /// </summary>
+    public static string Inscription => GetString("Inscription");
 
     /// <summary>
     ///   Vos informations sont invalides.
@@ -211,6 +221,20 @@ namespace Hymperia.Facade.Properties
     ///   Rotation Z
     /// </summary>
     public static string RotationZ => GetString("RotationZ");
+    
+    ///   Un mot de passe est requis.
+    /// </summary>
+    public static string RequiredPassword => GetString("RequiredPassword");
+
+    /// <summary>
+    ///   Un nom d'utilisateur est requis.
+    /// </summary>
+    public static string RequiredUsername => GetString("RequiredUsername");
+
+    /// <summary>
+    ///   Une confirmation du mot de passe est requis.
+    /// </summary>
+    public static string RequiredVerification => GetString("RequiredVerification");
 
     /// <summary>
     ///   Sauvegarder
@@ -244,6 +268,11 @@ namespace Hymperia.Facade.Properties
       => string.Format(
         GetString("UnknownChild", nameof(parent)),
         parent);
+
+    /// <summary>
+    ///   Le nom d'utilisateur est déjà utilisé.
+    /// </summary>
+    public static string UsedUsername => GetString("UsedUsername");
 
     /// <summary>
     ///   Ce viewport ne support que les manipulateurs de {types}.
@@ -292,6 +321,11 @@ namespace Hymperia.Facade.Properties
     ///   _Nom d'utilisateur
     /// </summary>
     public static string _Utilisateur => GetString("_Utilisateur");
+
+    /// <summary>
+    ///   _Vérification du mot de passe :
+    /// </summary>
+    public static string _VerificationMotDePasse => GetString("_VerificationMotDePasse");
 
     /// <summary>
     ///   L_argeur

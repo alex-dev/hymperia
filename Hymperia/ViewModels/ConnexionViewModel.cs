@@ -1,7 +1,7 @@
-﻿/*
-Auteur : Antoine Mailhot
-Date de création : 8 novembre 2018
-*/
+﻿/**
+ * Auteur : Antoine Mailhot
+ * Date de création : 8 novembre 2018
+ */
 
 using System;
 using System.Collections;
@@ -27,15 +27,21 @@ namespace Hymperia.Facade.ViewModels
     public string Username { get; set; }
 
     public DelegateCommand<PasswordBox> Connexion { get; }
+    public DelegateCommand Inscription { get; }
 
     #endregion
+
+    #region Constructeur
 
     public ConnexionViewModel(ContextFactory factory, IRegionManager manager)
     {
       Factory = factory;
       Manager = manager;
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
+      Inscription = new DelegateCommand(_Inscription);
     }
+
+    #endregion
 
     private void _Connexion(PasswordBox password)
     {
@@ -50,11 +56,18 @@ namespace Hymperia.Facade.ViewModels
         Navigate(utilisateur);
     }
 
+    #region Navigation
+
     private void Navigate(Utilisateur utilisateur) =>
       Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
       {
         { NavigationParameterKeys.Utilisateur, utilisateur }
       });
+
+    private void _Inscription() =>
+      Manager.RequestNavigate("ContentRegion", NavigationKeys.Inscription);
+
+    #endregion
 
     #region INotifyDataErrorInfo
 

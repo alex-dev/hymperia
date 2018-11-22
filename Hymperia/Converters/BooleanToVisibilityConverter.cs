@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * Auteur : Antoine Mailhot
+ * Date de création : 8 novembre 2018
+ */
+
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;

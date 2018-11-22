@@ -144,6 +144,9 @@
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
   </data>
+  <data name="DontMatchPassword" xml:space="preserve">
+    <value>Password should match.</value>
+  </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="ImpossibleInstantiation" xml:space="preserve">
     <value>Could not instantiate a {type}.</value>
+  </data>
+  <data name="Inscription" xml:space="preserve">
+    <value>Registration</value>
   </data>
   <data name="InvalidCredential" xml:space="preserve">
     <value>Invalid credentials.</value>
@@ -229,6 +235,14 @@
   </data>
   <data name="RotationZ" xml:space="preserve">
     <value>Rotation Z</value>
+  <data name="RequiredPassword" xml:space="preserve">
+    <value>Required password.</value>
+  </data>
+  <data name="RequiredUsername" xml:space="preserve">
+    <value>Required username.</value>
+  </data>
+  <data name="RequiredVerification" xml:space="preserve">
+    <value>Required password confirmation.</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -247,6 +261,9 @@
   </data>
   <data name="UnknownChild" xml:space="preserve">
     <value>Unknown child of {parent}.</value>
+  </data>
+  <data name="UsedUsername" xml:space="preserve">
+    <value>Username taken.</value>
   </data>
   <data name="ViewportManipulatorSupport" xml:space="preserve">
     <value>This viewport only supports {types} manipulators.</value>
@@ -281,6 +298,9 @@
   <data name="_Utilisateur" xml:space="preserve">
     <value>_Username</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_VerificationMotDePasse" xml:space="preserve">
+    <value>_Verify the password :</value>
   </data>
   <data name="_Width" xml:space="preserve">
     <value>_Width</value>
