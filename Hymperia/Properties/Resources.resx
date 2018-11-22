@@ -183,6 +183,15 @@
   <data name="Position" xml:space="preserve">
     <value>Position</value>
   </data>
+  <data name="PositionX" xml:space="preserve">
+    <value>Position X</value>
+  </data>
+  <data name="PositionY" xml:space="preserve">
+    <value>Position Y</value>
+  </data>
+  <data name="PositionZ" xml:space="preserve">
+    <value>Position Z</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>
   </data>
@@ -208,6 +217,18 @@
   </data>
   <data name="Rotation" xml:space="preserve">
     <value>Rotation</value>
+  </data>
+  <data name="RotationW" xml:space="preserve">
+    <value>Rotation W</value>
+  </data>
+  <data name="RotationX" xml:space="preserve">
+    <value>Rotation X</value>
+  </data>
+  <data name="RotationY" xml:space="preserve">
+    <value>Rotation Y</value>
+  </data>
+  <data name="RotationZ" xml:space="preserve">
+    <value>Rotation Z</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Sauvegarder</value>

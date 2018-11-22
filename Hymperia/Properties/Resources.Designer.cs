@@ -143,6 +143,21 @@ namespace Hymperia.Facade.Properties
     public static string Position => GetString("Position");
 
     /// <summary>
+    ///   Position X
+    /// </summary>
+    public static string PositionX => GetString("PositionX");
+
+    /// <summary>
+    ///   Position Y
+    /// </summary>
+    public static string PositionY => GetString("PositionY");
+
+    /// <summary>
+    ///   Position Z
+    /// </summary>
+    public static string PositionZ => GetString("PositionZ");
+
+    /// <summary>
     ///   Prix
     /// </summary>
     public static string Price => GetString("Price");
@@ -176,6 +191,26 @@ namespace Hymperia.Facade.Properties
     ///   Rotation
     /// </summary>
     public static string Rotation => GetString("Rotation");
+
+    /// <summary>
+    ///   Rotation W
+    /// </summary>
+    public static string RotationW => GetString("RotationW");
+
+    /// <summary>
+    ///   Rotation X
+    /// </summary>
+    public static string RotationX => GetString("RotationX");
+
+    /// <summary>
+    ///   Rotation Y
+    /// </summary>
+    public static string RotationY => GetString("RotationY");
+
+    /// <summary>
+    ///   Rotation Z
+    /// </summary>
+    public static string RotationZ => GetString("RotationZ");
 
     /// <summary>
     ///   Sauvegarder
