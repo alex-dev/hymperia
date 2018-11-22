@@ -33,6 +33,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Binding
 
+    ///<summary>Le <see cref="Acces.Droit"/> de l'utilisateur sur <see cref="Projet"/>.</summary>
+    public Acces.Droit Droit
+    {
+      get => droit;
+      set => SetProperty(ref droit, value, RaiseAccesChanged);
+    }
+
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     [CanBeNull]
@@ -129,8 +136,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       events.GetEvent<SelectedFormeChanged>().Subscribe(forme => SelectedForme = forme);
       events.GetEvent<SelectedMateriauChanged>().Subscribe(materiau => SelectedMateriau = materiau);
-      ProjetChanged = events.GetEvent<ProjetChanged>();
+      AccesChanged = events.GetEvent<AccesChanged>();
       FormesChanged = events.GetEvent<FormesChanged>();
+      ProjetChanged = events.GetEvent<ProjetChanged>();
       SelectionModeChanged = events.GetEvent<SelectionModeChanged>();
     }
 
@@ -260,6 +268,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Aggregated Event Handlers
 
+    private void RaiseAccesChanged() => AccesChanged.Publish(Droit);
+
     private void RaiseFormesChanged(Collection<FormeWrapper> old)
     {
       NotifyCollectionChangedEventArgs args;
@@ -362,6 +372,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     [NotNull]
     private readonly ConvertisseurFormes ConvertisseurFormes;
     [NotNull]
+    private readonly AccesChanged AccesChanged;
+    [NotNull]
     private readonly FormesChanged FormesChanged;
     [NotNull]
     private readonly ProjetChanged ProjetChanged;
@@ -375,6 +387,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private Acces.Droit droit;
     private Projet projet;
     private BulkObservableCollection<FormeWrapper> formes;
     private SelectionMode selection;

@@ -18,6 +18,10 @@ namespace Hymperia.Facade.DependencyObjects
     public static readonly DependencyProperty SelectionModeProperty =
       DependencyProperty.Register(nameof(SelectionMode), typeof(SelectionMode), typeof(Viewport), new PropertyMetadata(SelectionMode.Deplacement, OnSelectionModeChanged));
 
+    /// <seealso cref="CanModify"/>
+    public static readonly DependencyProperty CanModifyProperty =
+      DependencyProperty.Register(nameof(CanModify), typeof(bool), typeof(Viewport), new PropertyMetadata(true));
+
     #endregion
 
     #region Properties
@@ -29,12 +33,22 @@ namespace Hymperia.Facade.DependencyObjects
       set => SetValue(SelectionModeProperty, value);
     }
 
+    /// <summary>Détermine si le viewport peut permettre à l'utilisateur de modifier les objets qu'il affiche.</summary>
+    public bool CanModify
+    {
+      get => (bool)GetValue(CanModifyProperty);
+      set => SetValue(CanModifyProperty, value);
+    }
+
     #endregion
 
     #region Handle Manipulators
 
     private void AddManipulator([NotNull] MeshElement3D model)
     {
+      if (!CanModify)
+        return;
+
       Manipulator = CreateManipulator();
       Manipulator.Bind(model);
       Children.Add(Manipulator);
