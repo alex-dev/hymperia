@@ -27,15 +27,19 @@
         Grid.Row="2" />
     <Label Target="txtRotationX" Content="{x:Static prop:Resources.RotationX}" Grid.Column="0" Grid.Row="3" />
     <TextBox x:Name="txtRotationX" Style="{StaticResource NumericTextBox}" Text="{Binding RotationX}" Grid.Column="1"
+        do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
         Grid.Row="3" />
     <Label Target="txtRotationY" Content="{x:Static prop:Resources.RotationY}" Grid.Column="0" Grid.Row="4" />
     <TextBox x:Name="txtRotationY" Style="{StaticResource NumericTextBox}" Text="{Binding RotationY}" Grid.Column="1"
+        do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
         Grid.Row="4" />
     <Label Target="txtRotationZ" Content="{x:Static prop:Resources.RotationZ}" Grid.Column="0" Grid.Row="5" />
-    <TextBox x:Name="txtRotationZ" Style="{StaticResource NumericTextBox}" Text="{Binding RotationZ}" Grid.Column="1"
-        Grid.Row="5" />
+    <TextBox x:Name="txtRotationZ" Style="{StaticResource NumericTextBox}" Text="{Binding RotationZ}"
+        do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
+        Grid.Column="1" Grid.Row="5" />
     <Label Target="txtRotationW" Content="{x:Static prop:Resources.RotationW}" Grid.Column="0" Grid.Row="6" />
     <TextBox x:Name="txtRotationW" Style="{StaticResource NumericTextBox}" Text="{Binding RotationW}" Grid.Column="1"
+        do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
         Grid.Row="6" />
   </Grid>
 </do:DataUserControl>

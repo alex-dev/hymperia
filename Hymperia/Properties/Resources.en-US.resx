@@ -247,6 +247,7 @@
   </data>
   <data name="RotationZ" xml:space="preserve">
     <value>Rotation Z</value>
+  </data>
   <data name="RequiredPassword" xml:space="preserve">
     <value>Required password.</value>
   </data>
