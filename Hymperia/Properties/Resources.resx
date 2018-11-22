@@ -186,6 +186,18 @@
   <data name="Ouvrir" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="PositionX" xml:space="preserve">
+    <value>Position X</value>
+  </data>
+  <data name="PositionY" xml:space="preserve">
+    <value>Position Y</value>
+  </data>
+  <data name="PositionZ" xml:space="preserve">
+    <value>Position Z</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>
   </data>
@@ -209,6 +221,20 @@
     <value>Rayon _Z</value>
     <comment>AccessKey for labels</comment>
   </data>
+  <data name="Rotation" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="RotationW" xml:space="preserve">
+    <value>Rotation W</value>
+  </data>
+  <data name="RotationX" xml:space="preserve">
+    <value>Rotation X</value>
+  </data>
+  <data name="RotationY" xml:space="preserve">
+    <value>Rotation Y</value>
+  </data>
+  <data name="RotationZ" xml:space="preserve">
+    <value>Rotation Z</value>
   <data name="RequiredPassword" xml:space="preserve">
     <value>Un mot de passe est requis.</value>
   </data>
