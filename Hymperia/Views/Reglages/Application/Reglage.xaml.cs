@@ -9,28 +9,26 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
+using Hymperia.Model.Modeles;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 
-namespace Hymperia.Facade.Views.Reglages.Utilisateur
+namespace Hymperia.Facade.Views.Reglages.Application
 {
-  /// <summary>
-  /// Logique d'interaction pour Reglage.xaml
-  /// </summary>
   public partial class Reglage : UserControl, INavigationAware, IActiveAware
   {
     #region Dependency Properties
 
-    public static readonly DependencyProperty ProjetProperty =
-      DependencyProperty.Register(nameof(Utilisateur), typeof(Model.Modeles.Utilisateur), typeof(Reglage));
+    public static readonly DependencyProperty UtilisateurProperty =
+      DependencyProperty.Register(nameof(Utilisateur), typeof(Utilisateur), typeof(Reglage));
 
     #endregion
 
-    public Model.Modeles.Utilisateur Utilisateur
+    public Utilisateur Utilisateur
     {
-      get => (Model.Modeles.Utilisateur)GetValue(ProjetProperty);
-      set => SetValue(ProjetProperty, value);
+      get => (Utilisateur)GetValue(UtilisateurProperty);
+      set => SetValue(UtilisateurProperty, value);
     }
 
     #region Constructors
@@ -43,7 +41,7 @@ namespace Hymperia.Facade.Views.Reglages.Utilisateur
       Loaded += RegisterViews;
       InitializeComponent();
 
-      BindingOperations.SetBinding(this, ProjetProperty, new Binding(nameof(Utilisateur)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(UtilisateurProperty, new Binding(nameof(Utilisateur)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -57,16 +55,16 @@ namespace Hymperia.Facade.Views.Reglages.Utilisateur
       ChangementMotDePasseRegion = Manager.Regions[RegionKeys.ChangementMotDePasseRegion];
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
-      ChangementMotDePasseRegion.Add(Container.Resolve<Model.Modeles.Utilisateur>(), ViewKeys.ChangementMotDePasse);
-      ConnexionAutomatiqueRegion.Add(Container.Resolve<>(), ViewKeys.ConnexionAutomatique);
+      ChangementMotDePasseRegion.Add(Container.Resolve<ChangementMotDePasse>(), ViewKeys.ChangementMotDePasse);
+      //ConnexionAutomatiqueRegion.Add(Container.Resolve<>(), ViewKeys.ConnexionAutomatique);
     }
 
     #endregion
 
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Model.Modeles.Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Model.Modeles.Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
+    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion

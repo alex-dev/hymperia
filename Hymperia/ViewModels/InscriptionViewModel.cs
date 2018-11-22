@@ -19,7 +19,7 @@ using B = BCrypt.Net;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class InscriptionViewModel : ValidatingBase, INotifyDataErrorInfo
+  public class InscriptionViewModel : ValidatingBase
   {
     #region Properties
 
@@ -121,7 +121,7 @@ namespace Hymperia.Facade.ViewModels
     #region Navigation
 
     private void Navigate(Utilisateur utilisateur) =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
       {
         { NavigationParameterKeys.Utilisateur, utilisateur }
       });
@@ -163,6 +163,5 @@ namespace Hymperia.Facade.ViewModels
     private string verification;
 
     #endregion
-
   }
 }

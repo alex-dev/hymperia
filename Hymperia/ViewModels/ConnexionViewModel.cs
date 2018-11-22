@@ -59,17 +59,19 @@ namespace Hymperia.Facade.ViewModels
     #region Navigation
 
     private void Navigate(Utilisateur utilisateur) =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
       {
         { NavigationParameterKeys.Utilisateur, utilisateur }
       });
 
     private void _Inscription() =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.Inscription);
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Inscription);
 
     #endregion
 
     #region INotifyDataErrorInfo
+
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
     public bool HasErrors
     {
@@ -91,8 +93,6 @@ namespace Hymperia.Facade.ViewModels
     private readonly ContextFactory Factory;
     [NotNull]
     private readonly IRegionManager Manager;
-
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
     #endregion
 

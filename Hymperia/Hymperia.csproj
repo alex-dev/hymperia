@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\BulkObservableCollection.cs" />
+    <Compile Include="CommandAggregatorCommands\PreSauvegarderReglageApplication.cs" />
     <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
     <Compile Include="Loaders\AsyncLoader.cs" />
     <Compile Include="Loaders\AsyncLoader{T}.cs" />
@@ -151,7 +152,8 @@
     <Compile Include="ViewModels\Editeur\PropertiesEditor\EditorViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
-    <Compile Include="ViewModels\Reglages\Utilisateur\ChangementMotDePasseViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ReglageViewModel.cs" />
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
     </Compile>
@@ -207,13 +209,10 @@
     <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
       <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reglages\Utilisateur\ChangementMotDePasse.xaml.cs">
+    <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reglages\Utilisateur\ConnexionAutomatique.xaml.cs">
-      <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reglages\Utilisateur\Reglage.xaml.cs">
+    <Compile Include="Views\Reglages\Application\Reglage.xaml.cs">
       <DependentUpon>Reglage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -288,15 +287,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reglages\Utilisateur\ChangementMotDePasse.xaml">
+    <Page Include="Views\Reglages\Application\ChangementMotDePasse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Reglages\Utilisateur\ConnexionAutomatique.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reglages\Utilisateur\Reglage.xaml">
+    <Page Include="Views\Reglages\Application\Reglage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

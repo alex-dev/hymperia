@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using MoreLinq;
 
 namespace Prism.Mvvm
 {

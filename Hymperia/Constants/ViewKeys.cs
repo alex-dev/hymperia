@@ -13,7 +13,7 @@
     public const string EllipsoideEditor = nameof(Views.Editeur.PropertiesEditor.EllipsoideEditor);
     public const string PrismeRectangulaireEditor = nameof(Views.Editeur.PropertiesEditor.PrismeEditor);
 
-    public const string ChangementMotDePasse = nameof(Views.Reglages.Utilisateur.ChangementMotDePasse);
-    public const string ConnexionAutomatique = nameof(Views.Reglages.Utilisateur.ConnexionAutomatique);
+    public const string ChangementMotDePasse = nameof(Views.Reglages.Application.ChangementMotDePasse);
+    public const string ConnexionAutomatique = "";//nameof(Views.Reglages.Application.ConnexionAutomatique);
   }
 }

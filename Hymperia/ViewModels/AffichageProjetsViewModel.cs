@@ -102,7 +102,7 @@ namespace Hymperia.Facade.ViewModels
       // Force la création d'un context d'éditeur pour la durée de la navigation.
       // De cette façon, toutes les vues peuvent garantir que leur contexte est le même.
       using (ContextFactory.GetEditeurContext())
-        Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Editeur, new NavigationParameters
         {
           { NavigationParameterKeys.Projet, projet }
         });
@@ -115,7 +115,7 @@ namespace Hymperia.Facade.ViewModels
     private void _NavigateToReglage(Utilisateur utilisateur)
     {
       using (ContextFactory.GetReglageUtilisateurContext())
-        Manager.RequestNavigate("ContentRegion", NavigationKeys.ReglageUtilisateur, new NavigationParameters
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageUtilisateur, new NavigationParameters
         {
           { NavigationParameterKeys.Utilisateur, utilisateur }
         });

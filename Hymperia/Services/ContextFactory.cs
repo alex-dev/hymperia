@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Hymperia.Facade.Constants;
 using Hymperia.Model;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
@@ -30,22 +29,6 @@ namespace Hymperia.Facade.Services
 
     #endregion
 
-    #region ReglageEditeurContext
-
-    [NotNull]
-    public IContextWrapper<DatabaseContext> GetReglageEditeurContext()
-    {
-      if (ReglageEditeurContext is null)
-        ReglageEditeurContext = new Tracker<DatabaseContext>();
-
-      ++ReglageEditeurContext.Count;
-      return new ContextWrapper<DatabaseContext>(ReglageEditeurContext.Context, () => Release(ref ReglageEditeurContext));
-    }
-
-    private Tracker<DatabaseContext> ReglageEditeurContext;
-
-    #endregion
-
     #region ReglageUtilisateurContext
 
     [NotNull]
@@ -62,21 +45,22 @@ namespace Hymperia.Facade.Services
 
     #endregion
 
-    public interface IContextWrapper<T> : IDisposable where T : DbContext
-    {
-      T Context { get; }
-    }
-
-    #region Dispose
+    #region IDisposable
 
     public void Dispose()
     {
       ReglageUtilisateurContext.Dispose();
       EditeurContext.Dispose();
-      ReglageEditeurContext.Dispose();
     }
 
-    #region Dispose Wrapper
+    #endregion
+
+    #region Wrapper
+
+    public interface IContextWrapper<T> : IDisposable where T : DbContext
+    {
+      T Context { get; }
+    }
 
     private sealed class ContextWrapper<T> : IContextWrapper<T> where T : DbContext
     {
@@ -92,6 +76,10 @@ namespace Hymperia.Facade.Services
       public void Dispose() => DisposeAction();
     }
 
+    #endregion
+
+    #region Tracker
+
     private void Release<T>(ref Tracker<T> tracker) where T : DbContext, new()
     {
       if (--tracker.Count == 0)
@@ -101,9 +89,6 @@ namespace Hymperia.Facade.Services
       }
     }
 
-    #endregion
-
-    #region Tracker
 
     private sealed class Tracker<T> : IDisposable where T : DbContext, new()
     {
@@ -116,8 +101,5 @@ namespace Hymperia.Facade.Services
     }
 
     #endregion
-
-    #endregion
-
   }
 }
