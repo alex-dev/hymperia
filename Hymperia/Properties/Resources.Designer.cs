@@ -25,6 +25,11 @@ namespace Hymperia.Facade.Properties
     public static string AjouterProjet => GetString("AjouterProjet");
 
     /// <summary>
+    ///   Analyse Matériaux
+    /// </summary>
+    public static string AnalyseMateriau => GetString("AnalyseMateriau");
+
+    /// <summary>
     ///   et
     /// </summary>
     public static string And => GetString("And");
@@ -141,6 +146,11 @@ namespace Hymperia.Facade.Properties
     ///   Prix
     /// </summary>
     public static string Price => GetString("Price");
+
+    /// <summary>
+    ///   Propriétés
+    /// </summary>
+    public static string ProprieteForme => GetString("ProprieteForme");
 
     /// <summary>
     ///   Rayon _Base

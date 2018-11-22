@@ -42,7 +42,7 @@ namespace Hymperia.Facade.Views.Editeur
     }
 
     #endregion
-    
+
     #region Views Registration
 
     private void RegisterViews(object sender, RoutedEventArgs e)
@@ -50,14 +50,16 @@ namespace Hymperia.Facade.Views.Editeur
       Loaded -= RegisterViews;
 
       ViewportRegion = Manager.Regions[RegionKeys.ViewportRegion];
-      HorizontalTabControl = Manager.Regions[RegionKeys.FormesSelectionRegion];
-      VerticalTabControl = Manager.Regions[RegionKeys.MateriauxSelectionRegion];
-      
+      HorizontalTabControl = Manager.Regions[RegionKeys.HorizontalTabControlRegion];
+      VerticalTabControl = Manager.Regions[RegionKeys.VerticalTabControlRegion];
+
 
       ViewportRegion.Add(Container.Resolve<Viewport>(), ViewKeys.Viewport);
       HorizontalTabControl.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
-      VerticalTabControl.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
-      
+      HorizontalTabControl.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
+      VerticalTabControl.Add(Container.Resolve­<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
+      VerticalTabControl.Add(Container.Resolve­<Editor>(), ViewKeys.PropertiesEditor);
+
     }
 
     #endregion

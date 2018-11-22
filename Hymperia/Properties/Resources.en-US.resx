@@ -123,6 +123,9 @@
   <data name="AjouterProjet" xml:space="preserve">
     <value>Create project</value>
   </data>
+  <data name="AnalyseMateriau" xml:space="preserve">
+    <value>Material Analysis</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>and</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
+  </data>
+  <data name="ProprieteForme" xml:space="preserve">
+    <value>Properties</value>
   </data>
   <data name="Radius_Base" xml:space="preserve">
     <value>Radius _Base</value>

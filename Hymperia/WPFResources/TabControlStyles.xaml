@@ -3,6 +3,7 @@
   <Style x:Key="BaseTabControl" TargetType="{x:Type TabControl}">
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
     <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
+    <Setter Property="Margin" Value="5" />
   </Style>
 
   <ContextMenu x:Key="TabHeaderMenu">
