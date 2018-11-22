@@ -110,12 +110,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
     {
       void Execute(string viewname, IRegion region)
       {
-        var view = region.GetView(viewname) as DataUserControl;
+        if (!(region.GetView(viewname) is DataUserControl view))
+          return;
 
         region.Activate(view);
-
-        if (view is DataUserControl)
-          view.Data = selected;
+        view.Data = selected;
       }
 
       Execute(ViewKeys.PositionEditeur, Manager.Regions[RegionKeys.PositionPropertiesRegion]);
