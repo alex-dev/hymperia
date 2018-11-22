@@ -1,5 +1,8 @@
-﻿using Hymperia.Facade.ModelWrappers;
+﻿using System.ComponentModel;
+using Hymperia.Facade.Extensions;
+using Hymperia.Facade.ModelWrappers;
 using Hymperia.Model.Modeles.JsonObject;
+using JetBrains.Annotations;
 using Prism.Mvvm;
 
 namespace Hymperia.Facade.Views.Editeur
@@ -8,17 +11,30 @@ namespace Hymperia.Facade.Views.Editeur
   {
     #region Properties
 
+    [CanBeNull]
     public FormeWrapper Forme
     {
       get => forme;
-      set => SetProperty(ref forme, value, RaiseAllChanged);
+      set
+      {
+        var old = forme;
+
+        if (SetProperty(ref forme, value, RaiseAllChanged))
+        {
+          old?.Remove(OnPropertyChanged);
+          forme?.Add(OnPropertyChanged);
+        }
+      }
     }
 
     private Point Position
     {
-      get => Forme.Origine;
+      get => Forme?.Origine;
       set
       {
+        if (Forme is null)
+          return;
+
         if (Forme.Origine != value)
         {
           Forme.Origine = value;
@@ -29,9 +45,12 @@ namespace Hymperia.Facade.Views.Editeur
 
     private Quaternion Rotation
     {
-      get => Forme.Rotation;
+      get => Forme?.Rotation;
       set
       {
+        if (Forme is null)
+          return;
+
         if (Forme.Rotation != value)
         {
           Forme.Rotation = value;
@@ -42,44 +61,44 @@ namespace Hymperia.Facade.Views.Editeur
 
     public double PositionX
     {
-      get => Position.X;
+      get => Position?.X ?? 0;
       set => Position = new Point(value, Position.Y, Position.Z);
     }
 
     public double PositionY
     {
-      get => Position.Y;
+      get => Position?.Y ?? 0;
       set => Position = new Point(Position.X, value, Position.Z);
     }
 
     public double PositionZ
     {
-      get => Position.Z;
+      get => Position?.Z ?? 0;
       set => Position = new Point(Position.X, Position.Y, value);
     }
 
     public double RotationX
     {
-      get => Rotation.X;
-      set => Rotation = new Quaternion(value, Rotation.Y, Rotation.Z, Rotation.W);
+      get => Rotation?.X ?? 0;
+      set => Rotation = GeometryExtension.CreateNormalized(value, Rotation.Y, Rotation.Z, Rotation.W);
     }
 
     public double RotationY
     {
-      get => Rotation.Y;
-      set => Rotation = new Quaternion(Rotation.X, value, Rotation.Z, Rotation.W);
+      get => Rotation?.Y ?? 0;
+      set => Rotation = GeometryExtension.CreateNormalized(Rotation.X, value, Rotation.Z, Rotation.W);
     }
 
     public double RotationZ
     {
-      get => Rotation.Z;
-      set => Rotation = new Quaternion(Rotation.X, Rotation.Y, value, Rotation.W);
+      get => Rotation?.Z ?? 0;
+      set => Rotation = GeometryExtension.CreateNormalized(Rotation.X, Rotation.Y, value, Rotation.W);
     }
 
     public double RotationW
     {
-      get => Rotation.W;
-      set => Rotation = new Quaternion(Rotation.X, Rotation.Y, Rotation.Z, value);
+      get => Rotation?.W ?? 0;
+      set => Rotation = GeometryExtension.CreateNormalized(Rotation.X, Rotation.Y, Rotation.Z, value);
     }
 
     #endregion
@@ -88,6 +107,21 @@ namespace Hymperia.Facade.Views.Editeur
 
     public PositionEditeurViewModel()
     {
+    }
+
+    #endregion
+
+    #region FormeChanged
+
+    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      switch (e.PropertyName)
+      {
+        case nameof(FormeWrapper.Origine):
+          RaisePositionChanged(); break;
+        case nameof(FormeWrapper.Rotation):
+          RaiseRotationChanged(); break;
+      }
     }
 
     #endregion

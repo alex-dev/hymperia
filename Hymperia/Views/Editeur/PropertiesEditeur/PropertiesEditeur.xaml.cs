@@ -41,6 +41,7 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
       SpecificPropertiesRegion.Add(Container.Resolve<EllipsoideEditeur>(), ViewKeys.EllipsoideEditor);
       SpecificPropertiesRegion.Add(Container.Resolve<PrismeEditeur>(), ViewKeys.PrismeRectangulaireEditor);
 
+      PositionPropertiesRegion?.Deactivate();
       SpecificPropertiesRegion?.Deactivate();
     }
 
