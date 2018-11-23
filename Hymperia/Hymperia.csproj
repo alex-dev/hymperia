@@ -89,6 +89,7 @@
     <Compile Include="Collections\BulkObservableCollection.cs" />
     <Compile Include="CommandAggregatorCommands\PreSauvegarderReglageApplication.cs" />
     <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
+    <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
     <Compile Include="Loaders\AsyncLoader.cs" />
     <Compile Include="Loaders\AsyncLoader{T}.cs" />
     <Compile Include="SelectionMode.cs" />

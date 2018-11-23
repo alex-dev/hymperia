@@ -80,7 +80,7 @@ namespace Hymperia.Facade.ViewModels
 
     public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
-      NavigateToReglage = new DelegateCommand<Utilisateur>(_NavigateToReglage);
+      NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
       SupprimerProjet = new DelegateCommand<IList>(
         projets => _SupprimerProjets(projets?.Cast<Projet>()),
@@ -93,7 +93,6 @@ namespace Hymperia.Facade.ViewModels
 
 
     #endregion
-
 
     #region Command NavigateToProjet
 
@@ -112,12 +111,12 @@ namespace Hymperia.Facade.ViewModels
 
     #region Command NavigateToReglage
 
-    private void _NavigateToReglage(Utilisateur utilisateur)
+    private void _NavigateToReglage()
     {
       using (ContextFactory.GetReglageUtilisateurContext())
         Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageUtilisateur, new NavigationParameters
         {
-          { NavigationParameterKeys.Utilisateur, utilisateur }
+          { NavigationParameterKeys.Utilisateur, Utilisateur }
         });
     }
 

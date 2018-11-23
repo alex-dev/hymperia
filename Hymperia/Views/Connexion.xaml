@@ -4,8 +4,15 @@ Date de création : 8 novembre 2018
 -->
 
 <UserControl x:Class="Hymperia.Facade.Views.Connexion" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:prism="http://prismlibrary.com/" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <i:InvokeCommandAction Command="{Binding ConnexionAutomatique}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
   <StackPanel Orientation="Vertical">
     <TextBlock Text="{x:Static prop:Resources.InvalidCredential}">
       <TextBlock.Style>
@@ -25,5 +32,5 @@ Date de création : 8 novembre 2018
     <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
         Content="{x:Static prop:Resources.Connexion}" />
     <Button Command="{Binding Inscription}" Content="{x:Static prop:Resources.Inscription}" />
-  </StackPanel>
+    </StackPanel>
 </UserControl>

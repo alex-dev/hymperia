@@ -55,7 +55,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
       ChangementMotDePasseRegion = Manager.Regions[RegionKeys.ChangementMotDePasseRegion];
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
-      ChangementMotDePasseRegion.Add(Container.Resolve<ChangementMotDePasse>(), ViewKeys.ChangementMotDePasse);
+      //ChangementMotDePasseRegion.Add(Container.Resolve<ChangementMotDePasse>(), ViewKeys.ChangementMotDePasse);
       ConnexionAutomatiqueRegion.Add(Container.Resolve<ConnexionAutomatique>(), ViewKeys.ConnexionAutomatique);
     }
 
@@ -64,7 +64,22 @@ namespace Hymperia.Facade.Views.Reglages.Application
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      void Set() =>
+        Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+
+      void Load(object sender, RoutedEventArgs e)
+      {
+        Set();
+        Loaded -= Load;
+      }
+
+      if (IsLoaded)
+        Set();
+      else
+        Loaded += Load;
+    }
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion

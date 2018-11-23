@@ -18,6 +18,7 @@ using Prism;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Application
 {
@@ -27,11 +28,16 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Binding
 
-
+    public Utilisateur Utilisateur
+    {
+      get => utilisateur;
+      set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
+    }
 
     #endregion
 
     #region Commands
+
     public ICommand Sauvegarder { get; }
 
     #endregion
@@ -53,8 +59,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
       ContextFactory = factory;
 
-      PreSauvegarder = new PreSauvegarderReglageApplication();
-      commands.RegisterCommand(PreSauvegarder);
+      PreSauvegarder = commands.GetCommandOrCreate<PreSauvegarderReglageApplication>();
+      UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
     }
 
     #endregion
@@ -64,32 +70,36 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private async Task _Sauvegarder()
     {
       PreSauvegarder.Execute(null);
-      using (var context = ContextFactory.GetReglageUtilisateurContext())
-      {
-        await context.Context.SaveChangesAsync();
-      }
+      S.Default.Save();
+      using (await AsyncLock.Lock(ContextWrapper.Context))
+        await ContextWrapper.Context.SaveChangesAsync();
     }
 
     #endregion
 
     #region Queries
 
-    /*private async Task<Utilisateur> QueryUtilisateur(Utilisateur _utilisateur)
+    private async Task<Utilisateur> QueryUtilisateur(Utilisateur _utilisateur, Action onChanged)
     {
+      Utilisateur value = null;
+      SetProperty(ref utilisateur, null, onChanged, nameof(Utilisateur));
 
-      /*Projet value = null;
-      SetProperty(ref projet, null, onChanged, nameof(Projet));
-
-      if (_projet is Projet)
+      if (_utilisateur is Utilisateur)
       {
         using (await AsyncLock.Lock(ContextWrapper.Context))
-          value = await ContextWrapper.Context.Projets.IncludeFormes().FindByIdAsync(_projet.Id);
+          value = await ContextWrapper.Context.Utilisateurs.FindByIdAsync(_utilisateur.Id);
 
-        SetProperty(ref projet, value, onChanged, nameof(Projet));
+        SetProperty(ref utilisateur, value, onChanged, nameof(Projet));
       }
 
-      return value;*/
-    //}
+      return value;
+    }
+
+    #endregion
+
+    #region UtilisateurChanged
+
+    private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
 
     #endregion
 
@@ -167,6 +177,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private readonly ContextFactory ContextFactory;
     [NotNull]
     private readonly PreSauvegarderReglageApplication PreSauvegarder;
+    [NotNull]
+    private readonly ReglageUtilisateurChanged UtilisateurChanged;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;

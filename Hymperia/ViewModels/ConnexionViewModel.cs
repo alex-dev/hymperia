@@ -25,10 +25,15 @@ namespace Hymperia.Facade.ViewModels
   {
     #region Properties
 
-    public string Username { get; set; }
+    public string Username
+    {
+      get => username;
+      set => SetProperty(ref username, value);
+    }
 
     public DelegateCommand<PasswordBox> Connexion { get; }
     public DelegateCommand Inscription { get; }
+    public DelegateCommand ConnexionAutomatique { get; }
 
     #endregion
 
@@ -39,40 +44,37 @@ namespace Hymperia.Facade.ViewModels
       Factory = factory;
       Manager = manager;
 
-      if (S.Default.ConnexionAutomatique == 1)
-        _ConnexionAutommatique();
-
+      ConnexionAutomatique = new DelegateCommand(_ConnexionAutomatique);
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
       Inscription = new DelegateCommand(_Inscription);
     }
 
     #endregion
 
-    private void _ConnexionAutommatique()
+    private void _ConnexionAutomatique()
     {
-      Utilisateur utilisateur;
+      if (!S.Default.ConnexionAutomatique)
+        return;
 
-      using (var context = Factory.GetContext())
-        utilisateur = context.Utilisateurs.SingleOrDefault(u => u.Nom == S.Default.Utilisateur);
-
-      Navigate(utilisateur);
+      _Connexion(S.Default.Utilisateur, utilisateur => S.Default.MotDePasse == utilisateur.MotDePasse);
     }
 
-    private void _Connexion(PasswordBox password)
+    private void _Connexion(PasswordBox password) =>
+      _Connexion(Username, utilisateur => B.BCrypt.Verify(password.Password, utilisateur.MotDePasse, true));
+
+    private void _Connexion(string username, Predicate<Utilisateur> validate)
     {
       Utilisateur utilisateur;
 
       using (var context = Factory.GetContext())
-        utilisateur = context.Utilisateurs.SingleOrDefault(u => u.Nom == Username);
+        utilisateur = context.Utilisateurs.SingleOrDefault(u => u.Nom == username);
 
-      HasErrors = !(utilisateur is Utilisateur && B.BCrypt.Verify(password.Password, utilisateur.MotDePasse, true));
+      HasErrors = !(utilisateur is Utilisateur && validate(utilisateur));
 
-      if (!HasErrors)
-      {
-        S.Default.Utilisateur = utilisateur.Nom;
-        S.Default.MotDePasse = B.BCrypt.HashPassword(utilisateur.MotDePasse, Utilisateur.PasswordWorkFactor, true);
+      if (HasErrors)
+        Username = username;
+      else
         Navigate(utilisateur);
-      }
     }
 
     #region Navigation
@@ -117,6 +119,7 @@ namespace Hymperia.Facade.ViewModels
 
     #region Private Fields
 
+    private string username;
     private bool errors;
 
     #endregion
