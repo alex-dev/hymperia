@@ -153,6 +153,7 @@
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ReglageViewModel.cs" />
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
@@ -211,6 +212,9 @@
     </Compile>
     <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\ConnexionAutomatique.xaml.cs">
+      <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Application\Reglage.xaml.cs">
       <DependentUpon>Reglage.xaml</DependentUpon>
@@ -288,6 +292,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Reglages\Application\ChangementMotDePasse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ConnexionAutomatique.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

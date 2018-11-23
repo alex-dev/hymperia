@@ -144,6 +144,9 @@
   <data name="Connexion" xml:space="preserve">
     <value>Connexion</value>
   </data>
+  <data name="ConnexionAutomatique" xml:space="preserve">
+    <value>Connexion automatique :</value>
+  </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
   </data>
@@ -183,8 +186,14 @@
   <data name="Movement" xml:space="preserve">
     <value>Déplacement</value>
   </data>
+  <data name="Non" xml:space="preserve">
+    <value>Non</value>
+  </data>
   <data name="NouveauNomProjet" xml:space="preserve">
     <value>Merci de saisir le nom du nouveau projet :</value>
+  </data>
+  <data name="Oui" xml:space="preserve">
+    <value>Oui</value>
   </data>
   <data name="Ouvrir" xml:space="preserve">
     <value>Ouvrir</value>

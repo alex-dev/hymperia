@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
@@ -15,6 +16,7 @@ using JetBrains.Annotations;
 using Prism.Commands;
 using Prism.Mvvm;
 using B = BCrypt.Net;
+using S = Hymperia.Model.Properties.Settings;
 
 
 namespace Hymperia.Facade.ViewModels.Reglages.Application
@@ -23,9 +25,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
   {
     #region Properties
 
-    [Required(
+    /*[Required(
       ErrorMessageResourceName = nameof(Resources.RequiredPassword),
-      ErrorMessageResourceType = typeof(Resources))]
+      ErrorMessageResourceType = typeof(Resources))]*/
     [Compare(nameof(Verification),
       ErrorMessageResourceName = nameof(Resources.DontMatchPassword),
       ErrorMessageResourceType = typeof(Resources))]
@@ -39,9 +41,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       }
     }
 
-    [Required(
+    /*[Required(
       ErrorMessageResourceName = nameof(Resources.RequiredVerification),
-      ErrorMessageResourceType = typeof(Resources))]
+      ErrorMessageResourceType = typeof(Resources))]*/
     [Compare(nameof(Password),
       ErrorMessageResourceName = nameof(Resources.DontMatchPassword),
       ErrorMessageResourceType = typeof(Resources))]
@@ -89,8 +91,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     #region Queries
     private async Task ModificationUtilisateur()
     {
-      //var utilisateur = new Model.Modeles.Utilisateur(Utilisateur.Nom, B.BCrypt.HashPassword(Password, Model.Modeles.Utilisateur.PasswordWorkFactor, true));
-
       Utilisateur.MotDePasse = B.BCrypt.HashPassword(Password, Model.Modeles.Utilisateur.PasswordWorkFactor, true);
 
       using (var context = ContextFactory.GetReglageUtilisateurContext())
@@ -98,6 +98,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
         context.Context.Utilisateurs.Update(Utilisateur);
         await context.Context.SaveChangesAsync();
       }
+
+      S.Default.MotDePasse = Utilisateur.MotDePasse;
     }
 
     #endregion
@@ -193,8 +195,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     #region Private Fields
 
     private Model.Modeles.Utilisateur utilisateur;
-    private string password;
-    private string verification;
+    private string password = "";
+    private string verification = "";
     private bool isActive;
     private CancellationTokenSource disposeToken;
 

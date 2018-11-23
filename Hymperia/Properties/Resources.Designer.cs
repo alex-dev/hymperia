@@ -66,6 +66,11 @@ namespace Hymperia.Facade.Properties
     public static string Connexion => GetString("Connexion");
 
     /// <summary>
+    ///   Connexion automatique :
+    /// </summary>
+    public static string ConnexionAutomatique => GetString("ConnexionAutomatique");
+
+    /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
     /// </summary>
     public static string DestructiveConversion => GetString("DestructiveConversion");
@@ -143,9 +148,19 @@ namespace Hymperia.Facade.Properties
     public static string Movement => GetString("Movement");
 
     /// <summary>
+    ///   Non
+    /// </summary>
+    public static string Non => GetString("Non");
+
+    /// <summary>
     ///   Merci de saisir le nom du nouveau projet :
     /// </summary>
     public static string NouveauNomProjet => GetString("NouveauNomProjet");
+
+    /// <summary>
+    ///   Oui
+    /// </summary>
+    public static string Oui => GetString("Oui");
 
     /// <summary>
     ///   Ouvrir

@@ -16,6 +16,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using B = BCrypt.Net;
+using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
@@ -90,6 +91,8 @@ namespace Hymperia.Facade.ViewModels
         return;
 
       var utilisateur = await CreateUtilisateur();
+      S.Default.Utilisateur = utilisateur.Nom;
+      S.Default.MotDePasse = B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true);
       Navigate(utilisateur);
     }
 

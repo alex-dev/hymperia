@@ -3,24 +3,25 @@
   <Profiles />
   <Settings>
     <Setting Name="MainDatabase" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymperia; Password=infoH25978;&lt;/ConnectionString&gt;
-  &lt;ProviderName /&gt;
-&lt;/SerializableConnectionString&gt;</Value>
+      <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymperia; Password=infoH25978;</Value>
     </Setting>
     <Setting Name="LocalizationDatabase" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; Username=Hymperia; Password=infoH25978;&lt;/ConnectionString&gt;
-  &lt;ProviderName /&gt;
-&lt;/SerializableConnectionString&gt;</Value>
+      <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; Username=Hymperia; Password=infoH25978;</Value>
     </Setting>
     <Setting Name="Culture" Type="System.String" Scope="User">
-      <Value Profile="(Default)">fr-CA</Value>
+      <Value Profile="(Default)">en-US</Value>
     </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Default</Value>
+      <Value Profile="(Default)">Dark</Value>
+    </Setting>
+    <Setting Name="Utilisateur" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MotDePasse" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ConnexionAutomatique" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

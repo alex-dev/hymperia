@@ -17,6 +17,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using B = BCrypt.Net;
+using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
@@ -37,11 +38,25 @@ namespace Hymperia.Facade.ViewModels
     {
       Factory = factory;
       Manager = manager;
+
+      if (S.Default.ConnexionAutomatique == 1)
+        _ConnexionAutommatique();
+
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
       Inscription = new DelegateCommand(_Inscription);
     }
 
     #endregion
+
+    private void _ConnexionAutommatique()
+    {
+      Utilisateur utilisateur;
+
+      using (var context = Factory.GetContext())
+        utilisateur = context.Utilisateurs.SingleOrDefault(u => u.Nom == S.Default.Utilisateur);
+
+      Navigate(utilisateur);
+    }
 
     private void _Connexion(PasswordBox password)
     {
@@ -53,7 +68,11 @@ namespace Hymperia.Facade.ViewModels
       HasErrors = !(utilisateur is Utilisateur && B.BCrypt.Verify(password.Password, utilisateur.MotDePasse, true));
 
       if (!HasErrors)
+      {
+        S.Default.Utilisateur = utilisateur.Nom;
+        S.Default.MotDePasse = B.BCrypt.HashPassword(utilisateur.MotDePasse, Utilisateur.PasswordWorkFactor, true);
         Navigate(utilisateur);
+      }
     }
 
     #region Navigation

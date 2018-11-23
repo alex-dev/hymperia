@@ -63,14 +63,20 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     private async Task _Sauvegarder()
     {
+      PreSauvegarder.Execute(null);
+      using (var context = ContextFactory.GetReglageUtilisateurContext())
+      {
+        await context.Context.SaveChangesAsync();
+      }
     }
 
     #endregion
 
     #region Queries
 
-    //private async Task<Utilisateur> QueryUtilisateur(Utilisateur _projet, Action onChanged)
-    //{
+    /*private async Task<Utilisateur> QueryUtilisateur(Utilisateur _utilisateur)
+    {
+
       /*Projet value = null;
       SetProperty(ref projet, null, onChanged, nameof(Projet));
 
@@ -159,14 +165,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     [NotNull]
     private readonly ContextFactory ContextFactory;
-    [NotNull]
-    private readonly ConvertisseurFormes ConvertisseurFormes;
-    [NotNull]
-    private readonly FormesChanged FormesChanged;
-    [NotNull]
-    private readonly ProjetChanged ProjetChanged;
-    [NotNull]
-    private readonly SelectionModeChanged SelectionModeChanged;
     [NotNull]
     private readonly PreSauvegarderReglageApplication PreSauvegarder;
 

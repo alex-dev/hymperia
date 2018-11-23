@@ -56,7 +56,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
       ChangementMotDePasseRegion.Add(Container.Resolve<ChangementMotDePasse>(), ViewKeys.ChangementMotDePasse);
-      //ConnexionAutomatiqueRegion.Add(Container.Resolve<>(), ViewKeys.ConnexionAutomatique);
+      ConnexionAutomatiqueRegion.Add(Container.Resolve<ConnexionAutomatique>(), ViewKeys.ConnexionAutomatique);
     }
 
     #endregion
