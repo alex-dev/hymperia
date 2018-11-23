@@ -35,8 +35,9 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
     public Reglage(IRegionManager manager, IContainerExtension container)
     {
-      Container = container;
       Manager = manager;
+      ChangementMotDePasse = container.Resolve<ChangementMotDePasse>();
+      ConnexionAutomatique = container.Resolve<ConnexionAutomatique>();
 
       Loaded += RegisterViews;
       InitializeComponent();
@@ -55,8 +56,8 @@ namespace Hymperia.Facade.Views.Reglages.Application
       ChangementMotDePasseRegion = Manager.Regions[RegionKeys.ChangementMotDePasseRegion];
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
-      //ChangementMotDePasseRegion.Add(Container.Resolve<ChangementMotDePasse>(), ViewKeys.ChangementMotDePasse);
-      ConnexionAutomatiqueRegion.Add(Container.Resolve<ConnexionAutomatique>(), ViewKeys.ConnexionAutomatique);
+      //ChangementMotDePasseRegion.Add(ChangementMotDePasse, ViewKeys.ChangementMotDePasse);
+      ConnexionAutomatiqueRegion.Add(ConnexionAutomatique, ViewKeys.ConnexionAutomatique);
     }
 
     #endregion
@@ -125,10 +126,16 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
     #region Services
 
-    private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
     private IRegion ChangementMotDePasseRegion;
     private IRegion ConnexionAutomatiqueRegion;
+
+    #endregion
+
+    #region Views
+
+    private readonly ChangementMotDePasse ChangementMotDePasse;
+    private readonly ConnexionAutomatique ConnexionAutomatique;
 
     #endregion
   }

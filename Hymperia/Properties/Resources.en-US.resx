@@ -123,6 +123,9 @@
   <data name="AjouterProjet" xml:space="preserve">
     <value>Create project</value>
   </data>
+  <data name="AnalyseMateriau" xml:space="preserve">
+    <value>Material Analysis</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>and</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Can only convert from {origins}.</value>
   </data>
   <data name="CanOnlyConvertTo" xml:space="preserve">
-    <value>Can onyl convert to {targets}.</value>
+    <value>Can only convert to {targets}.</value>
   </data>
   <data name="ChangementDuMotDePasse" xml:space="preserve">
     <value>Change password :</value>
@@ -155,6 +158,9 @@
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="Fermer" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Field cannot be empty.</value>
@@ -198,8 +204,26 @@
   <data name="Ouvrir" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="PositionX" xml:space="preserve">
+    <value>Position X</value>
+  </data>
+  <data name="PositionY" xml:space="preserve">
+    <value>Position Y</value>
+  </data>
+  <data name="PositionZ" xml:space="preserve">
+    <value>Position Z</value>
+  </data>
+  <data name="OuvrirFenetre" xml:space="preserve">
+    <value>Open in new window</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
+  </data>
+  <data name="ProprieteForme" xml:space="preserve">
+    <value>Properties</value>
   </data>
   <data name="Radius_Base" xml:space="preserve">
     <value>Radius _Base</value>
@@ -221,8 +245,20 @@
     <value>Radius _Z</value>
     <comment>AccessKey for labels</comment>
   </data>
-  <data name="Reglage" xml:space="preserve">
-    <value>Setting</value>
+  <data name="Rotation" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="RotationW" xml:space="preserve">
+    <value>Rotation W</value>
+  </data>
+  <data name="RotationX" xml:space="preserve">
+    <value>Rotation X</value>
+  </data>
+  <data name="RotationY" xml:space="preserve">
+    <value>Rotation Y</value>
+  </data>
+  <data name="RotationZ" xml:space="preserve">
+    <value>Rotation Z</value>
   </data>
   <data name="RequiredPassword" xml:space="preserve">
     <value>Required password.</value>
@@ -238,6 +274,12 @@
   </data>
   <data name="Scaling" xml:space="preserve">
     <value>Scaling</value>
+  </data>
+  <data name="SelectionForme" xml:space="preserve">
+    <value>Shape Selector</value>
+  </data>
+  <data name="SelectionMateriau" xml:space="preserve">
+    <value>Material Selector</value>
   </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Delete</value>

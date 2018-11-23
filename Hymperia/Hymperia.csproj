@@ -86,15 +86,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+	<Compile Include="SelectionMode.cs" />
     <Compile Include="Collections\BulkObservableCollection.cs" />
-    <Compile Include="CommandAggregatorCommands\PreSauvegarderReglageApplication.cs" />
-    <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
-    <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
-    <Compile Include="Loaders\AsyncLoader.cs" />
-    <Compile Include="Loaders\AsyncLoader{T}.cs" />
-    <Compile Include="SelectionMode.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
+    <Compile Include="CommandAggregatorCommands\PreSauvegarderReglageApplication.cs" />
+    <Compile Include="Constants\NavigationKeys.cs" />
+    <Compile Include="Constants\NavigationParameterKeys.cs" />
+    <Compile Include="Constants\RegionKeys.cs" />
+    <Compile Include="Constants\ViewKeys.cs" />
     <Compile Include="Converters\AggregateConverters\MaxAggregateConverter.cs" />
     <Compile Include="Converters\AggregateConverters\MinAggregateConverter.cs" />
     <Compile Include="Converters\AggregatorConverters\AggregatorMultiValueConverter.cs" />
@@ -106,13 +106,19 @@
     <Compile Include="Converters\TransformConverter.cs" />
     <Compile Include="Converters\ManipulatorRadiusConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="DependencyObjects\DataUserControl.cs" />
     <Compile Include="DependencyObjects\ImageHelper.cs" />
     <Compile Include="DependencyObjects\Manipulators\CombinedManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\MovementManipulator.cs" />
     <Compile Include="DependencyObjects\Manipulators\ResizeManipulator.cs" />
+    <Compile Include="DependencyObjects\MaskingBehavior.cs" />
+    <Compile Include="DependencyObjects\NumericTextBoxBehavior.cs" />
+    <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
+    <Compile Include="DependencyObjects\TabItemNameBehavior.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
+    <Compile Include="EventAggregatorMessages\AccesChanged.cs" />
     <Compile Include="EventAggregatorMessages\FormesChanged.cs" />
     <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
@@ -125,6 +131,8 @@
     <Compile Include="Extensions\GeometryExtension.cs" />
     <Compile Include="Extensions\LINQExtension.cs" />
     <Compile Include="Extensions\RegionExtension.cs" />
+    <Compile Include="Loaders\AsyncLoader.cs" />
+    <Compile Include="Loaders\AsyncLoader{T}.cs" />
     <Compile Include="ModelWrappers\ConeWrapper.cs" />
     <Compile Include="ModelWrappers\CylindreWrapper.cs" />
     <Compile Include="ModelWrappers\EllipsoideWrapper.cs" />
@@ -132,10 +140,6 @@
     <Compile Include="ModelWrappers\MateriauWrapper.cs" />
     <Compile Include="ModelWrappers\PrismeRectangulaireWrapper.cs" />
     <Compile Include="ModelWrappers\ThetaDivFormeWrapper.cs" />
-    <Compile Include="Constants\NavigationKeys.cs" />
-    <Compile Include="Constants\NavigationParameterKeys.cs" />
-    <Compile Include="Constants\RegionKeys.cs" />
-    <Compile Include="Constants\ViewKeys.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\ConvertisseurFormes.cs" />
     <Compile Include="Services\ConvertisseurMateriaux.cs" />
@@ -150,7 +154,7 @@
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
-    <Compile Include="ViewModels\Editeur\PropertiesEditor\EditorViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
@@ -171,20 +175,24 @@
     <Compile Include="Views\Editeur\ProjetAnalyse\MateriauxAnalyse.xaml.cs">
       <DependentUpon>MateriauxAnalyse.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\Editor.xaml.cs">
-      <DependentUpon>Editor.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\PropertiesEditeur\PositionEditeur.xaml.cs">
+      <DependentUpon>PositionEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\CylindreEditor.xaml.cs">
-      <DependentUpon>CylindreEditor.xaml</DependentUpon>
+    <Compile Include="ViewModels\Editeur\PositionEditeurViewModel.cs" />
+    <Compile Include="Views\Editeur\PropertiesEditeur\PropertiesEditeur.xaml.cs">
+      <DependentUpon>PropertiesEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\ConeEditor.xaml.cs">
-      <DependentUpon>ConeEditor.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\PropertiesEditeur\CylindreEditeur.xaml.cs">
+      <DependentUpon>CylindreEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\PrismeEditor.xaml.cs">
-      <DependentUpon>PrismeEditor.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\PropertiesEditeur\ConeEditeur.xaml.cs">
+      <DependentUpon>ConeEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editeur\PropertiesEditor\EllipsoideEditor.xaml.cs">
-      <DependentUpon>EllipsoideEditor.xaml</DependentUpon>
+    <Compile Include="Views\Editeur\PropertiesEditeur\PrismeEditeur.xaml.cs">
+      <DependentUpon>PrismeEditeur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editeur\PropertiesEditeur\EllipsoideEditeur.xaml.cs">
+      <DependentUpon>EllipsoideEditeur.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editeur\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
@@ -248,23 +256,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\Editor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\PositionEditeur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\CylindreEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\PropertiesEditeur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editeur\PropertiesEditeur\CylindreEditeur.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\ConeEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\ConeEditeur.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\PrismeEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\PrismeEditeur.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Editeur\PropertiesEditor\EllipsoideEditor.xaml">
+    <Page Include="Views\Editeur\PropertiesEditeur\EllipsoideEditeur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -320,9 +332,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPFResources\EditeurStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFResources\MenuStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\TabControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\NumericTextBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WPFResources\Themes\Default.xaml">
       <SubType>Designer</SubType>
