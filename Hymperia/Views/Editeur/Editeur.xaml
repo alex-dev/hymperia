@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade" xmlns:const="clr-namespace:Hymperia.Facade.Constants"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True"
-    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects">
+    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz" xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="3.2*" />
@@ -34,8 +34,20 @@
         Grid.Row="1" Grid.RowSpan="3" IsSynchronizedWithCurrentItem="True" />
     <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.HorizontalTabControlRegion}" Grid.Column="1"
         Grid.Row="1" IsSynchronizedWithCurrentItem="True" />
+    <!--<dragablz:TabablzControl Margin="5" Grid.Column="0" Grid.Row="0">
+      <dragablz:TabablzControl.InterTabController>
+        <dragablz:InterTabController />
+      </dragablz:TabablzControl.InterTabController>
+      <TabItem Header="Tab 1" IsSelected="True">
+        <TextBlock>Hello!</TextBlock>
+      </TabItem>
+      <TabItem Header="Tab 2">
+        <TextBlock>Goodbye.</TextBlock>
+      </TabItem>
+    </dragablz:TabablzControl>-->
   </Grid>
 </UserControl>
-<!-- https://www.codeproject.com/Articles/1242778/TabControl-with-Pop-Out-Windows -->
-<!-- Follow this for titles : https://stackoverflow.com/questions/18507641/tab-controls-tab-item-header-in-wpf
-  Do it in a base class (in dependnacy objects). -->
+<!-- 
+  https://github.com/ButchersBoy/Dragablz
+  https://dragablz.net/2014/11/18/getting-started-with-dragablz-tabablzcontrol/
+-->
