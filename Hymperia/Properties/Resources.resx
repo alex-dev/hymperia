@@ -123,6 +123,9 @@
   <data name="AjouterProjet" xml:space="preserve">
     <value>Ajouter un projet</value>
   </data>
+  <data name="AnalyseMateriau" xml:space="preserve">
+    <value>Analyse Matériaux</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>et</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="EnumerationSeparator" xml:space="preserve">
     <value>, </value>
+  </data>
+  <data name="Fermer" xml:space="preserve">
+    <value>Fermer</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Le champ ne peut pas être vide.</value>
@@ -198,8 +204,26 @@
   <data name="Ouvrir" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
+  <data name="OuvrirFenetre" xml:space="preserve">
+    <value>Ouvrir dans une fenêtre</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="PositionX" xml:space="preserve">
+    <value>Position X</value>
+  </data>
+  <data name="PositionY" xml:space="preserve">
+    <value>Position Y</value>
+  </data>
+  <data name="PositionZ" xml:space="preserve">
+    <value>Position Z</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>
+  </data>
+  <data name="ProprieteForme" xml:space="preserve">
+    <value>Propriétés</value>
   </data>
   <data name="Radius_Base" xml:space="preserve">
     <value>Rayon _Base</value>
@@ -224,6 +248,21 @@
   <data name="Reglage" xml:space="preserve">
     <value>Réglage</value>
   </data>
+  <data name="Rotation" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="RotationW" xml:space="preserve">
+    <value>Rotation W</value>
+  </data>
+  <data name="RotationX" xml:space="preserve">
+    <value>Rotation X</value>
+  </data>
+  <data name="RotationY" xml:space="preserve">
+    <value>Rotation Y</value>
+  </data>
+  <data name="RotationZ" xml:space="preserve">
+    <value>Rotation Z</value>
+  </data>
   <data name="RequiredPassword" xml:space="preserve">
     <value>Un mot de passe est requis.</value>
   </data>
@@ -238,6 +277,12 @@
   </data>
   <data name="Scaling" xml:space="preserve">
     <value>Redimensionnement</value>
+  </data>
+  <data name="SelectionForme" xml:space="preserve">
+    <value>Sélection Formes</value>
+  </data>
+  <data name="SelectionMateriau" xml:space="preserve">
+    <value>Sélection Matériaux</value>
   </data>
   <data name="Supprimer" xml:space="preserve">
     <value>Supprimer</value>

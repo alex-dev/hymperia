@@ -32,5 +32,12 @@ namespace Hymperia.Facade.Extensions
     public static Media.Vector3D ConvertToVector(this Object.Point point) => new Media.Vector3D(point.X, point.Y, point.Z);
     /// <summary>Convertit un <see cref="Media.Vector3D"/> en <see cref="Object.Point"/>.</summary>
     public static Object.Point ConvertToPoint(this Media.Vector3D vector) => new Object.Point(vector.X, vector.Y, vector.Z);
+
+    public static Object.Quaternion CreateNormalized(double x, double y, double z, double w)
+    {
+      var quaternion = new Media.Quaternion(x, y, z, w);
+      quaternion.Normalize();
+      return quaternion.Convert();
+    }
   }
 }

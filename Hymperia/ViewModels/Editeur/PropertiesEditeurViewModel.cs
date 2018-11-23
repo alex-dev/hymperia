@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Hymperia.Facade.Collections;
 using Hymperia.Facade.Constants;
+using Hymperia.Facade.DependencyObjects;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.ModelWrappers;
@@ -20,9 +20,9 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
+namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public class EditorViewModel : BindableBase, IActiveAware
+  public class PropertiesEditeurViewModel : BindableBase, IActiveAware
   {
     #region Properties
 
@@ -52,6 +52,9 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
       }
       set
       {
+        if (value is null)
+          return;
+
         SelectedFormes.ForEach(forme => forme.Materiau = value);
       }
     }
@@ -78,7 +81,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
 
     #region Constructors
 
-    public EditorViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurMateriaux convertisseur, [NotNull] IRegionManager manager, [NotNull] IEventAggregator events)
+    public PropertiesEditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurMateriaux convertisseur, [NotNull] IRegionManager manager, [NotNull] IEventAggregator events)
     {
       SelectedFormes.CollectionChanged += OnSelectedFormesChanged;
 
@@ -98,37 +101,18 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
       using (await AsyncLock.Lock(MateriauxLoader))
         using (var wrapper = Factory.GetEditeurContext())
           using (await AsyncLock.Lock(wrapper.Context))
-            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+            Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+
+      // Reset interfaces' SelectedItem to proper values once ItemsSource changed.
+      RaisePropertyChanged(nameof(Materiau));
+      return Materiaux;
     }
 
     #endregion
 
     #region Region Activation
 
-    private void Activate(string name, FormeWrapper selected)
-    {
-      var region = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
-      var view = region.GetView(name);
-
-      if (view is UserControl _view)
-        _view.DataContext = selected;
-
-      region.Activate(view);
-    }
-
-    private void Deactivate()
-    {
-      var region = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
-
-      foreach (var view in region.ActiveViews)
-        region.Deactivate(view);
-    }
-
-    #endregion
-
-    #region SelectedFormes Changes Handlers
-
-    private void OnSelectedFormeChanged()
+    private void Navigate()
     {
       switch (SelectedForme)
       {
@@ -143,7 +127,42 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
         default:
           Deactivate(); break;
       }
+    }
 
+    private void Activate(string name, FormeWrapper selected)
+    {
+      void Execute(string viewname, IRegion region)
+      {
+        if (!(region.GetView(viewname) is DataUserControl view))
+          return;
+
+        region.Activate(view);
+        view.Data = selected;
+      }
+
+      Execute(ViewKeys.PositionEditeur, Manager.Regions[RegionKeys.PositionPropertiesRegion]);
+      Execute(name, Manager.Regions[RegionKeys.SpecificPropertiesRegion]);
+    }
+
+    private void Deactivate()
+    {
+      void Execute(IRegion region)
+      {
+        foreach (var view in region.ActiveViews)
+          region.Deactivate(view);
+      }
+
+      Execute(Manager.Regions[RegionKeys.PositionPropertiesRegion]);
+      Execute(Manager.Regions[RegionKeys.SpecificPropertiesRegion]);
+    }
+
+    #endregion
+
+    #region SelectedFormes Changes Handlers
+
+    private void OnSelectedFormeChanged()
+    {
+      Navigate();
       SelectedSingleFormeChanged.Publish(SelectedForme);
     }
 
@@ -214,7 +233,11 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditor
       }
     }
 
-    protected virtual void OnActivation() => MateriauxLoader.Loading = QueryMateriaux();
+    protected virtual void OnActivation()
+    {
+      MateriauxLoader.Loading = QueryMateriaux();
+      Navigate();
+    }
     protected virtual void OnDeactivation() { }
 
     #endregion

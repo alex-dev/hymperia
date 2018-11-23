@@ -7,6 +7,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValidationRules.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ValueConverters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/NumericTextBoxStyles.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ErrorStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/RadioButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/MaterialsSelectionStyles.xaml" />
@@ -17,6 +18,8 @@
         <ResourceDictionary Source="pack://application:,,,/WPFResources/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/DataGridStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WPFResources/MenuStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/TabControlStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFResources/EditeurStyles.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

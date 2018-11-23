@@ -25,6 +25,11 @@ namespace Hymperia.Facade.Properties
     public static string AjouterProjet => GetString("AjouterProjet");
 
     /// <summary>
+    ///   Analyse Matériaux
+    /// </summary>
+    public static string AnalyseMateriau => GetString("AnalyseMateriau");
+
+    /// <summary>
     ///   et
     /// </summary>
     public static string And => GetString("And");
@@ -84,6 +89,11 @@ namespace Hymperia.Facade.Properties
     ///   , 
     /// </summary>
     public static string EnumerationSeparator => GetString("EnumerationSeparator");
+
+    /// <summary>
+    ///   Fermer
+    /// </summary>
+    public static string Fermer => GetString("Fermer");
 
     /// <summary>
     ///   Le champ ne peut pas être vide.
@@ -168,9 +178,39 @@ namespace Hymperia.Facade.Properties
     public static string Ouvrir => GetString("Ouvrir");
 
     /// <summary>
+    ///   Position
+    /// </summary>
+    public static string Position => GetString("Position");
+
+    /// <summary>
+    ///   Position X
+    /// </summary>
+    public static string PositionX => GetString("PositionX");
+
+    /// <summary>
+    ///   Position Y
+    /// </summary>
+    public static string PositionY => GetString("PositionY");
+
+    /// <summary>
+    ///   Position Z
+    /// </summary>
+    public static string PositionZ => GetString("PositionZ");
+
+    /// <summary>
+    ///   Ouvrir dans une fenêtre
+    /// </summary>
+    public static string OuvrirFenetre => GetString("OuvrirFenetre");
+
+    /// <summary>
     ///   Prix
     /// </summary>
     public static string Price => GetString("Price");
+
+    /// <summary>
+    ///   Propriétés
+    /// </summary>
+    public static string ProprieteForme => GetString("ProprieteForme");
 
     /// <summary>
     ///   Rayon _Base
@@ -203,6 +243,30 @@ namespace Hymperia.Facade.Properties
     public static string Reglage => GetString("Reglage");
 
     /// <summary>
+    ///   Rotation
+    /// </summary>
+    public static string Rotation => GetString("Rotation");
+
+    /// <summary>
+    ///   Rotation W
+    /// </summary>
+    public static string RotationW => GetString("RotationW");
+
+    /// <summary>
+    ///   Rotation X
+    /// </summary>
+    public static string RotationX => GetString("RotationX");
+
+    /// <summary>
+    ///   Rotation Y
+    /// </summary>
+    public static string RotationY => GetString("RotationY");
+
+    /// <summary>
+    ///   Rotation Z
+    /// </summary>
+    public static string RotationZ => GetString("RotationZ");
+    
     ///   Un mot de passe est requis.
     /// </summary>
     public static string RequiredPassword => GetString("RequiredPassword");
@@ -226,6 +290,16 @@ namespace Hymperia.Facade.Properties
     ///   Redimensionnement
     /// </summary>
     public static string Scaling => GetString("Scaling");
+
+    /// <summary>
+    ///   Sélection Formes
+    /// </summary>
+    public static string SelectionForme => GetString("SelectionForme");
+
+    /// <summary>
+    ///   Sélection Matériaux
+    /// </summary>
+    public static string SelectionMateriau => GetString("SelectionMateriau");
 
     /// <summary>
     ///   Supprimer

@@ -5,11 +5,11 @@ using System.Windows.Data;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
 using Hymperia.Facade.Views.Editeur.ProjetAnalyse;
-using Hymperia.Facade.Views.Editeur.PropertiesEditor;
 using Hymperia.Model.Modeles;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
+using P = Hymperia.Facade.Views.Editeur.PropertiesEditeur;
 
 namespace Hymperia.Facade.Views.Editeur
 {
@@ -20,6 +20,9 @@ namespace Hymperia.Facade.Views.Editeur
     public static readonly DependencyProperty ProjetProperty =
       DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Editeur));
 
+    public static readonly DependencyProperty DroitProperty =
+      DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur));
+
     #endregion
 
     public Projet Projet
@@ -28,17 +31,28 @@ namespace Hymperia.Facade.Views.Editeur
       set => SetValue(ProjetProperty, value);
     }
 
+    public Acces.Droit Droit
+    {
+      get => (Acces.Droit)GetValue(DroitProperty);
+      set => SetValue(DroitProperty, value);
+    }
+
     #region Constructors
 
     public Editeur(IRegionManager manager, IContainerExtension container)
     {
-      Container = container;
       Manager = manager;
+      Viewport = container.Resolve<Viewport>();
+      FormesSelection = container.Resolve<FormesSelection>();
+      MateriauxSelection = container.Resolve<MateriauxSelection>();
+      PropertiesEditeur = container.Resolve<P.PropertiesEditeur>();
+      MateriauxAnalyse = container.Resolve<MateriauxAnalyse>();
 
       Loaded += RegisterViews;
       InitializeComponent();
 
-      BindingOperations.SetBinding(this, ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      //BindingOperations.SetBinding(this, DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -50,39 +64,33 @@ namespace Hymperia.Facade.Views.Editeur
       Loaded -= RegisterViews;
 
       ViewportRegion = Manager.Regions[RegionKeys.ViewportRegion];
-      FormesSelectionRegion = Manager.Regions[RegionKeys.FormesSelectionRegion];
-      MateriauxSelectionRegion = Manager.Regions[RegionKeys.MateriauxSelectionRegion];
-      ProjetAnalyseRegion = Manager.Regions[RegionKeys.ProjetAnalyseRegion];
-      FormesPropertiesRegion = Manager.Regions[RegionKeys.FormesPropertiesRegion];
+      HorizontalTabControl = Manager.Regions[RegionKeys.HorizontalTabControlRegion];
+      VerticalTabControl = Manager.Regions[RegionKeys.VerticalTabControlRegion];
+    }
 
-      ViewportRegion.Add(Container.Resolve<Viewport>(), ViewKeys.Viewport);
-      FormesSelectionRegion.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
-      MateriauxSelectionRegion.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
-      ProjetAnalyseRegion.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      FormesPropertiesRegion.Add(Container.Resolve<Editor>(), ViewKeys.PropertiesEditor);
+    private void RegisterViews(Acces.Droit droit)
+    {
+      ViewportRegion.Add(Viewport, ViewKeys.Viewport);
+      HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
+      HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
+      VerticalTabControl.Add(MateriauxAnalyse, ViewKeys.MateriauxAnalyse);
+      VerticalTabControl.Add(PropertiesEditeur, ViewKeys.PropertiesEditeur);
     }
 
     #endregion
 
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
+    public bool IsNavigationTarget(NavigationContext context) =>
+      context.Parameters[NavigationParameterKeys.Projet] is Projet && context.Parameters[NavigationParameterKeys.Acces] is Acces.Droit;
+
     public void OnNavigatedTo(NavigationContext context)
     {
-      void Set() =>
-        Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
-
-      void Load(object sender, RoutedEventArgs e)
-      {
-        Set();
-        Loaded -= Load;
-      }
-
-      if (IsLoaded)
-        Set();
-      else
-        Loaded += Load;
+      Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+      Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
+      RegisterViews(Droit);
     }
+
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
@@ -113,19 +121,15 @@ namespace Hymperia.Facade.Views.Editeur
     private void OnActivation()
     {
       ViewportRegion?.Activate(ViewportRegion?.GetView(ViewKeys.Viewport));
-      FormesSelectionRegion?.Activate(FormesSelectionRegion?.GetView(ViewKeys.FormesSelection));
-      MateriauxSelectionRegion?.Activate(MateriauxSelectionRegion?.GetView(ViewKeys.MateriauxSelection));
-      ProjetAnalyseRegion?.Activate(ProjetAnalyseRegion?.GetView(ViewKeys.MateriauxAnalyse));
-      FormesPropertiesRegion?.Activate(FormesPropertiesRegion?.GetView(ViewKeys.PropertiesEditor));
+      HorizontalTabControl?.Activate(HorizontalTabControl?.GetView(ViewKeys.FormesSelection));
+      VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.PropertiesEditeur));
     }
 
     private void OnDeactivation()
     {
       ViewportRegion?.Deactivate();
-      FormesSelectionRegion?.Deactivate();
-      MateriauxSelectionRegion?.Deactivate();
-      ProjetAnalyseRegion?.Deactivate();
-      FormesPropertiesRegion?.Deactivate();
+      HorizontalTabControl?.Deactivate();
+      VerticalTabControl?.Deactivate();
     }
 
     private bool isActive;
@@ -134,13 +138,20 @@ namespace Hymperia.Facade.Views.Editeur
 
     #region Services
 
-    private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
     private IRegion ViewportRegion;
-    private IRegion FormesSelectionRegion;
-    private IRegion MateriauxSelectionRegion;
-    private IRegion ProjetAnalyseRegion;
-    private IRegion FormesPropertiesRegion;
+    private IRegion HorizontalTabControl;
+    private IRegion VerticalTabControl;
+
+    #endregion
+
+    #region Views
+
+    private readonly Viewport Viewport;
+    private readonly FormesSelection FormesSelection;
+    private readonly MateriauxSelection MateriauxSelection;
+    private readonly P.PropertiesEditeur PropertiesEditeur;
+    private readonly MateriauxAnalyse MateriauxAnalyse;
 
     #endregion
   }
