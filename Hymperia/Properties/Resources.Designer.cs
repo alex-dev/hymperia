@@ -56,6 +56,11 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
+    ///   Changement du mot de passe :
+    /// </summary>
+    public static string ChangementDuMotDePasse => GetString("ChangementDuMotDePasse");
+
+    /// <summary>
     ///   Confirmer
     /// </summary>
     public static string Confirmer => GetString("Confirmer");
@@ -64,6 +69,11 @@ namespace Hymperia.Facade.Properties
     ///   Connexion
     /// </summary>
     public static string Connexion => GetString("Connexion");
+
+    /// <summary>
+    ///   Connexion automatique :
+    /// </summary>
+    public static string ConnexionAutomatique => GetString("ConnexionAutomatique");
 
     /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
@@ -148,9 +158,19 @@ namespace Hymperia.Facade.Properties
     public static string Movement => GetString("Movement");
 
     /// <summary>
+    ///   Non
+    /// </summary>
+    public static string Non => GetString("Non");
+
+    /// <summary>
     ///   Merci de saisir le nom du nouveau projet :
     /// </summary>
     public static string NouveauNomProjet => GetString("NouveauNomProjet");
+
+    /// <summary>
+    ///   Oui
+    /// </summary>
+    public static string Oui => GetString("Oui");
 
     /// <summary>
     ///   Ouvrir
@@ -216,6 +236,11 @@ namespace Hymperia.Facade.Properties
     ///   Rayon _Z
     /// </summary>
     public static string Radius_Z => GetString("Radius_Z");
+
+    /// <summary>
+    ///   Réglage
+    /// </summary>
+    public static string Reglage => GetString("Reglage");
 
     /// <summary>
     ///   Rotation

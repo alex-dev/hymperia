@@ -1,0 +1,18 @@
+﻿<!--
+Auteur : Antoine Mailhot
+Date de création : 21 novembre 2018
+-->
+<UserControl x:Class="Hymperia.Facade.Views.Reglages.Application.ChangementMotDePasse"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+  <StackPanel Orientation="Vertical">
+    <TextBlock Text="{x:Static prop:Resources.ChangementDuMotDePasse}" HorizontalAlignment="Center" />
+    <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
+    <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
+        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+    <Label Target="{Binding ElementName=txtVerification}" Content="{x:Static prop:Resources._VerificationMotDePasse}" />
+    <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
+        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+  </StackPanel>
+</UserControl>

@@ -138,11 +138,17 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Peut seulement convertir vers {targets}.</value>
   </data>
+  <data name="ChangementDuMotDePasse" xml:space="preserve">
+    <value>Changement du mot de passe :</value>
+  </data>
   <data name="Confirmer" xml:space="preserve">
     <value>Confirmer</value>
   </data>
   <data name="Connexion" xml:space="preserve">
     <value>Connexion</value>
+  </data>
+  <data name="ConnexionAutomatique" xml:space="preserve">
+    <value>Connexion automatique :</value>
   </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
@@ -186,8 +192,14 @@
   <data name="Movement" xml:space="preserve">
     <value>Déplacement</value>
   </data>
+  <data name="Non" xml:space="preserve">
+    <value>Non</value>
+  </data>
   <data name="NouveauNomProjet" xml:space="preserve">
     <value>Merci de saisir le nom du nouveau projet :</value>
+  </data>
+  <data name="Oui" xml:space="preserve">
+    <value>Oui</value>
   </data>
   <data name="Ouvrir" xml:space="preserve">
     <value>Ouvrir</value>
@@ -232,6 +244,9 @@
   <data name="Radius_Z" xml:space="preserve">
     <value>Rayon _Z</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="Reglage" xml:space="preserve">
+    <value>Réglage</value>
   </data>
   <data name="Rotation" xml:space="preserve">
     <value>Rotation</value>

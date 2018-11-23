@@ -41,8 +41,12 @@ namespace Hymperia.Facade.Views.Editeur
 
     public Editeur(IRegionManager manager, IContainerExtension container)
     {
-      Container = container;
       Manager = manager;
+      Viewport = container.Resolve<Viewport>();
+      FormesSelection = container.Resolve<FormesSelection>();
+      MateriauxSelection = container.Resolve<MateriauxSelection>();
+      PropertiesEditeur = container.Resolve<P.PropertiesEditeur>();
+      MateriauxAnalyse = container.Resolve<MateriauxAnalyse>();
 
       Loaded += RegisterViews;
       InitializeComponent();
@@ -66,11 +70,11 @@ namespace Hymperia.Facade.Views.Editeur
 
     private void RegisterViews(Acces.Droit droit)
     {
-      ViewportRegion.Add(Container.Resolve<Viewport>(), ViewKeys.Viewport);
-      HorizontalTabControl.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
-      HorizontalTabControl.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
-      VerticalTabControl.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      VerticalTabControl.Add(Container.Resolve<P.PropertiesEditeur>(), ViewKeys.PropertiesEditeur);
+      ViewportRegion.Add(Viewport, ViewKeys.Viewport);
+      HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
+      HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
+      VerticalTabControl.Add(MateriauxAnalyse, ViewKeys.MateriauxAnalyse);
+      VerticalTabControl.Add(PropertiesEditeur, ViewKeys.PropertiesEditeur);
     }
 
     #endregion
@@ -134,11 +138,20 @@ namespace Hymperia.Facade.Views.Editeur
 
     #region Services
 
-    private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
     private IRegion ViewportRegion;
     private IRegion HorizontalTabControl;
     private IRegion VerticalTabControl;
+
+    #endregion
+
+    #region Views
+
+    private readonly Viewport Viewport;
+    private readonly FormesSelection FormesSelection;
+    private readonly MateriauxSelection MateriauxSelection;
+    private readonly P.PropertiesEditeur PropertiesEditeur;
+    private readonly MateriauxAnalyse MateriauxAnalyse;
 
     #endregion
   }

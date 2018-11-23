@@ -99,7 +99,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private async Task<ICollection<MateriauWrapper>> QueryMateriaux()
     {
       using (await AsyncLock.Lock(MateriauxLoader))
-        using (var wrapper = Factory.GetEditorContext())
+        using (var wrapper = Factory.GetEditeurContext())
           using (await AsyncLock.Lock(wrapper.Context))
             Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
 

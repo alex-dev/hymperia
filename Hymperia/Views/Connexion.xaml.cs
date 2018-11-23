@@ -6,14 +6,11 @@ using System.Windows.Controls;
 
 namespace Hymperia.Facade.Views
 {
-  /// <summary>
-  /// Logique d'interaction pour Connexion.xaml
-  /// </summary>
   public partial class Connexion : UserControl
+  {
+    public Connexion()
     {
-        public Connexion()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
     }
+  }
 }

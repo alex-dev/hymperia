@@ -16,10 +16,11 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using B = BCrypt.Net;
+using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class InscriptionViewModel : ValidatingBase, INotifyDataErrorInfo
+  public class InscriptionViewModel : ValidatingBase
   {
     #region Properties
 
@@ -90,6 +91,8 @@ namespace Hymperia.Facade.ViewModels
         return;
 
       var utilisateur = await CreateUtilisateur();
+      S.Default.Utilisateur = utilisateur.Nom;
+      S.Default.MotDePasse = B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true);
       Navigate(utilisateur);
     }
 
@@ -121,7 +124,7 @@ namespace Hymperia.Facade.ViewModels
     #region Navigation
 
     private void Navigate(Utilisateur utilisateur) =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
       {
         { NavigationParameterKeys.Utilisateur, utilisateur }
       });
@@ -163,6 +166,5 @@ namespace Hymperia.Facade.ViewModels
     private string verification;
 
     #endregion
-
   }
 }

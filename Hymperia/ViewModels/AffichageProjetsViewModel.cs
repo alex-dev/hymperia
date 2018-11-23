@@ -51,6 +51,8 @@ namespace Hymperia.Facade.ViewModels
     #region Commands
 
     public ICommand NavigateToProjet { get; private set; }
+    public ICommand NavigateToReglage { get; private set; } 
+
     public ICommand SupprimerProjet { get; private set; }
     public ICommand AjouterProjet { get; private set; }
 
@@ -77,7 +79,8 @@ namespace Hymperia.Facade.ViewModels
 
     public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
-      NavigateToProjet = new DelegateCommand<Acces>(_NavigateToProjet);
+      NavigateToProjet = new DelegateCommand<Acces>(_NavigateToProjet);      
+      NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       SupprimerProjet = new DelegateCommand<IList>(
         projets => _SupprimerProjets(projets?.Cast<Acces>()),
         projets => CanSupprimerProjets(projets?.Cast<Acces>()));
@@ -87,6 +90,7 @@ namespace Hymperia.Facade.ViewModels
       Manager = manager;
     }
 
+
     #endregion
 
     #region Command NavigateToProjet
@@ -95,11 +99,24 @@ namespace Hymperia.Facade.ViewModels
     {
       // Force la création d'un context d'éditeur pour la durée de la navigation.
       // De cette façon, toutes les vues peuvent garantir que leur contexte est le même.
-      using (ContextFactory.GetEditorContext())
-        Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
+      using (ContextFactory.GetEditeurContext())
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Editeur, new NavigationParameters
         {
           { NavigationParameterKeys.Projet, projet.Projet },
           { NavigationParameterKeys.Acces, projet.DroitDAcces }
+        });
+    }
+
+    #endregion
+
+    #region Command NavigateToReglage
+
+    private void _NavigateToReglage()
+    {
+      using (ContextFactory.GetReglageUtilisateurContext())
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageUtilisateur, new NavigationParameters
+        {
+          { NavigationParameterKeys.Utilisateur, Utilisateur }
         });
     }
 

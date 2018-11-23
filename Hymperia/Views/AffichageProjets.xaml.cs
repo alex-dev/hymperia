@@ -41,7 +41,8 @@ namespace Hymperia.Facade.Views
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    public void OnNavigatedTo(NavigationContext context) => 
+      Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
