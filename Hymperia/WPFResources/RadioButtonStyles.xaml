@@ -9,22 +9,23 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListBoxItem}">
-          <DockPanel LastChildFill="True" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch"
-              VerticalAlignment="Center">
+          <DockPanel LastChildFill="True" Background="{TemplateBinding Background}" HorizontalAlignment="Left"
+              VerticalAlignment="Center" Width="200">
             <RadioButton IsChecked="{TemplateBinding IsSelected}" Focusable="False" IsHitTestVisible="False"
-                VerticalAlignment="Center" Margin="0,0,4,0" />
-            <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="5" Width="200">
+              <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
                 ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
                 ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
                 HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Width="105"/>
+            </RadioButton>
           </DockPanel>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
     <Setter Property="FontSize" Value="20" />
-    <Setter Property="FontFamily" Value="."/>
+    <Setter Property="FontFamily" Value="." />
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrush}}" />
   </Style>
   <Style x:Key="RadioButtonList" TargetType="{x:Type ListBox}">
@@ -36,6 +37,8 @@
     <Setter Property="SelectedValuePath" Value="Tag" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Background" Value="Transparent" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="Width" Value="200" />
     <Setter Property="ItemContainerStyle" Value="{StaticResource RadioButtonListItem}" />
     <Setter Property="Control.Template">
       <Setter.Value>
@@ -56,6 +59,33 @@
         <ItemsPanelTemplate>
           <VirtualizingStackPanel Background="Transparent" Orientation="Horizontal" />
         </ItemsPanelTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style TargetType="{x:Type RadioButton}" x:Name="RadioButtonStripe">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type RadioButton}">
+          <BulletDecorator Cursor="Hand" Width="180">
+            <Border Width="150" Height="30" CornerRadius="2"
+                BorderBrush="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" BorderThickness="2">
+              <Grid>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                <Border Margin="5,0,137,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Name="RadioMark" />
+              </Grid>
+            </Border>
+          </BulletDecorator>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter TargetName="RadioMark" Property="Background"
+                  Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="RadioMark" Property="Background"
+                  Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrush}}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
