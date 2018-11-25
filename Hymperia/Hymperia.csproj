@@ -86,7 +86,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-	<Compile Include="SelectionMode.cs" />
+    <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
+    <Compile Include="SelectionMode.cs" />
     <Compile Include="Collections\BulkObservableCollection.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
