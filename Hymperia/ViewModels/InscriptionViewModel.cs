@@ -33,9 +33,9 @@ namespace Hymperia.Facade.ViewModels
       set => SetProperty(ref username, value);
     }
 
-    [Required(
+    /*[Required(
       ErrorMessageResourceName = nameof(Resources.RequiredPassword),
-      ErrorMessageResourceType = typeof(Resources))]
+      ErrorMessageResourceType = typeof(Resources))]*/
     [Compare(nameof(Verification),
       ErrorMessageResourceName = nameof(Resources.DontMatchPassword),
       ErrorMessageResourceType = typeof(Resources))]
@@ -50,9 +50,9 @@ namespace Hymperia.Facade.ViewModels
     }
 
 
-    [Required(
+    /*[Required(
       ErrorMessageResourceName = nameof(Resources.RequiredVerification),
-      ErrorMessageResourceType = typeof(Resources))]
+      ErrorMessageResourceType = typeof(Resources))]*/
     [Compare(nameof(Password),
       ErrorMessageResourceName = nameof(Resources.DontMatchPassword),
       ErrorMessageResourceType = typeof(Resources))]

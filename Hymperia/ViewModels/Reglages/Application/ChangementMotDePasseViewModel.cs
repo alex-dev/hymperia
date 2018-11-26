@@ -4,16 +4,19 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using JetBrains.Annotations;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using B = BCrypt.Net;
 using S = Hymperia.Model.Properties.Settings;
@@ -24,6 +27,15 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
   public class ChangementMotDePasseViewModel : ValidatingBase, INotifyDataErrorInfo
   {
     #region Properties
+
+    public string OldPassword
+    {
+      get => oldpassword;
+      set
+      {
+        SetProperty(ref oldpassword, value);
+      }
+    }
 
     /*[Required(
       ErrorMessageResourceName = nameof(Resources.RequiredPassword),
@@ -60,10 +72,13 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public Model.Modeles.Utilisateur Utilisateur
     {
       get => utilisateur;
-      set
-      {
-        SetProperty(ref utilisateur, value);
-      }
+      set { SetProperty(ref utilisateur, value); }
+    }
+
+    public List<string> Erreurs
+    {
+      get => erreurs;
+      set { SetProperty(ref erreurs, value); }
     }
 
     public DelegateCommand ChangementMotDePasse { get; }
@@ -72,18 +87,41 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructeur
 
-    public ChangementMotDePasseViewModel(ContextFactory factory)
+    public ChangementMotDePasseViewModel(ContextFactory context, ICommandAggregator commands, IEventAggregator events)
     {
-      ContextFactory = factory;
+      ContextFactory = context;
+      commands.GetCommandOrCreate<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarderChangementMotDePasse));
+      events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
+      events.GetEvent<ReglageErreursChanged>().Subscribe(OnErreursChanged);
+
       ChangementMotDePasse = new DelegateCommand(_ChangementMotDePasse);
     }
 
     #endregion
 
+    private void PreSauvegarderChangementMotDePasse()
+    {
+      if (ValidatationAncientMotDePasse())
+        _ChangementMotDePasse();
+      else
+      {
+        Erreurs.Add(Resources.InvalidCredential);
+        OnErreursChanged(Erreurs);
+      }
+    }
+
+    private void OnUtilisateurChanged(Model.Modeles.Utilisateur utilisateur) => Utilisateur = utilisateur;
+
+    private void OnErreursChanged(List<string> erreurs) => Erreurs = erreurs;
+
     private async void _ChangementMotDePasse()
     {
       if (!await Validate())
+      {
+        Erreurs.Add(Resources.InvalidCredential);
+        OnErreursChanged(Erreurs);
         return;
+      }
 
       await ModificationUtilisateur();
     }
@@ -96,10 +134,15 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       using (var context = ContextFactory.GetReglageUtilisateurContext())
       {
         context.Context.Utilisateurs.Update(Utilisateur);
-        await context.Context.SaveChangesAsync();
       }
 
       S.Default.MotDePasse = Utilisateur.MotDePasse;
+      OnUtilisateurChanged(Utilisateur);
+    }
+
+    private bool ValidatationAncientMotDePasse()
+    {
+      return B.BCrypt.Verify(OldPassword, Utilisateur.MotDePasse, true);
     }
 
     #endregion
@@ -199,6 +242,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private string verification = "";
     private bool isActive;
     private CancellationTokenSource disposeToken;
+    private string oldpassword = "";
+    private List<string> erreurs = new List<string>();
 
     #endregion
   }

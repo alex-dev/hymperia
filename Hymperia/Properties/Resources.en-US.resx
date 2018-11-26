@@ -323,11 +323,11 @@
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_MotDePasse" xml:space="preserve">
-    <value>_Password</value>
+    <value>_Password :</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Utilisateur" xml:space="preserve">
-    <value>_Username</value>
+    <value>_Username :</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_VerificationMotDePasse" xml:space="preserve">
@@ -336,5 +336,8 @@
   <data name="_Width" xml:space="preserve">
     <value>_Width</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_AncientMotDePasse" xml:space="preserve">
+    <value>_Old password : </value>
   </data>
 </root>

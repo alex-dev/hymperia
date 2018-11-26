@@ -7,7 +7,11 @@ Date de création : 21 novembre 2018
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Vertical">
+
     <TextBlock Text="{x:Static prop:Resources.ChangementDuMotDePasse}" HorizontalAlignment="Center" />
+    <Label Target="{Binding ElementName=txtOldPassword}" Content="{x:Static prop:Resources._AncientMotDePasse}" />
+    <PasswordBox x:Name="txtOldPassword" do:PasswordBoxHelper.Attach="True"
+        do:PasswordBoxHelper.Password="{Binding OldPassword, ValidatesOnDataErrors=True}" PasswordChar="♦" />
     <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
     <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
         do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />

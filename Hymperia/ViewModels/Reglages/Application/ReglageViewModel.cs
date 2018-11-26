@@ -4,6 +4,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -34,6 +35,12 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
     }
 
+    public List<string> Erreurs
+    {
+      get => erreurs;
+      set => RaiseErreursChanged();
+    }
+
     #endregion
 
     #region Commands
@@ -44,6 +51,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Asynchronous Loading
 
+    public AsyncLoader<List<string>> ErreursLoader { get; } = new AsyncLoader<List<string>>();
     public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();
 
@@ -61,6 +69,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
       PreSauvegarder = commands.GetCommandOrCreate<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
+      ErreursChanged = events.GetEvent<ReglageErreursChanged>();
     }
 
     #endregion
@@ -70,9 +79,16 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private async Task _Sauvegarder()
     {
       PreSauvegarder.Execute(null);
-      S.Default.Save();
-      using (await AsyncLock.Lock(ContextWrapper.Context))
-        await ContextWrapper.Context.SaveChangesAsync();
+      if (Erreurs?.Count > 0)
+      {
+        return;
+      }
+      else
+      {
+        S.Default.Save();
+        using (await AsyncLock.Lock(ContextWrapper.Context))
+          await ContextWrapper.Context.SaveChangesAsync();
+      }
     }
 
     #endregion
@@ -89,7 +105,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
         using (await AsyncLock.Lock(ContextWrapper.Context))
           value = await ContextWrapper.Context.Utilisateurs.FindByIdAsync(_utilisateur.Id);
 
-        SetProperty(ref utilisateur, value, onChanged, nameof(Projet));
+        SetProperty(ref utilisateur, value, onChanged, nameof(Utilisateur));
       }
 
       return value;
@@ -97,9 +113,17 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #endregion
 
+    private async Task<List<string>> CheckErreurs(List<string> _erreurs, Action onChanged)
+    {
+      SetProperty(ref erreurs,null, onChanged, nameof(Erreurs));
+      return _erreurs;
+    }
+
     #region UtilisateurChanged
 
     private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
+
+    private void RaiseErreursChanged() => ErreursChanged.Publish(Erreurs);
 
     #endregion
 
@@ -179,6 +203,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private readonly PreSauvegarderReglageApplication PreSauvegarder;
     [NotNull]
     private readonly ReglageUtilisateurChanged UtilisateurChanged;
+    [NotNull]
+    private readonly ReglageErreursChanged ErreursChanged;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
@@ -190,6 +216,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private Utilisateur utilisateur;
     private bool isActive;
     private CancellationTokenSource disposeToken;
+    private List<string> erreurs;
 
     #endregion
   }
