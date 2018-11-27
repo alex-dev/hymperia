@@ -3,49 +3,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
     xmlns:base="clr-namespace:Hymperia.Facade" xmlns:const="clr-namespace:Hymperia.Facade.Constants"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True"
-    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz" xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz">
+    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects">
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3.2*" />
       <ColumnDefinition Width="13*" />
       <ColumnDefinition Width="5*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="50" />
       <RowDefinition Height="5*" />
-      <RowDefinition Height="7*" />
-      <RowDefinition Height="10*" />
-      <RowDefinition Height="200" />
+      <RowDefinition Height="17*" />
     </Grid.RowDefinitions>
-    <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Center"
+    <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center"
         HorizontalContentAlignment="Center">
       <MenuItem Command="{Binding Sauvegarder}" Header="{x:Static prop:Resources.Save}" Grid.Row="0" Grid.Column="0" />
     </Menu>
     <ListBox Style="{StaticResource RadioButtonList}" SelectedValuePath="Tag"
-        SelectedValue="{Binding SelectedSelectionMode, Mode=OneWayToSource}" Grid.Column="0" Grid.Row="1">
+        SelectedValue="{Binding SelectedSelectionMode, Mode=OneWayToSource}" Grid.Column="2" Grid.Row="1">
       <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Deplacement}"
           Content="{x:Static prop:Resources.Movement}" Selector.IsSelected="True" />
       <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Transformation}"
           Content="{x:Static prop:Resources.Scaling}" />
     </ListBox>
-    <ContentControl Style="{StaticResource EditeurStyle}" prism:RegionManager.RegionName="{x:Static const:RegionKeys.ViewportRegion}" Grid.Column="1"
-        Grid.Row="2" Grid.RowSpan="3" />
+    <ContentControl Style="{StaticResource EditeurStyle}" prism:RegionManager.RegionName="{x:Static const:RegionKeys.ViewportRegion}" Grid.Column="0"
+        Grid.Row="2" />
     <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.VerticalTabControlRegion}" Grid.Column="2"
-        Grid.Row="1" Grid.RowSpan="3" IsSynchronizedWithCurrentItem="True" />
-    <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.HorizontalTabControlRegion}" Grid.Column="1"
+        Grid.Row="2" IsSynchronizedWithCurrentItem="True" />
+        <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.HorizontalTabControlRegion}" Grid.Column="0"
         Grid.Row="1" IsSynchronizedWithCurrentItem="True" />
-    <!--<dragablz:TabablzControl Margin="5" Grid.Column="0" Grid.Row="0">
-      <dragablz:TabablzControl.InterTabController>
-        <dragablz:InterTabController />
-      </dragablz:TabablzControl.InterTabController>
-      <TabItem Header="Tab 1" IsSelected="True">
-        <TextBlock>Hello!</TextBlock>
-      </TabItem>
-      <TabItem Header="Tab 2">
-        <TextBlock>Goodbye.</TextBlock>
-      </TabItem>
-    </dragablz:TabablzControl>-->
-  </Grid>
+    </Grid>
+  <!-- https://stackoverflow.com/questions/2502178/hide-grid-row-in-wpf -->
 </UserControl>
 <!-- 
   https://github.com/ButchersBoy/Dragablz
