@@ -40,8 +40,9 @@
     </ListBox>
     <DockPanel LastChildFill="False" Grid.Column="1">
       <Button Content="{x:Static prop:Resources.Ajouter}" Command="{Binding AjouterProjet}" DockPanel.Dock="Top" />
-      <Button x:Name="btnSuppression" Content="{x:Static prop:Resources.Supprimer}" Command="{Binding SupprimerProjet}"
-          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"/>
+      <Button x:Name="btnSuppression" Command="{Binding SupprimerProjet}"
+          CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"
+          Content="{x:Static prop:Resources.Supprimer}" />
       <Button Content="{x:Static prop:Resources.Reglage}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom" />
     </DockPanel>
   </Grid>
