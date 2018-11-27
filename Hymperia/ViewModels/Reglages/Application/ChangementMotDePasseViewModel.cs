@@ -17,6 +17,7 @@ using Hymperia.Model;
 using JetBrains.Annotations;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using B = BCrypt.Net;
 using S = Hymperia.Model.Properties.Settings;
@@ -92,7 +93,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       ContextFactory = context;
       commands.GetCommandOrCreate<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarderChangementMotDePasse));
       events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
-      events.GetEvent<ReglageErreursChanged>().Subscribe(OnErreursChanged);
+      ErreursChanged = events.GetEvent<ReglageErreursChanged>();
 
       ChangementMotDePasse = new DelegateCommand(_ChangementMotDePasse);
     }
@@ -106,9 +107,11 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       else
       {
         Erreurs.Add(Resources.InvalidCredential);
-        OnErreursChanged(Erreurs);
+        RaiseErreursChanged();
       }
     }
+
+    private void RaiseErreursChanged() => ErreursChanged.Publish(Erreurs);
 
     private void OnUtilisateurChanged(Model.Modeles.Utilisateur utilisateur) => Utilisateur = utilisateur;
 
@@ -119,7 +122,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       if (!await Validate())
       {
         Erreurs.Add(Resources.InvalidCredential);
-        OnErreursChanged(Erreurs);
+        RaiseErreursChanged();
         return;
       }
 
@@ -229,9 +232,10 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     [NotNull]
     private readonly ContextFactory ContextFactory;
-
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
+    [NotNull]
+    private readonly ReglageErreursChanged ErreursChanged;
 
     #endregion
 

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
@@ -18,6 +19,7 @@ using JetBrains.Annotations;
 using Prism;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using S = Hymperia.Model.Properties.Settings;
 
@@ -38,8 +40,14 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public List<string> Erreurs
     {
       get => erreurs;
-      set => RaiseErreursChanged();
+      set => SetProperty(ref erreurs, value);
     }
+
+    #endregion
+
+    #region Interaction Requests
+
+    public InteractionRequest<IConfirmation> InformationSauvegardeRequest { get; } = new InteractionRequest<IConfirmation>();
 
     #endregion
 
@@ -63,31 +71,66 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
-      Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _Sauvegarder());
+      Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _PreSauvegarder());
 
       ContextFactory = factory;
 
       PreSauvegarder = commands.GetCommandOrCreate<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
-      ErreursChanged = events.GetEvent<ReglageErreursChanged>();
+      events.GetEvent<ReglageErreursChanged>().Subscribe(RafraichirErreurs);
     }
 
     #endregion
 
     #region Command Sauvegarder
 
-    private async Task _Sauvegarder()
+    private async Task _PreSauvegarder()
     {
       PreSauvegarder.Execute(null);
+      _InformationSauvegarde();
       if (Erreurs?.Count > 0)
       {
-        return;
+        Erreurs.Clear();
+        RaiseErreursChanged();
+      }
+
+    }
+
+    private async Task _Sauvegarder()
+    {
+      S.Default.Save();
+      using (await AsyncLock.Lock(ContextWrapper.Context))
+        await ContextWrapper.Context.SaveChangesAsync();
+
+    }
+
+    #endregion
+
+    #region Command InformationSauvegarde
+
+    private void _InformationSauvegarde()
+    {
+      if (Erreurs?.Count > 0)
+      {
+        InformationSauvegardeRequest.Raise(new Confirmation
+        {
+          Title = Resources.Echec,
+          Content = Erreurs
+        });
       }
       else
       {
-        S.Default.Save();
-        using (await AsyncLock.Lock(ContextWrapper.Context))
-          await ContextWrapper.Context.SaveChangesAsync();
+        InformationSauvegardeRequest.Raise(new Confirmation
+        {
+          Title = Resources.Reussite,
+          Content = Resources.SaveDataInfo
+        }, ExecuteReussite);
+      }
+
+      void ExecuteReussite(IConfirmation context)
+      {
+        if (context.Confirmed == true)
+            _Sauvegarder();
       }
     }
 
@@ -113,17 +156,16 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #endregion
 
-    private async Task<List<string>> CheckErreurs(List<string> _erreurs, Action onChanged)
-    {
-      SetProperty(ref erreurs,null, onChanged, nameof(Erreurs));
-      return _erreurs;
-    }
-
     #region UtilisateurChanged
 
     private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
 
+    #endregion
+
+    #region ErreursChanged
+
     private void RaiseErreursChanged() => ErreursChanged.Publish(Erreurs);
+    private void RafraichirErreurs(List<string> erreurs) => Erreurs = erreurs;
 
     #endregion
 
@@ -205,6 +247,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private readonly ReglageUtilisateurChanged UtilisateurChanged;
     [NotNull]
     private readonly ReglageErreursChanged ErreursChanged;
+    [NotNull]
+    private readonly IEventAggregator Events;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;

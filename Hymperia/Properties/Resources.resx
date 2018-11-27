@@ -343,4 +343,16 @@
   <data name="_AncientMotDePasse" xml:space="preserve">
     <value>_Ancient mot de passe :</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Echec" xml:space="preserve">
+    <value>Échec</value>
+  </data>
+  <data name="Reussite" xml:space="preserve">
+    <value>Réussite</value>
+  </data>
+  <data name="SaveDataInfo" xml:space="preserve">
+    <value>Voulez vous sauvegardées les données.</value>
+  </data>
 </root>

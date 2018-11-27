@@ -393,6 +393,26 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string _AncientMotDePasse => GetString("_AncientMotDePasse");
 
+    /// <summary>
+    ///   Ok
+    /// </summary>
+    public static string Ok => GetString("Ok");
+
+    /// <summary>
+    ///   Échec
+    /// </summary>
+    public static string Echec => GetString("Echec");
+
+    /// <summary>
+    ///   Réussite
+    /// </summary>
+    public static string Reussite => GetString("Reussite");
+
+    /// <summary>
+    ///   Voulez vous sauvegardées les données.
+    /// </summary>
+    public static string SaveDataInfo => GetString("SaveDataInfo");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",
