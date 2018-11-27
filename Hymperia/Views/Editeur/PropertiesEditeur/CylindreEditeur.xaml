@@ -1,7 +1,7 @@
 ﻿<do:DataUserControl x:Class="Hymperia.Facade.Views.Editeur.PropertiesEditeur.CylindreEditeur"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
-    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
@@ -13,16 +13,16 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <Label Target="{Binding ElementName=tbxH}" Content="{x:Static prop:Resources._Height}" Grid.Column="0" Grid.Row="0" />
-    <TextBox x:Name="tbxH" Style="{StaticResource NumericTextBox}"
-        Text="{Binding Data.Hauteur, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
+    <TextBox x:Name="tbxH" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
+        Text="{Binding Forme.Hauteur, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="0" />
     <Label Target="{Binding ElementName=tbxD}" Content="{x:Static prop:Resources._Diametre}" Grid.Column="0" Grid.Row="1" />
-    <TextBox x:Name="tbxD" Style="{StaticResource NumericTextBox}"
-        Text="{Binding Data.Diametre, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
+    <TextBox x:Name="tbxD" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
+        Text="{Binding Forme.Diametre, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="1" />
     <Label Target="{Binding ElementName=tbxID}" Content="{x:Static prop:Resources._InnerDiametre}" Grid.Column="0" Grid.Row="2" />
-    <TextBox x:Name="tbxID" Style="{StaticResource NumericTextBox}"
-        Text="{Binding Data.InnerDiametre, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
+    <TextBox x:Name="tbxID" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
+        Text="{Binding Forme.InnerDiametre, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="2" />
   </Grid>
 </do:DataUserControl>

@@ -21,7 +21,7 @@ namespace Hymperia.Facade.Views.Editeur
       DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Editeur));
 
     public static readonly DependencyProperty DroitProperty =
-      DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur));
+      DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur), new PropertyMetadata(OnDroitChanged));
 
     #endregion
 
@@ -52,7 +52,7 @@ namespace Hymperia.Facade.Views.Editeur
       InitializeComponent();
 
       SetBinding(ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
-      //BindingOperations.SetBinding(this, DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -68,13 +68,31 @@ namespace Hymperia.Facade.Views.Editeur
       VerticalTabControl = Manager.Regions[RegionKeys.VerticalTabControlRegion];
 
       ViewportRegion.Add(Viewport, ViewKeys.Viewport);
-      HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
-      HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
+      RegisterViews();
+    }
+
+    private void RegisterViews()
+    {
+      if (!IsLoaded)
+        return;
+
+      HorizontalTabControl.RemoveAll();
+      VerticalTabControl.RemoveAll();
+
       VerticalTabControl.Add(MateriauxAnalyse, ViewKeys.MateriauxAnalyse);
       VerticalTabControl.Add(PropertiesEditeur, ViewKeys.PropertiesEditeur);
+
+      if (Droit >= Acces.Droit.LectureEcriture)
+      {
+        HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
+        HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
+      }
     }
 
     #endregion
+
+    private static void OnDroitChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) =>
+      (d as Editeur)?.RegisterViews();
 
     #region INavigationAware 
 

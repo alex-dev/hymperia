@@ -59,7 +59,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
       ContextFactory = factory;
 
-      PreSauvegarder = commands.GetCommandOrCreate<PreSauvegarderReglageApplication>();
+      PreSauvegarder = commands.GetCommand<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
     }
 

@@ -86,6 +86,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\BooleanInverter.cs" />
     <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
     <Compile Include="SelectionMode.cs" />
     <Compile Include="Collections\BulkObservableCollection.cs" />
@@ -155,7 +156,8 @@
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
-    <Compile Include="ViewModels\Editeur\PropertiesEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeur\FormePropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeur\PropertiesEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
@@ -179,7 +181,7 @@
     <Compile Include="Views\Editeur\PropertiesEditeur\PositionEditeur.xaml.cs">
       <DependentUpon>PositionEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Editeur\PositionEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeur\PositionEditeurViewModel.cs" />
     <Compile Include="Views\Editeur\PropertiesEditeur\PropertiesEditeur.xaml.cs">
       <DependentUpon>PropertiesEditeur.xaml</DependentUpon>
     </Compile>

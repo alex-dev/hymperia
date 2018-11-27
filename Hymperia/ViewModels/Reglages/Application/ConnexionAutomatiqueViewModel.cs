@@ -33,7 +33,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public ConnexionAutomatiqueViewModel(ContextFactory context, ICommandAggregator commands, IEventAggregator events)
     {
       ContextFactory = context;
-      commands.GetCommandOrCreate<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
+      commands.GetCommand<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
     }
 

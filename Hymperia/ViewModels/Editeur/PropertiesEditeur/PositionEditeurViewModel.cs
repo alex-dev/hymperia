@@ -1,15 +1,24 @@
 ﻿using System.ComponentModel;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Extensions;
 using Hymperia.Facade.ModelWrappers;
+using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
 using JetBrains.Annotations;
+using Prism.Events;
 using Prism.Mvvm;
 
-namespace Hymperia.Facade.Views.Editeur
+namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditeur
 {
   public class PositionEditeurViewModel : BindableBase
   {
     #region Properties
+
+    public bool IsReadOnly
+    {
+      get => isreadonly;
+      set => SetProperty(ref isreadonly, value);
+    }
 
     [CanBeNull]
     public FormeWrapper Forme
@@ -105,8 +114,9 @@ namespace Hymperia.Facade.Views.Editeur
 
     #region Constructors
 
-    public PositionEditeurViewModel()
+    public PositionEditeurViewModel(IEventAggregator events)
     {
+      events.GetEvent<AccesChanged>().Subscribe(OnAccesChanged);
     }
 
     #endregion
@@ -152,8 +162,15 @@ namespace Hymperia.Facade.Views.Editeur
 
     #endregion
 
+    #region Aggregated Events Handlers
+
+    private void OnAccesChanged(Acces.Droit droit) => IsReadOnly = (droit < Acces.Droit.LectureEcriture);
+
+    #endregion
+
     #region Private Fields
 
+    private bool isreadonly = true;
     private FormeWrapper forme;
 
     #endregion
