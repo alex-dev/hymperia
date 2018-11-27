@@ -19,7 +19,10 @@
     </Grid.RowDefinitions>
     <Menu Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Center"
         HorizontalContentAlignment="Center">
-      <MenuItem Command="{Binding Sauvegarder}" Header="{x:Static prop:Resources.Save}" Grid.Row="0" Grid.Column="0" />
+      <MenuItem Command="{Binding Sauvegarder}" Header="{x:Static prop:Resources.Save}"
+          Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" Grid.Row="0" Grid.Column="0" />
+      <MenuItem Command="{Binding NavigateToReglage}" Header="{x:Static prop:Resources.Reglage}"
+          Visibility="{Binding Own, Converter={StaticResource ToVisibility}}" Grid.Row="0" Grid.Column="0" />
     </Menu>
     <ListBox Style="{StaticResource RadioButtonList}" SelectedValuePath="Tag"
         SelectedValue="{Binding SelectedSelectionMode, Mode=OneWayToSource}"

@@ -40,10 +40,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       set => SetProperty(ref droit, value, RaiseAccesChanged);
     }
 
-    public bool CanModify
-    {
-      get => Droit >= Acces.Droit.LectureEcriture;
-    }
+    public bool CanModify => Droit >= Acces.Droit.LectureEcriture;
+    public bool Own => Droit >= Acces.Droit.Possession;
 
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
@@ -276,6 +274,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private void RaiseAccesChanged()
     {
       RaisePropertyChanged(nameof(CanModify));
+      RaisePropertyChanged(nameof(Own));
       AccesChanged.Publish(Droit);
     }
 
