@@ -25,11 +25,8 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<SerializableConnectionString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <ConnectionString>Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymperia; Password=infoH25978;</ConnectionString>
-  <ProviderName />
-</SerializableConnectionString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymp" +
+            "eria; Password=infoH25978;")]
         public string MainDatabase {
             get {
                 return ((string)(this["MainDatabase"]));
@@ -41,11 +38,8 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<SerializableConnectionString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <ConnectionString>Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; Username=Hymperia; Password=infoH25978;</ConnectionString>
-  <ProviderName />
-</SerializableConnectionString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; " +
+            "Username=Hymperia; Password=infoH25978;")]
         public string LocalizationDatabase {
             get {
                 return ((string)(this["LocalizationDatabase"]));
@@ -57,7 +51,7 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fr-CA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
         public string Culture {
             get {
                 return ((string)(this["Culture"]));
@@ -69,13 +63,49 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Dark")]
         public string Theme {
             get {
                 return ((string)(this["Theme"]));
             }
             set {
                 this["Theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Utilisateur {
+            get {
+                return ((string)(this["Utilisateur"]));
+            }
+            set {
+                this["Utilisateur"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MotDePasse {
+            get {
+                return ((string)(this["MotDePasse"]));
+            }
+            set {
+                this["MotDePasse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConnexionAutomatique {
+            get {
+                return ((bool)(this["ConnexionAutomatique"]));
+            }
+            set {
+                this["ConnexionAutomatique"] = value;
             }
         }
     }

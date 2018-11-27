@@ -138,11 +138,17 @@
   <data name="CanOnlyConvertTo" xml:space="preserve">
     <value>Can only convert to {targets}.</value>
   </data>
+  <data name="ChangementDuMotDePasse" xml:space="preserve">
+    <value>Change password :</value>
+  </data>
   <data name="Confirmer" xml:space="preserve">
     <value>Confirm</value>
   </data>
   <data name="Connexion" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="ConnexionAutomatique" xml:space="preserve">
+    <value>Automatic connection :</value>
   </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Destructive processes cannot be reversed.</value>
@@ -186,8 +192,14 @@
   <data name="Movement" xml:space="preserve">
     <value>Movement</value>
   </data>
+  <data name="Non" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="NouveauNomProjet" xml:space="preserve">
     <value>Please enter the name of the new project :</value>
+  </data>
+  <data name="Oui" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="Ouvrir" xml:space="preserve">
     <value>Open</value>
@@ -311,11 +323,11 @@
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_MotDePasse" xml:space="preserve">
-    <value>_Password</value>
+    <value>_Password :</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Utilisateur" xml:space="preserve">
-    <value>_Username</value>
+    <value>_Username :</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_VerificationMotDePasse" xml:space="preserve">
@@ -324,5 +336,20 @@
   <data name="_Width" xml:space="preserve">
     <value>_Width</value>
     <comment>AccessKey for labels</comment>
+  </data>
+  <data name="_AncientMotDePasse" xml:space="preserve">
+    <value>_Old password : </value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Echec" xml:space="preserve">
+    <value>Failure</value>
+  </data>
+  <data name="Reussite" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SaveDataInfo" xml:space="preserve">
+    <value>Do you want to save the data.</value>
   </data>
 </root>

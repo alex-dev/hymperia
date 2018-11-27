@@ -18,7 +18,6 @@ using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
 using Prism;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
@@ -41,7 +40,7 @@ namespace Hymperia.Facade.ViewModels
     }
 
     [CanBeNull]
-    public BulkObservableCollection<Projet> Projets
+    public BulkObservableCollection<Acces> Projets
     {
       get => projets;
       set => SetProperty(ref projets, value);
@@ -52,6 +51,8 @@ namespace Hymperia.Facade.ViewModels
     #region Commands
 
     public ICommand NavigateToProjet { get; private set; }
+    public ICommand NavigateToReglage { get; private set; } 
+
     public ICommand SupprimerProjet { get; private set; }
     public ICommand AjouterProjet { get; private set; }
 
@@ -78,28 +79,44 @@ namespace Hymperia.Facade.ViewModels
 
     public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
-      NavigateToProjet = new DelegateCommand<Projet>(_NavigateToProjet);
+      NavigateToProjet = new DelegateCommand<Acces>(_NavigateToProjet);      
+      NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       SupprimerProjet = new DelegateCommand<IList>(
-        projets => _SupprimerProjets(projets?.Cast<Projet>()),
-        projets => CanSupprimerProjets(projets?.Cast<Projet>()));
+        projets => _SupprimerProjets(projets?.Cast<Acces>()),
+        projets => CanSupprimerProjets(projets?.Cast<Acces>()));
       AjouterProjet = new DelegateCommand(_AjouterProjet);
 
       ContextFactory = factory;
       Manager = manager;
     }
 
+
     #endregion
 
     #region Command NavigateToProjet
 
-    private void _NavigateToProjet(Projet projet)
+    private void _NavigateToProjet(Acces projet)
     {
       // Force la création d'un context d'éditeur pour la durée de la navigation.
       // De cette façon, toutes les vues peuvent garantir que leur contexte est le même.
-      using (ContextFactory.GetEditorContext())
-        Manager.RequestNavigate("ContentRegion", NavigationKeys.Editeur, new NavigationParameters
+      using (ContextFactory.GetEditeurContext())
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Editeur, new NavigationParameters
         {
-          { NavigationParameterKeys.Projet, projet }
+          { NavigationParameterKeys.Projet, projet.Projet },
+          { NavigationParameterKeys.Acces, projet.DroitDAcces }
+        });
+    }
+
+    #endregion
+
+    #region Command NavigateToReglage
+
+    private void _NavigateToReglage()
+    {
+      using (ContextFactory.GetReglageUtilisateurContext())
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageUtilisateur, new NavigationParameters
+        {
+          { NavigationParameterKeys.Utilisateur, Utilisateur }
         });
     }
 
@@ -115,7 +132,7 @@ namespace Hymperia.Facade.ViewModels
         {
           AjouterProjetLoader.Loading = ConfirmedCreerProjet(context.Content.ToString().Trim());
           AjouterProjetLoader.Loading.ContinueWith(
-            result => _NavigateToProjet(result.Result),
+            result => _NavigateToProjet(Utilisateur.Acces.Single(acces => acces.Projet == result.Result)),
             default,
             TaskContinuationOptions.OnlyOnRanToCompletion,
             TaskScheduler.FromCurrentSynchronizationContext());
@@ -145,13 +162,15 @@ namespace Hymperia.Facade.ViewModels
 
     #region Command SupprimerProjet
 
-    private void _SupprimerProjets(IEnumerable<Projet> projets)
+    private void _SupprimerProjets(IEnumerable<Acces> projets)
     {
       void Execute(IConfirmation context)
       {
         if (context.Confirmed)
         {
-          SupprimerProjetLoader.Loading = ConfirmedSupprimerProjets(projets);
+          Projets.RemoveRange(projets);
+          SupprimerProjetLoader.Loading = ConfirmedSupprimerProjets(from projet in projets
+                                                                    select projet.Projet);
         }
       }
 
@@ -177,12 +196,11 @@ namespace Hymperia.Facade.ViewModels
             Context.Remove(projet);
         }
 
-        Projets.RemoveRange(projets);
         await Context.SaveChangesAsync();
       }
     }
 
-    private bool CanSupprimerProjets(IEnumerable<Projet> projets) => projets is IEnumerable<Projet> && projets.Count() > 0;
+    private bool CanSupprimerProjets(IEnumerable<Acces> projets) => projets is IEnumerable<Acces> && projets.Count() > 0;
 
     #endregion
 
@@ -209,7 +227,7 @@ namespace Hymperia.Facade.ViewModels
     #region On Utilisateur Changed
 
     private void UpdateProjets() => Projets = Utilisateur is Utilisateur
-        ? new BulkObservableCollection<Projet>(from acces in Utilisateur.Acces select acces.Projet)
+        ? new BulkObservableCollection<Acces>(Utilisateur.Acces)
         : null;
 
     #endregion
@@ -288,7 +306,7 @@ namespace Hymperia.Facade.ViewModels
     #region Private Fields
 
     private Utilisateur utilisateur;
-    private BulkObservableCollection<Projet> projets;
+    private BulkObservableCollection<Acces> projets;
     private bool isActive;
 
     #endregion

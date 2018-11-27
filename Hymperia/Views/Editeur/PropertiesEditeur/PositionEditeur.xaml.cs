@@ -1,5 +1,6 @@
 ﻿using System.Windows.Data;
 using Hymperia.Facade.DependencyObjects;
+using Hymperia.Facade.ViewModels.Editeur.PropertiesEditeur;
 
 namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
 {

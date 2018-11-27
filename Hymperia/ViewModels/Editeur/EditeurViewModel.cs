@@ -33,6 +33,16 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Binding
 
+    ///<summary>Le <see cref="Acces.Droit"/> de l'utilisateur sur <see cref="Projet"/>.</summary>
+    public Acces.Droit Droit
+    {
+      get => droit;
+      set => SetProperty(ref droit, value, RaiseAccesChanged);
+    }
+
+    public bool CanModify => Droit >= Acces.Droit.LectureEcriture;
+    public bool Own => Droit >= Acces.Droit.Possession;
+
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     [CanBeNull]
@@ -93,8 +103,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public AddFormeCommand AjouterForme { get; }
-    public DeleteFormesCommand SupprimerFormes { get; }
+    public DelegateCommand<Point> AjouterForme { get; }
+    public DelegateCommand<ICollection<FormeWrapper>> SupprimerFormes { get; }
     public ICommand Sauvegarder { get; }
 
     #endregion
@@ -113,24 +123,25 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
-      AjouterForme = (AddFormeCommand)new AddFormeCommand(_AjouterForme, PeutAjouterForme)
+      AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
         .ObservesProperty(() => SelectedForme)
         .ObservesProperty(() => SelectedMateriau);
-      SupprimerFormes = new DeleteFormesCommand(_SupprimerFormes, CanSupprimerFormes);
+      SupprimerFormes = new DelegateCommand<ICollection<FormeWrapper>>(_SupprimerFormes, CanSupprimerFormes);
       Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _Sauvegarder())
         .ObservesCanExecute(() => HasChanged);
 
       ContextFactory = factory;
       ConvertisseurFormes = formes;
 
-      commands.RegisterCommand(AjouterForme);
-      commands.RegisterCommand(SupprimerFormes);
+      commands.GetCommand<AddFormeCommand>().RegisterCommand(AjouterForme);
+      commands.GetCommand<DeleteFormesCommand>().RegisterCommand(SupprimerFormes);
 
       events.GetEvent<SelectedFormeChanged>().Subscribe(forme => SelectedForme = forme);
       events.GetEvent<SelectedMateriauChanged>().Subscribe(materiau => SelectedMateriau = materiau);
-      ProjetChanged = events.GetEvent<ProjetChanged>();
+      AccesChanged = events.GetEvent<AccesChanged>();
       FormesChanged = events.GetEvent<FormesChanged>();
+      ProjetChanged = events.GetEvent<ProjetChanged>();
       SelectionModeChanged = events.GetEvent<SelectionModeChanged>();
     }
 
@@ -161,9 +172,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     private bool PeutAjouterForme(Point point) =>
-      point is Point && Projet is Projet
-      && SelectedMateriau is Materiau
-      && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
+      Projet is Projet && Droit >= Acces.Droit.LectureEcriture
+        && point is Point && SelectedMateriau is Materiau && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
 
     #endregion
 
@@ -180,7 +190,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Formes.RemoveRange(wrappers);
     }
 
-    private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) => wrappers.Any();
+    private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) =>
+      Projet is Projet && Droit >= Acces.Droit.LectureEcriture && wrappers.Any();
 
     #endregion
 
@@ -260,6 +271,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Aggregated Event Handlers
 
+    private void RaiseAccesChanged()
+    {
+      RaisePropertyChanged(nameof(CanModify));
+      RaisePropertyChanged(nameof(Own));
+      AccesChanged.Publish(Droit);
+    }
+
     private void RaiseFormesChanged(Collection<FormeWrapper> old)
     {
       NotifyCollectionChangedEventArgs args;
@@ -315,7 +333,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private void OnActivation()
     {
       if (ContextWrapper is null)
-        ContextWrapper = ContextFactory.GetEditorContext();
+        ContextWrapper = ContextFactory.GetEditeurContext();
       else
         CancelDispose();
     }
@@ -362,6 +380,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     [NotNull]
     private readonly ConvertisseurFormes ConvertisseurFormes;
     [NotNull]
+    private readonly AccesChanged AccesChanged;
+    [NotNull]
     private readonly FormesChanged FormesChanged;
     [NotNull]
     private readonly ProjetChanged ProjetChanged;
@@ -375,6 +395,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private Acces.Droit droit;
     private Projet projet;
     private BulkObservableCollection<FormeWrapper> formes;
     private SelectionMode selection;

@@ -11,6 +11,7 @@ using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Services;
+using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Prism.Commands;
 using Prism.Events;
@@ -25,6 +26,13 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Properties
 
     #region Binding
+
+    /// <summary>L'utilisateur peut modifier le projet.</summary>
+    public bool CanModify
+    {
+      get => modify;
+      private set => SetProperty(ref modify, value);
+    }
 
     /// <summary>Les formes affichables.</summary>
     [NotNull]
@@ -72,6 +80,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       SelectedChanged = events.GetEvent<SelectedFormesChanged>();
       SelectedChanged.Subscribe(OnSelectedChanged, FilterSelectedChanged);
+      events.GetEvent<AccesChanged>().Subscribe(OnAccesChanged);
       events.GetEvent<SelectionModeChanged>().Subscribe(OnSelectionModeChanged);
       events.GetEvent<FormesChanged>().Subscribe(OnFormesChanged);
 
@@ -83,19 +92,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Command SupprimerForme
 
-    private void _SupprimerFormes(ICollection<MeshElement3D> meshes)
-    {
-      var formes = (from mesh in meshes
-                    let wrapper = (FormeWrapper)BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)
-                      ?.Bindings?.OfType<Binding>()?.First()?.Source
-                    where wrapper is FormeWrapper
-                    select wrapper).ToArray();
+    private void _SupprimerFormes(ICollection<MeshElement3D> meshes) =>
+      InnerSupprimerFormes.Execute(ConvertMeshes(meshes).ToArray());
 
-      if (InnerSupprimerFormes.CanExecute(formes))
-        InnerSupprimerFormes.Execute(formes);
-    }
+    private bool CanSupprimerFormes(ICollection<MeshElement3D> meshes) =>
+      InnerSupprimerFormes.CanExecute(ConvertMeshes(meshes).ToArray());
 
-    private bool CanSupprimerFormes(ICollection<MeshElement3D> meshes) => meshes.Any();
+    private IEnumerable<FormeWrapper> ConvertMeshes(ICollection<MeshElement3D> meshes) =>
+      from mesh in meshes
+      let wrapper = BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
+      where wrapper is FormeWrapper
+      select (FormeWrapper)wrapper;
 
     #endregion
 
@@ -115,6 +122,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #endregion
 
     #region Aggregated Event Handlers
+
+    private void OnAccesChanged(Acces.Droit droit) => CanModify = droit >= Acces.Droit.LectureEcriture;
 
     protected virtual void OnSelectionModeChanged(SelectionMode? mode) => SelectionMode = mode;
 
@@ -195,6 +204,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Private Fields
 
     private SelectionMode? mode;
+    private bool modify = Acces.Droit.Lecture >= Acces.Droit.LectureEcriture;
 
     #endregion
 

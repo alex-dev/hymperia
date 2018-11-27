@@ -20,6 +20,9 @@ namespace Hymperia.Facade.Views.Editeur
     public static readonly DependencyProperty ProjetProperty =
       DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Editeur));
 
+    public static readonly DependencyProperty DroitProperty =
+      DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur), new PropertyMetadata(OnDroitChanged));
+
     #endregion
 
     public Projet Projet
@@ -28,17 +31,28 @@ namespace Hymperia.Facade.Views.Editeur
       set => SetValue(ProjetProperty, value);
     }
 
+    public Acces.Droit Droit
+    {
+      get => (Acces.Droit)GetValue(DroitProperty);
+      set => SetValue(DroitProperty, value);
+    }
+
     #region Constructors
 
     public Editeur(IRegionManager manager, IContainerExtension container)
     {
-      Container = container;
       Manager = manager;
+      Viewport = container.Resolve<Viewport>();
+      FormesSelection = container.Resolve<FormesSelection>();
+      MateriauxSelection = container.Resolve<MateriauxSelection>();
+      PropertiesEditeur = container.Resolve<P.PropertiesEditeur>();
+      MateriauxAnalyse = container.Resolve<MateriauxAnalyse>();
 
       Loaded += RegisterViews;
       InitializeComponent();
 
       SetBinding(ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -53,21 +67,44 @@ namespace Hymperia.Facade.Views.Editeur
       HorizontalTabControl = Manager.Regions[RegionKeys.HorizontalTabControlRegion];
       VerticalTabControl = Manager.Regions[RegionKeys.VerticalTabControlRegion];
 
+      ViewportRegion.Add(Viewport, ViewKeys.Viewport);
+      RegisterViews();
+    }
 
-      ViewportRegion.Add(Container.Resolve<Viewport>(), ViewKeys.Viewport);
-      HorizontalTabControl.Add(Container.Resolve<FormesSelection>(), ViewKeys.FormesSelection);
-      HorizontalTabControl.Add(Container.Resolve<MateriauxSelection>(), ViewKeys.MateriauxSelection);
-      VerticalTabControl.Add(Container.Resolve<MateriauxAnalyse>(), ViewKeys.MateriauxAnalyse);
-      VerticalTabControl.Add(Container.Resolve<P.PropertiesEditeur>(), ViewKeys.PropertiesEditeur);
+    private void RegisterViews()
+    {
+      if (!IsLoaded)
+        return;
 
+      HorizontalTabControl.RemoveAll();
+      VerticalTabControl.RemoveAll();
+
+      VerticalTabControl.Add(MateriauxAnalyse, ViewKeys.MateriauxAnalyse);
+      VerticalTabControl.Add(PropertiesEditeur, ViewKeys.PropertiesEditeur);
+
+      if (Droit >= Acces.Droit.LectureEcriture)
+      {
+        HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
+        HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
+      }
     }
 
     #endregion
 
+    private static void OnDroitChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) =>
+      (d as Editeur)?.RegisterViews();
+
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
-    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+    public bool IsNavigationTarget(NavigationContext context) =>
+      context.Parameters[NavigationParameterKeys.Projet] is Projet && context.Parameters[NavigationParameterKeys.Acces] is Acces.Droit;
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+      Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
@@ -107,8 +144,6 @@ namespace Hymperia.Facade.Views.Editeur
       ViewportRegion?.Deactivate();
       HorizontalTabControl?.Deactivate();
       VerticalTabControl?.Deactivate();
-      //ProjetAnalyseRegion?.Deactivate();
-      //FormesPropertiesRegion?.Deactivate();
     }
 
     private bool isActive;
@@ -117,7 +152,6 @@ namespace Hymperia.Facade.Views.Editeur
 
     #region Services
 
-    private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
     private IRegion ViewportRegion;
     private IRegion HorizontalTabControl;
@@ -125,6 +159,15 @@ namespace Hymperia.Facade.Views.Editeur
 
     #endregion
 
+    #region Views
+
+    private readonly Viewport Viewport;
+    private readonly FormesSelection FormesSelection;
+    private readonly MateriauxSelection MateriauxSelection;
+    private readonly P.PropertiesEditeur PropertiesEditeur;
+    private readonly MateriauxAnalyse MateriauxAnalyse;
+
+    #endregion
   }
 
 }

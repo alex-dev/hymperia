@@ -29,7 +29,7 @@
         SelectionMode="Extended" SelectionChanged="OnSelectionChanged" Grid.Column="0">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding}">
+          <TextBlock Text="{Binding Projet.Nom}">
             <TextBlock.InputBindings>
               <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
                   CommandParameter="{Binding}" />
@@ -43,6 +43,7 @@
       <Button x:Name="btnSuppression" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"
           Content="{x:Static prop:Resources.Supprimer}" />
+      <Button Content="{x:Static prop:Resources.Reglage}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom" />
     </DockPanel>
   </Grid>
 </UserControl>

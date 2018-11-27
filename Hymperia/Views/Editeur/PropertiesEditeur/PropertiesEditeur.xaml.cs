@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
-using Hymperia.Facade.ViewModels.Editeur;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
@@ -14,9 +13,8 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
   {
     #region Constructors
 
-    public PropertiesEditeur(PropertiesEditeurViewModel context, IRegionManager manager, IContainerExtension container)
+    public PropertiesEditeur(IRegionManager manager, IContainerExtension container)
     {
-      DataContext = context;
       Container = container;
       Manager = manager;
 

@@ -86,11 +86,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Collections\BulkObservableCollection.cs" />
-    <Compile Include="DependencyObjects\TabItemNameBehavior.cs" />
+    <Compile Include="Converters\BooleanInverter.cs" />
+    <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
     <Compile Include="SelectionMode.cs" />
+    <Compile Include="Collections\BulkObservableCollection.cs" />
     <Compile Include="CommandAggregatorCommands\AddFormeCommand.cs" />
     <Compile Include="CommandAggregatorCommands\DeleteFormeCommand.cs" />
+    <Compile Include="CommandAggregatorCommands\PreSauvegarderReglageApplication.cs" />
     <Compile Include="Constants\NavigationKeys.cs" />
     <Compile Include="Constants\NavigationParameterKeys.cs" />
     <Compile Include="Constants\RegionKeys.cs" />
@@ -115,8 +117,10 @@
     <Compile Include="DependencyObjects\NumericTextBoxBehavior.cs" />
     <Compile Include="DependencyObjects\PasswordBoxHelper.cs" />
     <Compile Include="DependencyObjects\SelectionViewport.cs" />
+    <Compile Include="DependencyObjects\TabItemNameBehavior.cs" />
     <Compile Include="DependencyObjects\Viewport.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
+    <Compile Include="EventAggregatorMessages\AccesChanged.cs" />
     <Compile Include="EventAggregatorMessages\FormesChanged.cs" />
     <Compile Include="EventAggregatorMessages\ProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\SelectedFormeChanged.cs" />
@@ -152,9 +156,13 @@
     <Compile Include="ViewModels\Editeur\MateriauxSelectionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\MateriauxAnalyseViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ProjetAnalyse\ProjetAnalyseBase.cs" />
-    <Compile Include="ViewModels\Editeur\PropertiesEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeur\FormePropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeur\PropertiesEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ReglageViewModel.cs" />
     <Compile Include="Views\AffichageProjets.xaml.cs">
       <DependentUpon>AffichageProjets.xaml</DependentUpon>
     </Compile>
@@ -173,7 +181,7 @@
     <Compile Include="Views\Editeur\PropertiesEditeur\PositionEditeur.xaml.cs">
       <DependentUpon>PositionEditeur.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Editeur\PositionEditeurViewModel.cs" />
+    <Compile Include="ViewModels\Editeur\PropertiesEditeur\PositionEditeurViewModel.cs" />
     <Compile Include="Views\Editeur\PropertiesEditeur\PropertiesEditeur.xaml.cs">
       <DependentUpon>PropertiesEditeur.xaml</DependentUpon>
     </Compile>
@@ -211,8 +219,23 @@
     <Compile Include="Views\Popups\AjouterProjetPopup.xaml.cs">
       <DependentUpon>AjouterProjetPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popups\ConfirmationPopup.xaml.cs">
+      <DependentUpon>ConfirmationPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
       <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\InformationPopup.xaml.cs">
+      <DependentUpon>InformationPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
+      <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\ConnexionAutomatique.xaml.cs">
+      <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\Reglage.xaml.cs">
+      <DependentUpon>Reglage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -286,9 +309,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Popups\ConfirmationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Popups\EntitySuppressionPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Popups\InformationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ChangementMotDePasse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ConnexionAutomatique.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\Reglage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPFResources\ButtonStyles.xaml">
       <SubType>Designer</SubType>

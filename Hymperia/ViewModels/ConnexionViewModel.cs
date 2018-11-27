@@ -17,6 +17,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using B = BCrypt.Net;
+using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
@@ -24,10 +25,15 @@ namespace Hymperia.Facade.ViewModels
   {
     #region Properties
 
-    public string Username { get; set; }
+    public string Username
+    {
+      get => username;
+      set => SetProperty(ref username, value);
+    }
 
     public DelegateCommand<PasswordBox> Connexion { get; }
     public DelegateCommand Inscription { get; }
+    public DelegateCommand ConnexionAutomatique { get; }
 
     #endregion
 
@@ -37,39 +43,56 @@ namespace Hymperia.Facade.ViewModels
     {
       Factory = factory;
       Manager = manager;
+
+      ConnexionAutomatique = new DelegateCommand(_ConnexionAutomatique);
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
       Inscription = new DelegateCommand(_Inscription);
     }
 
     #endregion
 
-    private void _Connexion(PasswordBox password)
+    private void _ConnexionAutomatique()
+    {
+      if (!S.Default.ConnexionAutomatique)
+        return;
+
+      _Connexion(S.Default.Utilisateur, utilisateur => S.Default.MotDePasse == utilisateur.MotDePasse);
+    }
+
+    private void _Connexion(PasswordBox password) =>
+      _Connexion(Username, utilisateur => B.BCrypt.Verify(password.Password, utilisateur.MotDePasse, true));
+
+    private void _Connexion(string username, Predicate<Utilisateur> validate)
     {
       Utilisateur utilisateur;
 
       using (var context = Factory.GetContext())
-        utilisateur = context.Utilisateurs.SingleOrDefault(u => u.Nom == Username);
+        utilisateur = context.Utilisateurs.SingleOrDefault(u => u.Nom == username);
 
-      HasErrors = !(utilisateur is Utilisateur && B.BCrypt.Verify(password.Password, utilisateur.MotDePasse, true));
+      HasErrors = !(utilisateur is Utilisateur && validate(utilisateur));
 
-      if (!HasErrors)
+      if (HasErrors)
+        Username = username;
+      else
         Navigate(utilisateur);
     }
 
     #region Navigation
 
     private void Navigate(Utilisateur utilisateur) =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.AffichageProjets, new NavigationParameters
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
       {
         { NavigationParameterKeys.Utilisateur, utilisateur }
       });
 
     private void _Inscription() =>
-      Manager.RequestNavigate("ContentRegion", NavigationKeys.Inscription);
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Inscription);
 
     #endregion
 
     #region INotifyDataErrorInfo
+
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
     public bool HasErrors
     {
@@ -92,12 +115,11 @@ namespace Hymperia.Facade.ViewModels
     [NotNull]
     private readonly IRegionManager Manager;
 
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
     #endregion
 
     #region Private Fields
 
+    private string username;
     private bool errors;
 
     #endregion

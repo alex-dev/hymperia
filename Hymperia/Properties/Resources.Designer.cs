@@ -56,6 +56,11 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
+    ///   Changement du mot de passe :
+    /// </summary>
+    public static string ChangementDuMotDePasse => GetString("ChangementDuMotDePasse");
+
+    /// <summary>
     ///   Confirmer
     /// </summary>
     public static string Confirmer => GetString("Confirmer");
@@ -64,6 +69,11 @@ namespace Hymperia.Facade.Properties
     ///   Connexion
     /// </summary>
     public static string Connexion => GetString("Connexion");
+
+    /// <summary>
+    ///   Connexion automatique :
+    /// </summary>
+    public static string ConnexionAutomatique => GetString("ConnexionAutomatique");
 
     /// <summary>
     ///   Impossible d'inverser un processus détérioratif.
@@ -148,14 +158,29 @@ namespace Hymperia.Facade.Properties
     public static string Movement => GetString("Movement");
 
     /// <summary>
+    ///   Non
+    /// </summary>
+    public static string Non => GetString("Non");
+
+    /// <summary>
     ///   Merci de saisir le nom du nouveau projet :
     /// </summary>
     public static string NouveauNomProjet => GetString("NouveauNomProjet");
 
     /// <summary>
+    ///   Oui
+    /// </summary>
+    public static string Oui => GetString("Oui");
+
+    /// <summary>
     ///   Ouvrir
     /// </summary>
     public static string Ouvrir => GetString("Ouvrir");
+
+    /// <summary>
+    ///   Ouvrir dans une fenêtre
+    /// </summary>
+    public static string OuvrirFenetre => GetString("OuvrirFenetre");
 
     /// <summary>
     ///   Position
@@ -176,11 +201,6 @@ namespace Hymperia.Facade.Properties
     ///   Position Z
     /// </summary>
     public static string PositionZ => GetString("PositionZ");
-
-    /// <summary>
-    ///   Ouvrir dans une fenêtre
-    /// </summary>
-    public static string OuvrirFenetre => GetString("OuvrirFenetre");
 
     /// <summary>
     ///   Prix
@@ -218,6 +238,11 @@ namespace Hymperia.Facade.Properties
     public static string Radius_Z => GetString("Radius_Z");
 
     /// <summary>
+    ///   Réglage
+    /// </summary>
+    public static string Reglage => GetString("Reglage");
+
+    /// <summary>
     ///   Rotation
     /// </summary>
     public static string Rotation => GetString("Rotation");
@@ -241,7 +266,8 @@ namespace Hymperia.Facade.Properties
     ///   Rotation Z
     /// </summary>
     public static string RotationZ => GetString("RotationZ");
-    
+
+    /// <summary>
     ///   Un mot de passe est requis.
     /// </summary>
     public static string RequiredPassword => GetString("RequiredPassword");
@@ -343,12 +369,12 @@ namespace Hymperia.Facade.Properties
     public static string _Material => GetString("_Material");
 
     /// <summary>
-    ///   _Mot de passe
+    ///   _Mot de passe :
     /// </summary>
     public static string _MotDePasse => GetString("_MotDePasse");
 
     /// <summary>
-    ///   _Nom d'utilisateur
+    ///   _Nom d'utilisateur :
     /// </summary>
     public static string _Utilisateur => GetString("_Utilisateur");
 
@@ -361,6 +387,31 @@ namespace Hymperia.Facade.Properties
     ///   L_argeur
     /// </summary>
     public static string _Width => GetString("_Width");
+
+    /// <summary>
+    ///   _Ancient mot de passe :
+    /// </summary>
+    public static string _AncientMotDePasse => GetString("_AncientMotDePasse");
+
+    /// <summary>
+    ///   Ok
+    /// </summary>
+    public static string Ok => GetString("Ok");
+
+    /// <summary>
+    ///   Échec
+    /// </summary>
+    public static string Echec => GetString("Echec");
+
+    /// <summary>
+    ///   Réussite
+    /// </summary>
+    public static string Reussite => GetString("Reussite");
+
+    /// <summary>
+    ///   Voulez vous sauvegardées les données.
+    /// </summary>
+    public static string SaveDataInfo => GetString("SaveDataInfo");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),

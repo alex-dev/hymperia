@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Hymperia.Facade.Collections;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.DependencyObjects;
@@ -21,13 +20,19 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace Hymperia.Facade.ViewModels.Editeur
+namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditeur
 {
   public class PropertiesEditeurViewModel : BindableBase, IActiveAware
   {
     #region Properties
 
     #region Bindings
+
+    public bool IsReadOnly
+    {
+      get => isreadonly;
+      set => SetProperty(ref isreadonly, value);
+    }
 
     [CanBeNull]
     [ItemNotNull]
@@ -53,6 +58,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
       set
       {
+        if (value is null)
+          return;
+
         SelectedFormes.ForEach(forme => forme.Materiau = value);
       }
     }
@@ -88,6 +96,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Manager = manager;
       SelectedSingleFormeChanged = events.GetEvent<SelectedSingleFormeChanged>();
       events.GetEvent<SelectedFormesChanged>().Subscribe(OnSelectedFormesChanged);
+      events.GetEvent<AccesChanged>().Subscribe(OnAccesChanged);
     }
 
     #endregion
@@ -97,14 +106,35 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private async Task<ICollection<MateriauWrapper>> QueryMateriaux()
     {
       using (await AsyncLock.Lock(MateriauxLoader))
-        using (var wrapper = Factory.GetEditorContext())
+        using (var wrapper = Factory.GetEditeurContext())
           using (await AsyncLock.Lock(wrapper.Context))
-            return Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+            Materiaux = await ConvertisseurMateriaux.Convertir(wrapper.Context.Materiaux);
+
+      // Reset interfaces' SelectedItem to proper values once ItemsSource changed.
+      RaisePropertyChanged(nameof(Materiau));
+      return Materiaux;
     }
 
     #endregion
 
     #region Region Activation
+
+    private void Navigate()
+    {
+      switch (SelectedForme)
+      {
+        case EllipsoideWrapper ellipsoide:
+          Activate(ViewKeys.EllipsoideEditor, SelectedForme); break;
+        case PrismeRectangulaireWrapper prisme:
+          Activate(ViewKeys.PrismeRectangulaireEditor, SelectedForme); break;
+        case CylindreWrapper cylindre:
+          Activate(ViewKeys.CylindreEditor, SelectedForme); break;
+        case ConeWrapper cone:
+          Activate(ViewKeys.ConeEditor, SelectedForme); break;
+        default:
+          Deactivate(); break;
+      }
+    }
 
     private void Activate(string name, FormeWrapper selected)
     {
@@ -139,20 +169,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnSelectedFormeChanged()
     {
-      switch (SelectedForme)
-      {
-        case EllipsoideWrapper ellipsoide:
-          Activate(ViewKeys.EllipsoideEditor, SelectedForme); break;
-        case PrismeRectangulaireWrapper prisme:
-          Activate(ViewKeys.PrismeRectangulaireEditor, SelectedForme); break;
-        case CylindreWrapper cylindre:
-          Activate(ViewKeys.CylindreEditor, SelectedForme); break;
-        case ConeWrapper cone:
-          Activate(ViewKeys.ConeEditor, SelectedForme); break;
-        default:
-          Deactivate(); break;
-      }
-
+      Navigate();
       SelectedSingleFormeChanged.Publish(SelectedForme);
     }
 
@@ -179,6 +196,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #endregion
 
     #region Aggregated Events Handlers
+
+    private void OnAccesChanged(Acces.Droit droit) => IsReadOnly = (droit < Acces.Droit.LectureEcriture);
 
     private void OnSelectedFormesChanged(NotifyCollectionChangedEventArgs e)
     {
@@ -223,7 +242,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
       }
     }
 
-    protected virtual void OnActivation() => MateriauxLoader.Loading = QueryMateriaux();
+    protected virtual void OnActivation()
+    {
+      MateriauxLoader.Loading = QueryMateriaux();
+      Navigate();
+    }
     protected virtual void OnDeactivation() { }
 
     #endregion
@@ -243,6 +266,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private bool isreadonly = true;
     private FormeWrapper selected;
     private bool isActive;
     private ICollection<MateriauWrapper> materiaux;

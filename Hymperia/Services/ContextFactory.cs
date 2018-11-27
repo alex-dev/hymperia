@@ -13,19 +13,45 @@ namespace Hymperia.Facade.Services
     [NotNull]
     public DatabaseContext GetContext() => new DatabaseContext();
 
-    [NotNull]
-    public IContextWrapper<DatabaseContext> GetEditorContext()
-    {
-      if (EditorContext is null)
-        EditorContext = new Tracker<DatabaseContext>();
+    #region EditeurContext
 
-      ++EditorContext.Count;
-      return new ContextWrapper<DatabaseContext>(EditorContext.Context, () => Release(ref EditorContext));
+    [NotNull]
+    public IContextWrapper<DatabaseContext> GetEditeurContext()
+    {
+      if (EditeurContext is null)
+        EditeurContext = new Tracker<DatabaseContext>();
+
+      ++EditeurContext.Count;
+      return new ContextWrapper<DatabaseContext>(EditeurContext.Context, () => Release(ref EditeurContext));
     }
+
+    private Tracker<DatabaseContext> EditeurContext;
+
+    #endregion
+
+    #region ReglageUtilisateurContext
+
+    [NotNull]
+    public IContextWrapper<DatabaseContext> GetReglageUtilisateurContext()
+    {
+      if (ReglageUtilisateurContext is null)
+        ReglageUtilisateurContext = new Tracker<DatabaseContext>();
+
+      ++ReglageUtilisateurContext.Count;
+      return new ContextWrapper<DatabaseContext>(ReglageUtilisateurContext.Context, () => Release(ref ReglageUtilisateurContext));
+    }
+
+    private Tracker<DatabaseContext> ReglageUtilisateurContext;
+
+    #endregion
 
     #region IDisposable
 
-    public void Dispose() => EditorContext.Dispose();
+    public void Dispose()
+    {
+      ReglageUtilisateurContext.Dispose();
+      EditeurContext.Dispose();
+    }
 
     #endregion
 
@@ -52,7 +78,7 @@ namespace Hymperia.Facade.Services
 
     #endregion
 
-    #region Trackers
+    #region Tracker
 
     private void Release<T>(ref Tracker<T> tracker) where T : DbContext, new()
     {
@@ -63,7 +89,6 @@ namespace Hymperia.Facade.Services
       }
     }
 
-    private Tracker<DatabaseContext> EditorContext;
 
     private sealed class Tracker<T> : IDisposable where T : DbContext, new()
     {

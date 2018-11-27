@@ -1,4 +1,5 @@
-﻿using Prism.Regions;
+﻿using Hymperia.Facade.Constants;
+using Prism.Regions;
 using System.Windows;
 
 namespace Hymperia.Facade.Views
@@ -7,7 +8,7 @@ namespace Hymperia.Facade.Views
   {
     public FenetrePrincipale(IRegionManager manager)
     {
-      manager.RegisterViewWithRegion("ContentRegion", typeof(Connexion));
+      manager.RegisterViewWithRegion(RegionKeys.ContentRegion, typeof(Connexion));
       InitializeComponent();
     }
   }
