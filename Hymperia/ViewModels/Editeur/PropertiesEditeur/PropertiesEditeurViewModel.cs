@@ -20,13 +20,19 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace Hymperia.Facade.ViewModels.Editeur
+namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditeur
 {
   public class PropertiesEditeurViewModel : BindableBase, IActiveAware
   {
     #region Properties
 
     #region Bindings
+
+    public bool IsReadOnly
+    {
+      get => isreadonly;
+      set => SetProperty(ref isreadonly, value);
+    }
 
     [CanBeNull]
     [ItemNotNull]
@@ -90,6 +96,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Manager = manager;
       SelectedSingleFormeChanged = events.GetEvent<SelectedSingleFormeChanged>();
       events.GetEvent<SelectedFormesChanged>().Subscribe(OnSelectedFormesChanged);
+      events.GetEvent<AccesChanged>().Subscribe(OnAccesChanged);
     }
 
     #endregion
@@ -190,6 +197,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Aggregated Events Handlers
 
+    private void OnAccesChanged(Acces.Droit droit) => IsReadOnly = (droit < Acces.Droit.LectureEcriture);
+
     private void OnSelectedFormesChanged(NotifyCollectionChangedEventArgs e)
     {
       var newitems = e.NewItems?.Cast<FormeWrapper>() ?? Enumerable.Empty<FormeWrapper>();
@@ -257,6 +266,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Private Fields
 
+    private bool isreadonly = true;
     private FormeWrapper selected;
     private bool isActive;
     private ICollection<MateriauWrapper> materiaux;

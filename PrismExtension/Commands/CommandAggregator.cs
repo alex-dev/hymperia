@@ -8,14 +8,7 @@ namespace Prism.Commands
   public class CommandAggregator : ICommandAggregator
   {
     /// <inheritdoc />
-    public TCommand GetCommand<TCommand>() where TCommand : ICommand
-    {
-      lock (commands)
-        return (TCommand)commands[typeof(TCommand)];
-    }
-
-    /// <inheritdoc />
-    public TCommand GetCommandOrCreate<TCommand>() where TCommand : CompositeCommand, new()
+    public TCommand GetCommand<TCommand>() where TCommand : CompositeCommand, new()
     {
       lock (commands)
       {
@@ -23,15 +16,6 @@ namespace Prism.Commands
           commands[typeof(TCommand)] = new TCommand();
 
         return (TCommand)commands[typeof(TCommand)];
-      }
-    }
-
-    /// <inheritdoc />
-    public void RegisterCommand<TCommand>([NotNull] TCommand command) where TCommand : ICommand
-    {
-      lock (commands)
-      {
-        commands[typeof(TCommand)] = command;
       }
     }
 

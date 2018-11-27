@@ -92,19 +92,17 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Command SupprimerForme
 
-    private void _SupprimerFormes(ICollection<MeshElement3D> meshes)
-    {
-      var formes = (from mesh in meshes
-                    let wrapper = (FormeWrapper)BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)
-                      ?.Bindings?.OfType<Binding>()?.First()?.Source
-                    where wrapper is FormeWrapper
-                    select wrapper).ToArray();
+    private void _SupprimerFormes(ICollection<MeshElement3D> meshes) =>
+      InnerSupprimerFormes.Execute(ConvertMeshes(meshes).ToArray());
 
-      if (InnerSupprimerFormes.CanExecute(formes))
-        InnerSupprimerFormes.Execute(formes);
-    }
+    private bool CanSupprimerFormes(ICollection<MeshElement3D> meshes) =>
+      InnerSupprimerFormes.CanExecute(ConvertMeshes(meshes).ToArray());
 
-    private bool CanSupprimerFormes(ICollection<MeshElement3D> meshes) => meshes.Any();
+    private IEnumerable<FormeWrapper> ConvertMeshes(ICollection<MeshElement3D> meshes) =>
+      from mesh in meshes
+      let wrapper = BindingOperations.GetMultiBinding(mesh, MeshElement3D.TransformProperty)?.Bindings?.OfType<Binding>()?.First()?.Source
+      where wrapper is FormeWrapper
+      select (FormeWrapper)wrapper;
 
     #endregion
 

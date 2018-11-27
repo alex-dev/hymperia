@@ -18,8 +18,9 @@
       </Grid.RowDefinitions>
       <Label Target="{Binding ElementName=cbxMateriau}" Content="{x:Static prop:Resources._Material}" Grid.Column="0"
           Grid.Row="0" />
-      <ComboBox x:Name="cbxMateriau" ItemsSource="{Binding Materiaux, Mode=OneWay}"
-          SelectedValue="{Binding Materiau, Mode=TwoWay}" SelectedValuePath="Materiau" Grid.Column="1" Grid.Row="0">
+      <ComboBox x:Name="cbxMateriau" IsEnabled="{Binding IsReadOnly, Converter={StaticResource Inverter}}" IsReadOnly="True"
+          ItemsSource="{Binding Materiaux, Mode=OneWay}" SelectedValue="{Binding Materiau, Mode=TwoWay}"
+          SelectedValuePath="Materiau" Grid.Column="1" Grid.Row="0">
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Nom}" />

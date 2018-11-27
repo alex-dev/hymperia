@@ -40,6 +40,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
       set => SetProperty(ref droit, value, RaiseAccesChanged);
     }
 
+    public bool CanModify
+    {
+      get => Droit >= Acces.Droit.LectureEcriture;
+    }
+
     /// <summary>Le projet travaillé par l'éditeur.</summary>
     /// <remarks><see cref="null"/> si le projet est en attente.</remarks>
     [CanBeNull]
@@ -100,8 +105,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
-    public AddFormeCommand AjouterForme { get; }
-    public DeleteFormesCommand SupprimerFormes { get; }
+    public DelegateCommand<Point> AjouterForme { get; }
+    public DelegateCommand<ICollection<FormeWrapper>> SupprimerFormes { get; }
     public ICommand Sauvegarder { get; }
 
     #endregion
@@ -120,19 +125,19 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
-      AjouterForme = (AddFormeCommand)new AddFormeCommand(_AjouterForme, PeutAjouterForme)
+      AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
         .ObservesProperty(() => SelectedForme)
         .ObservesProperty(() => SelectedMateriau);
-      SupprimerFormes = new DeleteFormesCommand(_SupprimerFormes, CanSupprimerFormes);
+      SupprimerFormes = new DelegateCommand<ICollection<FormeWrapper>>(_SupprimerFormes, CanSupprimerFormes);
       Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _Sauvegarder())
         .ObservesCanExecute(() => HasChanged);
 
       ContextFactory = factory;
       ConvertisseurFormes = formes;
 
-      commands.RegisterCommand(AjouterForme);
-      commands.RegisterCommand(SupprimerFormes);
+      commands.GetCommand<AddFormeCommand>().RegisterCommand(AjouterForme);
+      commands.GetCommand<DeleteFormesCommand>().RegisterCommand(SupprimerFormes);
 
       events.GetEvent<SelectedFormeChanged>().Subscribe(forme => SelectedForme = forme);
       events.GetEvent<SelectedMateriauChanged>().Subscribe(materiau => SelectedMateriau = materiau);
@@ -169,9 +174,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     private bool PeutAjouterForme(Point point) =>
-      point is Point && Projet is Projet
-      && SelectedMateriau is Materiau
-      && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
+      Projet is Projet && Droit >= Acces.Droit.LectureEcriture
+        && point is Point && SelectedMateriau is Materiau && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
 
     #endregion
 
@@ -188,7 +192,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Formes.RemoveRange(wrappers);
     }
 
-    private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) => wrappers.Any();
+    private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) =>
+      Projet is Projet && Droit >= Acces.Droit.LectureEcriture && wrappers.Any();
 
     #endregion
 
@@ -268,7 +273,11 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Aggregated Event Handlers
 
-    private void RaiseAccesChanged() => AccesChanged.Publish(Droit);
+    private void RaiseAccesChanged()
+    {
+      RaisePropertyChanged(nameof(CanModify));
+      AccesChanged.Publish(Droit);
+    }
 
     private void RaiseFormesChanged(Collection<FormeWrapper> old)
     {

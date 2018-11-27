@@ -9,6 +9,7 @@
     xmlns:agg="clr-namespace:Hymperia.Facade.Converters.AggregateConverters"
     xmlns:aggregator="clr-namespace:Hymperia.Facade.Converters.AggregatorConverters">
   <helix:LinearConverter x:Key="Linear" M="1" />
+  <main:BooleanInverter x:Key="Inverter" />
   <main:BooleanToVisibilityConverter x:Key="ToVisibility" />
   <main:ManipulatorRadiusConverter x:Key="ManipulatorRadius" />
   <main:Point3DToPointConverter x:Key="Point3DToPoint" />
