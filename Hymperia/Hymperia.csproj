@@ -219,8 +219,14 @@
     <Compile Include="Views\Popups\AjouterProjetPopup.xaml.cs">
       <DependentUpon>AjouterProjetPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popups\ConfirmationPopup.xaml.cs">
+      <DependentUpon>ConfirmationPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
       <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popups\InformationPopup.xaml.cs">
+      <DependentUpon>InformationPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
@@ -303,9 +309,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Popups\ConfirmationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Popups\EntitySuppressionPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Popups\InformationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Reglages\Application\ChangementMotDePasse.xaml">
       <SubType>Designer</SubType>

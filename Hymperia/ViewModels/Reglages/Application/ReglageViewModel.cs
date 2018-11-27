@@ -4,12 +4,15 @@
 */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
@@ -17,6 +20,7 @@ using JetBrains.Annotations;
 using Prism;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using S = Hymperia.Model.Properties.Settings;
 
@@ -33,6 +37,13 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       get => utilisateur;
       set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
     }
+
+    #endregion
+
+    #region Interaction Requests
+
+    public InteractionRequest<IConfirmation> ConfirmationRequest { get; } = new InteractionRequest<IConfirmation>();
+    public InteractionRequest<INotification> InformationRequest { get; } = new InteractionRequest<INotification>();
 
     #endregion
 
@@ -55,7 +66,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
-      Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _Sauvegarder());
+      Sauvegarder = new DelegateCommand(InteractionSauvegarder);
 
       ContextFactory = factory;
 
@@ -67,12 +78,46 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Command Sauvegarder
 
+    private ICollection<string> _PreSauvegarder()
+    {
+      var errors = new List<string>();
+      PreSauvegarder.Execute(errors);
+      return errors;
+    }
+
     private async Task _Sauvegarder()
     {
-      PreSauvegarder.Execute(null);
       S.Default.Save();
       using (await AsyncLock.Lock(ContextWrapper.Context))
         await ContextWrapper.Context.SaveChangesAsync();
+    }
+
+    #endregion
+
+    #region Command InformationSauvegarde
+
+    private void InteractionSauvegarder()
+    {
+      async Task ExecuteReussite(IConfirmation context)
+      {
+        if (context.Confirmed)
+          await _Sauvegarder();
+      }
+
+      var errors = _PreSauvegarder();
+
+      if (errors.Any())
+        InformationRequest.Raise(new Notification
+        {
+          Title = Resources.Echec,
+          Content = errors
+        });
+      else
+        ConfirmationRequest.Raise(new Confirmation
+        {
+          Title = Resources.Reussite,
+          Content = Resources.SaveDataInfo
+        }, context => SaveLoader.Loading = ExecuteReussite(context));
     }
 
     #endregion
@@ -89,7 +134,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
         using (await AsyncLock.Lock(ContextWrapper.Context))
           value = await ContextWrapper.Context.Utilisateurs.FindByIdAsync(_utilisateur.Id);
 
-        SetProperty(ref utilisateur, value, onChanged, nameof(Projet));
+        SetProperty(ref utilisateur, value, onChanged, nameof(Utilisateur));
       }
 
       return value;
@@ -179,6 +224,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private readonly PreSauvegarderReglageApplication PreSauvegarder;
     [NotNull]
     private readonly ReglageUtilisateurChanged UtilisateurChanged;
+    [NotNull]
+    private readonly IEventAggregator Events;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;

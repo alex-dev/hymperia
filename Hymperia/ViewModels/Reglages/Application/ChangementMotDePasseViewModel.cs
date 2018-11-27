@@ -3,17 +3,21 @@
  * Date de création : 21 novembre 2018
  */
 
-using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
+using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using B = BCrypt.Net;
 using S = Hymperia.Model.Properties.Settings;
@@ -24,6 +28,12 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
   public class ChangementMotDePasseViewModel : ValidatingBase, INotifyDataErrorInfo
   {
     #region Properties
+
+    public string OldPassword
+    {
+      get => oldpassword;
+      set => SetProperty(ref oldpassword, value);
+    }
 
     /*[Required(
       ErrorMessageResourceName = nameof(Resources.RequiredPassword),
@@ -57,135 +67,57 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       }
     }
 
-    public Model.Modeles.Utilisateur Utilisateur
-    {
-      get => utilisateur;
-      set
-      {
-        SetProperty(ref utilisateur, value);
-      }
-    }
-
-    public DelegateCommand ChangementMotDePasse { get; }
+    public Utilisateur Utilisateur { get; set; }
 
     #endregion
 
     #region Constructeur
 
-    public ChangementMotDePasseViewModel(ContextFactory factory)
+    public ChangementMotDePasseViewModel(ICommandAggregator commands, IEventAggregator events)
     {
-      ContextFactory = factory;
-      ChangementMotDePasse = new DelegateCommand(_ChangementMotDePasse);
+      commands.GetCommand<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand<List<string>>(PreSauvegarderChangementMotDePasse));
+      events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
     }
 
     #endregion
 
-    private async void _ChangementMotDePasse()
+    private async void PreSauvegarderChangementMotDePasse(List<string> erreurs)
     {
       if (!await Validate())
-        return;
-
-      await ModificationUtilisateur();
-    }
-
-    #region Queries
-    private async Task ModificationUtilisateur()
-    {
-      Utilisateur.MotDePasse = B.BCrypt.HashPassword(Password, Model.Modeles.Utilisateur.PasswordWorkFactor, true);
-
-      using (var context = ContextFactory.GetReglageUtilisateurContext())
       {
-        context.Context.Utilisateurs.Update(Utilisateur);
-        await context.Context.SaveChangesAsync();
+        erreurs.AddRange(Errors.GetErrors().Values
+          .SelectMany(list => list.Select(item => item.ErrorMessage)).Distinct());
+        return;
       }
 
-      S.Default.MotDePasse = Utilisateur.MotDePasse;
+      Utilisateur.MotDePasse = B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true);
+
+      if (S.Default.ConnexionAutomatique)
+        S.Default.MotDePasse = Utilisateur.MotDePasse;
     }
 
-    #endregion
+    private void OnUtilisateurChanged(Utilisateur utilisateur) => Utilisateur = utilisateur;
 
     #region ValidationBase
+
+    private bool ValidatationAncientMotDePasse() => ValidateProperty<string>(v =>
+    {
+      if (!B.BCrypt.Verify(OldPassword, Utilisateur.MotDePasse, true))
+        Errors.SetErrors(
+          nameof(OldPassword),
+          new ValidationResult[] { new ValidationResult(Resources.InvalidCredential, new string[] { nameof(OldPassword) }) });
+    }, nameof(OldPassword));
 
     protected override async Task ValidateAsync()
     {
       ValidateProperty<string>(nameof(Password));
       ValidateProperty<string>(nameof(Verification));
+      ValidatationAncientMotDePasse();
     }
-
-    #endregion
-
-    #region IActiveAware
-
-    public event EventHandler IsActiveChanged;
-
-    public bool IsActive
-    {
-      get => isActive;
-      set
-      {
-        if (isActive == value)
-          return;
-
-        isActive = value;
-
-        if (value)
-          OnActivation();
-        else
-          OnDeactivation();
-
-        IsActiveChanged?.Invoke(this, EventArgs.Empty);
-      }
-    }
-
-#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
-
-    private void OnActivation()
-    {
-      if (ContextWrapper is null)
-        ContextWrapper = ContextFactory.GetEditeurContext();
-      else
-        CancelDispose();
-    }
-
-    private void OnDeactivation() => DisposeContext();
-
-
-#pragma warning restore 4014
-
-    #endregion
-
-    #region IDisposable
-
-#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
-
-    public void Dispose() => DisposeContext();
-
-#pragma warning restore 4014
-
-    private async Task DisposeContext()
-    {
-      if (ContextWrapper is null)
-        return;
-
-      disposeToken = new CancellationTokenSource();
-      using (await AsyncLock.Lock(ContextWrapper.Context, disposeToken.Token))
-      {
-        if (disposeToken.IsCancellationRequested)
-          return;
-
-        ContextWrapper.Dispose();
-        ContextWrapper = null;
-      }
-    }
-
-    private void CancelDispose() => disposeToken.Cancel();
 
     #endregion
 
     #region Services
-
-    [NotNull]
-    private readonly ContextFactory ContextFactory;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
@@ -194,11 +126,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Private Fields
 
-    private Model.Modeles.Utilisateur utilisateur;
     private string password = "";
     private string verification = "";
-    private bool isActive;
-    private CancellationTokenSource disposeToken;
+    private string oldpassword = "";
 
     #endregion
   }

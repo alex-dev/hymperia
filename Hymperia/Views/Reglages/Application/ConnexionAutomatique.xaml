@@ -8,9 +8,9 @@ Date de création : 23 novembre 2018
         prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Vertical">
     <TextBlock Text="{x:Static prop:Resources.ConnexionAutomatique}" />
-    <ComboBox IsEditable="False">
-      <ComboBoxItem Foreground="Red" Content="{x:Static prop:Resources.Non}" />
-      <ComboBoxItem Foreground="Green" Content="{x:Static prop:Resources.Oui}" IsSelected="{Binding Selectionne}" />
+    <ComboBox x:Name="ConnexionAutomatiqueComboBox" IsReadOnly="True">
+      <ComboBoxItem Content="{x:Static prop:Resources.Non}" />
+      <ComboBoxItem Content="{x:Static prop:Resources.Oui}" IsSelected="{Binding Selectionne}" />
     </ComboBox>
   </StackPanel>
 </UserControl>
