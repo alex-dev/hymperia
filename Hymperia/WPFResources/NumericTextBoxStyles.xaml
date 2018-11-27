@@ -21,11 +21,11 @@
               <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"
                   VerticalScrollBarVisibility="Hidden" />
             </Border>
-            <Button
+            <Button IsEnabled="{TemplateBinding IsReadOnly, Converter={StaticResource Inverter}}"
                 Command="{Binding (do:NumericTextBoxBehavior.UpCommand), Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}"
                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}" Content="+" Margin="0"
                 FontSize="10" MaxHeight="12.98" Padding="5,0" Grid.Column="1" Grid.Row="0" />
-            <Button
+            <Button IsEnabled="{TemplateBinding IsReadOnly, Converter={StaticResource Inverter}}"
                 Command="{Binding (do:NumericTextBoxBehavior.DownCommand), Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}"
                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}" Content="-" Margin="0"
                 FontSize="10" MaxHeight="12.98" Padding="5,0" Grid.Column="1" Grid.Row="1" />

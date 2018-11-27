@@ -79,8 +79,9 @@ namespace Hymperia.Facade.Views.Editeur
       HorizontalTabControl.RemoveAll();
       VerticalTabControl.RemoveAll();
 
-      VerticalTabControl.Add(MateriauxAnalyse, ViewKeys.MateriauxAnalyse);
+      // PropertiesEditeur must be first so it is fully loaded.
       VerticalTabControl.Add(PropertiesEditeur, ViewKeys.PropertiesEditeur);
+      VerticalTabControl.Add(MateriauxAnalyse, ViewKeys.MateriauxAnalyse);
 
       if (Droit >= Acces.Droit.LectureEcriture)
       {

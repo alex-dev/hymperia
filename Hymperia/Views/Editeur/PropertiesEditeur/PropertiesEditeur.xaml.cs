@@ -15,8 +15,12 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
 
     public PropertiesEditeur(IRegionManager manager, IContainerExtension container)
     {
-      Container = container;
       Manager = manager;
+      PositionEditeur = container.Resolve<PositionEditeur>();
+      ConeEditeur = container.Resolve<ConeEditeur>();
+      CylindreEditeur = container.Resolve<CylindreEditeur>();
+      EllipsoideEditeur = container.Resolve<EllipsoideEditeur>();
+      PrismeEditeur = container.Resolve<PrismeEditeur>();
 
       Loaded += RegisterViews;
       InitializeComponent();
@@ -33,11 +37,11 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
       PositionPropertiesRegion = Manager.Regions[RegionKeys.PositionPropertiesRegion];
       SpecificPropertiesRegion = Manager.Regions[RegionKeys.SpecificPropertiesRegion];
 
-      PositionPropertiesRegion.Add(Container.Resolve<PositionEditeur>(), ViewKeys.PositionEditeur);
-      SpecificPropertiesRegion.Add(Container.Resolve<ConeEditeur>(), ViewKeys.ConeEditor);
-      SpecificPropertiesRegion.Add(Container.Resolve<CylindreEditeur>(), ViewKeys.CylindreEditor);
-      SpecificPropertiesRegion.Add(Container.Resolve<EllipsoideEditeur>(), ViewKeys.EllipsoideEditor);
-      SpecificPropertiesRegion.Add(Container.Resolve<PrismeEditeur>(), ViewKeys.PrismeRectangulaireEditor);
+      PositionPropertiesRegion.Add(PositionEditeur, ViewKeys.PositionEditeur);
+      SpecificPropertiesRegion.Add(ConeEditeur, ViewKeys.ConeEditor);
+      SpecificPropertiesRegion.Add(CylindreEditeur, ViewKeys.CylindreEditor);
+      SpecificPropertiesRegion.Add(EllipsoideEditeur, ViewKeys.EllipsoideEditor);
+      SpecificPropertiesRegion.Add(PrismeEditeur, ViewKeys.PrismeRectangulaireEditor);
 
       PositionPropertiesRegion?.Deactivate();
       SpecificPropertiesRegion?.Deactivate();
@@ -81,11 +85,15 @@ namespace Hymperia.Facade.Views.Editeur.PropertiesEditeur
 
     #region Services
 
-    private readonly IContainerExtension Container;
     private readonly IRegionManager Manager;
+    private readonly PositionEditeur PositionEditeur;
+    private readonly ConeEditeur ConeEditeur;
+    private readonly CylindreEditeur CylindreEditeur;
+    private readonly EllipsoideEditeur EllipsoideEditeur;
+    private readonly PrismeEditeur PrismeEditeur;
     private IRegion PositionPropertiesRegion;
     private IRegion SpecificPropertiesRegion;
 
-    #endregion
-  }
+      #endregion
+   }
 }

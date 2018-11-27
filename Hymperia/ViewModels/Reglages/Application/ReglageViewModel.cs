@@ -225,9 +225,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     [NotNull]
     private readonly ReglageUtilisateurChanged UtilisateurChanged;
     [NotNull]
-    private readonly IEventAggregator Events;
-
-    [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
 
     #endregion
