@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -37,17 +38,12 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
     }
 
-    public List<string> Erreurs
-    {
-      get => erreurs;
-      set => SetProperty(ref erreurs, value);
-    }
-
     #endregion
 
     #region Interaction Requests
 
-    public InteractionRequest<IConfirmation> InformationSauvegardeRequest { get; } = new InteractionRequest<IConfirmation>();
+    public InteractionRequest<IConfirmation> ConfirmationRequest { get; } = new InteractionRequest<IConfirmation>();
+    public InteractionRequest<INotification> InformationRequest { get; } = new InteractionRequest<INotification>();
 
     #endregion
 
@@ -59,7 +55,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Asynchronous Loading
 
-    public AsyncLoader<List<string>> ErreursLoader { get; } = new AsyncLoader<List<string>>();
     public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();
 
@@ -71,29 +66,23 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
-      Sauvegarder = new DelegateCommand(() => SaveLoader.Loading = _PreSauvegarder());
+      Sauvegarder = new DelegateCommand(InteractionSauvegarder);
 
       ContextFactory = factory;
 
-      PreSauvegarder = commands.GetCommandOrCreate<PreSauvegarderReglageApplication>();
+      PreSauvegarder = commands.GetCommand<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
-      events.GetEvent<ReglageErreursChanged>().Subscribe(RafraichirErreurs);
     }
 
     #endregion
 
     #region Command Sauvegarder
 
-    private async Task _PreSauvegarder()
+    private ICollection<string> _PreSauvegarder()
     {
-      PreSauvegarder.Execute(null);
-      _InformationSauvegarde();
-      if (Erreurs?.Count > 0)
-      {
-        Erreurs.Clear();
-        RaiseErreursChanged();
-      }
-
+      var errors = new List<string>();
+      PreSauvegarder.Execute(errors);
+      return errors;
     }
 
     private async Task _Sauvegarder()
@@ -101,37 +90,34 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       S.Default.Save();
       using (await AsyncLock.Lock(ContextWrapper.Context))
         await ContextWrapper.Context.SaveChangesAsync();
-
     }
 
     #endregion
 
     #region Command InformationSauvegarde
 
-    private void _InformationSauvegarde()
+    private void InteractionSauvegarder()
     {
-      if (Erreurs?.Count > 0)
+      async Task ExecuteReussite(IConfirmation context)
       {
-        InformationSauvegardeRequest.Raise(new Confirmation
+        if (context.Confirmed)
+          await _Sauvegarder();
+      }
+
+      var errors = _PreSauvegarder();
+
+      if (errors.Any())
+        InformationRequest.Raise(new Notification
         {
           Title = Resources.Echec,
-          Content = Erreurs
+          Content = errors
         });
-      }
       else
-      {
-        InformationSauvegardeRequest.Raise(new Confirmation
+        ConfirmationRequest.Raise(new Confirmation
         {
           Title = Resources.Reussite,
           Content = Resources.SaveDataInfo
-        }, ExecuteReussite);
-      }
-
-      void ExecuteReussite(IConfirmation context)
-      {
-        if (context.Confirmed == true)
-            _Sauvegarder();
-      }
+        }, context => SaveLoader.Loading = ExecuteReussite(context));
     }
 
     #endregion
@@ -159,13 +145,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     #region UtilisateurChanged
 
     private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
-
-    #endregion
-
-    #region ErreursChanged
-
-    private void RaiseErreursChanged() => ErreursChanged.Publish(Erreurs);
-    private void RafraichirErreurs(List<string> erreurs) => Erreurs = erreurs;
 
     #endregion
 
@@ -246,8 +225,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     [NotNull]
     private readonly ReglageUtilisateurChanged UtilisateurChanged;
     [NotNull]
-    private readonly ReglageErreursChanged ErreursChanged;
-    [NotNull]
     private readonly IEventAggregator Events;
 
     [NotNull]
@@ -260,7 +237,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private Utilisateur utilisateur;
     private bool isActive;
     private CancellationTokenSource disposeToken;
-    private List<string> erreurs;
 
     #endregion
   }

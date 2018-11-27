@@ -9,10 +9,17 @@ Date de création : 21 novembre 2018
     xmlns:popups="clr-namespace:Hymperia.Facade.Views.Popups" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     prism:ViewModelLocator.AutoWireViewModel="True">
   <i:Interaction.Triggers>
-    <prism:InteractionRequestTrigger SourceObject="{Binding InformationSauvegardeRequest }">
+    <prism:InteractionRequestTrigger SourceObject="{Binding InformationRequest}">
       <prism:PopupWindowAction IsModal="True">
         <prism:PopupWindowAction.WindowContent>
           <popups:InformationPopup />
+        </prism:PopupWindowAction.WindowContent>
+      </prism:PopupWindowAction>
+    </prism:InteractionRequestTrigger>
+    <prism:InteractionRequestTrigger SourceObject="{Binding ConfirmationRequest}">
+      <prism:PopupWindowAction IsModal="True">
+        <prism:PopupWindowAction.WindowContent>
+          <popups:ConfirmationPopup />
         </prism:PopupWindowAction.WindowContent>
       </prism:PopupWindowAction>
     </prism:InteractionRequestTrigger>
@@ -33,7 +40,6 @@ Date de création : 21 novembre 2018
     <ContentControl x:Name="regionConnexionAutomatique"
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.ConnexionAutomatiqueRegion}" Grid.Column="1"
         Grid.Row="1" />
-
     <Button Command="{Binding Sauvegarder}" Content="{x:Static prop:Resources.Save}" Grid.ColumnSpan="2" Grid.Row="2">
       <Button.Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

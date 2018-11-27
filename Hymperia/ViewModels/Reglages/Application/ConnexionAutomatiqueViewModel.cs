@@ -5,7 +5,6 @@
 
 using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
-using Hymperia.Facade.Services;
 using Hymperia.Model.Modeles;
 using Prism.Commands;
 using Prism.Events;
@@ -30,10 +29,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructeur
 
-    public ConnexionAutomatiqueViewModel(ContextFactory context, ICommandAggregator commands, IEventAggregator events)
+    public ConnexionAutomatiqueViewModel(ICommandAggregator commands, IEventAggregator events)
     {
-      ContextFactory = context;
-      commands.GetCommandOrCreate<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
+      commands.GetCommand<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
     }
 
@@ -51,12 +49,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     #endregion
 
     private void OnUtilisateurChanged(Utilisateur utilisateur) => Utilisateur = utilisateur;
-
-    #region Services
-
-    ContextFactory ContextFactory;
-
-    #endregion
 
     #region Private Fields
 

@@ -19,21 +19,6 @@ namespace Hymperia.Facade.Views.Popups
       InitializeComponent();
     }
 
-    private void Ok(object sender, RoutedEventArgs e)
-    {
-      if (Notification is IConfirmation confirmation)
-
-        confirmation.Confirmed = true;
-
-      FinishInteraction?.Invoke();
-    }
-
-    private void Cancel(object sender, RoutedEventArgs e)
-    {
-      if (Notification is IConfirmation confirmation)
-        confirmation.Confirmed = false;
-
-      FinishInteraction?.Invoke();
-    }
+    private void Ok(object sender, RoutedEventArgs e) => FinishInteraction?.Invoke();
   }
 }

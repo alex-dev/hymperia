@@ -8,7 +8,7 @@ Date de création : 23 novembre 2018
         prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Vertical">
     <TextBlock Text="{x:Static prop:Resources.ConnexionAutomatique}" />
-    <ComboBox x:Name="ConnexionAutomatiqueComboBox" IsEditable="False">
+    <ComboBox x:Name="ConnexionAutomatiqueComboBox" IsReadOnly="True">
       <ComboBoxItem Content="{x:Static prop:Resources.Non}" />
       <ComboBoxItem Content="{x:Static prop:Resources.Oui}" IsSelected="{Binding Selectionne}" />
     </ComboBox>
