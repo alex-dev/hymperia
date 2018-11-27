@@ -169,9 +169,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     private bool PeutAjouterForme(Point point) =>
-      point is Point && Projet is Projet
-      && SelectedMateriau is Materiau
-      && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
+      Projet is Projet && Droit >= Acces.Droit.LectureEcriture
+        && point is Point && SelectedMateriau is Materiau && ((SelectedForme as Type)?.IsSubclassOf(typeof(Forme)) ?? false);
 
     #endregion
 
@@ -188,7 +187,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       Formes.RemoveRange(wrappers);
     }
 
-    private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) => wrappers.Any();
+    private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) =>
+      Projet is Projet && Droit >= Acces.Droit.LectureEcriture && wrappers.Any();
 
     #endregion
 

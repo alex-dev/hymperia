@@ -66,10 +66,7 @@ namespace Hymperia.Facade.Views.Editeur
       ViewportRegion = Manager.Regions[RegionKeys.ViewportRegion];
       HorizontalTabControl = Manager.Regions[RegionKeys.HorizontalTabControlRegion];
       VerticalTabControl = Manager.Regions[RegionKeys.VerticalTabControlRegion];
-    }
 
-    private void RegisterViews(Acces.Droit droit)
-    {
       ViewportRegion.Add(Viewport, ViewKeys.Viewport);
       HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
       HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
@@ -88,7 +85,6 @@ namespace Hymperia.Facade.Views.Editeur
     {
       Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
       Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
-      RegisterViews(Droit);
     }
 
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
