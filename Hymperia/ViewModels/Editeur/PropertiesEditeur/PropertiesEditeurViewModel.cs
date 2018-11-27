@@ -179,7 +179,7 @@ namespace Hymperia.Facade.ViewModels.Editeur.PropertiesEditeur
       e.NewItems?.Cast<FormeWrapper>()?.ForEach(wrapper => wrapper.PropertyChanged += OnFormeChanged);
       Raises();
 
-      SelectedForme = ((ICollection<FormeWrapper>)sender).Count <= 1 
+      SelectedForme = ((ICollection<FormeWrapper>)sender).Count <= 1
         ? ((ICollection<FormeWrapper>)sender).SingleOrDefault()
         : null;
     }
