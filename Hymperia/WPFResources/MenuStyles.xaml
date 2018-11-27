@@ -10,11 +10,18 @@
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrush}}" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="Padding" Value="5" />
+    <Setter Property="Margin" Value="12" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Menu}">
           <Border Name="Border" SnapsToDevicePixels="True">
-            <StackPanel ClipToBounds="True" Orientation="Vertical" IsItemsHost="True" />
+            <StackPanel ClipToBounds="True" Orientation="Horizontal" IsItemsHost="True">
+              <StackPanel.Resources>
+                <Style TargetType="{x:Type MenuItem}">
+                  <Setter Property="Margin" Value="0,10,0,0" />
+                </Style>
+              </StackPanel.Resources>
+            </StackPanel>
           </Border>
         </ControlTemplate>
       </Setter.Value>
@@ -22,8 +29,8 @@
   </Style>
 
   <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
-    <Setter Property="Height" Value="1" />
-    <Setter Property="Margin" Value="0,4,0,4" />
+    <Setter Property="Height" Value="2" />
+    <Setter Property="Margin" Value="4" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Separator}">
@@ -55,7 +62,7 @@
     <Border Name="Border" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}" BorderThickness="1" CornerRadius="1">
       <Grid>
-        <ContentPresenter Margin="6,3,6,3" ContentSource="Header" RecognizesAccessKey="True" />
+        <ContentPresenter Margin="6,3,6,3" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center"/>
       </Grid>
     </Border>
     <ControlTemplate.Triggers>
