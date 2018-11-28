@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.Collections;
 using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.Constants;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Extensions;
 using Hymperia.Facade.Loaders;
@@ -24,6 +25,7 @@ using Prism;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -106,6 +108,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public DelegateCommand<Point> AjouterForme { get; }
     public DelegateCommand<ICollection<FormeWrapper>> SupprimerFormes { get; }
     public ICommand Sauvegarder { get; }
+    public ICommand NavigateToReglage { get; private set; }
 
     #endregion
 
@@ -121,8 +124,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events, IRegionManager manager)
     {
+      NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
         .ObservesProperty(() => SelectedForme)
@@ -133,6 +137,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
       ContextFactory = factory;
       ConvertisseurFormes = formes;
+      Manager = manager;
 
       commands.GetCommand<AddFormeCommand>().RegisterCommand(AjouterForme);
       commands.GetCommand<DeleteFormesCommand>().RegisterCommand(SupprimerFormes);
@@ -143,6 +148,19 @@ namespace Hymperia.Facade.ViewModels.Editeur
       FormesChanged = events.GetEvent<FormesChanged>();
       ProjetChanged = events.GetEvent<ProjetChanged>();
       SelectionModeChanged = events.GetEvent<SelectionModeChanged>();
+    }
+
+    #endregion
+
+    #region Command NavigateToReglage
+
+    private void _NavigateToReglage()
+    {
+      using (ContextFactory.GetReglageEditeurContext())
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageEditeur, new NavigationParameters
+        {
+          { NavigationParameterKeys.Projet, Projet }
+        });
     }
 
     #endregion
@@ -377,6 +395,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     [NotNull]
     private readonly ContextFactory ContextFactory;
+    [NotNull]
+    private readonly IRegionManager Manager;
     [NotNull]
     private readonly ConvertisseurFormes ConvertisseurFormes;
     [NotNull]

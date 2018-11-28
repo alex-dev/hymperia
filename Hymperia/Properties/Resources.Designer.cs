@@ -413,6 +413,11 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string SaveDataInfo => GetString("SaveDataInfo");
 
+    /// <summary>
+    ///   Renommer un projet :
+    /// </summary>
+    public static string TitleRenameProject => GetString("TitleRenameProject");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",

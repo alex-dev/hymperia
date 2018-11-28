@@ -17,6 +17,7 @@ using Hymperia.Model.Properties;
 using Prism.Ioc;
 using Prism.Ninject;
 using A = Hymperia.Facade.Views.Reglages.Application;
+using E = Hymperia.Facade.Views.Reglages.Editeur;
 
 namespace Hymperia.Facade
 {
@@ -38,6 +39,7 @@ namespace Hymperia.Facade
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
       registry.RegisterForNavigation<Inscription>(NavigationKeys.Inscription);
       registry.RegisterForNavigation<A.Reglage>(NavigationKeys.ReglageUtilisateur);
+      registry.RegisterForNavigation<E.Reglage>(NavigationKeys.ReglageEditeur);
     }
 
     /// <summary>Trouve la fenêtre via le kernel de Ninject.</summary>

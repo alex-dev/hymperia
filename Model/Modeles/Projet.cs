@@ -78,6 +78,12 @@ namespace Hymperia.Model.Modeles
     /// <param name="forme"></param>
     public void SupprimerForme([NotNull] Forme forme) => _Formes.Remove(forme);
 
+    /// <summary>
+    /// Renomme un projet.
+    /// </summary>
+    /// <param name="nom">Le nouveau nom pour le projet.</param>
+    public void RenommerProjet([NotNull] string nom) => Nom = nom;
+
     #endregion
 
     #region ToString

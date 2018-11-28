@@ -352,4 +352,7 @@
   <data name="SaveDataInfo" xml:space="preserve">
     <value>Do you want to save the data.</value>
   </data>
+  <data name="TitleRenameProject" xml:space="preserve">
+    <value>Rename a project :</value>
+  </data>
 </root>
