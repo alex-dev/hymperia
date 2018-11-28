@@ -108,7 +108,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public DelegateCommand<Point> AjouterForme { get; }
     public DelegateCommand<ICollection<FormeWrapper>> SupprimerFormes { get; }
     public ICommand Sauvegarder { get; }
-    public ICommand NavigateToReglage { get; private set; }
+    public ICommand NavigateToReglage { get; }
 
     #endregion
 
@@ -124,7 +124,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events, IRegionManager manager)
+    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events, [NotNull] IRegionManager manager)
     {
       NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
