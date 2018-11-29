@@ -48,12 +48,12 @@
         <Style TargetType="{x:Type DataGridCell}">
           <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" />
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
               <Setter Property="BorderBrush" Value="Transparent" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" />
-              <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}" />
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrush}}" />
+              <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" />
               <Setter Property="BorderThickness" Value="1" />
             </Trigger>
           </Style.Triggers>

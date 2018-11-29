@@ -24,7 +24,7 @@ Date de création : 21 novembre 2018
       </prism:PopupWindowAction>
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
-  <Grid>
+  <Grid Margin="200">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="1*" />
       <ColumnDefinition Width="1*" />
