@@ -364,8 +364,17 @@
   <data name="SupprimerProjet" xml:space="preserve">
     <value>Delete the project.</value>
   </data>
+  <data name="Reglage" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="SupprimerProjetContent" xml:space="preserve">
+    <value>Do you want to delete the project ?</value>
+  </data>
   <data name="TitleAccesProjet" xml:space="preserve">
     <value>Sharing projects</value>
+  </data>
+  <data name="TitleConfirmDelete" xml:space="preserve">
+    <value>Confirmation deletion</value>
   </data>
   <data name="UserExistProjet" xml:space="preserve">
     <value>The user already has this project.</value>
