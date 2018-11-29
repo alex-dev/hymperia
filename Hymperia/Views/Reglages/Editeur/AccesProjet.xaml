@@ -6,15 +6,17 @@
     <CollectionViewSource x:Key="acces" Source="{Binding Acces}" Filter="OnFiltering" />
   </UserControl.Resources>
   <StackPanel Orientation="Vertical">
-    <TextBlock Text="" />
+    <TextBlock Text="{x:Static prop:Resources.TitleAccesProjet}" />
     <StackPanel Orientation="Horizontal">
       <TextBox Text="{Binding Name}" />
       <Button Command="{Binding AddAcces}" Content="{x:Static prop:Resources.Ajouter}" />
     </StackPanel>
-    <DataGrid x:Name="a" ItemsSource="{Binding Source={StaticResource acces}}" AutoGenerateColumns="False" CanUserAddRows="True" IsReadOnly="False">
+    <DataGrid x:Name="a" ItemsSource="{Binding Source={StaticResource acces}}" AutoGenerateColumns="False"
+        CanUserAddRows="True" IsReadOnly="False">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="{x:Static prop:Resources._Utilisateur}" Binding="{Binding Utilisateur.Nom}" IsReadOnly="True" MinWidth="150" />
-        <DataGridCheckBoxColumn Header="Droit édition" MinWidth="150" />
+        <DataGridTextColumn Header="{x:Static prop:Resources._Utilisateur}" Binding="{Binding Utilisateur.Nom}"
+            IsReadOnly="True" MinWidth="150" />
+        <DataGridCheckBoxColumn Header="{x:Static prop:Resources.DroitEdition}" MinWidth="150" />
       </DataGrid.Columns>
     </DataGrid>
   </StackPanel>

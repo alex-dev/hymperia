@@ -364,6 +364,9 @@
   <data name="SupprimerProjet" xml:space="preserve">
     <value>Delete the project.</value>
   </data>
+  <data name="Reglage" xml:space="preserve">
+    <value>Setting</value>
+  </data>
   <data name="TitleAccesProjet" xml:space="preserve">
     <value>Sharing projects</value>
   </data>
