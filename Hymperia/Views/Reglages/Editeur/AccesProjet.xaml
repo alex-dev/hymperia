@@ -13,8 +13,8 @@
     </StackPanel>
     <DataGrid x:Name="a" ItemsSource="{Binding Source={StaticResource acces}}" AutoGenerateColumns="False" CanUserAddRows="True" IsReadOnly="False">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="{x:Static prop:Resources._Utilisateur}" Binding="{Binding Utilisateur.Nom}" IsReadOnly="True" MinWidth="150" />
-        <DataGridCheckBoxColumn Header="Droit édition" MinWidth="150" />
+        <DataGridTextColumn Binding="{Binding Utilisateur.Nom}" Header="{x:Static prop:Resources._Utilisateur}" IsReadOnly="True" MinWidth="150" />
+        <DataGridCheckBoxColumn Binding="{Binding DroitDAcces, Converter={StaticResource DroitToBool}}" Header="Droit édition" MinWidth="150" />
       </DataGrid.Columns>
     </DataGrid>
   </StackPanel>

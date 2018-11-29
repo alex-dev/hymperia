@@ -39,7 +39,7 @@ Date de création : 28 novembre 2018
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.RenommerProjetRegion}" Grid.Column="1" Grid.Row="0" />
     <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1">
       <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Retour}" />
-      <Button Command="{Binding dfs}" Content="{x:Static prop:Resources.SupprimerProjet}" />
+      <Button Command="{Binding Delete}" Content="{x:Static prop:Resources.Supprimer}" />
       <Button Command="{Binding Sauvegarder}" Content="{x:Static prop:Resources.Save}">
         <Button.Style>
           <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
