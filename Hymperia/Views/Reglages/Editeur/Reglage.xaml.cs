@@ -6,31 +6,16 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
-using Hymperia.Model.Modeles;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 
 namespace Hymperia.Facade.Views.Reglages.Editeur
 {
-  public partial class Reglage : UserControl, INavigationAware, IActiveAware
+  public partial class Reglage : UserControl, IActiveAware
   {
-    #region Dependency Properties
-
-    public static readonly DependencyProperty ProjetProperty =
-      DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Reglage));
-
-    #endregion
-
-    public Projet Projet
-    {
-      get => (Projet)GetValue(ProjetProperty);
-      set => SetValue(ProjetProperty, value);
-    }
-
     #region Constructors
 
     public Reglage(IRegionManager manager, IContainerExtension container)
@@ -41,8 +26,6 @@ namespace Hymperia.Facade.Views.Reglages.Editeur
 
       Loaded += RegisterViews;
       InitializeComponent();
-
-      SetBinding(ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -59,14 +42,6 @@ namespace Hymperia.Facade.Views.Reglages.Editeur
       AccesProjetRegion.Add(AccesProjet, ViewKeys.AccesProjet);
       RenommerProjetRegion.Add(RenommerProjet, ViewKeys.RenommerProjet);
     }
-
-    #endregion
-
-    #region INavigationAware 
-
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
-    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
-    public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
 

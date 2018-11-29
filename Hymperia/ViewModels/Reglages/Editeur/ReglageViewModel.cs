@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.Constants;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
@@ -22,11 +23,12 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
+using Prism.Regions;
 using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 {
-  public sealed class ReglageViewModel : BindableBase, IActiveAware, IDisposable
+  public sealed class ReglageViewModel : BindableBase, INavigationAware, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -145,6 +147,14 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     #region ProjetChanged
 
     private void RaiseProjetChanged() => ProjetChanged.Publish(Projet);
+
+    #endregion
+
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
+    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+    public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
 

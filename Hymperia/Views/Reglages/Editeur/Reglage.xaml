@@ -37,10 +37,10 @@ Date de création : 28 novembre 2018
       <RowDefinition Height="50" />
     </Grid.RowDefinitions>
     <Button Content="{x:Static prop:Resources.Retour}"  Grid.Column="0" Grid.Row="0"/> <!-- Bouton pour quitter Alex doit implementer le retour. -->
-    <ContentControl x:Name="regionChangementMotDePasse"
+    <ContentControl x:Name="regionAccesProjet"
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.AccesProjetRegion}" Grid.Column="0" Grid.ColumnSpan="2"
         Grid.Row="1"  Grid.RowSpan="2"/>
-    <ContentControl x:Name="regionConnexionAutomatique"
+    <ContentControl x:Name="regionRenommerProjet"
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.RenommerProjetRegion}" Grid.Column="2"
         Grid.Row="1" />
     <Button Content="{x:Static prop:Resources.SupprimerProjet}" Command="{Binding dfs}"  Grid.Column="2" Grid.Row="2" />
@@ -48,7 +48,7 @@ Date de création : 28 novembre 2018
       <Button.Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding (prism:RegionManager.Context).HasError, ElementName=regionccesProjet}"
+            <DataTrigger Binding="{Binding (prism:RegionManager.Context).HasError, ElementName=regionAccesProjet}"
                 Value="True">
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
