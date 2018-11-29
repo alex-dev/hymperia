@@ -51,6 +51,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     #region Commands
 
+    public ICommand NavigateBack { get; }
+
     public ICommand Sauvegarder { get; }
 
     #endregion
@@ -66,15 +68,24 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     #region Constructors
 
-    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
+      NavigateBack = new DelegateCommand(_NavigateBack);
       Sauvegarder = new DelegateCommand(InteractionSauvegarder);
 
       ContextFactory = factory;
+      Manager = manager;
 
       PreSauvegarder = commands.GetCommand<PreSauvegarderReglageEditeur>();
       ProjetChanged = events.GetEvent<ReglageProjetChanged>();
     }
+
+    #endregion
+
+    #region Navigation Commands
+
+    private void _NavigateBack() =>
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
     #endregion
 
@@ -231,11 +242,11 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     [NotNull]
     private readonly ContextFactory ContextFactory;
     [NotNull]
+    private readonly IRegionManager Manager;
+    [NotNull]
     private readonly PreSauvegarderReglageEditeur PreSauvegarder;
     [NotNull]
     private readonly ReglageProjetChanged ProjetChanged;
-    [NotNull]
-    private readonly IEventAggregator Events;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;

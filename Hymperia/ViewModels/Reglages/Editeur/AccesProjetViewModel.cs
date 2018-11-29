@@ -6,17 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Hymperia.Facade.CommandAggregatorCommands;
+using System.Windows.Input;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Extensions;
+using Hymperia.Facade.Loaders;
 using Hymperia.Facade.ModelWrappers;
+using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using Prism;
 using Prism.Commands;
@@ -25,14 +29,23 @@ using Prism.Mvvm;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 {
-  class AccesProjetViewModel : BindableBase, IActiveAware
+  public class AccesProjetViewModel : ValidatingBase, IActiveAware
   {
     #region Propriete
+
+    [Required(
+      ErrorMessageResourceName = nameof(Resources.RequiredUsername),
+      ErrorMessageResourceType = typeof(Resources))]
+    public string Name
+    {
+      get => name;
+      set => SetProperty(ref name, value);
+    }
 
     public Projet Projet
     {
       get => projet;
-      set => SetProperty(ref projet, value, OnProjetChanged);
+      set => SetProperty(ref projet, value, () => AccesLoader.Loading = OnProjetChanged());
     }
 
     public ObservableCollection<AccesWrapper> Acces
@@ -46,80 +59,112 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
       }
     }
 
+    private Utilisateur Utilisateur { get; set; }
+
+    #region Commands
+
+    public ICommand AddAcces { get; }
+
+    #endregion
+
+    #region Async Loader
+
+    public AsyncLoader<IEnumerable<AccesWrapper>> AccesLoader { get; } = new AsyncLoader<IEnumerable<AccesWrapper>>();
+
+    #endregion
+
     #endregion
 
     #region Constructeur
 
-    public AccesProjetViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurAcces acces, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public AccesProjetViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurAcces acces, [NotNull] IEventAggregator events)
     {
+      AddAcces = new DelegateCommand(_AddAcces);
+
       ContextFactory = factory;
       Convertisseur = acces;
 
-      commands.GetCommand<PreSauvegarderReglageEditeur>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageProjetChanged>().Subscribe(OnProjetChanged);
-    }
-
-    #endregion
-
-    #region CommandAcces
-
-    #region AjouterAcces
-
-    private void _AjouterAcces(string utilisateur)
-    {
-      //if()
-
-    }
-
-    #endregion
-
-    #region ModifierAcces
-
-    #endregion
-
-    #region SupprimerAcces
-
-    #endregion
-
-    #endregion
-
-    #region Sauvegarder
-
-    private void PreSauvegarder()
-    {
-
     }
 
     #endregion
 
     #region Query
 
-    private IEnumerable<Acces> QueryAcces() =>
-      from acces in ContextWrapper.Context.Acces.IncludeProjets().IncludeUtilisateurs()
-      where acces.Projet == Projet
-      select acces;
+    private async Task<Acces[]> QueryAcces() =>
+      await (from acces in ContextWrapper.Context.Acces.IncludeProjets().IncludeUtilisateurs()
+             where acces.Projet == Projet
+             select acces).ToArrayAsync().ConfigureAwait(false);
 
 
-    private Utilisateur QueryUtilisateur(string nom) =>
-      ContextWrapper.Context.Utilisateurs
+    private async Task<Utilisateur> QueryUtilisateur() =>
+      await ContextWrapper.Context.Utilisateurs//.IncludeAcces()
         .Except(from acces in Acces
                 select acces.Utilisateur)
-        .SingleOrDefault(u => u.Nom == nom);
+        .SingleOrDefaultAsync(u => u.Nom == Name).ConfigureAwait(false);
+
+    #endregion
+
+    #region AddAcces Command
+
+    private async void _AddAcces()
+    {
+      await ValidateUtilisateur();
+
+      if (HasErrors)
+        return;
+
+      Utilisateur.RecevoirProjet(Projet, Model.Modeles.Acces.Droit.Lecture);
+      Acces.Add(Convertisseur.Convertir(Utilisateur.Acces.Single(acces => acces.Projet == Projet)));
+    }
 
     #endregion
 
     #region OnPropertyChanged
 
-    private void OnProjetChanged() => Acces = Projet is null
+    private async Task<IEnumerable<AccesWrapper>> OnProjetChanged() => Acces = Projet is null
       ? null
-      : new ObservableCollection<AccesWrapper>(from acces in QueryAcces()
+      : new ObservableCollection<AccesWrapper>(from acces in await QueryAcces()
                                                select Convertisseur.Convertir(acces));
 
-    private void OnAccesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
+    private void OnAccesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) =>
       e.OldItems?.Cast<AccesWrapper>()?.ForEach(acces => acces.Utilisateur.RetirerProjet(Projet));
 
-      //e.NewItems?.Cast<FormeWrapper>()?.ForEach(forme => forme.PropertyChanged += OnFormeChanged);
+    #endregion
+
+    #region Validation
+
+    private bool ValidateUnique()
+    {
+      if ((from acces in Acces
+           select acces.Utilisateur.Nom).Contains(Name))
+        Errors.SetErrors(nameof(Name), new ValidationResult[]
+        {
+          new ValidationResult(Resources.UserExistProjet, new string[] { nameof(Name) })
+        });
+
+
+      RaisePropertyChanged(nameof(Name));
+      return !HasErrors;
+    }
+
+    private async Task ValidateUtilisateur()
+    {
+      Errors.ClearErrors(nameof(Name));
+
+      if (!ValidateProperty<string>(nameof(Name)) && !ValidateUnique())
+        return;
+
+      var user = await QueryUtilisateur();
+
+      if (user is null)
+        Errors.SetErrors(nameof(Name), new ValidationResult[]
+        {
+          new ValidationResult(Resources.UserNotExist, new string[] { nameof(Name) })
+        });
+
+      Utilisateur = user;
+      RaiseErrorsChanged(nameof(Name));
     }
 
     #endregion
@@ -212,6 +257,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     #region Private Fields
 
+    private string name;
     private Projet projet;
     private ObservableCollection<AccesWrapper> acces;
     private bool isActive;

@@ -105,7 +105,7 @@ namespace Prism.Mvvm
       return !HasErrors;
     }
 
-    protected abstract Task ValidateAsync();
+    protected virtual async Task ValidateAsync() { }
 
     protected virtual void RaiseErrorsChanged([CallerMemberName] string name = null) =>
       ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(name));
