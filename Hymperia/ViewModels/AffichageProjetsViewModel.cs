@@ -165,8 +165,9 @@ namespace Hymperia.Facade.ViewModels
       {
         if (context.Confirmed)
         {
-          Projets.RemoveRange(projets);
-          SupprimerProjetLoader.Loading = ConfirmedSupprimerProjets(from projet in projets
+          var _projets = projets.ToArray();
+          Projets.RemoveRange(_projets);
+          SupprimerProjetLoader.Loading = ConfirmedSupprimerProjets(from projet in _projets
                                                                     select projet.Projet);
         }
       }
