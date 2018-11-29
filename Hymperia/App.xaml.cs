@@ -34,6 +34,7 @@ namespace Hymperia.Facade
       registry.RegisterSingleton<ConvertisseurWrappers>();
       registry.RegisterSingleton<NotifyCollectionChangedCopyFactory>();
 
+      registry.RegisterForNavigation<Connexion>(NavigationKeys.Connexion);
       registry.RegisterForNavigation<AffichageProjets>(NavigationKeys.AffichageProjets);
       registry.RegisterForNavigation<Editeur>(NavigationKeys.Editeur);
       registry.RegisterForNavigation<Inscription>(NavigationKeys.Inscription);

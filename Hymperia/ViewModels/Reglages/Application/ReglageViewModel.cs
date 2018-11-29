@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.Constants;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
@@ -22,11 +23,12 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
+using Prism.Regions;
 using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Application
 {
-  public sealed class ReglageViewModel : BindableBase, IActiveAware, IDisposable
+  public sealed class ReglageViewModel : BindableBase, INavigationAware, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -49,6 +51,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Commands
 
+    public ICommand NavigateBack { get; }
+
     public ICommand Sauvegarder { get; }
 
     #endregion
@@ -64,15 +68,23 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructors
 
-    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
+      NavigateBack = new DelegateCommand(_NavigateBack);
       Sauvegarder = new DelegateCommand(InteractionSauvegarder);
 
       ContextFactory = factory;
-
+      Manager = manager;
       PreSauvegarder = commands.GetCommand<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
     }
+
+    #endregion
+
+    #region Navigation Commands
+
+    private void _NavigateBack() =>
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
     #endregion
 
@@ -148,6 +160,14 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #endregion
 
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
+    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
+
+    #endregion
+
     #region IActiveAware
 
     public event EventHandler IsActiveChanged;
@@ -220,6 +240,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     [NotNull]
     private readonly ContextFactory ContextFactory;
+    [NotNull]
+    private readonly IRegionManager Manager;
     [NotNull]
     private readonly PreSauvegarderReglageApplication PreSauvegarder;
     [NotNull]

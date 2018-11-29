@@ -44,6 +44,7 @@
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"
           Content="{x:Static prop:Resources.Supprimer}" />
       <Button Content="{x:Static prop:Resources.Reglage}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom" />
+      <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Deconnexion}" DockPanel.Dock="Bottom" />
     </DockPanel>
   </Grid>
 </UserControl>

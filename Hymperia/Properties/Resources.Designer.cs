@@ -413,6 +413,16 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string SaveDataInfo => GetString("SaveDataInfo");
 
+    /// <summary>
+    ///   Retour
+    /// </summary>
+    public static string Return => GetString("Return");
+
+    /// <summary>
+    ///   Déconnexion
+    /// </summary>
+    public static string Deconnexion => GetString("Deconnexion");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",

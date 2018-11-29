@@ -13,23 +13,14 @@ using P = Hymperia.Facade.Views.Editeur.PropertiesEditeur;
 
 namespace Hymperia.Facade.Views.Editeur
 {
-  public partial class Editeur : UserControl, INavigationAware, IActiveAware
+  public partial class Editeur : UserControl, IActiveAware
   {
     #region Dependency Properties
-
-    public static readonly DependencyProperty ProjetProperty =
-      DependencyProperty.Register(nameof(Projet), typeof(Projet), typeof(Editeur));
 
     public static readonly DependencyProperty DroitProperty =
       DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur), new PropertyMetadata(OnDroitChanged));
 
     #endregion
-
-    public Projet Projet
-    {
-      get => (Projet)GetValue(ProjetProperty);
-      set => SetValue(ProjetProperty, value);
-    }
 
     public Acces.Droit Droit
     {
@@ -51,8 +42,7 @@ namespace Hymperia.Facade.Views.Editeur
       Loaded += RegisterViews;
       InitializeComponent();
 
-      SetBinding(ProjetProperty, new Binding(nameof(Projet)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
-      SetBinding(DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWay });
     }
 
     #endregion
@@ -95,21 +85,6 @@ namespace Hymperia.Facade.Views.Editeur
     private static void OnDroitChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) =>
       (d as Editeur)?.RegisterViews();
 
-    #region INavigationAware 
-
-    public bool IsNavigationTarget(NavigationContext context) =>
-      context.Parameters[NavigationParameterKeys.Projet] is Projet && context.Parameters[NavigationParameterKeys.Acces] is Acces.Droit;
-
-    public void OnNavigatedTo(NavigationContext context)
-    {
-      Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
-      Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
-    }
-
-    public void OnNavigatedFrom(NavigationContext context) => Projet = null;
-
-    #endregion
-
     #region IActiveAware
 
     public event EventHandler IsActiveChanged;
@@ -136,8 +111,10 @@ namespace Hymperia.Facade.Views.Editeur
     private void OnActivation()
     {
       ViewportRegion?.Activate(ViewportRegion?.GetView(ViewKeys.Viewport));
-      HorizontalTabControl?.Activate(HorizontalTabControl?.GetView(ViewKeys.FormesSelection));
       VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.PropertiesEditeur));
+
+      if (HorizontalTabControl?.GetView(ViewKeys.FormesSelection) is object view)
+        HorizontalTabControl?.Activate(view);
     }
 
     private void OnDeactivation()

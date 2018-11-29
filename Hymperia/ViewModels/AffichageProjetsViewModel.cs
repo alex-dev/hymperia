@@ -26,7 +26,7 @@ using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public sealed class AffichageProjetsViewModel : BindableBase, IActiveAware, IDisposable
+  public sealed class AffichageProjetsViewModel : BindableBase, INavigationAware, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -50,11 +50,12 @@ namespace Hymperia.Facade.ViewModels
 
     #region Commands
 
-    public ICommand NavigateToProjet { get; private set; }
-    public ICommand NavigateToReglage { get; private set; } 
+    public ICommand NavigateBack { get; }
+    public ICommand NavigateToProjet { get; }
+    public ICommand NavigateToReglage { get; } 
 
-    public ICommand SupprimerProjet { get; private set; }
-    public ICommand AjouterProjet { get; private set; }
+    public ICommand SupprimerProjet { get; }
+    public ICommand AjouterProjet { get; }
 
     #endregion
 
@@ -79,6 +80,7 @@ namespace Hymperia.Facade.ViewModels
 
     public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
+      NavigateBack = new DelegateCommand(_NavigateBack);
       NavigateToProjet = new DelegateCommand<Acces>(_NavigateToProjet);      
       NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       SupprimerProjet = new DelegateCommand<IList>(
@@ -90,10 +92,12 @@ namespace Hymperia.Facade.ViewModels
       Manager = manager;
     }
 
-
     #endregion
 
-    #region Command NavigateToProjet
+    #region Navigation Commands
+
+    private void _NavigateBack() =>
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
     private void _NavigateToProjet(Acces projet)
     {
@@ -107,18 +111,11 @@ namespace Hymperia.Facade.ViewModels
         });
     }
 
-    #endregion
-
-    #region Command NavigateToReglage
-
-    private void _NavigateToReglage()
-    {
-      using (ContextFactory.GetReglageUtilisateurContext())
-        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageUtilisateur, new NavigationParameters
-        {
-          { NavigationParameterKeys.Utilisateur, Utilisateur }
-        });
-    }
+    private void _NavigateToReglage() =>
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageUtilisateur, new NavigationParameters
+      {
+        { NavigationParameterKeys.Utilisateur, Utilisateur }
+      });
 
     #endregion
 
@@ -229,6 +226,14 @@ namespace Hymperia.Facade.ViewModels
     private void UpdateProjets() => Projets = Utilisateur is Utilisateur
         ? new BulkObservableCollection<Acces>(Utilisateur.Acces)
         : null;
+
+    #endregion
+
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
+    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
 

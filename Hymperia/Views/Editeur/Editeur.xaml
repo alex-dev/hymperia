@@ -1,9 +1,14 @@
-﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.Editeur"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prism="http://prismlibrary.com/"
-    xmlns:base="clr-namespace:Hymperia.Facade" xmlns:const="clr-namespace:Hymperia.Facade.Constants"
-    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True"
-    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects">
+﻿<!--
+  Auteur : Alexandre Parent
+  Date : 2018-09-20
+  Nom : Editeur.xaml
+  -->
+<!-- xmlns:do est nécessaire au fonctionnement du style derrière les TabControl!!! DO NOT REMOVE!! -->  
+<UserControl x:Class="Hymperia.Facade.Views.Editeur.Editeur"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:base="clr-namespace:Hymperia.Facade"
+    xmlns:const="clr-namespace:Hymperia.Facade.Constants" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
+    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" prism:ViewModelLocator.AutoWireViewModel="True">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="13*" />
@@ -14,13 +19,17 @@
       <RowDefinition Height="4.5*" />
       <RowDefinition Height="17*" />
     </Grid.RowDefinitions>
-    <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center"
-        HorizontalContentAlignment="Center">
-      <MenuItem Command="{Binding Sauvegarder}" Header="{x:Static prop:Resources.Save}"
-          Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" Grid.Row="0" Grid.Column="0" />
-      <MenuItem Command="{Binding NavigateToReglage}" Header="{x:Static prop:Resources.Reglage}"
-          Visibility="{Binding Own, Converter={StaticResource ToVisibility}}" Grid.Row="0" Grid.Column="0" />
-    </Menu>
+    <DockPanel LastChildFill="False" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+      <Menu HorizontalAlignment="Center" HorizontalContentAlignment="Center" DockPanel.Dock="Top">
+        <MenuItem Command="{Binding NavigateBack}" Header="{x:Static prop:Resources.Return}" />
+        <Separator />
+        <MenuItem Command="{Binding Sauvegarder}" Header="{x:Static prop:Resources.Save}"
+            Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" />
+        <Separator />
+        <MenuItem Command="{Binding NavigateToReglage}" Header="{x:Static prop:Resources.Reglage}"
+            Visibility="{Binding Own, Converter={StaticResource ToVisibility}}" />
+      </Menu>
+    </DockPanel>
     <ListBox Style="{StaticResource RadioButtonList}" SelectedValuePath="Tag"
         SelectedValue="{Binding SelectedSelectionMode, Mode=OneWayToSource}"
         Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" Grid.Column="1" Grid.Row="1">
@@ -29,16 +38,16 @@
       <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Transformation}"
           Content="{x:Static prop:Resources.Scaling}" />
     </ListBox>
-    <ContentControl Style="{StaticResource EditeurStyle}" prism:RegionManager.RegionName="{x:Static const:RegionKeys.ViewportRegion}" Grid.Column="0"
-        Grid.Row="2" />
+    <ContentControl Style="{StaticResource EditeurStyle}"
+        prism:RegionManager.RegionName="{x:Static const:RegionKeys.ViewportRegion}" Grid.Column="0" Grid.Row="2" />
     <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.VerticalTabControlRegion}" Grid.Column="2"
         Grid.Row="2" IsSynchronizedWithCurrentItem="True" />
-        <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.HorizontalTabControlRegion}" Grid.Column="0"
+    <TabControl prism:RegionManager.RegionName="{x:Static const:RegionKeys.HorizontalTabControlRegion}" Grid.Column="0"
         Grid.Row="1" IsSynchronizedWithCurrentItem="True"
         Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" />
-    </Grid>
-  <!-- https://stackoverflow.com/questions/2502178/hide-grid-row-in-wpf -->
+  </Grid>
 </UserControl>
+<!-- https://stackoverflow.com/questions/2502178/hide-grid-row-in-wpf -->
 <!-- 
   https://github.com/ButchersBoy/Dragablz
   https://dragablz.net/2014/11/18/getting-started-with-dragablz-tabablzcontrol/
