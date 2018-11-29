@@ -355,4 +355,7 @@
   <data name="SaveDataInfo" xml:space="preserve">
     <value>Voulez vous sauvegardées les données.</value>
   </data>
+  <data name="Return" xml:space="preserve">
+    <value>Retour</value>
+  </data>
 </root>

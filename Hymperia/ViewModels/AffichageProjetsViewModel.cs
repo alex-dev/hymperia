@@ -50,11 +50,11 @@ namespace Hymperia.Facade.ViewModels
 
     #region Commands
 
-    public ICommand NavigateToProjet { get; private set; }
-    public ICommand NavigateToReglage { get; private set; } 
+    public ICommand NavigateToProjet { get; }
+    public ICommand NavigateToReglage { get; } 
 
-    public ICommand SupprimerProjet { get; private set; }
-    public ICommand AjouterProjet { get; private set; }
+    public ICommand SupprimerProjet { get; }
+    public ICommand AjouterProjet { get; }
 
     #endregion
 
@@ -89,7 +89,6 @@ namespace Hymperia.Facade.ViewModels
       ContextFactory = factory;
       Manager = manager;
     }
-
 
     #endregion
 

@@ -2,11 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
 using Hymperia.Facade.Views.Editeur.ProjetAnalyse;
 using Hymperia.Model.Modeles;
 using Prism;
+using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
 using P = Hymperia.Facade.Views.Editeur.PropertiesEditeur;
@@ -22,6 +24,9 @@ namespace Hymperia.Facade.Views.Editeur
 
     public static readonly DependencyProperty DroitProperty =
       DependencyProperty.Register(nameof(Droit), typeof(Acces.Droit), typeof(Editeur), new PropertyMetadata(OnDroitChanged));
+
+    public static readonly DependencyPropertyKey BackActionProperty =
+      DependencyProperty.RegisterReadOnly(nameof(BackAction), typeof(ICommand), typeof(Editeur), new PropertyMetadata(new DelegateCommand<Editeur>(BackAction)));
 
     #endregion
 
@@ -96,6 +101,9 @@ namespace Hymperia.Facade.Views.Editeur
       (d as Editeur)?.RegisterViews();
 
     #region INavigationAware 
+
+    private static void BackAction(Editeur editeur) =>
+      editeur.Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
     public bool IsNavigationTarget(NavigationContext context) =>
       context.Parameters[NavigationParameterKeys.Projet] is Projet && context.Parameters[NavigationParameterKeys.Acces] is Acces.Droit;
