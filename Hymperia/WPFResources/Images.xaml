@@ -10,4 +10,5 @@
   <BitmapImage x:Key="Ellipsoide" UriSource="pack://application:,,,/WPFResources/Images/Ellipsoide.png" />
   <BitmapImage x:Key="PrismeRectangulaire"
       UriSource="pack://application:,,,/WPFResources/Images/PrismeRectangulaire.png" />
+  <BitmapImage x:Key="Logo" UriSource="pack://application:,,,/WPFResources/Images/Hymperia_Logo.png" />
 </ResourceDictionary>

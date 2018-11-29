@@ -8,35 +8,37 @@ Date de création : 9 novembre 2018
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:prism="http://prismlibrary.com/" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
-  <StackPanel Orientation="Vertical">
-    <Label Target="{Binding ElementName=txtUsername}" Content="{x:Static prop:Resources._Utilisateur}" />
-    <TextBox x:Name="txtUsername" Text="{Binding Username, ValidatesOnDataErrors=True}">
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="LostFocus">
-          <i:InvokeCommandAction Command="{Binding ValidationUsername}" />
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
-    </TextBox>
-    <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
-    <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
-    <Label Target="{Binding ElementName=txtVerification}" Content="{x:Static prop:Resources._VerificationMotDePasse}" />
-    <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
-    <Button Command="{Binding Inscription}" CommandParameter="{Binding ., ElementName=txtPassword}"
-        Content="{x:Static prop:Resources.Inscription}">
-      <Button.Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding (Validation.HasError), ElementName=txtUsername}" Value="True">
-              <Setter Property="IsEnabled" Value="False" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding (Validation.HasError), ElementName=txtVerification}" Value="True">
-              <Setter Property="IsEnabled" Value="False" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </Button.Style>
-    </Button>
-  </StackPanel>
+  <Grid Style="{StaticResource ConnexionScreen}">
+    <StackPanel Orientation="Vertical">
+      <Label Target="{Binding ElementName=txtUsername}" Content="{x:Static prop:Resources._Utilisateur}" />
+      <TextBox x:Name="txtUsername" Text="{Binding Username, ValidatesOnDataErrors=True}">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="LostFocus">
+            <i:InvokeCommandAction Command="{Binding ValidationUsername}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+      </TextBox>
+      <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
+      <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
+          do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+      <Label Target="{Binding ElementName=txtVerification}" Content="{x:Static prop:Resources._VerificationMotDePasse}" />
+      <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
+          do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+      <Button Command="{Binding Inscription}" CommandParameter="{Binding ., ElementName=txtPassword}"
+          Content="{x:Static prop:Resources.Inscription}">
+        <Button.Style>
+          <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding (Validation.HasError), ElementName=txtUsername}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding (Validation.HasError), ElementName=txtVerification}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Button.Style>
+      </Button>
+    </StackPanel>
+  </Grid>
 </UserControl>
