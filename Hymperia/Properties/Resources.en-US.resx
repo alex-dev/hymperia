@@ -355,4 +355,13 @@
   <data name="TitleRenameProject" xml:space="preserve">
     <value>Rename a project :</value>
   </data>
+  <data name="DroitEdition" xml:space="preserve">
+    <value>Right edition</value>
+  </data>
+  <data name="Retour" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="SupprimerProjet" xml:space="preserve">
+    <value>Delete the project.</value>
+  </data>
 </root>

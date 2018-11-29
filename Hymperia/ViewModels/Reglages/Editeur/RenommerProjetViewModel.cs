@@ -17,7 +17,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     public string Nom
     {
-      get => Nom;
+      get => nom;
       set => SetProperty(ref nom, value);
     }
 

@@ -418,6 +418,21 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string TitleRenameProject => GetString("TitleRenameProject");
 
+    /// <summary>
+    ///   Droit édition
+    /// </summary>
+    public static string DroitEdition => GetString("DroitEdition");
+
+    /// <summary>
+    ///   Retour
+    /// </summary>
+    public static string Retour => GetString("Retour");
+
+    /// <summary>
+    ///   Supprimer le projet.
+    /// </summary>
+    public static string SupprimerProjet => GetString("SupprimerProjet");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",
