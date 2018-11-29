@@ -433,6 +433,16 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string SupprimerProjet => GetString("SupprimerProjet");
 
+    /// <summary>
+    ///   L'utilisateur possède déjà ce projet.
+    /// </summary>
+    public static string UserExistProjet => GetString("UserExistProjet");
+
+    /// <summary>
+    ///   L'utilisateur n'existe pas.
+    /// </summary>
+    public static string UserNotExist => GetString("UserNotExist");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",

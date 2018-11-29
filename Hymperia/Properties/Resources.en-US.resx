@@ -364,4 +364,10 @@
   <data name="SupprimerProjet" xml:space="preserve">
     <value>Delete the project.</value>
   </data>
+  <data name="UserExistProjet" xml:space="preserve">
+    <value>The user already has this project.</value>
+  </data>
+  <data name="UserNotExist" xml:space="preserve">
+    <value>The user does not exist.</value>
+  </data>
 </root>
