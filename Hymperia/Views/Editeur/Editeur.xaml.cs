@@ -144,8 +144,10 @@ namespace Hymperia.Facade.Views.Editeur
     private void OnActivation()
     {
       ViewportRegion?.Activate(ViewportRegion?.GetView(ViewKeys.Viewport));
-      HorizontalTabControl?.Activate(HorizontalTabControl?.GetView(ViewKeys.FormesSelection));
       VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.PropertiesEditeur));
+
+      if (HorizontalTabControl?.GetView(ViewKeys.FormesSelection) is object view)
+        HorizontalTabControl?.Activate(view);
     }
 
     private void OnDeactivation()
