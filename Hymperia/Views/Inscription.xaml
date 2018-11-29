@@ -8,8 +8,17 @@ Date de création : 9 novembre 2018
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:prism="http://prismlibrary.com/" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+  <UserControl.Resources>
+    <Image x:Key="RegisterFinal" Source="{StaticResource RegisterFinal}" Width="30" Height="30" />
+    <Image x:Key="Return" Source="{StaticResource Return}" Width="30" Height="30" />
+  </UserControl.Resources>
   <Grid Style="{StaticResource ConnexionScreen}">
-    <StackPanel Orientation="Vertical">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="5*" />
+      <RowDefinition Height="10*" />
+    </Grid.RowDefinitions>
+    <Image Grid.Row="0" Source="{StaticResource Logo}" />
+    <StackPanel Orientation="Vertical" Grid.Row="1">
       <Label Target="{Binding ElementName=txtUsername}" Content="{x:Static prop:Resources._Utilisateur}" />
       <TextBox x:Name="txtUsername" Text="{Binding Username, ValidatesOnDataErrors=True}">
         <i:Interaction.Triggers>
@@ -25,7 +34,7 @@ Date de création : 9 novembre 2018
       <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
           do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
       <Button Command="{Binding Inscription}" CommandParameter="{Binding ., ElementName=txtPassword}"
-          Content="{x:Static prop:Resources.Inscription}">
+          Content="{StaticResource RegisterFinal}">
         <Button.Style>
           <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Style.Triggers>
@@ -39,7 +48,7 @@ Date de création : 9 novembre 2018
           </Style>
         </Button.Style>
       </Button>
-      <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Return}" />
+      <Button Command="{Binding NavigateBack}" Content="{StaticResource Return}" />
     </StackPanel>
   </Grid>
 </UserControl>

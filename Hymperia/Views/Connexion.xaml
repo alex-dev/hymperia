@@ -7,13 +7,17 @@ Date de création : 8 novembre 2018
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:prism="http://prismlibrary.com/" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     prism:ViewModelLocator.AutoWireViewModel="True">
+  <UserControl.Resources>
+    <Image x:Key="Login" Source="{StaticResource Login}" Width="30" Height="30" />
+    <Image x:Key="Register" Source="{StaticResource Register}" Width="30" Height="30" />
+  </UserControl.Resources>
   <Grid Style="{StaticResource ConnexionScreen}">
     <Grid.RowDefinitions>
       <RowDefinition Height="5*" />
       <RowDefinition Height="10*" />
     </Grid.RowDefinitions>
     <Image Grid.Row="0" Source="{StaticResource Logo}" />
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Grid.Row="1">
       <TextBlock Text="{x:Static prop:Resources.InvalidCredential}">
         <TextBlock.Style>
           <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ErrorTextBlock}">
@@ -30,8 +34,8 @@ Date de création : 8 novembre 2018
       <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
       <PasswordBox x:Name="txtPassword" PasswordChar="♦" />
       <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
-          Content="{x:Static prop:Resources.Connexion}" />
-      <Button Command="{Binding Inscription}" Content="{x:Static prop:Resources.Inscription}" />
+          Content="{StaticResource Login}" />
+      <Button Command="{Binding Inscription}" Content="{StaticResource Register}" />
     </StackPanel>
   </Grid>
 </UserControl>
