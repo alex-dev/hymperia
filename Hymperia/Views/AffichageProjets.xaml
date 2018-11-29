@@ -29,7 +29,7 @@
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" MinWidth="150" />
-      <ColumnDefinition MinWidth="150" MaxWidth="250" />
+      <ColumnDefinition MinWidth="100" MaxWidth="150" />
     </Grid.ColumnDefinitions>
     <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
         SelectionMode="Extended" SelectionChanged="OnSelectionChanged" Grid.Column="0">
