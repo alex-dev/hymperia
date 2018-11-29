@@ -36,6 +36,8 @@ namespace Hymperia.Facade.Views.Reglages.Editeur
     public Reglage(IRegionManager manager, IContainerExtension container)
     {
       Manager = manager;
+      AccesProjet = container.Resolve<AccesProjet>();
+      RenommerProjet = container.Resolve<RenommerProjet>();
 
       Loaded += RegisterViews;
       InitializeComponent();
@@ -63,22 +65,7 @@ namespace Hymperia.Facade.Views.Reglages.Editeur
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
-    public void OnNavigatedTo(NavigationContext context)
-    {
-      void Set() =>
-        Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
-
-      void Load(object sender, RoutedEventArgs e)
-      {
-        Set();
-        Loaded -= Load;
-      }
-
-      if (IsLoaded)
-        Set();
-      else
-        Loaded += Load;
-    }
+    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
