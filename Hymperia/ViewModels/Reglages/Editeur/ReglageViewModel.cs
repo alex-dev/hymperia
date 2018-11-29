@@ -247,8 +247,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     private readonly PreSauvegarderReglageEditeur PreSauvegarder;
     [NotNull]
     private readonly ReglageProjetChanged ProjetChanged;
-    [NotNull]
-    private readonly IEventAggregator Events;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;

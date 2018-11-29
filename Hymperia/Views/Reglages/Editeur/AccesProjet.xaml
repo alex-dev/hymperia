@@ -7,7 +7,10 @@
   </UserControl.Resources>
   <StackPanel Orientation="Vertical">
     <TextBlock Text="" />
-    <Button Click="Button_Click" />
+    <StackPanel Orientation="Horizontal">
+      <TextBox Text="{Binding Name}" />
+      <Button Command="{Binding AddAcces}" Content="{x:Static prop:Resources.Ajouter}" />
+    </StackPanel>
     <DataGrid x:Name="a" ItemsSource="{Binding Source={StaticResource acces}}" AutoGenerateColumns="False" CanUserAddRows="True" IsReadOnly="False">
       <DataGrid.Columns>
         <DataGridTextColumn Header="{x:Static prop:Resources._Utilisateur}" Binding="{Binding Utilisateur.Nom}" IsReadOnly="True" MinWidth="150" />

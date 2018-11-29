@@ -13,10 +13,5 @@ namespace Hymperia.Facade.Views.Reglages.Editeur
 
     private void OnFiltering(object sender, FilterEventArgs e) =>
       e.Accepted = !((e.Item as AccesWrapper)?.EstPropriétaire ?? true);
-
-    private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-    {
-      return;
-    }
   }
 }
