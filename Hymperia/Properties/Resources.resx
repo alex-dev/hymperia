@@ -367,4 +367,10 @@
   <data name="SupprimerProjet" xml:space="preserve">
     <value>Supprimer le projet.</value>
   </data>
+  <data name="UserExistProjet" xml:space="preserve">
+    <value>L'utilisateur possède déjà ce projet.</value>
+  </data>
+  <data name="UserNotExist" xml:space="preserve">
+    <value>L'utilisateur n'existe pas.</value>
+  </data>
 </root>
