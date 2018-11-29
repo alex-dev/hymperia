@@ -1,8 +1,14 @@
-﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.Editeur"
+﻿<!--
+  Auteur : Alexandre Parent
+  Date : 2018-09-20
+  Nom : Editeur.xaml
+  -->
+<!-- xmlns:do est nécessaire au fonctionnement du style derrière les TabControl!!! DO NOT REMOVE!! -->  
+<UserControl x:Class="Hymperia.Facade.Views.Editeur.Editeur"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:base="clr-namespace:Hymperia.Facade"
     xmlns:const="clr-namespace:Hymperia.Facade.Constants" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
-    prism:ViewModelLocator.AutoWireViewModel="True">
+    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" prism:ViewModelLocator.AutoWireViewModel="True">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="13*" />
