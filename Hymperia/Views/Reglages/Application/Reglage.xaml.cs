@@ -6,31 +6,16 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Extensions;
-using Hymperia.Model.Modeles;
 using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 
 namespace Hymperia.Facade.Views.Reglages.Application
 {
-  public partial class Reglage : UserControl, INavigationAware, IActiveAware
+  public partial class Reglage : UserControl, IActiveAware
   {
-    #region Dependency Properties
-
-    public static readonly DependencyProperty UtilisateurProperty =
-      DependencyProperty.Register(nameof(Utilisateur), typeof(Utilisateur), typeof(Reglage));
-
-    #endregion
-
-    public Utilisateur Utilisateur
-    {
-      get => (Utilisateur)GetValue(UtilisateurProperty);
-      set => SetValue(UtilisateurProperty, value);
-    }
-
     #region Constructors
 
     public Reglage(IRegionManager manager, IContainerExtension container)
@@ -41,8 +26,6 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
       Loaded += RegisterViews;
       InitializeComponent();
-
-      SetBinding(UtilisateurProperty, new Binding(nameof(Utilisateur)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
     }
 
     #endregion
@@ -59,29 +42,6 @@ namespace Hymperia.Facade.Views.Reglages.Application
       ChangementMotDePasseRegion.Add(ChangementMotDePasse, ViewKeys.ChangementMotDePasse);
       ConnexionAutomatiqueRegion.Add(ConnexionAutomatique, ViewKeys.ConnexionAutomatique);
     }
-
-    #endregion
-
-    #region INavigationAware 
-
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context)
-    {
-      void Set() =>
-        Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
-
-      void Load(object sender, RoutedEventArgs e)
-      {
-        Set();
-        Loaded -= Load;
-      }
-
-      if (IsLoaded)
-        Set();
-      else
-        Loaded += Load;
-    }
-    public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
 
