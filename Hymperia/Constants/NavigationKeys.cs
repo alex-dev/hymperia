@@ -2,6 +2,7 @@
 {
   public static class NavigationKeys
   {
+    public const string Connexion = nameof(Views.Connexion);
     public const string AffichageProjets = nameof(Views.AffichageProjets);
     public const string Editeur = nameof(Views.Editeur.Editeur);
     public const string Inscription = nameof(Views.Inscription);

@@ -38,5 +38,6 @@ Date de création : 9 novembre 2018
         </Style>
       </Button.Style>
     </Button>
+    <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Return}" />
   </StackPanel>
 </UserControl>

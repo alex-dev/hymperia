@@ -21,8 +21,7 @@
               <Border x:Name="Border" BorderThickness="1,1,1,0"
                   BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}" CornerRadius="2,2,0,0"
                   Margin="2,0">
-                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,2"
-                    ContentSource="Header" />
+                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,2" ContentSource="Header" />
               </Border>
               <ControlTemplate.Triggers>
                 <Trigger Property="IsSelected" Value="True">

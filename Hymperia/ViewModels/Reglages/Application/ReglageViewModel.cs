@@ -74,7 +74,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       Sauvegarder = new DelegateCommand(InteractionSauvegarder);
 
       ContextFactory = factory;
-
+      Manager = manager;
       PreSauvegarder = commands.GetCommand<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
     }

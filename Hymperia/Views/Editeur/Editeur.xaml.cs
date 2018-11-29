@@ -42,7 +42,7 @@ namespace Hymperia.Facade.Views.Editeur
       Loaded += RegisterViews;
       InitializeComponent();
 
-      SetBinding(DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWayToSource });
+      SetBinding(DroitProperty, new Binding(nameof(Droit)) { Source = DataContext, Mode = BindingMode.OneWay });
     }
 
     #endregion

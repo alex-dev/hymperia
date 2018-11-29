@@ -83,6 +83,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     private async void PreSauvegarderChangementMotDePasse(List<string> erreurs)
     {
+      if (string.IsNullOrEmpty(OldPassword) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Verification))
+        return;
+
       if (!await Validate())
       {
         erreurs.AddRange(Errors.GetErrors().Values

@@ -8,11 +8,6 @@ Date de création : 8 novembre 2018
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:prism="http://prismlibrary.com/" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     prism:ViewModelLocator.AutoWireViewModel="True">
-  <i:Interaction.Triggers>
-    <i:EventTrigger EventName="Loaded">
-      <i:InvokeCommandAction Command="{Binding ConnexionAutomatique}" />
-    </i:EventTrigger>
-  </i:Interaction.Triggers>
   <StackPanel Orientation="Vertical">
     <TextBlock Text="{x:Static prop:Resources.InvalidCredential}">
       <TextBlock.Style>

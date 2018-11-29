@@ -44,20 +44,17 @@ namespace Hymperia.Facade.ViewModels
       Factory = factory;
       Manager = manager;
 
-      ConnexionAutomatique = new DelegateCommand(_ConnexionAutomatique);
+      ConnexionAutomatique = new DelegateCommand(_ConnexionAutomatique, CanConnect);
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
       Inscription = new DelegateCommand(_Inscription);
     }
 
     #endregion
 
-    private void _ConnexionAutomatique()
-    {
-      if (!S.Default.ConnexionAutomatique)
-        return;
-
+    private void _ConnexionAutomatique() =>
       _Connexion(S.Default.Utilisateur, utilisateur => S.Default.MotDePasse == utilisateur.MotDePasse);
-    }
+
+    private bool CanConnect() => S.Default.ConnexionAutomatique;
 
     private void _Connexion(PasswordBox password) =>
       _Connexion(Username, utilisateur => B.BCrypt.Verify(password.Password, utilisateur.MotDePasse, true));

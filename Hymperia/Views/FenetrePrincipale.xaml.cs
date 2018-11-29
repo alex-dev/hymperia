@@ -8,7 +8,7 @@ namespace Hymperia.Facade.Views
   {
     public FenetrePrincipale(IRegionManager manager)
     {
-      manager.RegisterViewWithRegion(RegionKeys.ContentRegion, typeof(Connexion));
+      Loaded += (sender, e) => manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
       InitializeComponent();
     }
   }
