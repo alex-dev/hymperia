@@ -196,7 +196,7 @@
     <value>No</value>
   </data>
   <data name="NouveauNomProjet" xml:space="preserve">
-    <value>Please enter the name of the new project :</value>
+    <value>Please enter the name of the new project </value>
   </data>
   <data name="Oui" xml:space="preserve">
     <value>Yes</value>
@@ -323,22 +323,22 @@
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_MotDePasse" xml:space="preserve">
-    <value>_Password :</value>
+    <value>_Password </value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Utilisateur" xml:space="preserve">
-    <value>_Username :</value>
+    <value>_Username </value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_VerificationMotDePasse" xml:space="preserve">
-    <value>_Verify the password :</value>
+    <value>_Verify the password </value>
   </data>
   <data name="_Width" xml:space="preserve">
     <value>_Width</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_AncientMotDePasse" xml:space="preserve">
-    <value>_Old password : </value>
+    <value>_Old password </value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
@@ -353,7 +353,7 @@
     <value>Do you want to save the data.</value>
   </data>
   <data name="TitleRenameProject" xml:space="preserve">
-    <value>Rename a project :</value>
+    <value>Rename a project </value>
   </data>
   <data name="DroitEdition" xml:space="preserve">
     <value>Right edition</value>
@@ -363,6 +363,18 @@
   </data>
   <data name="SupprimerProjet" xml:space="preserve">
     <value>Delete the project.</value>
+  </data>
+  <data name="Reglage" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="SupprimerProjetContent" xml:space="preserve">
+    <value>Do you want to delete the project ?</value>
+  </data>
+  <data name="TitleAccesProjet" xml:space="preserve">
+    <value>Sharing projects</value>
+  </data>
+  <data name="TitleConfirmDelete" xml:space="preserve">
+    <value>Confirmation deletion</value>
   </data>
   <data name="UserExistProjet" xml:space="preserve">
     <value>The user already has this project.</value>

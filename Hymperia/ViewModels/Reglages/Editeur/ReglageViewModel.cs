@@ -151,8 +151,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
       ConfirmationRequest.Raise(new Confirmation
       {
-        Title = "",
-        Content = ""
+        Title = Resources.TitleConfirmDelete,
+        Content = Resources.SupprimerProjetContent
       }, Execute);
     }
 
@@ -161,7 +161,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
       Utilisateur user;
       using (await AsyncLock.Lock(ContextWrapper.Context))
       {
-        // Broken if more than one owner!
+        // Broken if more than one owner or no owner!
         user = await (from acces in ContextWrapper.Context.Acces.IncludeProjets().IncludeUtilisateurs().AsNoTracking()
                       where acces.Projet == Projet && acces.DroitDAcces == Acces.Droit.Possession
                       select acces.Utilisateur).SingleAsync();

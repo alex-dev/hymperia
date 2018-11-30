@@ -56,7 +56,7 @@ namespace Hymperia.Facade.Properties
         targets);
 
     /// <summary>
-    ///   Changement du mot de passe :
+    ///   Changement du mot de passe
     /// </summary>
     public static string ChangementDuMotDePasse => GetString("ChangementDuMotDePasse");
 
@@ -71,7 +71,7 @@ namespace Hymperia.Facade.Properties
     public static string Connexion => GetString("Connexion");
 
     /// <summary>
-    ///   Connexion automatique :
+    ///   Connexion automatique
     /// </summary>
     public static string ConnexionAutomatique => GetString("ConnexionAutomatique");
 
@@ -163,7 +163,7 @@ namespace Hymperia.Facade.Properties
     public static string Non => GetString("Non");
 
     /// <summary>
-    ///   Merci de saisir le nom du nouveau projet :
+    ///   Merci de saisir le nom du nouveau projet
     /// </summary>
     public static string NouveauNomProjet => GetString("NouveauNomProjet");
 
@@ -379,7 +379,7 @@ namespace Hymperia.Facade.Properties
     public static string _Utilisateur => GetString("_Utilisateur");
 
     /// <summary>
-    ///   _Vérification du mot de passe :
+    ///   _Vérification du mot de passe
     /// </summary>
     public static string _VerificationMotDePasse => GetString("_VerificationMotDePasse");
 
@@ -389,7 +389,7 @@ namespace Hymperia.Facade.Properties
     public static string _Width => GetString("_Width");
 
     /// <summary>
-    ///   _Ancient mot de passe :
+    ///   _Ancient mot de passe
     /// </summary>
     public static string _AncientMotDePasse => GetString("_AncientMotDePasse");
 
@@ -414,7 +414,7 @@ namespace Hymperia.Facade.Properties
     public static string SaveDataInfo => GetString("SaveDataInfo");
 
     /// <summary>
-    ///   Renommer un projet :
+    ///   Renommer un projet
     /// </summary>
     public static string TitleRenameProject => GetString("TitleRenameProject");
 
@@ -432,6 +432,21 @@ namespace Hymperia.Facade.Properties
     ///   Supprimer le projet.
     /// </summary>
     public static string SupprimerProjet => GetString("SupprimerProjet");
+
+    /// <summary>
+    ///   Voulez vous supprimer le projet ?
+    /// </summary>
+    public static string SupprimerProjetContent => GetString("SupprimerProjetContent");
+
+    /// <summary>
+    ///   Partage des projets
+    /// </summary>
+    public static string TitleAccesProjet => GetString("TitleAccesProjet");
+
+    /// <summary>
+    ///   Confirmation suppression
+    /// </summary>
+    public static string TitleConfirmDelete => GetString("TitleConfirmDelete");
 
     /// <summary>
     ///   L'utilisateur possède déjà ce projet.
