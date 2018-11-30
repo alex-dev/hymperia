@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Hymperia.Facade.Views.Reglages.Editeur.AccesProjet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+  <UserControl.Resources>
+    <CollectionViewSource x:Key="acces" Source="{Binding Acces}" Filter="OnFiltering" />
+  </UserControl.Resources>
+  <StackPanel Orientation="Vertical">
+    <TextBlock Text="{x:Static prop:Resources.TitleAccesProjet}" />
+    <StackPanel Orientation="Horizontal">
+      <TextBox Text="{Binding Name}" />
+      <Button Command="{Binding AddAcces}" Content="{x:Static prop:Resources.Ajouter}" />
+    </StackPanel>
+    <DataGrid x:Name="a" ItemsSource="{Binding Source={StaticResource acces}}" AutoGenerateColumns="False"
+        CanUserAddRows="True" IsReadOnly="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="{x:Static prop:Resources._Utilisateur}" Binding="{Binding Utilisateur.Nom}"
+            IsReadOnly="True" MinWidth="150" />
+        <DataGridCheckBoxColumn Header="{x:Static prop:Resources.DroitEdition}" MinWidth="150" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </StackPanel>
+</UserControl>

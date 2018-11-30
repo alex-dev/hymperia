@@ -10,6 +10,7 @@ using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 using P = Hymperia.Facade.Views.Editeur.PropertiesEditeur;
+using E = Hymperia.Facade.Views.Reglages.Editeur; 
 
 namespace Hymperia.Facade.Views.Editeur
 {

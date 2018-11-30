@@ -71,15 +71,15 @@ namespace Hymperia.Model.Modeles
     public Projet CreerProjet([NotNull] string nom)
     {
       var projet = new Projet(nom);
-      RecevoirProjet(projet);
+      RecevoirProjet(projet, Modeles.Acces.Droit.Possession);
 
       return projet;
     }
 
     /// <summary></summary>
     /// <param name="projet"></param>
-    public void RecevoirProjet([NotNull] Projet projet) =>
-      _Acces.Add(new Acces(projet, this, Modeles.Acces.Droit.Possession));
+    public void RecevoirProjet([NotNull] Projet projet, Acces.Droit droit) =>
+      _Acces.Add(new Acces(projet, this, droit));
 
     /// <summary></summary>
     /// <param name="projet"></param>

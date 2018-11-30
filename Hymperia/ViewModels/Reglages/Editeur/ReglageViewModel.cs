@@ -1,6 +1,6 @@
 ﻿/*
  * Auteur : Antoine Mailhot
- * Date de création : 22 novembre 2018
+ * Date de création : 28 novembre 2018
 */
 
 using System;
@@ -26,7 +26,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using S = Hymperia.Model.Properties.Settings;
 
-namespace Hymperia.Facade.ViewModels.Reglages.Application
+namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 {
   public sealed class ReglageViewModel : BindableBase, INavigationAware, IActiveAware, IDisposable
   {
@@ -34,10 +34,10 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Binding
 
-    public Utilisateur Utilisateur
+    public Projet Projet
     {
-      get => utilisateur;
-      set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
+      get => projet;
+      set => ProjetLoader.Loading = QueryProjet(value, RaiseProjetChanged);
     }
 
     #endregion
@@ -59,7 +59,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Asynchronous Loading
 
-    public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
+    public AsyncLoader<Projet> ProjetLoader { get; } = new AsyncLoader<Projet>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();
 
     #endregion
@@ -75,8 +75,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
       ContextFactory = factory;
       Manager = manager;
-      PreSauvegarder = commands.GetCommand<PreSauvegarderReglageApplication>();
-      UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
+
+      PreSauvegarder = commands.GetCommand<PreSauvegarderReglageEditeur>();
+      ProjetChanged = events.GetEvent<ReglageProjetChanged>();
     }
 
     #endregion
@@ -136,17 +137,17 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Queries
 
-    private async Task<Utilisateur> QueryUtilisateur(Utilisateur _utilisateur, Action onChanged)
+    private async Task<Projet> QueryProjet(Projet _projet, Action onChanged)
     {
-      Utilisateur value = null;
-      SetProperty(ref utilisateur, null, onChanged, nameof(Utilisateur));
+      Projet value = null;
+      SetProperty(ref projet, null, onChanged, nameof(Projet));
 
-      if (_utilisateur is Utilisateur)
+      if (_projet is Projet)
       {
         using (await AsyncLock.Lock(ContextWrapper.Context))
-          value = await ContextWrapper.Context.Utilisateurs.FindByIdAsync(_utilisateur.Id);
+          value = await ContextWrapper.Context.Projets.FindByIdAsync(_projet.Id);
 
-        SetProperty(ref utilisateur, value, onChanged, nameof(Utilisateur));
+        SetProperty(ref projet, value, onChanged, nameof(Projet));
       }
 
       return value;
@@ -154,17 +155,17 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #endregion
 
-    #region UtilisateurChanged
+    #region ProjetChanged
 
-    private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
+    private void RaiseProjetChanged() => ProjetChanged.Publish(Projet);
 
     #endregion
 
     #region INavigationAware 
 
-    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
-    public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
+    public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
+    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+    public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
 
@@ -196,7 +197,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private void OnActivation()
     {
       if (ContextWrapper is null)
-        ContextWrapper = ContextFactory.GetReglageUtilisateurContext();
+        ContextWrapper = ContextFactory.GetReglageEditeurContext();
       else
         CancelDispose();
     }
@@ -243,9 +244,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     [NotNull]
     private readonly IRegionManager Manager;
     [NotNull]
-    private readonly PreSauvegarderReglageApplication PreSauvegarder;
+    private readonly PreSauvegarderReglageEditeur PreSauvegarder;
     [NotNull]
-    private readonly ReglageUtilisateurChanged UtilisateurChanged;
+    private readonly ReglageProjetChanged ProjetChanged;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
@@ -254,7 +255,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Private Fields
 
-    private Utilisateur utilisateur;
+    private Projet projet;
     private bool isActive;
     private CancellationTokenSource disposeToken;
 

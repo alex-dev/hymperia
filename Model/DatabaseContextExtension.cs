@@ -71,7 +71,7 @@ namespace Hymperia.Model
     [NotNull]
     [ItemNotNull]
     public static IQueryable<Acces> IncludeUtilisateurs([NotNull][ItemNotNull] this IQueryable<Acces> acces) =>
-      acces.Include(_acces => _acces.Utilisateur);
+      acces.Include(_acces => _acces.Utilisateur);//.ThenInclude(user => user._Acces);
 
     [NotNull]
     [ItemNotNull]

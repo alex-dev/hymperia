@@ -106,6 +106,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     #region Commands
 
     public ICommand NavigateBack { get; }
+    public ICommand NavigateToReglage { get; }
 
     public DelegateCommand<Point> AjouterForme { get; }
     public DelegateCommand<ICollection<FormeWrapper>> SupprimerFormes { get; }
@@ -128,6 +129,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
     public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
+      NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
         .ObservesProperty(() => SelectedForme)
@@ -139,6 +141,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
       ContextFactory = factory;
       Manager = manager;
       ConvertisseurFormes = formes;
+      Manager = manager;
 
       commands.GetCommand<AddFormeCommand>().RegisterCommand(AjouterForme);
       commands.GetCommand<DeleteFormesCommand>().RegisterCommand(SupprimerFormes);
@@ -157,6 +160,15 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void _NavigateBack() =>
       Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
+
+    private void _NavigateToReglage()
+    {
+      using (ContextFactory.GetReglageEditeurContext())
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageEditeur, new NavigationParameters
+        {
+          { NavigationParameterKeys.Projet, Projet }
+        });
+    }
 
     #endregion
 

@@ -139,7 +139,7 @@
     <value>Peut seulement convertir vers {targets}.</value>
   </data>
   <data name="ChangementDuMotDePasse" xml:space="preserve">
-    <value>Changement du mot de passe :</value>
+    <value>Changement du mot de passe</value>
   </data>
   <data name="Confirmer" xml:space="preserve">
     <value>Confirmer</value>
@@ -148,7 +148,7 @@
     <value>Connexion</value>
   </data>
   <data name="ConnexionAutomatique" xml:space="preserve">
-    <value>Connexion automatique :</value>
+    <value>Connexion automatique</value>
   </data>
   <data name="DestructiveConversion" xml:space="preserve">
     <value>Impossible d'inverser un processus détérioratif.</value>
@@ -196,7 +196,7 @@
     <value>Non</value>
   </data>
   <data name="NouveauNomProjet" xml:space="preserve">
-    <value>Merci de saisir le nom du nouveau projet :</value>
+    <value>Merci de saisir le nom du nouveau projet</value>
   </data>
   <data name="Oui" xml:space="preserve">
     <value>Oui</value>
@@ -334,14 +334,14 @@
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_VerificationMotDePasse" xml:space="preserve">
-    <value>_Vérification du mot de passe :</value>
+    <value>_Vérification du mot de passe</value>
   </data>
   <data name="_Width" xml:space="preserve">
     <value>L_argeur</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_AncientMotDePasse" xml:space="preserve">
-    <value>_Ancient mot de passe :</value>
+    <value>_Ancient mot de passe</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
@@ -355,6 +355,32 @@
   <data name="SaveDataInfo" xml:space="preserve">
     <value>Voulez vous sauvegardées les données.</value>
   </data>
+  <data name="TitleRenameProject" xml:space="preserve">
+    <value>Renommer un projet</value>
+  </data>
+  <data name="DroitEdition" xml:space="preserve">
+    <value>Droit édition</value>
+  </data>
+  <data name="Retour" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="SupprimerProjet" xml:space="preserve">
+    <value>Supprimer le projet.</value>
+  </data>
+  <data name="SupprimerProjetContent" xml:space="preserve">
+    <value>Voulez vous supprimer le projet ?</value>
+  </data>
+  <data name="TitleAccesProjet" xml:space="preserve">
+    <value>Partage des projets</value>
+  </data>
+  <data name="TitleConfirmDelete" xml:space="preserve">
+    <value>Confirmation suppression</value>
+  </data>
+  <data name="UserExistProjet" xml:space="preserve">
+    <value>L'utilisateur possède déjà ce projet.</value>
+  </data>
+  <data name="UserNotExist" xml:space="preserve">
+    <value>L'utilisateur n'existe pas.</value>
   <data name="Return" xml:space="preserve">
     <value>Retour</value>
   </data>

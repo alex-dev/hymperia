@@ -45,12 +45,30 @@ namespace Hymperia.Facade.Services
 
     #endregion
 
+    #region ReglageEditeurContext
+
+    [NotNull]
+    public IContextWrapper<DatabaseContext> GetReglageEditeurContext()
+    {
+      if (ReglageEditeurContext is null)
+        ReglageEditeurContext = new Tracker<DatabaseContext>();
+
+      ++ReglageEditeurContext.Count;
+      return new ContextWrapper<DatabaseContext>(ReglageEditeurContext.Context, () => Release(ref ReglageEditeurContext));
+    }
+
+    private Tracker<DatabaseContext> ReglageEditeurContext;
+
+    #endregion
+
     #region IDisposable
 
     public void Dispose()
     {
+      ReglageEditeurContext.Dispose();
       ReglageUtilisateurContext.Dispose();
       EditeurContext.Dispose();
+
     }
 
     #endregion

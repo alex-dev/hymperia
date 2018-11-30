@@ -14,5 +14,7 @@
     public const string PrismeRectangulaireEditor = nameof(Views.Editeur.PropertiesEditeur.PrismeEditeur);
     public const string ChangementMotDePasse = nameof(Views.Reglages.Application.ChangementMotDePasse);
     public const string ConnexionAutomatique = nameof(Views.Reglages.Application.ConnexionAutomatique);
+    public const string AccesProjet = nameof(Views.Reglages.Editeur.AccesProjet);
+    public const string RenommerProjet = nameof(Views.Reglages.Editeur.RenommerProjet);
   }
 }
