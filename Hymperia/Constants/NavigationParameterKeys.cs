@@ -6,5 +6,6 @@
     public const string Forme = nameof(Forme);
     public const string Projet = nameof(Projet);
     public const string Utilisateur = nameof(Utilisateur);
+    public const string Back = nameof(Back);
   }
 }

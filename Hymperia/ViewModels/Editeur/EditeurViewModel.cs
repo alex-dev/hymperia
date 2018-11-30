@@ -29,7 +29,7 @@ using Prism.Regions;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
-  public sealed class EditeurViewModel : BindableBase, IActiveAware, IDisposable
+  public sealed class EditeurViewModel : BindableBase, INavigationAware, IActiveAware, IDisposable
   {
     #region Properties
 
@@ -105,10 +105,12 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Commands
 
+    public ICommand NavigateBack { get; }
+    public ICommand NavigateToReglage { get; }
+
     public DelegateCommand<Point> AjouterForme { get; }
     public DelegateCommand<ICollection<FormeWrapper>> SupprimerFormes { get; }
     public ICommand Sauvegarder { get; }
-    public ICommand NavigateToReglage { get; }
 
     #endregion
 
@@ -124,8 +126,9 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events, [NotNull] IRegionManager manager)
+    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
+      NavigateBack = new DelegateCommand(_NavigateBack);
       NavigateToReglage = new DelegateCommand(_NavigateToReglage);
       AjouterForme = new DelegateCommand<Point>(_AjouterForme, PeutAjouterForme)
         .ObservesProperty(() => Projet)
@@ -136,6 +139,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
         .ObservesCanExecute(() => HasChanged);
 
       ContextFactory = factory;
+      Manager = manager;
       ConvertisseurFormes = formes;
       Manager = manager;
 
@@ -152,7 +156,10 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #endregion
 
-    #region Command NavigateToReglage
+    #region Navigation Commands
+
+    private void _NavigateBack() =>
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
     private void _NavigateToReglage()
     {
@@ -164,6 +171,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     }
 
     #endregion
+
+    #region Editeur Commands
 
     #region Command AjouterForme
 
@@ -210,6 +219,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private bool CanSupprimerFormes(ICollection<FormeWrapper> wrappers) =>
       Projet is Projet && Droit >= Acces.Droit.LectureEcriture && wrappers.Any();
+
+    #endregion
 
     #endregion
 
@@ -320,6 +331,21 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private void RaiseProjetChanged() => ProjetChanged.Publish(Projet);
 
     private void RaiseSelectionModeChanged() => SelectionModeChanged.Publish(SelectedSelectionMode);
+
+    #endregion
+
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) =>
+      context.Parameters[NavigationParameterKeys.Projet] is Projet && context.Parameters[NavigationParameterKeys.Acces] is Acces.Droit;
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+      Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
+    }
+
+    public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion
 

@@ -83,6 +83,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     private async void PreSauvegarderChangementMotDePasse(List<string> erreurs)
     {
+      if (string.IsNullOrEmpty(OldPassword) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Verification))
+        return;
+
       if (!await Validate())
       {
         erreurs.AddRange(Errors.GetErrors().Values
@@ -108,6 +111,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
           new ValidationResult[] { new ValidationResult(Resources.InvalidCredential, new string[] { nameof(OldPassword) }) });
     }, nameof(OldPassword));
 
+#pragma warning disable 1998 // Justification: Asynchronous validation is enforced by base class but not always needed.
+
     protected override async Task ValidateAsync()
     {
       ValidateProperty<string>(nameof(Password));
@@ -115,12 +120,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       ValidatationAncientMotDePasse();
     }
 
-    #endregion
-
-    #region Services
-
-    [NotNull]
-    private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
+#pragma warning restore 1998
 
     #endregion
 

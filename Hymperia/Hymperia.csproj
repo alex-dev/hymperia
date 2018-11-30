@@ -369,6 +369,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPFResources\ConnexionStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFResources\DataGridStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -457,15 +461,21 @@
     <Resource Include="WPFResources\Images\Cone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="WPFResources\Images\create.png" />
     <Resource Include="WPFResources\Images\Cylindre.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="WPFResources\Images\Ellipsoide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="WPFResources\Images\login.png" />
+    <Resource Include="WPFResources\Images\logout.png" />
     <Resource Include="WPFResources\Images\PrismeRectangulaire.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="WPFResources\Images\return.png" />
+    <Resource Include="WPFResources\Images\settings.png" />
+    <Resource Include="WPFResources\Images\trash.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -561,6 +571,12 @@
       <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="WPFResources\Images\Hymperia_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WPFResources\Images\register.png" />
+    <Resource Include="WPFResources\Images\registerfinal.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

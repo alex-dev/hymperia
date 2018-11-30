@@ -10,4 +10,13 @@
   <BitmapImage x:Key="Ellipsoide" UriSource="pack://application:,,,/WPFResources/Images/Ellipsoide.png" />
   <BitmapImage x:Key="PrismeRectangulaire"
       UriSource="pack://application:,,,/WPFResources/Images/PrismeRectangulaire.png" />
+  <BitmapImage x:Key="Logo" UriSource="pack://application:,,,/WPFResources/Images/Hymperia_Logo.png" />
+  <BitmapImage x:Key="Trash" UriSource="pack://application:,,,/WPFResources/Images/trash.png" />
+  <BitmapImage x:Key="Create" UriSource="pack://application:,,,/WPFResources/Images/create.png" />
+  <BitmapImage x:Key="Login" UriSource="pack://application:,,,/WPFResources/Images/login.png" />
+  <BitmapImage x:Key="Logout" UriSource="pack://application:,,,/WPFResources/Images/logout.png" />
+  <BitmapImage x:Key="Return" UriSource="pack://application:,,,/WPFResources/Images/return.png" />
+  <BitmapImage x:Key="Settings" UriSource="pack://application:,,,/WPFResources/Images/settings.png" />
+  <BitmapImage x:Key="Register" UriSource="pack://application:,,,/WPFResources/Images/register.png" />
+  <BitmapImage x:Key="RegisterFinal" UriSource="pack://application:,,,/WPFResources/Images/registerfinal.png" />
 </ResourceDictionary>

@@ -381,5 +381,10 @@
   </data>
   <data name="UserNotExist" xml:space="preserve">
     <value>L'utilisateur n'existe pas.</value>
+  <data name="Return" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="Deconnexion" xml:space="preserve">
+    <value>Déconnexion</value>
   </data>
 </root>

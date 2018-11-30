@@ -33,6 +33,7 @@ Date de création : 21 novembre 2018
       <RowDefinition Height="20" />
       <RowDefinition Height="*" />
       <RowDefinition Height="50" />
+      <RowDefinition Height="50" />
     </Grid.RowDefinitions>
     <ContentControl x:Name="regionChangementMotDePasse"
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.ChangementMotDePasseRegion}" Grid.Column="0"
@@ -58,5 +59,6 @@ Date de création : 21 novembre 2018
         </Style>
       </Button.Style>
     </Button>
+    <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Return}" Grid.ColumnSpan="2" Grid.Row="3"/>
   </Grid>
 </UserControl>

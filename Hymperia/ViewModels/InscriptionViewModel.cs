@@ -6,6 +6,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
@@ -66,8 +67,8 @@ namespace Hymperia.Facade.ViewModels
       }
     }
 
+    public ICommand NavigateBack { get; }
     public DelegateCommand Inscription { get; }
-
     public DelegateCommand ValidationUsername { get; }
 
     #endregion
@@ -76,14 +77,24 @@ namespace Hymperia.Facade.ViewModels
 
     public InscriptionViewModel(ContextFactory factory, IRegionManager manager)
     {
+      NavigateBack = new DelegateCommand(_NavigateBack);
+      Inscription = new DelegateCommand(_Inscription);
+      ValidationUsername = new DelegateCommand(_ValidateUsername);
 
       Factory = factory;
       Manager = manager;
-      Inscription = new DelegateCommand(_Inscription);
-      ValidationUsername = new DelegateCommand(_ValidateUsername);
     }
 
     #endregion
+
+    #region Navigation Commands
+
+    private void _NavigateBack() =>
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
+
+    #endregion
+
+    #region Inscription Commands
 
     private async void _Inscription()
     {
@@ -97,6 +108,8 @@ namespace Hymperia.Facade.ViewModels
     }
 
     private async void _ValidateUsername() => await ValidateUsername();
+
+    #endregion
 
     #region Queries
 

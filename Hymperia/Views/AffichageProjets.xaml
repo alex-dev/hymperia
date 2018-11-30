@@ -4,6 +4,12 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:popups="clr-namespace:Hymperia.Facade.Views.Popups" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
+  <UserControl.Resources>
+    <Image x:Key="Trashcan" Source="{StaticResource Trash}" Width="30" Height="30" />
+    <Image x:Key="Create" Source="{StaticResource Create}" Width="30" Height="30" />
+    <Image x:Key="Settings" Source="{StaticResource Settings}" Width="30" Height="30" />
+    <Image x:Key="Logout" Source="{StaticResource Logout}" Width="30" Height="30" />
+  </UserControl.Resources>
   <i:Interaction.Triggers>
     <prism:InteractionRequestTrigger SourceObject="{Binding SupprimerProjetRequest}">
       <prism:PopupWindowAction IsModal="True">
@@ -23,7 +29,7 @@
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" MinWidth="150" />
-      <ColumnDefinition MinWidth="150" MaxWidth="250" />
+      <ColumnDefinition MinWidth="100" MaxWidth="150" />
     </Grid.ColumnDefinitions>
     <ListBox Style="{StaticResource ListBoxProjets}" x:Name="ListBox" ItemsSource="{Binding Projets, Mode=OneWay}"
         SelectionMode="Extended" SelectionChanged="OnSelectionChanged" Grid.Column="0">
@@ -39,11 +45,13 @@
       </ListBox.ItemTemplate>
     </ListBox>
     <DockPanel LastChildFill="False" Grid.Column="1">
-      <Button Content="{x:Static prop:Resources.Ajouter}" Command="{Binding AjouterProjet}" DockPanel.Dock="Top" />
+      <Button Content="{StaticResource Create}" Command="{Binding AjouterProjet}" DockPanel.Dock="Top" />
       <Button x:Name="btnSuppression" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"
-          Content="{x:Static prop:Resources.Supprimer}" />
-      <Button Content="{x:Static prop:Resources.Reglage}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom" />
+          Content="{StaticResource Trashcan}" />
+      <!-- {x:Static prop:Resources.Supprimer} -->
+      <Button Content="{StaticResource Logout}" Command="{Binding NavigateBack}" DockPanel.Dock="Bottom" />
+      <Button Content="{StaticResource Settings}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom" />
     </DockPanel>
   </Grid>
 </UserControl>
