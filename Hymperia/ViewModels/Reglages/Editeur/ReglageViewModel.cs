@@ -170,6 +170,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
         await ContextWrapper.Context.SaveChangesAsync();
       }
 
+      // Recreate a nav journal.
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.Clear();
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
       Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
       {
         { NavigationParameterKeys.Utilisateur, user }
@@ -177,7 +180,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     }
 
     #endregion
-
 
     #region Queries
 
