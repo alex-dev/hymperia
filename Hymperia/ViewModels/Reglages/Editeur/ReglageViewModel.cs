@@ -18,6 +18,7 @@ using Hymperia.Facade.Services;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Prism;
 using Prism.Commands;
 using Prism.Events;
@@ -49,10 +50,16 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     #endregion
 
+    #region Asynchronous Loading
+
+    public AsyncLoader SupprimerProjetLoader { get; } = new AsyncLoader();
+
+    #endregion
+
     #region Commands
 
     public ICommand NavigateBack { get; }
-
+    public ICommand Delete { get; }
     public ICommand Sauvegarder { get; }
 
     #endregion
@@ -71,6 +78,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
+      Delete = new DelegateCommand(_SupprimerProjet);
       Sauvegarder = new DelegateCommand(InteractionSauvegarder);
 
       ContextFactory = factory;
@@ -90,24 +98,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     #endregion
 
     #region Command Sauvegarder
-
-    private ICollection<string> _PreSauvegarder()
-    {
-      var errors = new List<string>();
-      PreSauvegarder.Execute(errors);
-      return errors;
-    }
-
-    private async Task _Sauvegarder()
-    {
-      S.Default.Save();
-      using (await AsyncLock.Lock(ContextWrapper.Context))
-        await ContextWrapper.Context.SaveChangesAsync();
-    }
-
-    #endregion
-
-    #region Command InformationSauvegarde
 
     private void InteractionSauvegarder()
     {
@@ -133,7 +123,61 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
         }, context => SaveLoader.Loading = ExecuteReussite(context));
     }
 
+    private ICollection<string> _PreSauvegarder()
+    {
+      var errors = new List<string>();
+      PreSauvegarder.Execute(errors);
+      return errors;
+    }
+
+    private async Task _Sauvegarder()
+    {
+      S.Default.Save();
+      using (await AsyncLock.Lock(ContextWrapper.Context))
+        await ContextWrapper.Context.SaveChangesAsync();
+    }
+
     #endregion
+
+    #region Command SupprimerProjet
+
+    private void _SupprimerProjet()
+    {
+      void Execute(IConfirmation context)
+      {
+        if (context.Confirmed)
+          SupprimerProjetLoader.Loading = ConfirmedSupprimerProjets();
+      }
+
+      ConfirmationRequest.Raise(new Confirmation
+      {
+        Title = Resources.TitleConfirmDelete,
+        Content = Resources.SupprimerProjetContent
+      }, Execute);
+    }
+
+    private async Task ConfirmedSupprimerProjets()
+    {
+      Utilisateur user;
+      using (await AsyncLock.Lock(ContextWrapper.Context))
+      {
+        // Broken if more than one owner or no owner!
+        user = await (from acces in ContextWrapper.Context.Acces.IncludeProjets().IncludeUtilisateurs().AsNoTracking()
+                      where acces.Projet == Projet && acces.DroitDAcces == Acces.Droit.Possession
+                      select acces.Utilisateur).SingleAsync();
+
+        ContextWrapper.Context.Remove(Projet);
+        await ContextWrapper.Context.SaveChangesAsync();
+      }
+
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
+      {
+        { NavigationParameterKeys.Utilisateur, user }
+      });
+    }
+
+    #endregion
+
 
     #region Queries
 
