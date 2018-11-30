@@ -10,7 +10,6 @@ using Prism;
 using Prism.Ioc;
 using Prism.Regions;
 using P = Hymperia.Facade.Views.Editeur.PropertiesEditeur;
-using E = Hymperia.Facade.Views.Reglages.Editeur; 
 
 namespace Hymperia.Facade.Views.Editeur
 {
@@ -64,7 +63,7 @@ namespace Hymperia.Facade.Views.Editeur
 
     private void RegisterViews()
     {
-      if (!IsLoaded)
+      if (HorizontalTabControl is null || VerticalTabControl is null)
         return;
 
       HorizontalTabControl.RemoveAll();
@@ -76,8 +75,8 @@ namespace Hymperia.Facade.Views.Editeur
 
       if (Droit >= Acces.Droit.LectureEcriture)
       {
-        HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
         HorizontalTabControl.Add(MateriauxSelection, ViewKeys.MateriauxSelection);
+        HorizontalTabControl.Add(FormesSelection, ViewKeys.FormesSelection);
       }
     }
 
@@ -114,7 +113,7 @@ namespace Hymperia.Facade.Views.Editeur
       ViewportRegion?.Activate(ViewportRegion?.GetView(ViewKeys.Viewport));
       VerticalTabControl?.Activate(VerticalTabControl?.GetView(ViewKeys.PropertiesEditeur));
 
-      if (HorizontalTabControl?.GetView(ViewKeys.FormesSelection) is object view)
+      if (HorizontalTabControl?.GetView(ViewKeys.MateriauxSelection) is object view)
         HorizontalTabControl?.Activate(view);
     }
 
