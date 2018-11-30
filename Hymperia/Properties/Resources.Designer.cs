@@ -434,9 +434,19 @@ namespace Hymperia.Facade.Properties
     public static string SupprimerProjet => GetString("SupprimerProjet");
 
     /// <summary>
+    ///   Voulez vous supprimer le projet ?
+    /// </summary>
+    public static string SupprimerProjetContent => GetString("SupprimerProjetContent");
+
+    /// <summary>
     ///   Partage des projets
     /// </summary>
     public static string TitleAccesProjet => GetString("TitleAccesProjet");
+
+    /// <summary>
+    ///   Confirmation suppression
+    /// </summary>
+    public static string TitleConfirmDelete => GetString("TitleConfirmDelete");
 
     /// <summary>
     ///   L'utilisateur possède déjà ce projet.

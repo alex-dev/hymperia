@@ -83,7 +83,9 @@ namespace Hymperia.Model.Modeles
     [Pure]
     public override bool Equals(object obj) => Equals(obj as Acces);
     [Pure]
-    public bool Equals(Acces other) => Projet.Equals(other?.Projet) && Utilisateur.Equals(other?.Utilisateur);
+    public bool Equals(Acces other) => 
+      ((Projet is null && other?.Projet is null) || Projet.Equals(other?.Projet))
+        && ((Utilisateur is null && other?.Utilisateur is null) || Utilisateur.Equals(other?.Utilisateur));
     [Pure]
     public override int GetHashCode()
     {
