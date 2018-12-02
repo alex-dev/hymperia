@@ -478,6 +478,11 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string Hote => GetString("Hote");
 
+    /// <summary>
+    ///   Réglage de la base de données
+    /// </summary>
+    public static string TitleReglageBD => GetString("TitleReglageBD");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",

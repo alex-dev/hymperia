@@ -3,17 +3,247 @@
  * Date de création : 1 décembre 2018
 */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Hymperia.Facade.CommandAggregatorCommands;
+using Hymperia.Facade.Constants;
+using Hymperia.Facade.EventAggregatorMessages;
+using Hymperia.Facade.Loaders;
+using Hymperia.Facade.Properties;
+using Hymperia.Facade.Services;
+using Hymperia.Model;
+using Hymperia.Model.Modeles;
+using JetBrains.Annotations;
+using Prism;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
+using Prism.Mvvm;
+using Prism.Regions;
+using S = Hymperia.Model.Properties.Settings;
+
 namespace Hymperia.Facade.ViewModels.Reglages.BD
 {
-  public sealed class ReglageViewModel
+  public sealed class ReglageViewModel : ValidatingBase
   {
-    #region Constructeur
+    #region Properties
 
-    public ReglageViewModel()
+    #region Binding
+
+    public string Host
     {
+      get => host;
+      set => SetProperty(ref host, value);
+    }
+
+    public string Database
+    {
+      get => database;
+      set => SetProperty(ref database, value);
+    }
+
+    public string User
+    {
+      get => user;
+      set => SetProperty(ref user, value);
+    }
+
+    public string Password
+    {
+      get => password;
+      set => SetProperty(ref password, value);
+    }
+
+    #endregion
+
+    #region Interaction Requests
+
+    public InteractionRequest<IConfirmation> ConfirmationRequest { get; } = new InteractionRequest<IConfirmation>();
+    public InteractionRequest<INotification> InformationRequest { get; } = new InteractionRequest<INotification>();
+
+    #endregion
+
+    #region Commands
+
+    public ICommand NavigateBack { get; }
+
+    public ICommand Connexion { get; }
+
+    #endregion
+
+    #region Asynchronous Loading
+
+    public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
+    public AsyncLoader SaveLoader { get; } = new AsyncLoader();
+
+    #endregion
+
+    #endregion
+
+    #region Constructors
+
+    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
+    {
+      NavigateBack = new DelegateCommand(_NavigateBack);
+      Connexion = new DelegateCommand(InteractionSauvegarder);
+
+      ContextFactory = factory;
+      Manager = manager;
 
     }
 
-    #endregion 
+    #endregion
+
+    #region Navigation Commands
+
+    private void _NavigateBack() =>
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
+
+    #endregion
+
+    #region Command Sauvegarder
+
+    private ICollection<string> _PreSauvegarder()
+    {
+      var errors = new List<string>();
+      //PreSauvegarder.Execute(errors);
+      return errors;
+    }
+
+    private async Task _Sauvegarder()
+    {
+      S.Default.Save();
+      using (await AsyncLock.Lock(ContextWrapper.Context))
+        await ContextWrapper.Context.SaveChangesAsync();
+    }
+
+    #endregion
+
+    #region Command InformationSauvegarde
+
+    private void InteractionSauvegarder()
+    {
+      async Task ExecuteReussite(IConfirmation context)
+      {
+        if (context.Confirmed)
+          await _Sauvegarder();
+      }
+
+      var errors = _PreSauvegarder();
+
+      if (errors.Any())
+        InformationRequest.Raise(new Notification
+        {
+          Title = Resources.Echec,
+          Content = errors
+        });
+      else
+        ConfirmationRequest.Raise(new Confirmation
+        {
+          Title = Resources.Reussite,
+          Content = Resources.SaveDataInfo
+        }, context => SaveLoader.Loading = ExecuteReussite(context));
+    }
+
+    #endregion
+
+    #region Queries
+
+    #endregion
+
+    #region IActiveAware
+
+    public event EventHandler IsActiveChanged;
+
+    public bool IsActive
+    {
+      get => isActive;
+      set
+      {
+        if (isActive == value)
+          return;
+
+        isActive = value;
+
+        if (value)
+          OnActivation();
+        else
+          OnDeactivation();
+
+        IsActiveChanged?.Invoke(this, EventArgs.Empty);
+      }
+    }
+
+#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
+
+    private void OnActivation()
+    {
+      if (ContextWrapper is null)
+        ContextWrapper = ContextFactory.GetReglageBDContext();
+      else
+        CancelDispose();
+    }
+
+    private void OnDeactivation() => DisposeContext();
+
+
+#pragma warning restore 4014
+
+    #endregion
+
+    #region IDisposable
+
+#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
+
+    public void Dispose() => DisposeContext();
+
+#pragma warning restore 4014
+
+    private async Task DisposeContext()
+    {
+      if (ContextWrapper is null)
+        return;
+
+      disposeToken = new CancellationTokenSource();
+      using (await AsyncLock.Lock(ContextWrapper.Context, disposeToken.Token))
+      {
+        if (disposeToken.IsCancellationRequested)
+          return;
+
+        ContextWrapper.Dispose();
+        ContextWrapper = null;
+      }
+    }
+
+    private void CancelDispose() => disposeToken.Cancel();
+
+    #endregion
+
+    #region Services
+
+    [NotNull]
+    private readonly ContextFactory ContextFactory;
+    [NotNull]
+    private readonly IRegionManager Manager;
+
+    [NotNull]
+    private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
+
+    #endregion
+
+    #region Private Fields
+
+    private string host;
+    private string database;
+    private string user;
+    private string password;
+    private bool isActive;
+    private CancellationTokenSource disposeToken;
+
+    #endregion
   }
 }

@@ -394,4 +394,7 @@
   <data name="Hote" xml:space="preserve">
     <value>Host</value>
   </data>
+  <data name="TitleReglageBD" xml:space="preserve">
+    <value>Setting the database</value>
+  </data>
 </root>

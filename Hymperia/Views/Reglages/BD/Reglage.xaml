@@ -7,7 +7,7 @@ Date de création : 1 décembre 2018
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:const="clr-namespace:Hymperia.Facade.Constants"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:popups="clr-namespace:Hymperia.Facade.Views.Popups" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
-    prism:ViewModelLocator.AutoWireViewModel="True">
+    xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" prism:ViewModelLocator.AutoWireViewModel="True">
   <i:Interaction.Triggers>
     <prism:InteractionRequestTrigger SourceObject="{Binding InformationRequest}">
       <prism:PopupWindowAction IsModal="True">
@@ -25,6 +25,7 @@ Date de création : 1 décembre 2018
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <StackPanel>
+    <TextBlock Text="{x:Static prop:Resources.TitleReglageBD}" />
     <Label Content="{x:Static prop:Resources.Hote}" />
     <TextBox Text="{Binding Host}" />
 
@@ -35,7 +36,8 @@ Date de création : 1 décembre 2018
     <TextBox Text="{Binding User}" />
 
     <Label Content="{x:Static prop:Resources._MotDePasse}" />
-    <TextBox Text="{Binding Password}" />
+    <PasswordBox do:PasswordBoxHelper.Attach="True"
+        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
 
     <CheckBox />
     <Button Command="{Binding Connexion}" Content="{x:Static prop:Resources.Connexion}" />
