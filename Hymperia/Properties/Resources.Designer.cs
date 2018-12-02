@@ -458,6 +458,7 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string UserNotExist => GetString("UserNotExist");
 
+    /// <summary>
     ///   Retour
     /// </summary>
     public static string Return => GetString("Return");
@@ -466,6 +467,16 @@ namespace Hymperia.Facade.Properties
     ///   Déconnexion
     /// </summary>
     public static string Deconnexion => GetString("Deconnexion");
+
+    /// <summary>
+    ///   Base de données
+    /// </summary>
+    public static string BD => GetString("BD");
+
+    /// <summary>
+    ///   Hôte
+    /// </summary>
+    public static string Hote => GetString("Hote");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),

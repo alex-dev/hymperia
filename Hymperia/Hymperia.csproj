@@ -168,6 +168,7 @@
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ReglageViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\BD\ReglageViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Editeur\AccesProjetViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Editeur\ReglageViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Editeur\RenommerProjetViewModel.cs" />
@@ -243,6 +244,9 @@
       <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Application\Reglage.xaml.cs">
+      <DependentUpon>Reglage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\BD\Reglage.xaml.cs">
       <DependentUpon>Reglage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Editeur\AccesProjet.xaml.cs">
@@ -347,6 +351,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Reglages\Application\Reglage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\BD\Reglage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -579,5 +587,6 @@
     <Resource Include="WPFResources\Images\register.png" />
     <Resource Include="WPFResources\Images\registerfinal.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

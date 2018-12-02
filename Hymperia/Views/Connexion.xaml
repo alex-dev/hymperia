@@ -36,6 +36,7 @@ Date de création : 8 novembre 2018
       <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
           Content="{StaticResource Login}" />
       <Button Command="{Binding Inscription}" Content="{StaticResource Register}" />
+      <Button Command="{Binding NavigateToReglage}" Content="{x:Static prop:Resources.BD}" />
     </StackPanel>
   </Grid>
 </UserControl>

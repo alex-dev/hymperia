@@ -388,4 +388,10 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Déconnexion</value>
   </data>
+  <data name="BD" xml:space="preserve">
+    <value>Base de données</value>
+  </data>
+  <data name="Hote" xml:space="preserve">
+    <value>Hôte</value>
+  </data>
 </root>
