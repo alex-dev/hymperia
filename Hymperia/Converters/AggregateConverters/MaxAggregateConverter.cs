@@ -8,7 +8,7 @@ namespace Hymperia.Facade.Converters.AggregateConverters
 {
   /// <summary>Aggrège des nombres en leur valeur maximale.</summary>
   /// <remarks><see cref="ConvertBack(object, Type[], object, CultureInfo)"/> n'est pas implémenté parce que la transformation est un processus destructif.</remarks>
-  public class MaxAggregateConverter : IMultiValueConverter
+  public sealed class MaxAggregateConverter : IMultiValueConverter
   {
     /// inheritdoc/>
     public object Convert(object[] values, Type target, object parameter = null, CultureInfo culture = default) =>

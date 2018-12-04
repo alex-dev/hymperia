@@ -12,7 +12,7 @@ using Object = Hymperia.Model.Modeles.JsonObject;
 namespace Hymperia.Facade.Converters
 {
   /// <summary>Convertit des <see cref="Object.Point"/> et <see cref="Object.Quaternion"/> en <see cref="Transform3D"/>.</summary>
-  public class TransformConverter : IMultiValueConverter
+  public sealed class TransformConverter : IMultiValueConverter
   {
     /// <summary>Le type de la propriété source.</summary>
     [NotNull]

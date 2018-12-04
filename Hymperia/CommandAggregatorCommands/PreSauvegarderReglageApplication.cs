@@ -6,5 +6,5 @@ using Prism.Commands;
 
 namespace Hymperia.Facade.CommandAggregatorCommands
 {
-  public class PreSauvegarderReglageApplication : CompositeCommand { }
+  public sealed class PreSauvegarderReglageApplication : CompositeCommand { }
 }

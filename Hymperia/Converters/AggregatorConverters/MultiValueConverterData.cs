@@ -6,7 +6,7 @@ namespace Hymperia.Facade.Converters.AggregatorConverters
 {
   /// <summary>Value transporter for aggregator converters.</summary>
 
-  public class MultiValueConverterData : MarkupExtension
+  public sealed class MultiValueConverterData : MarkupExtension
   {
     public Type ConvertTargetType { get; set; }
     public Type[] ConvertBackTargetTypes { get; set; }
