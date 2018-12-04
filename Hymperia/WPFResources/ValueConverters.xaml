@@ -9,6 +9,7 @@
     xmlns:agg="clr-namespace:Hymperia.Facade.Converters.AggregateConverters"
     xmlns:aggregator="clr-namespace:Hymperia.Facade.Converters.AggregatorConverters">
   <helix:LinearConverter x:Key="Linear" M="1" />
+  <main:BooleanToGridRowHeightConverter x:Key="ToGridRow" />
   <main:BooleanInverter x:Key="Inverter" />
   <main:BooleanToVisibilityConverter x:Key="ToVisibility" />
   <main:DroitConverter x:Key="DroitToBool" />
