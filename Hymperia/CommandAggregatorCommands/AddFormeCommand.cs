@@ -2,5 +2,5 @@
 
 namespace Hymperia.Facade.CommandAggregatorCommands
 {
-  public class AddFormeCommand : CompositeCommand { }
+  public sealed class AddFormeCommand : CompositeCommand { }
 }

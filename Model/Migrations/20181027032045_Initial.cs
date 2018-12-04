@@ -150,10 +150,11 @@ namespace Hymperia.Model.Migrations
         new string[] { "Id", "Nom", "Prix", "R", "G", "B", "A" },
         new object[,]
         {
-          { 1, "Bois", 10.55, wood.R, wood.G, wood.B, wood.A },
-          { 2, "Acier", 50.55, steel.R, steel.G, steel.B, steel.A },
-          { 3, "Cuivre", 505.53, copper.R, copper.G, copper.B, copper.A },
-          { 4, "Or", 10485.68, gold.R, gold.G, gold.B, gold.A }
+          { 1, "Bois", 252.59, wood.R, wood.G, wood.B, wood.A },
+          { 2, "Acier", 7785.63, steel.R, steel.G, steel.B, steel.A },
+          { 3, "Cuivre", 791362.18, copper.R, copper.G, copper.B, copper.A },
+          { 4, "Or", 923582368875.00, gold.R, gold.G, gold.B, gold.A },
+          { 5, "Verre", 11934.65, 173, 195, 199, 0.75 }
         });
       }
 

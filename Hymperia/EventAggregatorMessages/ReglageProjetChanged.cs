@@ -8,5 +8,5 @@ using Prism.Events;
 
 namespace Hymperia.Facade.EventAggregatorMessages
 {
-  public class ReglageProjetChanged : PubSubEvent<Projet> { }
+  public sealed class ReglageProjetChanged : PubSubEvent<Projet> { }
 }

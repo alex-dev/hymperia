@@ -2,5 +2,5 @@
 
 namespace Hymperia.Facade.EventAggregatorMessages
 {
-  public class SelectionModeChanged : PubSubEvent<SelectionMode?> { }
+  public sealed class SelectionModeChanged : PubSubEvent<SelectionMode?> { }
 }

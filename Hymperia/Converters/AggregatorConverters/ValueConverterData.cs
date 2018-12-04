@@ -5,7 +5,7 @@ using System.Windows.Markup;
 namespace Hymperia.Facade.Converters.AggregatorConverters
 {
   /// <summary>Value transporter for aggregator converters.</summary>
-  public class ValueConverterData : MarkupExtension
+  public sealed class ValueConverterData : MarkupExtension
   {
     public Type ConvertTargetType { get; set; }
     public Type ConvertBackTargetType { get; set; }

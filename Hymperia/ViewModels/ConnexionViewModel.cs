@@ -116,7 +116,7 @@ namespace Hymperia.Facade.ViewModels
 
     #region Private Fields
 
-    private string username;
+    private string username = string.Empty;
     private bool errors;
 
     #endregion
