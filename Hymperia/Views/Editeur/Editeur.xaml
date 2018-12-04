@@ -3,7 +3,10 @@
   Date : 2018-09-20
   Nom : Editeur.xaml
   -->
-<!-- xmlns:do est nécessaire au fonctionnement du style derrière les TabControl!!! DO NOT REMOVE!! -->  
+<!--
+  xmlns:do est nécessaire au fonctionnement du style derrière les TabControl!!! DO NOT REMOVE!! 
+  Alex a fait cette erreur. Guillaume a passé 1 heure à tenter de le fix avec lui.
+  -->  
 <UserControl x:Class="Hymperia.Facade.Views.Editeur.Editeur"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:base="clr-namespace:Hymperia.Facade"
