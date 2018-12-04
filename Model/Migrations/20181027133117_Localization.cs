@@ -31,7 +31,9 @@ namespace Hymperia.Model.Migrations
           { "Bois", "en", "Wood" },
           { "Acier", "en", "Steel" },
           { "Cuivre", "en", "Copper" },
-          { "Or", "en", "Gold" }
+          { "Or", "en", "Gold" },
+          { "Verre", "fr", "Verre" },
+          { "Verre", "en", "Glass" }
         });
     }
 
