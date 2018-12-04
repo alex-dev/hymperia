@@ -102,8 +102,6 @@ namespace Hymperia.Facade.ViewModels
         return;
 
       var utilisateur = await CreateUtilisateur();
-      S.Default.Utilisateur = utilisateur.Nom;
-      S.Default.MotDePasse = B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true);
       Navigate(utilisateur);
     }
 
@@ -174,9 +172,9 @@ namespace Hymperia.Facade.ViewModels
 
     #region Private Fields
 
-    private string username;
-    private string password;
-    private string verification;
+    private string username = string.Empty;
+    private string password = string.Empty;
+    private string verification = string.Empty;
 
     #endregion
   }

@@ -105,7 +105,11 @@ namespace Prism.Mvvm
       return !HasErrors;
     }
 
+#pragma warning disable 1998
+
     protected virtual async Task ValidateAsync() { }
+
+#pragma warning restore 1998
 
     protected virtual void RaiseErrorsChanged([CallerMemberName] string name = null) =>
       ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(name));

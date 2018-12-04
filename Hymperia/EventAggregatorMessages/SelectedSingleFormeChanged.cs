@@ -3,5 +3,5 @@ using Prism.Events;
 
 namespace Hymperia.Facade.EventAggregatorMessages
 {
-  public class SelectedSingleFormeChanged : PubSubEvent<FormeWrapper> { }
+  public sealed class SelectedSingleFormeChanged : PubSubEvent<FormeWrapper> { }
 }

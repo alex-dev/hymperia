@@ -3,5 +3,5 @@ using Prism.Events;
 
 namespace Hymperia.Facade.EventAggregatorMessages
 {
-  public class AccesChanged : PubSubEvent<Acces.Droit> { }
+  public sealed class AccesChanged : PubSubEvent<Acces.Droit> { }
 }

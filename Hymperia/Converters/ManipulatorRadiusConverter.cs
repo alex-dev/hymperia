@@ -7,7 +7,7 @@ using Hymperia.Facade.Properties;
 namespace Hymperia.Facade.Converters
 {
   /// <summary>Convertit un groupe de nombre en la taille optimale d'un manipulator.</summary>
-  public class ManipulatorRadiusConverter : IMultiValueConverter
+  public sealed class ManipulatorRadiusConverter : IMultiValueConverter
   {
     /// inheritdoc/>
     /// <remarks>Vers la vue.</remarks>

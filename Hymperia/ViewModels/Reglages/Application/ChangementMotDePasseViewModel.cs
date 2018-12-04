@@ -126,9 +126,9 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Private Fields
 
-    private string password = "";
-    private string verification = "";
-    private string oldpassword = "";
+    private string password = string.Empty;
+    private string verification = string.Empty;
+    private string oldpassword = string.Empty;
 
     #endregion
   }
