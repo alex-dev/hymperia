@@ -35,13 +35,13 @@
         SelectionMode="Extended" SelectionChanged="OnSelectionChanged" Grid.Column="0">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <DockPanel>
+          <DockPanel LastChildFill="False">
             <DockPanel.InputBindings>
               <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
                   CommandParameter="{Binding}" />
             </DockPanel.InputBindings>
-            <TextBlock Text="{Binding Projet.Nom}" DockPanel.Dock="Bottom" />
             <Image do:ImageHelper.SourceResourceKey="{Binding DroitDAcces}" DockPanel.Dock="Top" />
+            <TextBlock Text="{Binding Projet.Nom}" DockPanel.Dock="Bottom" />
           </DockPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>

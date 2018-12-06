@@ -30,8 +30,7 @@
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type ListBoxItem}">
                 <Border x:Name="Border" SnapsToDevicePixels="True" BorderThickness="2" CornerRadius="2"
-                    BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}"
-                    Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                    BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}">
                   <Canvas Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                     <CheckBox x:Name="ProjetCheckBox" IsChecked="{TemplateBinding IsSelected}" Focusable="False"
                         IsHitTestVisible="False" Canvas.Left="5" Canvas.Top="5" Panel.ZIndex="1" />
@@ -42,14 +41,22 @@
                       <ContentPresenter.Style>
                         <Style>
                           <Style.Resources>
+                            <Style TargetType="{x:Type DockPanel}">
+                              <Setter Property="Background"
+                                  Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            </Style>
                             <Style TargetType="{x:Type TextBlock}">
                               <Setter Property="FontStyle" Value="Italic" />
                               <Setter Property="Foreground"
                                   Value="{DynamicResource {x:Static SystemColors.InfoTextBrush}}" />
                               <Setter Property="TextAlignment" Value="Center" />
                               <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                              <Setter Property="Padding" Value="7,20,7,10" />
                               <Setter Property="HorizontalAlignment" Value="Stretch" />
+                              <Setter Property="Margin" Value="5,0,5,10" />
+                            </Style>
+                            <Style TargetType="{x:Type Image}">
+                              <Setter Property="Width" Value="15" />
+                              <Setter Property="Margin" Value="0,5,0,0" />
                             </Style>
                           </Style.Resources>
                         </Style>

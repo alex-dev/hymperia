@@ -93,7 +93,6 @@
     <Compile Include="Converters\BooleanInverter.cs" />
     <Compile Include="Converters\BooleanToGridRowHeightConverter.cs" />
     <Compile Include="Converters\DroitConverter.cs" />
-    <Compile Include="Converters\DroitToKeyConverter.cs" />
     <Compile Include="EventAggregatorMessages\ReglageProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
