@@ -326,11 +326,11 @@
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_MotDePasse" xml:space="preserve">
-    <value>_Mot de passe :</value>
+    <value>_Mot de passe</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_Utilisateur" xml:space="preserve">
-    <value>_Nom d'utilisateur :</value>
+    <value>_Nom d'utilisateur</value>
     <comment>AccessKey for labels</comment>
   </data>
   <data name="_VerificationMotDePasse" xml:space="preserve">

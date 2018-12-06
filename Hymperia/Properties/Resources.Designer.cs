@@ -369,12 +369,12 @@ namespace Hymperia.Facade.Properties
     public static string _Material => GetString("_Material");
 
     /// <summary>
-    ///   _Mot de passe :
+    ///   _Mot de passe
     /// </summary>
     public static string _MotDePasse => GetString("_MotDePasse");
 
     /// <summary>
-    ///   _Nom d'utilisateur :
+    ///   _Nom d'utilisateur
     /// </summary>
     public static string _Utilisateur => GetString("_Utilisateur");
 
@@ -458,6 +458,7 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string UserNotExist => GetString("UserNotExist");
 
+    /// <summary>
     ///   Retour
     /// </summary>
     public static string Return => GetString("Return");

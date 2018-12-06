@@ -18,4 +18,5 @@
   <main:TransformConverter x:Key="Transform" />
   <agg:MaxAggregateConverter x:Key="MaxAggregate" />
   <agg:MinAggregateConverter x:Key="MinAggregate" />
+  <BorderGapMaskConverter x:Key="BorderMask" />
 </ResourceDictionary>
