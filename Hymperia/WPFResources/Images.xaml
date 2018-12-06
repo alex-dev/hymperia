@@ -4,7 +4,8 @@
   Nom : Images.xaml 
   -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:model="clr-namespace:Hymperia.Model.Modeles;assembly=Model">
   <BitmapImage x:Key="Cone" UriSource="pack://application:,,,/WPFResources/Images/Cone.png" />
   <BitmapImage x:Key="Cylindre" UriSource="pack://application:,,,/WPFResources/Images/Cylindre.png" />
   <BitmapImage x:Key="Ellipsoide" UriSource="pack://application:,,,/WPFResources/Images/Ellipsoide.png" />
@@ -19,4 +20,8 @@
   <BitmapImage x:Key="Settings" UriSource="pack://application:,,,/WPFResources/Images/settings.png" />
   <BitmapImage x:Key="Register" UriSource="pack://application:,,,/WPFResources/Images/register.png" />
   <BitmapImage x:Key="RegisterFinal" UriSource="pack://application:,,,/WPFResources/Images/registerfinal.png" />
+  <BitmapImage x:Key="{x:Static model:Acces+Droit.Possession}" UriSource="pack://application:,,,/WPFResources/Images/owner.png" />
+  <BitmapImage x:Key="{x:Static model:Acces+Droit.Lecture}" UriSource="pack://application:,,,/WPFResources/Images/view.png" />
+  <BitmapImage x:Key="{x:Static model:Acces+Droit.LectureEcriture}"
+      UriSource="pack://application:,,,/WPFResources/Images/edit.png" />
 </ResourceDictionary>

@@ -95,6 +95,7 @@
     <Compile Include="Converters\DroitConverter.cs" />
     <Compile Include="EventAggregatorMessages\ReglageProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="ModelWrappers\AccesWrapper.cs" />
     <Compile Include="SelectionMode.cs" />
     <Compile Include="Collections\BulkObservableCollection.cs" />
@@ -584,6 +585,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Logo_Hymperia.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WPFResources\Images\edit.png" />
+    <Resource Include="WPFResources\Images\owner.png" />
+    <Resource Include="WPFResources\Images\view.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
