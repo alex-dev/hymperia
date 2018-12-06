@@ -3,7 +3,6 @@
 * Date de création : 9 novembre 2018
 */
 
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,11 +16,10 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using B = BCrypt.Net;
-using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class InscriptionViewModel : ValidatingBase
+  public class InscriptionViewModel : ValidatingBase, INavigationAware
   {
     #region Properties
 
@@ -139,6 +137,19 @@ namespace Hymperia.Facade.ViewModels
       {
         { NavigationParameterKeys.Utilisateur, utilisateur }
       });
+
+    #endregion
+
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) => true;
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitle here!!.
+    }
+
+    public void OnNavigatedFrom(NavigationContext context) { }
 
     #endregion
 

@@ -38,7 +38,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     public Projet Projet
     {
       get => projet;
-      set => ProjetLoader.Loading = QueryProjet(value, RaiseProjetChanged);
+      set => ProjetLoader.Loading = QueryProjet(value, OnProjetChanged);
     }
 
     #endregion
@@ -203,6 +203,12 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     #region ProjetChanged
 
+    private void OnProjetChanged()
+    {
+
+      RaiseProjetChanged();
+    }
+
     private void RaiseProjetChanged() => ProjetChanged.Publish(Projet);
 
     #endregion
@@ -210,7 +216,13 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Projet] is Projet;
-    public void OnNavigatedTo(NavigationContext context) => Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitling delayed to OnProjetChanged after querying.
+      Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Projet = null;
 
     #endregion

@@ -365,7 +365,7 @@
     <value>Delete the project.</value>
   </data>
   <data name="Reglage" xml:space="preserve">
-    <value>Setting</value>
+    <value>Settings</value>
   </data>
   <data name="SupprimerProjetContent" xml:space="preserve">
     <value>Do you want to delete the project ?</value>
@@ -388,7 +388,7 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Logout</value>
   </data>
-  <data name="Reglage" xml:space="preserve">
-    <value>Settings</value>
+  <data name="Hymperia" xml:space="preserve">
+    <value>Hymperia</value>
   </data>
 </root>

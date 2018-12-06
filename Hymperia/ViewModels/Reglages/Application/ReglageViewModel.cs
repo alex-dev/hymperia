@@ -37,7 +37,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public Utilisateur Utilisateur
     {
       get => utilisateur;
-      set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
+      set => UtilisateurLoader.Loading = QueryUtilisateur(value, OnUtilisateurChange);
     }
 
     #endregion
@@ -156,6 +156,12 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region UtilisateurChanged
 
+    private void OnUtilisateurChange()
+    {
+
+      RaiseUtilisateurChanged();
+    }
+
     private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
 
     #endregion
@@ -163,7 +169,13 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitling delayed to OnProjetChanged after querying.
+      Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion

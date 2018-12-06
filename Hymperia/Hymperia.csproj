@@ -156,6 +156,7 @@
     <Compile Include="Services\ConvertisseurMateriaux.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
+    <Compile Include="Titles\MainWindowTitle.cs" />
     <Compile Include="ValidationRules\StringNotNullOrWhiteSpaceRule.cs" />
     <Compile Include="ViewModels\AffichageProjetsViewModel.cs" />
     <Compile Include="ViewModels\ConnexionViewModel.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="ViewModels\Editeur\PropertiesEditeur\FormePropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\PropertiesEditeur\PropertiesEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
+    <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />

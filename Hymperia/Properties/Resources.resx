@@ -388,4 +388,7 @@
   <data name="Deconnexion" xml:space="preserve">
     <value>Déconnexion</value>
   </data>
+  <data name="Hymperia" xml:space="preserve">
+    <value>Hympéria</value>
+  </data>
 </root>

@@ -36,7 +36,7 @@ namespace Hymperia.Facade.ViewModels
     public Utilisateur Utilisateur
     {
       get => utilisateur;
-      set => UtilisateurLoader.Loading = QueryUtilisateur(value, UpdateProjets);
+      set => UtilisateurLoader.Loading = QueryUtilisateur(value, OnUtilisateurChanged);
     }
 
     [CanBeNull]
@@ -224,16 +224,27 @@ namespace Hymperia.Facade.ViewModels
 
     #region On Utilisateur Changed
 
-    private void UpdateProjets() => Projets = Utilisateur is Utilisateur
+    private void OnUtilisateurChanged()
+    {
+
+
+      Projets = Utilisateur is Utilisateur
         ? new BulkObservableCollection<Acces>(Utilisateur.Acces)
         : null;
+    }
 
     #endregion
 
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitling delayed to OnProjetChanged after querying.
+      Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion

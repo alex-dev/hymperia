@@ -21,7 +21,7 @@ using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class ConnexionViewModel : BindableBase, INotifyDataErrorInfo
+  public class ConnexionViewModel : BindableBase, INavigationAware, INotifyDataErrorInfo
   {
     #region Properties
 
@@ -84,6 +84,19 @@ namespace Hymperia.Facade.ViewModels
 
     private void _Inscription() =>
       Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Inscription);
+
+    #endregion
+
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) => true;
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitle here!!.
+    }
+
+    public void OnNavigatedFrom(NavigationContext context) { }
 
     #endregion
 
