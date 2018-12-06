@@ -14,7 +14,7 @@
     <Setter Property="ItemsPanel">
       <Setter.Value>
         <ItemsPanelTemplate>
-          <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+          <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
         </ItemsPanelTemplate>
       </Setter.Value>
     </Setter>
@@ -70,14 +70,16 @@
                       <Condition Property="Selector.IsSelectionActive" Value="False" />
                       <Condition Property="IsSelected" Value="True" />
                     </MultiTrigger.Conditions>
-                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Property="BorderBrush" />
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
+                        Property="BorderBrush" />
                   </MultiTrigger>
                   <MultiTrigger>
                     <MultiTrigger.Conditions>
                       <Condition Property="Selector.IsSelectionActive" Value="True" />
                       <Condition Property="IsSelected" Value="True" />
                     </MultiTrigger.Conditions>
-                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Property="BorderBrush" />
+                    <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
+                        Property="BorderBrush" />
                   </MultiTrigger>
                 </ControlTemplate.Triggers>
               </ControlTemplate>
