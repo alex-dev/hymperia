@@ -81,6 +81,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo_Hymperia.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -578,6 +581,9 @@
   <ItemGroup>
     <Resource Include="WPFResources\Images\register.png" />
     <Resource Include="WPFResources\Images\registerfinal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Logo_Hymperia.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
