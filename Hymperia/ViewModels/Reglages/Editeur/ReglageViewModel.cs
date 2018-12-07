@@ -15,6 +15,7 @@ using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
@@ -25,6 +26,7 @@ using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Editeur
@@ -75,7 +77,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     #region Constructors
 
-    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events,
+      [NotNull] ITitleAggregator titles)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
       Delete = new DelegateCommand(_SupprimerProjet);
@@ -86,6 +89,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
       PreSauvegarder = commands.GetCommand<PreSauvegarderReglageEditeur>();
       ProjetChanged = events.GetEvent<ReglageProjetChanged>();
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -205,6 +209,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     private void OnProjetChanged()
     {
+      MainWindowTitle.SetTitle(Projet);
 
       RaiseProjetChanged();
     }
@@ -305,6 +310,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     private readonly PreSauvegarderReglageEditeur PreSauvegarder;
     [NotNull]
     private readonly ReglageProjetChanged ProjetChanged;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
