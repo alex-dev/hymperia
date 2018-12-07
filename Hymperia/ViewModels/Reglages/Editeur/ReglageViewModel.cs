@@ -95,6 +95,17 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     private void _NavigateBack() =>
       Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
+    private void NavigateToMain(Utilisateur user)
+    {
+      // Recreate a nav journal.
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.Clear();
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
+      {
+        { NavigationParameterKeys.Utilisateur, user }
+      });
+    }
+
     #endregion
 
     #region Command Sauvegarder
@@ -170,13 +181,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
         await ContextWrapper.Context.SaveChangesAsync();
       }
 
-      // Recreate a nav journal.
-      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.Clear();
-      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
-      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
-      {
-        { NavigationParameterKeys.Utilisateur, user }
-      });
+      NavigateToMain(user);
     }
 
     #endregion

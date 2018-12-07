@@ -6,11 +6,6 @@
   <ListBox Style="{StaticResource FormeSelection}" x:Name="ListBox"
       ItemsSource="{Binding Formes, Mode=OneWay, NotifyOnTargetUpdated=True}" SelectedValuePath="Key"
       SelectedValue="{Binding SelectedForme, Mode=TwoWay}" SelectionMode="Single">
-    <ListBox.ItemsPanel>
-      <ItemsPanelTemplate>
-        <WrapPanel Orientation="Horizontal" />
-      </ItemsPanelTemplate>
-    </ListBox.ItemsPanel>
     <ListBox.ItemTemplate>
       <DataTemplate>
         <Image do:ImageHelper.SourceResourceKey="{Binding Value}" />
