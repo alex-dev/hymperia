@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects">
-  <Style x:Key="MultiSettings" TargetType="{x:Type UserControl}">
+  <Style x:Key="SettingsGroup" TargetType="{x:Type UserControl}">
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Margin" Value="2.5" />
     <Setter Property="Template">
       <Setter.Value>

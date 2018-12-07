@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="Hymperia.Facade.Views.Reglages.Editeur.AccesProjet"
     do:TabItemNameBehavior.TabItemName="{x:Static prop:Resources.TitleAccesProjet}"
-    Style="{StaticResource MultiSettings}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    Style="{StaticResource SettingsGroup}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:prism="http://prismlibrary.com/" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     prism:ViewModelLocator.AutoWireViewModel="True">
