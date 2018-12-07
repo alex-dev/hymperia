@@ -16,9 +16,22 @@ namespace Hymperia.Facade.Titles
     [NotNull]
     public string Title => InnerTitle?.ToString() ?? Resources.Hymperia;
 
+    public void SetTitle() => InnerTitle = null;
     public void SetTitle([NotNull] string subtitle) => InnerTitle = new SubtitledTitle(subtitle);
-    public void SetTitle([NotNull] Utilisateur utilisateur) => InnerTitle = new UtilisateurTitle(utilisateur);
-    public void SetTitle([NotNull] Projet projet) => InnerTitle = new ProjetTitle((InnerTitle as UtilisateurTitle)?.Utilisateur, projet);
+    public void SetTitle([NotNull] Utilisateur utilisateur)
+    {
+      if (utilisateur is null)
+        return;
+
+      InnerTitle = new UtilisateurTitle(utilisateur);
+    }
+    public void SetTitle([NotNull] Projet projet)
+    {
+      if (projet is null)
+        return;
+
+      InnerTitle = new ProjetTitle((InnerTitle as UtilisateurTitle)?.Utilisateur, projet);
+    }
 
     protected void RaiseTitleChanged() => TitleChanged?.Invoke(this, new TitleChangedEventArgs(Title));
 

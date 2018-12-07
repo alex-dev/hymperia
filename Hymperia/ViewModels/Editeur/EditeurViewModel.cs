@@ -118,6 +118,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Asynchronous Loading
 
+    public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
     public AsyncLoader<Projet> ProjetLoader { get; } = new AsyncLoader<Projet>();
     public AsyncLoader<Materiau> MateriauLoader { get; } = new AsyncLoader<Materiau>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();

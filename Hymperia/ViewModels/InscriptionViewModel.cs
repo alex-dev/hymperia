@@ -9,12 +9,14 @@ using System.Windows.Input;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 using B = BCrypt.Net;
 
 namespace Hymperia.Facade.ViewModels
@@ -73,7 +75,8 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructeur
 
-    public InscriptionViewModel(ContextFactory factory, IRegionManager manager)
+    public InscriptionViewModel(ContextFactory factory, IRegionManager manager, 
+      [NotNull] ITitleAggregator titles)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
       Inscription = new DelegateCommand(_Inscription);
@@ -81,6 +84,8 @@ namespace Hymperia.Facade.ViewModels
 
       Factory = factory;
       Manager = manager;
+
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -178,6 +183,8 @@ namespace Hymperia.Facade.ViewModels
     private readonly ContextFactory Factory;
     [NotNull]
     private readonly IRegionManager Manager;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     #endregion
 
