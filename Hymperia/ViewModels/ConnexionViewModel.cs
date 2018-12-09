@@ -11,11 +11,13 @@ using System.Windows.Controls;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 using B = BCrypt.Net;
 using S = Hymperia.Model.Properties.Settings;
 
@@ -39,7 +41,7 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructeur
 
-    public ConnexionViewModel(ContextFactory factory, IRegionManager manager)
+    public ConnexionViewModel(ContextFactory factory, IRegionManager manager, [NotNull] ITitleAggregator titles)
     {
       Factory = factory;
       Manager = manager;
@@ -47,6 +49,7 @@ namespace Hymperia.Facade.ViewModels
       ConnexionAutomatique = new DelegateCommand(_ConnexionAutomatique, CanConnect);
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
       Inscription = new DelegateCommand(_Inscription);
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -93,7 +96,7 @@ namespace Hymperia.Facade.ViewModels
 
     public void OnNavigatedTo(NavigationContext context)
     {
-      // Retitle here!!.
+      MainWindowTitle.SetTitle();
     }
 
     public void OnNavigatedFrom(NavigationContext context) { }
@@ -124,6 +127,8 @@ namespace Hymperia.Facade.ViewModels
     private readonly ContextFactory Factory;
     [NotNull]
     private readonly IRegionManager Manager;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     #endregion
 

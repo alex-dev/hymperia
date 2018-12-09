@@ -151,7 +151,7 @@ namespace Hymperia.Facade.ViewModels
 
     public void OnNavigatedTo(NavigationContext context)
     {
-      // Retitle here!!.
+      MainWindowTitle.SetTitle();
     }
 
     public void OnNavigatedFrom(NavigationContext context) { }
