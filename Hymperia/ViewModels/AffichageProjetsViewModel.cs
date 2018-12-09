@@ -178,7 +178,8 @@ namespace Hymperia.Facade.ViewModels
       SupprimerProjetRequest.Raise(new Confirmation
       {
         Title = Resources.SupprimerProjets,
-        Content = projets
+        Content = from projet in projets
+                  select projet.Projet.Nom
       }, Execute);
     }
 

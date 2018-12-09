@@ -95,6 +95,16 @@ namespace Hymperia.Facade.ViewModels
     private void _NavigateBack() =>
       Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
 
+    private void NavigateAfterCreation(Utilisateur utilisateur)
+    {
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.Clear();
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
+      {
+        { NavigationParameterKeys.Utilisateur, utilisateur }
+      });
+    }
+
     #endregion
 
     #region Inscription Commands
@@ -105,7 +115,7 @@ namespace Hymperia.Facade.ViewModels
         return;
 
       var utilisateur = await CreateUtilisateur();
-      Navigate(utilisateur);
+      NavigateAfterCreation(utilisateur);
     }
 
     private async void _ValidateUsername() => await ValidateUsername();
@@ -157,7 +167,7 @@ namespace Hymperia.Facade.ViewModels
     public void OnNavigatedFrom(NavigationContext context) { }
 
     #endregion
-
+    
     #region ValidationBase
 
     private async Task<bool> ValidateUsername() => await ValidateProperty<string>(async v =>

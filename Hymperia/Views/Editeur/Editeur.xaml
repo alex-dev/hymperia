@@ -19,7 +19,7 @@
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="50" />
-      <RowDefinition Height="{Binding CanModify, Converter={StaticResource ToGridRow}, ConverterParameter=4.5}"/>
+      <RowDefinition Height="{Binding CanModify, Converter={StaticResource ToGridRow}, ConverterParameter=4.5}" />
       <RowDefinition Height="17*" />
     </Grid.RowDefinitions>
     <DockPanel LastChildFill="False" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
