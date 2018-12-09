@@ -60,6 +60,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions\Behaviors\TabControlItemsSourceSyncBehavior.cs" />
     <Compile Include="Regions\TabControlRegionAdapter.cs" />
+    <Compile Include="Titles\BaseTitle.cs" />
+    <Compile Include="Titles\ITitle.cs" />
+    <Compile Include="Titles\ITitleAggregator.cs" />
+    <Compile Include="Titles\TitleAggregator.cs" />
+    <Compile Include="Titles\TitleChangedEventArgs.cs" />
+    <Compile Include="Titles\TitleChangedEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations">

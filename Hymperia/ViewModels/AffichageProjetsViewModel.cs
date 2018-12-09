@@ -15,6 +15,7 @@ using Hymperia.Facade.Constants;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
@@ -23,6 +24,7 @@ using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 
 namespace Hymperia.Facade.ViewModels
 {
@@ -36,7 +38,7 @@ namespace Hymperia.Facade.ViewModels
     public Utilisateur Utilisateur
     {
       get => utilisateur;
-      set => UtilisateurLoader.Loading = QueryUtilisateur(value, UpdateProjets);
+      set => UtilisateurLoader.Loading = QueryUtilisateur(value, OnUtilisateurChanged);
     }
 
     [CanBeNull]
@@ -78,7 +80,7 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructors
 
-    public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
+    public AffichageProjetsViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ITitleAggregator titles)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
       NavigateToProjet = new DelegateCommand<Acces>(_NavigateToProjet);      
@@ -90,6 +92,7 @@ namespace Hymperia.Facade.ViewModels
 
       ContextFactory = factory;
       Manager = manager;
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -225,16 +228,27 @@ namespace Hymperia.Facade.ViewModels
 
     #region On Utilisateur Changed
 
-    private void UpdateProjets() => Projets = Utilisateur is Utilisateur
+    private void OnUtilisateurChanged()
+    {
+      MainWindowTitle.SetTitle(Utilisateur);
+
+      Projets = Utilisateur is Utilisateur
         ? new BulkObservableCollection<Acces>(Utilisateur.Acces)
         : null;
+    }
 
     #endregion
 
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitling delayed to OnProjetChanged after querying.
+      Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
@@ -307,6 +321,8 @@ namespace Hymperia.Facade.ViewModels
     private readonly IRegionManager Manager;
     [NotNull]
     private DatabaseContext Context;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     #endregion
 

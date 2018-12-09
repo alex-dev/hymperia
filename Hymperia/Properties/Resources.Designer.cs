@@ -468,6 +468,11 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string Deconnexion => GetString("Deconnexion");
 
+    /// <summary>
+    ///   Hympéria
+    /// </summary>
+    public static string Hymperia => GetString("Hymperia");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",

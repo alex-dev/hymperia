@@ -16,6 +16,7 @@ using Hymperia.Facade.Loaders;
 using Hymperia.Facade.ModelWrappers;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using Hymperia.Model.Modeles.JsonObject;
@@ -26,6 +27,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 
 namespace Hymperia.Facade.ViewModels.Editeur
 {
@@ -116,6 +118,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Asynchronous Loading
 
+    public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
     public AsyncLoader<Projet> ProjetLoader { get; } = new AsyncLoader<Projet>();
     public AsyncLoader<Materiau> MateriauLoader { get; } = new AsyncLoader<Materiau>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();
@@ -126,7 +129,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     #region Constructors
 
-    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public EditeurViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ConvertisseurFormes formes, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events, [NotNull] ITitleAggregator titles)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
       NavigateToReglage = new DelegateCommand(_NavigateToReglage);
@@ -152,6 +155,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
       FormesChanged = events.GetEvent<FormesChanged>();
       ProjetChanged = events.GetEvent<ProjetChanged>();
       SelectionModeChanged = events.GetEvent<SelectionModeChanged>();
+
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -268,6 +273,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     private void OnProjetChanged()
     {
+      MainWindowTitle.SetTitle(Projet);
+
       Formes = Projet is null
         ? null
         : new BulkObservableCollection<FormeWrapper>(from forme in Projet.Formes
@@ -341,6 +348,7 @@ namespace Hymperia.Facade.ViewModels.Editeur
 
     public void OnNavigatedTo(NavigationContext context)
     {
+      // Retitling delayed to OnProjetChanged after querying.
       Projet = (Projet)context.Parameters[NavigationParameterKeys.Projet];
       Droit = (Acces.Droit)context.Parameters[NavigationParameterKeys.Acces];
     }
@@ -433,6 +441,8 @@ namespace Hymperia.Facade.ViewModels.Editeur
     private readonly ProjetChanged ProjetChanged;
     [NotNull]
     private readonly SelectionModeChanged SelectionModeChanged;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
