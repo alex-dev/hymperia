@@ -2,5 +2,5 @@
 
 namespace Hymperia.Facade.CommandAggregatorCommands
 {
-  public class DeleteFormesCommand : CompositeCommand { }
+  public sealed class DeleteFormesCommand : CompositeCommand { }
 }

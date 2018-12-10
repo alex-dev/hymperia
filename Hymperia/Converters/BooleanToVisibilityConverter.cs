@@ -10,6 +10,7 @@ using System.Windows.Data;
 
 namespace Hymperia.Facade.Converters
 {
+  [ValueConversion(typeof(bool), typeof(Visibility))]
   public sealed class BooleanToVisibilityConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>

@@ -3,25 +3,25 @@
 * Date de création : 9 novembre 2018
 */
 
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 using B = BCrypt.Net;
-using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels
 {
-  public class InscriptionViewModel : ValidatingBase
+  public class InscriptionViewModel : ValidatingBase, INavigationAware
   {
     #region Properties
 
@@ -75,7 +75,8 @@ namespace Hymperia.Facade.ViewModels
 
     #region Constructeur
 
-    public InscriptionViewModel(ContextFactory factory, IRegionManager manager)
+    public InscriptionViewModel(ContextFactory factory, IRegionManager manager, 
+      [NotNull] ITitleAggregator titles)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
       Inscription = new DelegateCommand(_Inscription);
@@ -83,6 +84,8 @@ namespace Hymperia.Facade.ViewModels
 
       Factory = factory;
       Manager = manager;
+
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -91,6 +94,16 @@ namespace Hymperia.Facade.ViewModels
 
     private void _NavigateBack() =>
       Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.GoBack();
+
+    private void NavigateAfterCreation(Utilisateur utilisateur)
+    {
+      Manager.Regions[RegionKeys.ContentRegion].NavigationService.Journal.Clear();
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.AffichageProjets, new NavigationParameters
+      {
+        { NavigationParameterKeys.Utilisateur, utilisateur }
+      });
+    }
 
     #endregion
 
@@ -102,9 +115,7 @@ namespace Hymperia.Facade.ViewModels
         return;
 
       var utilisateur = await CreateUtilisateur();
-      S.Default.Utilisateur = utilisateur.Nom;
-      S.Default.MotDePasse = B.BCrypt.HashPassword(Password, Utilisateur.PasswordWorkFactor, true);
-      Navigate(utilisateur);
+      NavigateAfterCreation(utilisateur);
     }
 
     private async void _ValidateUsername() => await ValidateUsername();
@@ -144,6 +155,19 @@ namespace Hymperia.Facade.ViewModels
 
     #endregion
 
+    #region INavigationAware 
+
+    public bool IsNavigationTarget(NavigationContext context) => true;
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      MainWindowTitle.SetTitle();
+    }
+
+    public void OnNavigatedFrom(NavigationContext context) { }
+
+    #endregion
+    
     #region ValidationBase
 
     private async Task<bool> ValidateUsername() => await ValidateProperty<string>(async v =>
@@ -169,14 +193,16 @@ namespace Hymperia.Facade.ViewModels
     private readonly ContextFactory Factory;
     [NotNull]
     private readonly IRegionManager Manager;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     #endregion
 
     #region Private Fields
 
-    private string username;
-    private string password;
-    private string verification;
+    private string username = string.Empty;
+    private string password = string.Empty;
+    private string verification = string.Empty;
 
     #endregion
   }

@@ -81,6 +81,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo_Hymperia.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -88,9 +91,11 @@
     </Compile>
     <Compile Include="CommandAggregatorCommands\PreSauvegarderReglageEditeur.cs" />
     <Compile Include="Converters\BooleanInverter.cs" />
+    <Compile Include="Converters\BooleanToGridRowHeightConverter.cs" />
     <Compile Include="Converters\DroitConverter.cs" />
     <Compile Include="EventAggregatorMessages\ReglageProjetChanged.cs" />
     <Compile Include="EventAggregatorMessages\ReglageUtilisateurChanged.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="ModelWrappers\AccesWrapper.cs" />
     <Compile Include="SelectionMode.cs" />
     <Compile Include="Collections\BulkObservableCollection.cs" />
@@ -152,8 +157,8 @@
     <Compile Include="Services\ConvertisseurMateriaux.cs" />
     <Compile Include="Services\ConvertisseurWrappers.cs" />
     <Compile Include="Services\NotifyCollectionChangedCopyFactory.cs" />
+    <Compile Include="Titles\MainWindowTitle.cs" />
     <Compile Include="ValidationRules\StringNotNullOrWhiteSpaceRule.cs" />
-    <Compile Include="ViewModelInterface\IPasswordHolder.cs" />
     <Compile Include="ViewModels\AffichageProjetsViewModel.cs" />
     <Compile Include="ViewModels\ConnexionViewModel.cs" />
     <Compile Include="ViewModels\Editeur\EditeurViewModel.cs" />
@@ -164,8 +169,11 @@
     <Compile Include="ViewModels\Editeur\PropertiesEditeur\FormePropertiesViewModel.cs" />
     <Compile Include="ViewModels\Editeur\PropertiesEditeur\PropertiesEditeurViewModel.cs" />
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
+    <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ChangementLangueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ChangementThemeViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ReglageViewModel.cs" />
     <Compile Include="ViewModels\Reglages\BD\ReglageViewModel.cs" />
@@ -237,8 +245,14 @@
     <Compile Include="Views\Popups\InformationPopup.xaml.cs">
       <DependentUpon>InformationPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reglages\Application\ChangementLangue.xaml.cs">
+      <DependentUpon>ChangementLangue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\ChangementTheme.xaml.cs">
+      <DependentUpon>ChangementTheme.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Application\ConnexionAutomatique.xaml.cs">
       <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
@@ -342,7 +356,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Reglages\Application\ChangementLangue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Reglages\Application\ChangementMotDePasse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ChangementTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -394,7 +416,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPFResources\GroupBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFResources\MenuStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFResources\ReglagesStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -587,6 +617,13 @@
     <Resource Include="WPFResources\Images\register.png" />
     <Resource Include="WPFResources\Images\registerfinal.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Logo_Hymperia.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WPFResources\Images\edit.png" />
+    <Resource Include="WPFResources\Images\owner.png" />
+    <Resource Include="WPFResources\Images\view.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

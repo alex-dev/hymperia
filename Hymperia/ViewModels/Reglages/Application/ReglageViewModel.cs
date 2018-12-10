@@ -15,6 +15,7 @@ using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
+using Hymperia.Facade.Titles;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
@@ -24,6 +25,7 @@ using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Titles;
 using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Application
@@ -37,7 +39,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public Utilisateur Utilisateur
     {
       get => utilisateur;
-      set => UtilisateurLoader.Loading = QueryUtilisateur(value, RaiseUtilisateurChanged);
+      set => UtilisateurLoader.Loading = QueryUtilisateur(value, OnUtilisateurChange);
     }
 
     #endregion
@@ -68,7 +70,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructors
 
-    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events)
+    public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager, [NotNull] ICommandAggregator commands, [NotNull] IEventAggregator events,
+      [NotNull] ITitleAggregator titles)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
       Sauvegarder = new DelegateCommand(InteractionSauvegarder);
@@ -77,6 +80,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
       Manager = manager;
       PreSauvegarder = commands.GetCommand<PreSauvegarderReglageApplication>();
       UtilisateurChanged = events.GetEvent<ReglageUtilisateurChanged>();
+      MainWindowTitle = titles.GetTitle<MainWindowTitle>();
     }
 
     #endregion
@@ -156,6 +160,12 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region UtilisateurChanged
 
+    private void OnUtilisateurChange()
+    {
+      MainWindowTitle.SetTitle(Utilisateur);
+      RaiseUtilisateurChanged();
+    }
+
     private void RaiseUtilisateurChanged() => UtilisateurChanged.Publish(Utilisateur);
 
     #endregion
@@ -163,7 +173,13 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     #region INavigationAware 
 
     public bool IsNavigationTarget(NavigationContext context) => context.Parameters[NavigationParameterKeys.Utilisateur] is Utilisateur;
-    public void OnNavigatedTo(NavigationContext context) => Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+
+    public void OnNavigatedTo(NavigationContext context)
+    {
+      // Retitling delayed to OnProjetChanged after querying.
+      Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+    }
+
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;
 
     #endregion
@@ -246,6 +262,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     private readonly PreSauvegarderReglageApplication PreSauvegarder;
     [NotNull]
     private readonly ReglageUtilisateurChanged UtilisateurChanged;
+    [NotNull]
+    private readonly MainWindowTitle MainWindowTitle;
 
     [NotNull]
     private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;

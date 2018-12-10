@@ -8,7 +8,7 @@ using O = Hymperia.Model.Modeles.JsonObject;
 namespace Hymperia.Facade.Converters
 {
   [ValueConversion(typeof(M.Point3D), typeof(O.Point))]
-  public class Point3DToPointConverter : IValueConverter
+  public sealed class Point3DToPointConverter : IValueConverter
   {
     /// inheritdoc/>
     /// <remarks>Vers la vue.</remarks>

@@ -6,17 +6,12 @@
   <ListBox Style="{StaticResource MaterialSelection}" x:Name="ListBox"
       ItemsSource="{Binding Materiaux, Mode=OneWay, NotifyOnTargetUpdated=True}" SelectedValuePath="Materiau"
       SelectedValue="{Binding SelectedMateriau, Mode=TwoWay}" SelectionMode="Single">
-    <ListBox.ItemsPanel>
-      <ItemsPanelTemplate>
-        <WrapPanel Orientation="Horizontal" />
-      </ItemsPanelTemplate>
-    </ListBox.ItemsPanel>
     <ListBox.ItemTemplate>
       <DataTemplate>
-        <VirtualizingStackPanel>
+        <StackPanel>
           <TextBlock Text="{Binding Nom}" />
           <Rectangle Fill="{Binding Fill}" />
-        </VirtualizingStackPanel>
+        </StackPanel>
       </DataTemplate>
     </ListBox.ItemTemplate>
   </ListBox>

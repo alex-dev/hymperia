@@ -369,12 +369,12 @@ namespace Hymperia.Facade.Properties
     public static string _Material => GetString("_Material");
 
     /// <summary>
-    ///   _Mot de passe :
+    ///   _Mot de passe
     /// </summary>
     public static string _MotDePasse => GetString("_MotDePasse");
 
     /// <summary>
-    ///   _Nom d'utilisateur :
+    ///   _Nom d'utilisateur
     /// </summary>
     public static string _Utilisateur => GetString("_Utilisateur");
 
@@ -469,6 +469,47 @@ namespace Hymperia.Facade.Properties
     public static string Deconnexion => GetString("Deconnexion");
 
     /// <summary>
+    ///   Hympéria
+    /// </summary>
+    public static string Hymperia => GetString("Hymperia");
+
+    /// <summary>
+    ///   Langue
+    /// </summary>
+    public static string Langue => GetString("Langue");
+
+    /// <summary>
+    ///   Anglais
+    /// </summary>
+    public static string English => GetString("English");
+
+    /// <summary>
+    ///   Français
+    /// </summary>
+    public static string French => GetString("French");
+    ///   Thème
+    /// </summary>
+    public static string Theme => GetString("Theme");
+
+    /// <summary>
+    ///   Sombre
+    /// </summary>
+    public static string Dark => GetString("Dark");
+
+    /// <summary>
+    ///   Défaut
+    /// </summary>
+    public static string Default => GetString("Default");
+
+    /// <summary>
+    ///   Horreur
+    /// </summary>
+    public static string Eyesore => GetString("Eyesore");
+
+    /// <summary>
+    ///   Lumière
+    /// </summary>
+    public static string Light => GetString("Light");
     ///   Base de données
     /// </summary>
     public static string BD => GetString("BD");

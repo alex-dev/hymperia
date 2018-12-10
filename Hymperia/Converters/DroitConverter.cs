@@ -5,6 +5,7 @@ using Hymperia.Model.Modeles;
 
 namespace Hymperia.Facade.Converters
 {
+  [ValueConversion(typeof(Acces.Droit), typeof(bool))]
   public sealed class DroitConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
