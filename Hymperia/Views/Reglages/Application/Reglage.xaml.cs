@@ -23,6 +23,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     {
       Manager = manager;
       ChangementMotDePasse = container.Resolve<ChangementMotDePasse>();
+      ChangementTheme = container.Resolve<ChangementTheme>();
       ConnexionAutomatique = container.Resolve<ConnexionAutomatique>();
 
       Loaded += RegisterViews;
@@ -38,9 +39,11 @@ namespace Hymperia.Facade.Views.Reglages.Application
       Loaded -= RegisterViews;
 
       ChangementMotDePasseRegion = Manager.Regions[RegionKeys.ChangementMotDePasseRegion];
+      ChangementThemeRegion = Manager.Regions[RegionKeys.ChangementTheme];
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
       ChangementMotDePasseRegion.Add(ChangementMotDePasse, ViewKeys.ChangementMotDePasse);
+      ChangementThemeRegion.Add(ChangementTheme, ViewKeys.ChangementTheme);
       ConnexionAutomatiqueRegion.Add(ConnexionAutomatique, ViewKeys.ConnexionAutomatique);
     }
 
@@ -72,12 +75,14 @@ namespace Hymperia.Facade.Views.Reglages.Application
     private void OnActivation()
     {
       ChangementMotDePasseRegion?.Activate(ChangementMotDePasseRegion?.GetView(ViewKeys.ChangementMotDePasse));
+      ChangementThemeRegion?.Activate(ChangementThemeRegion?.GetView(ViewKeys.ChangementTheme));
       ConnexionAutomatiqueRegion?.Activate(ConnexionAutomatiqueRegion?.GetView(ViewKeys.ConnexionAutomatique));
     }
 
     private void OnDeactivation()
     {
       ChangementMotDePasseRegion?.Deactivate();
+      ChangementThemeRegion?.Deactivate();
       ConnexionAutomatiqueRegion?.Deactivate();
     }
 
@@ -89,6 +94,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
     private readonly IRegionManager Manager;
     private IRegion ChangementMotDePasseRegion;
+    private IRegion ChangementThemeRegion;
     private IRegion ConnexionAutomatiqueRegion;
 
     #endregion
@@ -96,6 +102,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     #region Views
 
     private readonly ChangementMotDePasse ChangementMotDePasse;
+    private readonly ChangementTheme ChangementTheme;
     private readonly ConnexionAutomatique ConnexionAutomatique;
 
     #endregion
