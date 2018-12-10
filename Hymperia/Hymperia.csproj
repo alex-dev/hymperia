@@ -242,6 +242,9 @@
     <Compile Include="Views\Popups\InformationPopup.xaml.cs">
       <DependentUpon>InformationPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reglages\Application\ChangementLangue.xaml.cs">
+      <DependentUpon>ChangementLangue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
     </Compile>
@@ -341,6 +344,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Popups\InformationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ChangementLangue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

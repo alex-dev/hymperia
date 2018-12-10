@@ -1,0 +1,15 @@
+﻿<!--
+Auteur : Antoine Mailhot
+Date de création : 10 décembre 2018
+-->
+
+<UserControl x:Class="Hymperia.Facade.Views.Reglages.Application.ChangementLangue"
+    do:TabItemNameBehavior.TabItemName="{x:Static prop:Resources.}" Style="{StaticResource SettingsGroup}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
+  <ComboBox x:Name="ChangementLangueComboBox" IsReadOnly="True" SelectedValuePath="Tag" SelectedValue="{Binding Langue}">
+    <ComboBoxItem Tag="fr-CA" Content="{x:Static prop:Resources.French}" />
+    <ComboBoxItem Tag="en-US" Content="{x:Static prop:Resources.English}" />
+  </ComboBox>
+</UserControl>

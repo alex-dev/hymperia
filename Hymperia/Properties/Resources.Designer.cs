@@ -473,6 +473,21 @@ namespace Hymperia.Facade.Properties
     /// </summary>
     public static string Hymperia => GetString("Hymperia");
 
+    /// <summary>
+    ///   Langue
+    /// </summary>
+    public static string Langue => GetString("Langue");
+
+    /// <summary>
+    ///   Anglais
+    /// </summary>
+    public static string English => GetString("English");
+
+    /// <summary>
+    ///   Français
+    /// </summary>
+    public static string French => GetString("French");
+
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),
       @"\{(\w+)(.*?)\}",
