@@ -391,6 +391,15 @@
   <data name="Hymperia" xml:space="preserve">
     <value>Hymperia</value>
   </data>
+  <data name="Langue" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="French" xml:space="preserve">
+    <value>French</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>

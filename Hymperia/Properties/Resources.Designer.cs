@@ -474,6 +474,19 @@ namespace Hymperia.Facade.Properties
     public static string Hymperia => GetString("Hymperia");
 
     /// <summary>
+    ///   Langue
+    /// </summary>
+    public static string Langue => GetString("Langue");
+
+    /// <summary>
+    ///   Anglais
+    /// </summary>
+    public static string English => GetString("English");
+
+    /// <summary>
+    ///   Français
+    /// </summary>
+    public static string French => GetString("French");
     ///   Thème
     /// </summary>
     public static string Theme => GetString("Theme");

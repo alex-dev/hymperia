@@ -9,6 +9,7 @@
     public const string SpecificPropertiesRegion = nameof(SpecificPropertiesRegion);
     public const string HorizontalTabControlRegion = nameof(HorizontalTabControlRegion);
     public const string VerticalTabControlRegion = nameof(VerticalTabControlRegion);
+    public const string ChangementLangueRegion = nameof(ChangementLangueRegion);
     public const string ChangementMotDePasseRegion = nameof(ChangementMotDePasseRegion);
     public const string ChangementTheme = nameof(ChangementTheme);
     public const string ConnexionAutomatiqueRegion = nameof(ConnexionAutomatiqueRegion);

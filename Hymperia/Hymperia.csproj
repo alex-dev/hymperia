@@ -171,6 +171,7 @@
     <Compile Include="ViewModels\Editeur\ViewportViewModel.cs" />
     <Compile Include="ViewModels\FenetrePrincipaleViewModel.cs" />
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ChangementLangueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementThemeViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />
@@ -242,6 +243,9 @@
     </Compile>
     <Compile Include="Views\Popups\InformationPopup.xaml.cs">
       <DependentUpon>InformationPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\ChangementLangue.xaml.cs">
+      <DependentUpon>ChangementLangue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
@@ -345,6 +349,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Popups\InformationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ChangementLangue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
