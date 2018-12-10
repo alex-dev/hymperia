@@ -13,7 +13,7 @@ using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.Application
 {
-  class ChangementThemeViewModel : BindableBase
+  public class ChangementThemeViewModel : BindableBase
   {
     #region Propriete
 
@@ -50,7 +50,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Private Fields
 
-    private string theme;
+    private string theme = S.Default.Theme;
 
     #endregion
   }
