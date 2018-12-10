@@ -173,6 +173,7 @@
     <Compile Include="ViewModels\InscriptionViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementLangueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ChangementMotDePasseViewModel.cs" />
+    <Compile Include="ViewModels\Reglages\Application\ChangementThemeViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ConnexionAutomatiqueViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Application\ReglageViewModel.cs" />
     <Compile Include="ViewModels\Reglages\Editeur\AccesProjetViewModel.cs" />
@@ -248,6 +249,9 @@
     </Compile>
     <Compile Include="Views\Reglages\Application\ChangementMotDePasse.xaml.cs">
       <DependentUpon>ChangementMotDePasse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reglages\Application\ChangementTheme.xaml.cs">
+      <DependentUpon>ChangementTheme.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reglages\Application\ConnexionAutomatique.xaml.cs">
       <DependentUpon>ConnexionAutomatique.xaml</DependentUpon>
@@ -353,6 +357,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Reglages\Application\ChangementMotDePasse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reglages\Application\ChangementTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

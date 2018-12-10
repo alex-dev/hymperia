@@ -487,6 +487,29 @@ namespace Hymperia.Facade.Properties
     ///   Français
     /// </summary>
     public static string French => GetString("French");
+    ///   Thème
+    /// </summary>
+    public static string Theme => GetString("Theme");
+
+    /// <summary>
+    ///   Sombre
+    /// </summary>
+    public static string Dark => GetString("Dark");
+
+    /// <summary>
+    ///   Défaut
+    /// </summary>
+    public static string Default => GetString("Default");
+
+    /// <summary>
+    ///   Horreur
+    /// </summary>
+    public static string Eyesore => GetString("Eyesore");
+
+    /// <summary>
+    ///   Lumière
+    /// </summary>
+    public static string Light => GetString("Light");
 
     private static string GetString(string name, params string[] names) => Regex.Replace(
       manager.GetString(name),

@@ -24,6 +24,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
       Manager = manager;
       ChangementLangue = container.Resolve<ChangementLangue>();
       ChangementMotDePasse = container.Resolve<ChangementMotDePasse>();
+      ChangementTheme = container.Resolve<ChangementTheme>();
       ConnexionAutomatique = container.Resolve<ConnexionAutomatique>();
 
       Loaded += RegisterViews;
@@ -40,10 +41,12 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
       ChangementLangueRegion = Manager.Regions[RegionKeys.ChangementLangueRegion];
       ChangementMotDePasseRegion = Manager.Regions[RegionKeys.ChangementMotDePasseRegion];
+      ChangementThemeRegion = Manager.Regions[RegionKeys.ChangementTheme];
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
       ChangementLangueRegion.Add(ChangementLangue, ViewKeys.ChangementLangue);
       ChangementMotDePasseRegion.Add(ChangementMotDePasse, ViewKeys.ChangementMotDePasse);
+      ChangementThemeRegion.Add(ChangementTheme, ViewKeys.ChangementTheme);
       ConnexionAutomatiqueRegion.Add(ConnexionAutomatique, ViewKeys.ConnexionAutomatique);
     }
 
@@ -76,6 +79,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     {
       ChangementLangueRegion?.Activate(ChangementLangueRegion?.GetView(ViewKeys.ChangementLangue));
       ChangementMotDePasseRegion?.Activate(ChangementMotDePasseRegion?.GetView(ViewKeys.ChangementMotDePasse));
+      ChangementThemeRegion?.Activate(ChangementThemeRegion?.GetView(ViewKeys.ChangementTheme));
       ConnexionAutomatiqueRegion?.Activate(ConnexionAutomatiqueRegion?.GetView(ViewKeys.ConnexionAutomatique));
     }
 
@@ -83,6 +87,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     {
       ChangementMotDePasseRegion?.Deactivate();
       ChangementLangueRegion?.Deactivate();
+      ChangementThemeRegion?.Deactivate();
       ConnexionAutomatiqueRegion?.Deactivate();
     }
 
@@ -95,6 +100,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     private readonly IRegionManager Manager;
     private IRegion ChangementLangueRegion;
     private IRegion ChangementMotDePasseRegion;
+    private IRegion ChangementThemeRegion;
     private IRegion ConnexionAutomatiqueRegion;
 
     #endregion
@@ -103,6 +109,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
     private readonly ChangementLangue ChangementLangue;
     private readonly ChangementMotDePasse ChangementMotDePasse;
+    private readonly ChangementTheme ChangementTheme;
     private readonly ConnexionAutomatique ConnexionAutomatique;
 
     #endregion

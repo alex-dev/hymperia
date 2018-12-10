@@ -400,4 +400,19 @@
   <data name="French" xml:space="preserve">
     <value>Français</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thème</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Sombre</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Défaut</value>
+  </data>
+  <data name="Eyesore" xml:space="preserve">
+    <value>Horreur</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Lumière</value>
+  </data>
 </root>
