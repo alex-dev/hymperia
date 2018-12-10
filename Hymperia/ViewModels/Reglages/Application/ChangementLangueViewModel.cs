@@ -41,7 +41,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     private void PreSauvegarder()
     {
-      S.Default.Theme = Langue;
+      S.Default.Culture = Langue;
     }
 
     #endregion
@@ -50,7 +50,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Private Fields
 
-    private string langue;
+    private string langue = S.Default.Culture;
 
     #endregion
   }

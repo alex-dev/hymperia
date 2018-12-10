@@ -22,6 +22,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     public Reglage(IRegionManager manager, IContainerExtension container)
     {
       Manager = manager;
+      ChangementLangue = container.Resolve<ChangementLangue>();
       ChangementMotDePasse = container.Resolve<ChangementMotDePasse>();
       ConnexionAutomatique = container.Resolve<ConnexionAutomatique>();
 
@@ -37,9 +38,11 @@ namespace Hymperia.Facade.Views.Reglages.Application
     {
       Loaded -= RegisterViews;
 
+      ChangementLangueRegion = Manager.Regions[RegionKeys.ChangementLangueRegion];
       ChangementMotDePasseRegion = Manager.Regions[RegionKeys.ChangementMotDePasseRegion];
       ConnexionAutomatiqueRegion = Manager.Regions[RegionKeys.ConnexionAutomatiqueRegion];
 
+      ChangementLangueRegion.Add(ChangementLangue, ViewKeys.ChangementLangue);
       ChangementMotDePasseRegion.Add(ChangementMotDePasse, ViewKeys.ChangementMotDePasse);
       ConnexionAutomatiqueRegion.Add(ConnexionAutomatique, ViewKeys.ConnexionAutomatique);
     }
@@ -71,6 +74,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
     private void OnActivation()
     {
+      ChangementLangueRegion?.Activate(ChangementLangueRegion?.GetView(ViewKeys.ChangementLangue));
       ChangementMotDePasseRegion?.Activate(ChangementMotDePasseRegion?.GetView(ViewKeys.ChangementMotDePasse));
       ConnexionAutomatiqueRegion?.Activate(ConnexionAutomatiqueRegion?.GetView(ViewKeys.ConnexionAutomatique));
     }
@@ -78,6 +82,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     private void OnDeactivation()
     {
       ChangementMotDePasseRegion?.Deactivate();
+      ChangementLangueRegion?.Deactivate();
       ConnexionAutomatiqueRegion?.Deactivate();
     }
 
@@ -88,6 +93,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
     #region Services
 
     private readonly IRegionManager Manager;
+    private IRegion ChangementLangueRegion;
     private IRegion ChangementMotDePasseRegion;
     private IRegion ConnexionAutomatiqueRegion;
 
@@ -95,6 +101,7 @@ namespace Hymperia.Facade.Views.Reglages.Application
 
     #region Views
 
+    private readonly ChangementLangue ChangementLangue;
     private readonly ChangementMotDePasse ChangementMotDePasse;
     private readonly ConnexionAutomatique ConnexionAutomatique;
 

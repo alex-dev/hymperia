@@ -12,6 +12,7 @@
     public const string CylindreEditor = nameof(Views.Editeur.PropertiesEditeur.CylindreEditeur);
     public const string EllipsoideEditor = nameof(Views.Editeur.PropertiesEditeur.EllipsoideEditeur);
     public const string PrismeRectangulaireEditor = nameof(Views.Editeur.PropertiesEditeur.PrismeEditeur);
+    public const string ChangementLangue = nameof(Views.Reglages.Application.ChangementLangue);
     public const string ChangementMotDePasse = nameof(Views.Reglages.Application.ChangementMotDePasse);
     public const string ConnexionAutomatique = nameof(Views.Reglages.Application.ConnexionAutomatique);
     public const string AccesProjet = nameof(Views.Reglages.Editeur.AccesProjet);
