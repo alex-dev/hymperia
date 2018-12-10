@@ -36,6 +36,7 @@ namespace Hymperia.Facade.ViewModels
     public DelegateCommand<PasswordBox> Connexion { get; }
     public DelegateCommand Inscription { get; }
     public DelegateCommand ConnexionAutomatique { get; }
+    public DelegateCommand NavigateToReglage { get; }
 
     #endregion
 
@@ -50,6 +51,7 @@ namespace Hymperia.Facade.ViewModels
       Connexion = new DelegateCommand<PasswordBox>(_Connexion);
       Inscription = new DelegateCommand(_Inscription);
       MainWindowTitle = titles.GetTitle<MainWindowTitle>();
+      NavigateToReglage = new DelegateCommand(_NavigateToReglage);
     }
 
     #endregion
@@ -87,6 +89,9 @@ namespace Hymperia.Facade.ViewModels
 
     private void _Inscription() =>
       Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Inscription);
+
+    private void _NavigateToReglage() =>
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageBD);
 
     #endregion
 

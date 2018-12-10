@@ -415,4 +415,13 @@
   <data name="Light" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="BD" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="Hote" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="TitleReglageBD" xml:space="preserve">
+    <value>Setting the database</value>
+  </data>
 </root>
