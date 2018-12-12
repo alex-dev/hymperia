@@ -62,7 +62,8 @@ namespace Hymperia.Facade.Services
     #endregion
 
     #region ReglageBDContext
-
+    
+    [Obsolete("Useless")]
     [NotNull]
     public IContextWrapper<DatabaseContext> GetReglageBDContext()
     {
@@ -84,7 +85,6 @@ namespace Hymperia.Facade.Services
       ReglageEditeurContext.Dispose();
       ReglageUtilisateurContext.Dispose();
       EditeurContext.Dispose();
-
     }
 
     #endregion

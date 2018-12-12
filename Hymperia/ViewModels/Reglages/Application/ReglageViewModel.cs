@@ -178,6 +178,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     {
       // Retitling delayed to OnProjetChanged after querying.
       Utilisateur = (Utilisateur)context.Parameters[NavigationParameterKeys.Utilisateur];
+      S.Default.Reload();
     }
 
     public void OnNavigatedFrom(NavigationContext context) => Utilisateur = null;

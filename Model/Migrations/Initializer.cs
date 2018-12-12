@@ -128,8 +128,8 @@ namespace Hymperia.Model.Migrations
     {
       string password = BCrypt.Net.BCrypt.HashPassword("123", Utilisateur.PasswordWorkFactor, true);
 
-      yield return new Utilisateur("Alexandre", password);
-      yield return new Utilisateur("Guillaume", password);
+      yield return new Utilisateur("Alexandre", password) { Langue = "en-US", Theme = "Dark" };
+      yield return new Utilisateur("Guillaume", password) { Theme = "Dark" };
       yield return new Utilisateur("Antoine", password);
     }
   }

@@ -3,14 +3,16 @@ using System;
 using Hymperia.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hymperia.Model.Migrations
+namespace Hymperia.Model.Migrations.Database
 {
   [DbContext(typeof(DatabaseContext))]
-  partial class DatabaseContextModelSnapshot : ModelSnapshot
+  [Migration("20181211204211_UserSettings")]
+  partial class UserSettings
   {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
       modelBuilder

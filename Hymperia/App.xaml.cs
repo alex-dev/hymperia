@@ -1,7 +1,7 @@
 ﻿/* 
  * Auteur : Alexandre
  * Date de création : 6 septembre 2018
-*/ 
+*/
 
 using System;
 using System.Globalization;
@@ -19,11 +19,14 @@ using Prism.Ninject;
 using A = Hymperia.Facade.Views.Reglages.Application;
 using E = Hymperia.Facade.Views.Reglages.Editeur;
 using B = Hymperia.Facade.Views.Reglages.BD;
+using System.Configuration;
 
 namespace Hymperia.Facade
 {
   public partial class App : PrismExtensionApplication
   {
+    private ResourceDictionary CurrentTheme;
+
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)
     {
@@ -51,31 +54,61 @@ namespace Hymperia.Facade
     /// <summary>Force le language de l'application.</summary>
     protected override void OnStartup(StartupEventArgs e)
     {
-      var culture = CreateAppCulture();
-      var language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
+      Settings.Default.SettingChanging += OnSettingChanged;
 
-      Thread.CurrentThread.CurrentCulture = culture;
-      Thread.CurrentThread.CurrentUICulture = culture;
-      FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(language));
-
-      Application.Current.Resources.MergedDictionaries.Add(CreateTheme());
+      SetAppCulture(Settings.Default.Culture);
+      SetTheme(Settings.Default.Theme);
 
       base.OnStartup(e);
     }
 
-    /// <summary>Crée une culture basé sur la culture courante.</summary>
-    [Obsolete("va être déplacer vers un service prochainement pour i18n.")]
-    private CultureInfo CreateAppCulture()
+    private void OnSettingChanged(object sender, SettingChangingEventArgs e)
     {
-      var culture = CultureInfo.CreateSpecificCulture(Settings.Default.Culture);
+      if (e.Cancel)
+        return;
+
+      switch (e.SettingName)
+      {
+        case nameof(Settings.Default.Culture):
+          SetAppCulture((string)e.NewValue); break;
+        case nameof(Settings.Default.Theme):
+          SetTheme((string)e.NewValue); break;
+      }
+    }
+
+
+    private CultureInfo SetAppCulture(string name)
+    {
+      var culture = CultureInfo.CreateSpecificCulture(name);
       culture.NumberFormat.CurrencySymbol = "$";
+      var language = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
+
+      Thread.CurrentThread.CurrentCulture = culture;
+      Thread.CurrentThread.CurrentUICulture = culture;
+
+      foreach (Window window in Windows)
+      {
+        if (window.Language == language)
+          continue;
+
+        window.Language = language;
+        window.UpdateLayout();
+      }
+
       return culture;
     }
 
-    [Obsolete("Sera un contrôle avec choix pour l'utilisateur dans une version prochaine.")]
-    private ResourceDictionary CreateTheme() => new ResourceDictionary
+    private ResourceDictionary SetTheme(string name)
     {
-      Source = new Uri($"pack://application:,,,/WPFResources/Themes/{Settings.Default.Theme}.xaml", UriKind.Absolute)
-    };
+      var theme = new ResourceDictionary
+      {
+        Source = new Uri($"pack://application:,,,/WPFResources/Themes/{name}.xaml", UriKind.Absolute)
+      };
+
+      Resources.MergedDictionaries.Remove(CurrentTheme);
+      Resources.MergedDictionaries.Add(theme);
+
+      return CurrentTheme = theme;
+    }
   }
 }

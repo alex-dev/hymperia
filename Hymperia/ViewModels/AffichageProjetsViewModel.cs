@@ -18,6 +18,7 @@ using Hymperia.Facade.Services;
 using Hymperia.Facade.Titles;
 using Hymperia.Model;
 using Hymperia.Model.Modeles;
+using S = Hymperia.Model.Properties;
 using JetBrains.Annotations;
 using Prism;
 using Prism.Commands;
@@ -232,9 +233,15 @@ namespace Hymperia.Facade.ViewModels
     {
       MainWindowTitle.SetTitle(Utilisateur);
 
-      Projets = Utilisateur is Utilisateur
-        ? new BulkObservableCollection<Acces>(Utilisateur.Acces)
-        : null;
+      if (Utilisateur is Utilisateur)
+      {
+        S.Settings.Default.SetSettingsFromUtilisateur(Utilisateur);
+        Projets = new BulkObservableCollection<Acces>(Utilisateur.Acces);
+      }
+      else
+      {
+        Projets = null;
+      }
     }
 
     #endregion

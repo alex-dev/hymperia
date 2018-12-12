@@ -14,9 +14,9 @@ namespace Hymperia.Facade.ViewModels
 
     public FenetrePrincipaleViewModel(ITitleAggregator titles)
     {
-      var title = titles.GetTitle<MainWindowTitle>();
-      Title = title.Title;
-      title.TitleChanged += OnTitleChanged;
+      var title_ = titles.GetTitle<MainWindowTitle>();
+      title_.TitleChanged += OnTitleChanged;
+      title = title_.Title;
     }
 
     private void OnTitleChanged(ITitle sender, TitleChangedEventArgs e) => Title = e.Title;

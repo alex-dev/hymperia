@@ -20,7 +20,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public string Langue
     {
       get => langue;
-      set => SetProperty(ref langue, value);
+      set => SetProperty(ref langue, value, OnLangueChanged);
     }
 
     public Utilisateur Utilisateur { get; set; }
@@ -29,24 +29,26 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructeur
 
-    public ChangementLangueViewModel(ICommandAggregator commands, IEventAggregator events)
+    public ChangementLangueViewModel(IEventAggregator events)
     {
-      commands.GetCommand<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
     }
 
     #endregion
 
-    #region Sauvegarder
-
-    private void PreSauvegarder()
+    private void OnLangueChanged()
     {
+      Utilisateur.Langue = Langue;
       S.Default.Culture = Langue;
     }
 
-    #endregion
+    private void OnUtilisateurChanged(Utilisateur utilisateur)
+    {
+      Utilisateur = utilisateur;
+      langue = utilisateur?.Langue ?? S.Default.Culture;
 
-    private void OnUtilisateurChanged(Utilisateur utilisateur) => Utilisateur = utilisateur;
+      RaisePropertyChanged(nameof(Langue));
+    }
 
     #region Private Fields
 

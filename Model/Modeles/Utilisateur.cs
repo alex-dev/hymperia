@@ -38,6 +38,14 @@ namespace Hymperia.Model.Modeles
     [MinLength(1, ErrorMessage = "Le mot de passe ne peut pas être vide.")]
     public string MotDePasse { get; set; }
 
+    [NotNull]
+    [Required]
+    public string Theme { get; set; } = "Default";
+
+    [NotNull]
+    [Required]
+    public string Langue { get; set; } = "fr-CA";
+
     #endregion
 
     #region Not Mapped Properties

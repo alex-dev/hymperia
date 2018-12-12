@@ -18,7 +18,7 @@ Date de création : 8 novembre 2018
     </Grid.RowDefinitions>
     <Image Grid.Row="0" Source="{StaticResource Logo}" />
     <StackPanel Orientation="Vertical" Grid.Row="1">
-      <TextBlock Text="{x:Static prop:Resources.InvalidCredential}">
+      <TextBlock Text="{Binding Path=(prop:Resources.InvalidCredential)}">
         <TextBlock.Style>
           <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ErrorTextBlock}">
             <Style.Triggers>
@@ -29,14 +29,14 @@ Date de création : 8 novembre 2018
           </Style>
         </TextBlock.Style>
       </TextBlock>
-      <Label Target="{Binding ElementName=txtUsername}" Content="{x:Static prop:Resources._Utilisateur}" />
+      <Label Target="{Binding ElementName=txtUsername}" Content="{Binding Path=(prop:Resources._Utilisateur)}" />
       <TextBox x:Name="txtUsername" Text="{Binding Username}" Validation.ErrorTemplate="{x:Null}" />
-      <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
+      <Label Target="{Binding ElementName=txtPassword}" Content="{Binding Path=(prop:Resources._MotDePasse)}" />
       <PasswordBox x:Name="txtPassword" PasswordChar="♦" />
       <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
           Content="{StaticResource Login}" />
       <Button Command="{Binding Inscription}" Content="{StaticResource Register}" />
-      <Button Command="{Binding NavigateToReglage}" Content="{x:Static prop:Resources.BD}" />
+      <Button Command="{Binding NavigateToReglage}" Content="{Binding Path=(prop:Resources.BD)}" />
     </StackPanel>
   </Grid>
 </UserControl>
