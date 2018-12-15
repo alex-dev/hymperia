@@ -11,7 +11,7 @@
       <RowDefinition Height="50" />
     </Grid.RowDefinitions>
     <TextBlock Text="{Binding Content}" Margin="50" Grid.ColumnSpan="2" Grid.Row="0" />
-    <Button Click="Ok" Content="{Binding (prop:Resources.Ok)}" Grid.Column="0" Grid.Row="1" />
-    <Button x:Name="Annuler" Click="Cancel" Content="{Binding (prop:Resources.Annuler)}" Grid.Column="1" Grid.Row="1" />
+    <Button Click="Ok" Content="{Binding Path=(prop:Resources.Ok)}" Grid.Column="0" Grid.Row="1" />
+    <Button x:Name="Annuler" Click="Cancel" Content="{Binding Path=(prop:Resources.Annuler)}" Grid.Column="1" Grid.Row="1" />
   </Grid>
 </UserControl>

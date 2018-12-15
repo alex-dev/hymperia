@@ -8,7 +8,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type UserControl}">
           <GroupBox BorderBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderThickness="2"
-              Header="{Binding (do:TabItemNameBehavior.TabItemName), Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}">
+              Header="{Binding Path=(do:TabItemNameBehavior.TabItemName), Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}">
             <ContentPresenter ContentSource="Content" />
           </GroupBox>
         </ControlTemplate>

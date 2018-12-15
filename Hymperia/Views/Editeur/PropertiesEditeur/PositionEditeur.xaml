@@ -16,34 +16,34 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <Label Target="txtPositionX" Content="{Binding (prop:Resources.PositionX)}" Grid.Column="0" Grid.Row="0" />
+    <Label Target="txtPositionX" Content="{Binding Path=(prop:Resources.PositionX)}" Grid.Column="0" Grid.Row="0" />
     <TextBox x:Name="txtPositionX" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding PositionX, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="0" />
-    <Label Target="txtPositionY" Content="{Binding (prop:Resources.PositionY)}" Grid.Column="0" Grid.Row="1" />
+    <Label Target="txtPositionY" Content="{Binding Path=(prop:Resources.PositionY)}" Grid.Column="0" Grid.Row="1" />
     <TextBox x:Name="txtPositionY" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding PositionY, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="1" />
-    <Label Target="txtPositionZ" Content="{Binding (prop:Resources.PositionZ)}" Grid.Column="0" Grid.Row="2" />
+    <Label Target="txtPositionZ" Content="{Binding Path=(prop:Resources.PositionZ)}" Grid.Column="0" Grid.Row="2" />
     <TextBox x:Name="txtPositionZ" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding PositionZ, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="2" />
-    <Label Target="txtRotationX" Content="{Binding (prop:Resources.RotationX)}" Grid.Column="0" Grid.Row="3" />
+    <Label Target="txtRotationX" Content="{Binding Path=(prop:Resources.RotationX)}" Grid.Column="0" Grid.Row="3" />
     <TextBox x:Name="txtRotationX" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding RotationX, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" do:NumericTextBoxBehavior.UpCommandParameter="0.05"
         do:NumericTextBoxBehavior.DownCommandParameter="0.1" Grid.Row="3" />
-    <Label Target="txtRotationY" Content="{Binding (prop:Resources.RotationY)}" Grid.Column="0" Grid.Row="4" />
+    <Label Target="txtRotationY" Content="{Binding Path=(prop:Resources.RotationY)}" Grid.Column="0" Grid.Row="4" />
     <TextBox x:Name="txtRotationY" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding RotationY, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
         Grid.Column="1" Grid.Row="4" />
-    <Label Target="txtRotationZ" Content="{Binding (prop:Resources.RotationZ)}" Grid.Column="0" Grid.Row="5" />
+    <Label Target="txtRotationZ" Content="{Binding Path=(prop:Resources.RotationZ)}" Grid.Column="0" Grid.Row="5" />
     <TextBox x:Name="txtRotationZ" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding RotationZ, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
         Grid.Column="1" Grid.Row="5" />
-    <Label Target="txtRotationW" Content="{Binding (prop:Resources.RotationW)}" Grid.Column="0" Grid.Row="6" />
+    <Label Target="txtRotationW" Content="{Binding Path=(prop:Resources.RotationW)}" Grid.Column="0" Grid.Row="6" />
     <TextBox x:Name="txtRotationW" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding RotationW, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         do:NumericTextBoxBehavior.UpCommandParameter="0.05" do:NumericTextBoxBehavior.DownCommandParameter="0.1"
