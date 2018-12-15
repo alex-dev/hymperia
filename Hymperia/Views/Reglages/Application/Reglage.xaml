@@ -51,7 +51,7 @@ Date de création : 21 novembre 2018
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.ChangementLangueRegion}" Grid.Column="1"
         Grid.Row="2" />
   
-    <Button Command="{Binding Sauvegarder}" Content="{x:Static prop:Resources.Save}" Grid.ColumnSpan="2" Grid.Row="6">
+    <Button Command="{Binding Sauvegarder}" Content="{Binding Path=(prop:Resources.Save)}" Grid.ColumnSpan="2" Grid.Row="6">
       <Button.Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
           <Style.Triggers>
@@ -79,6 +79,6 @@ Date de création : 21 novembre 2018
         </Style>
       </Button.Style>
     </Button>
-    <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Return}" Grid.ColumnSpan="2" Grid.Row="7"/>
+    <Button Command="{Binding NavigateBack}" Content="{Binding Path=(prop:Resources.Return)}" Grid.ColumnSpan="2" Grid.Row="7"/>
   </Grid>
 </UserControl>

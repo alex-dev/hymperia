@@ -24,12 +24,12 @@
     </Grid.RowDefinitions>
     <DockPanel LastChildFill="False" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
       <Menu HorizontalAlignment="Center" HorizontalContentAlignment="Center" DockPanel.Dock="Top">
-        <MenuItem Command="{Binding NavigateBack}" Header="{x:Static prop:Resources.Return}" />
+        <MenuItem Command="{Binding NavigateBack}" Header="{Binding (prop:Resources.Return)}" />
         <Separator Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" />
-        <MenuItem Command="{Binding Sauvegarder}" Header="{x:Static prop:Resources.Save}"
+        <MenuItem Command="{Binding Sauvegarder}" Header="{Binding (prop:Resources.Save)}"
             Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" />
         <Separator Visibility="{Binding Own, Converter={StaticResource ToVisibility}}" />
-        <MenuItem Command="{Binding NavigateToReglage}" Header="{x:Static prop:Resources.Reglage}"
+        <MenuItem Command="{Binding NavigateToReglage}" Header="{Binding (prop:Resources.Reglage)}"
             Visibility="{Binding Own, Converter={StaticResource ToVisibility}}" />
       </Menu>
     </DockPanel>
@@ -37,9 +37,9 @@
         SelectedValue="{Binding SelectedSelectionMode, Mode=OneWayToSource}"
         Visibility="{Binding CanModify, Converter={StaticResource ToVisibility}}" Grid.Column="1" Grid.Row="1">
       <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Deplacement}"
-          Content="{x:Static prop:Resources.Movement}" Selector.IsSelected="True" />
+          Content="{Binding (prop:Resources.Movement)}" Selector.IsSelected="True" />
       <ListBoxItem FontSize="20" Tag="{x:Static base:SelectionMode.Transformation}"
-          Content="{x:Static prop:Resources.Scaling}" />
+          Content="{Binding (prop:Resources.Scaling)}" />
     </ListBox>
     <ContentControl Style="{StaticResource EditeurStyle}"
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.ViewportRegion}" Grid.Column="0" Grid.Row="2" />

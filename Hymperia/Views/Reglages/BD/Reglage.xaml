@@ -25,21 +25,21 @@ Date de création : 1 décembre 2018
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <StackPanel HorizontalAlignment="Stretch" Margin="200">
-    <TextBlock Text="{x:Static prop:Resources.TitleReglageBD}" HorizontalAlignment="Center" />
-    <Label Content="{x:Static prop:Resources.Hote}" HorizontalContentAlignment="Center" />
+    <TextBlock Text="{Binding Path=(prop:Resources.TitleReglageBD)}" HorizontalAlignment="Center" />
+    <Label Content="{Binding Path=(prop:Resources.Hote)}" HorizontalContentAlignment="Center" />
     <TextBox Text="{Binding Host}" />
 
-    <Label Content="{x:Static prop:Resources.BD}" HorizontalContentAlignment="Center" />
+    <Label Content="{Binding Path=(prop:Resources.BD)}" HorizontalContentAlignment="Center" />
     <TextBox Text="{Binding Database}" />
 
-    <Label Content="{x:Static prop:Resources._Utilisateur}" HorizontalContentAlignment="Center" />
+    <Label Content="{Binding Path=(prop:Resources._Utilisateur)}" HorizontalContentAlignment="Center" />
     <TextBox Text="{Binding User}" />
 
-    <Label Content="{x:Static prop:Resources._MotDePasse}" HorizontalContentAlignment="Center" />
+    <Label Content="{Binding Path=(prop:Resources._MotDePasse)}" HorizontalContentAlignment="Center" />
     <PasswordBox do:PasswordBoxHelper.Attach="True"
         do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
 
     <CheckBox />
-    <Button Command="{Binding Connexion}" Content="{x:Static prop:Resources.Connexion}" />
+    <Button Command="{Binding Connexion}" Content="{Binding Path=(prop:Resources.Connexion)}" />
   </StackPanel>
 </UserControl>

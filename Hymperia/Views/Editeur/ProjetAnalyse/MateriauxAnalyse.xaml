@@ -1,23 +1,23 @@
 ﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.ProjetAnalyse.MateriauxAnalyse"
-    do:TabItemNameBehavior.TabItemName="{x:Static prop:Resources.AnalyseMateriau}"
+    do:TabItemNameBehavior.TabItemName="{Binding (prop:Resources.AnalyseMateriau)}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" xmlns:b="clr-namespace:Prism.Bindings;assembly=PrismExtension"
     prism:ViewModelLocator.AutoWireViewModel="True">
   <DockPanel>
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-      <TextBlock Text="{x:Static prop:Resources.TotalPrice}" />
+      <TextBlock Text="{Binding (prop:Resources.TotalPrice)}" />
       <TextBlock Text="{b:CultureAwareBinding Prix, StringFormat={}{0:C}, Mode=OneWay}" />
     </StackPanel>
     <DataGrid ItemsSource="{Binding Analyse, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True"
         CanUserAddRows="False">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="{x:Static prop:Resources.Material}" Binding="{Binding Key.Nom}" />
-        <DataGridTextColumn Header="{x:Static prop:Resources.MaterialPrice}"
+        <DataGridTextColumn Header="{Binding (prop:Resources.Material)}" Binding="{Binding Key.Nom}" />
+        <DataGridTextColumn Header="{Binding (prop:Resources.MaterialPrice)}"
             Binding="{b:CultureAwareBinding Key.Prix, StringFormat={}{0:C}}" />
-        <DataGridTextColumn Header="{x:Static prop:Resources.Volume}"
+        <DataGridTextColumn Header="{Binding (prop:Resources.Volume)}"
             Binding="{Binding Value.Item1, StringFormat={}{0:N}}" />
-        <DataGridTextColumn Header="{x:Static prop:Resources.Price}"
+        <DataGridTextColumn Header="{Binding (prop:Resources.Price)}"
             Binding="{b:CultureAwareBinding Value.Item2, StringFormat={}{0:C}}" />
       </DataGrid.Columns>
     </DataGrid>

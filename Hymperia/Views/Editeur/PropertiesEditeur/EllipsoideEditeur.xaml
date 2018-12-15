@@ -12,15 +12,15 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <Label Target="{Binding ElementName=tbxX}" Content="{x:Static prop:Resources.Radius_X}" Grid.Column="0" Grid.Row="0" />
+    <Label Target="{Binding ElementName=tbxX}" Content="{Binding (prop:Resources.Radius_X)}" Grid.Column="0" Grid.Row="0" />
     <TextBox x:Name="tbxX" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding Forme.RayonX, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="0" />
-    <Label Target="{Binding ElementName=tbxY}" Content="{x:Static prop:Resources.Radius_Y}" Grid.Column="0" Grid.Row="1" />
+    <Label Target="{Binding ElementName=tbxY}" Content="{Binding (prop:Resources.Radius_Y)}" Grid.Column="0" Grid.Row="1" />
     <TextBox x:Name="tbxY" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding Forme.RayonY, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="1" />
-    <Label Target="{Binding ElementName=tbxZ}" Content="{x:Static prop:Resources.Radius_Z}" Grid.Column="0" Grid.Row="2" />
+    <Label Target="{Binding ElementName=tbxZ}" Content="{Binding (prop:Resources.Radius_Z)}" Grid.Column="0" Grid.Row="2" />
     <TextBox x:Name="tbxZ" Style="{StaticResource NumericTextBox}" IsReadOnly="{Binding IsReadOnly}"
         Text="{Binding Forme.RayonZ, Mode=TwoWay,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged}"
         Grid.Column="1" Grid.Row="2" />
