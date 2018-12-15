@@ -1,15 +1,20 @@
-﻿using Hymperia.Facade.Constants;
-using Prism.Regions;
-using System.Windows;
+﻿using System.Windows;
+using Hymperia.Facade.ViewModels;
 
 namespace Hymperia.Facade.Views
 {
   public partial class FenetrePrincipale : Window
   {
-    public FenetrePrincipale(IRegionManager manager)
+    public FenetrePrincipale()
     {
-      Loaded += (sender, e) => manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
+      Loaded += OnLoaded;
       InitializeComponent();
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+      Loaded -= OnLoaded;
+      (DataContext as FenetrePrincipaleViewModel).Load.Execute(null);
     }
   }
 }

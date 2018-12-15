@@ -20,12 +20,21 @@ using A = Hymperia.Facade.Views.Reglages.Application;
 using E = Hymperia.Facade.Views.Reglages.Editeur;
 using B = Hymperia.Facade.Views.Reglages.BD;
 using System.Configuration;
+using System.Threading.Tasks;
+using Hymperia.Model;
 
 namespace Hymperia.Facade
 {
   public partial class App : PrismExtensionApplication
   {
     private ResourceDictionary CurrentTheme;
+
+    internal async Task UpdateDatabases()
+    {
+      using (var main = new DatabaseContext())
+      using (var localization = new LocalizationContext())
+        await Task.WhenAll(main.Migrate(), localization.Migrate());
+    }
 
     /// <summary>Permet d'enregistrer des types injectables au kernel de Ninject.</summary>
     protected override void RegisterTypes(IContainerRegistry registry)

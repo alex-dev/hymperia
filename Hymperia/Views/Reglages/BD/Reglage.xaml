@@ -38,8 +38,6 @@ Date de création : 1 décembre 2018
     <Label Content="{Binding Path=(prop:Resources._MotDePasse)}" HorizontalContentAlignment="Center" />
     <PasswordBox do:PasswordBoxHelper.Attach="True"
         do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
-
-    <CheckBox />
     <Button Command="{Binding Connexion}" Content="{Binding Path=(prop:Resources.Connexion)}" />
   </StackPanel>
 </UserControl>
