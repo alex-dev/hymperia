@@ -24,7 +24,7 @@ Date de création : 1 décembre 2018
       </prism:PopupWindowAction>
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
-  <StackPanel>
+  <StackPanel Margin="0,150" MaxWidth="400">
     <TextBlock Text="{x:Static prop:Resources.TitleReglageBD}" />
     <Label Content="{x:Static prop:Resources.Hote}" />
     <TextBox Text="{Binding Host}" />
