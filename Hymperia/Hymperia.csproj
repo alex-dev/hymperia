@@ -626,5 +626,15 @@
     <Resource Include="WPFResources\Images\owner.png" />
     <Resource Include="WPFResources\Images\view.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WPFResources\Images\BDReglage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WPFResources\Images\BDAccepte.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

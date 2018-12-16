@@ -20,7 +20,9 @@ Date de création : 9 novembre 2018
     <Image Grid.Row="0" Source="{StaticResource Logo}" />
     <StackPanel Orientation="Vertical" Grid.Row="1">
       <Label Target="{Binding ElementName=txtUsername}" Content="{Binding Path=(prop:Resources._Utilisateur)}" />
-      <TextBox x:Name="txtUsername" Text="{Binding Username, ValidatesOnDataErrors=True}">
+      <TextBox x:Name="txtUsername" Text="{Binding Username, ValidatesOnDataErrors=True}"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources._Utilisateur)}" >
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="LostFocus">
             <i:InvokeCommandAction Command="{Binding ValidationUsername}" />
@@ -29,12 +31,18 @@ Date de création : 9 novembre 2018
       </TextBox>
       <Label Target="{Binding ElementName=txtPassword}" Content="{Binding Path=(prop:Resources._MotDePasse)}" />
       <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
-          do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+          do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" />
       <Label Target="{Binding ElementName=txtVerification}" Content="{Binding Path=(prop:Resources._VerificationMotDePasse)}" />
       <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
-          do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+          do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources._VerificationMotDePasse)}" />
       <Button Command="{Binding Inscription}" CommandParameter="{Binding ., ElementName=txtPassword}"
-          Content="{StaticResource RegisterFinal}">
+          Content="{StaticResource RegisterFinal}" ToolTipService.InitialShowDelay="0"
+          ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Inscription)}">
         <Button.Style>
           <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Style.Triggers>
@@ -48,7 +56,9 @@ Date de création : 9 novembre 2018
           </Style>
         </Button.Style>
       </Button>
-      <Button Command="{Binding NavigateBack}" Content="{StaticResource Return}" />
+      <Button Command="{Binding NavigateBack}" Content="{StaticResource Return}" ToolTipService.InitialShowDelay="0"
+          ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Retour)}" />
     </StackPanel>
   </Grid>
 </UserControl>

@@ -38,9 +38,15 @@ Date de création : 28 novembre 2018
     <ContentControl x:Name="regionRenommerProjet"
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.RenommerProjetRegion}" Grid.Column="1" Grid.Row="0" />
     <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1">
-      <Button Command="{Binding NavigateBack}" Content="{Binding Path=(prop:Resources.Retour)}" />
-      <Button Command="{Binding Delete}" Content="{Binding Path=(prop:Resources.Supprimer)}" />
-      <Button Command="{Binding Sauvegarder}" Content="{Binding Path=(prop:Resources.Save)}">
+      <Button Command="{Binding NavigateBack}" Content="{Binding Path=(prop:Resources.Retour)}"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Retour)}" />
+      <Button Command="{Binding Delete}" Content="{Binding Path=(prop:Resources.Supprimer)}"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.SupprimerProjet)}" />
+      <Button Command="{Binding Sauvegarder}" Content="{Binding Path=(prop:Resources.Save)}"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Save)}">
         <Button.Style>
           <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Style.Triggers>

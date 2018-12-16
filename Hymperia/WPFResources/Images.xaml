@@ -20,8 +20,12 @@
   <BitmapImage x:Key="Settings" UriSource="pack://application:,,,/WPFResources/Images/settings.png" />
   <BitmapImage x:Key="Register" UriSource="pack://application:,,,/WPFResources/Images/register.png" />
   <BitmapImage x:Key="RegisterFinal" UriSource="pack://application:,,,/WPFResources/Images/registerfinal.png" />
-  <BitmapImage x:Key="{x:Static model:Acces+Droit.Possession}" UriSource="pack://application:,,,/WPFResources/Images/owner.png" />
-  <BitmapImage x:Key="{x:Static model:Acces+Droit.Lecture}" UriSource="pack://application:,,,/WPFResources/Images/view.png" />
+  <BitmapImage x:Key="BDReglage" UriSource="pack://application:,,,/WPFResources/Images/BDReglage.png" />
+  <BitmapImage x:Key="BDAccepte" UriSource="pack://application:,,,/WPFResources/Images/BDAccepte.png" />
+  <BitmapImage x:Key="{x:Static model:Acces+Droit.Possession}"
+      UriSource="pack://application:,,,/WPFResources/Images/owner.png" />
+  <BitmapImage x:Key="{x:Static model:Acces+Droit.Lecture}"
+      UriSource="pack://application:,,,/WPFResources/Images/view.png" />
   <BitmapImage x:Key="{x:Static model:Acces+Droit.LectureEcriture}"
       UriSource="pack://application:,,,/WPFResources/Images/edit.png" />
 </ResourceDictionary>

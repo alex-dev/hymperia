@@ -11,12 +11,18 @@ Date de création : 21 novembre 2018
   <StackPanel Orientation="Vertical">
     <Label Target="{Binding ElementName=txtOldPassword}" Content="{Binding Path=(prop:Resources._AncientMotDePasse)}" />
     <PasswordBox x:Name="txtOldPassword" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding OldPassword, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+        do:PasswordBoxHelper.Password="{Binding OldPassword, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._AncientMotDePasse)}" />
     <Label Target="{Binding ElementName=txtPassword}" Content="{Binding Path=(prop:Resources._MotDePasse)}" />
     <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" />
     <Label Target="{Binding ElementName=txtVerification}" Content="{Binding Path=(prop:Resources._VerificationMotDePasse)}" />
     <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._VerificationMotDePasse)}" />
   </StackPanel>
 </UserControl>

@@ -4,5 +4,6 @@
     xmlns:prism="http://prismlibrary.com/" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     prism:ViewModelLocator.AutoWireViewModel="True">
-  <TextBox Text="{Binding Nom}" />
+  <TextBox Text="{Binding Nom}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+      ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.TitleRenameProject)}" />
 </UserControl>

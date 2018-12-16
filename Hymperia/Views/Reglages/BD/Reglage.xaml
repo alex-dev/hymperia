@@ -8,6 +8,11 @@ Date de création : 1 décembre 2018
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:popups="clr-namespace:Hymperia.Facade.Views.Popups" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" prism:ViewModelLocator.AutoWireViewModel="True">
+  <UserControl.Resources>
+    <Image x:Key="Return" Source="{StaticResource Return}" Width="30" Height="30" />
+    <Image x:Key="BDReglage" Source="{StaticResource BDReglage}" Width="50" Height="50" />
+    <Image x:Key="BDAccepte" Source="{StaticResource BDAccepte}" Width="30" Height="30" />
+  </UserControl.Resources>
   <i:Interaction.Triggers>
     <prism:InteractionRequestTrigger SourceObject="{Binding InformationRequest}">
       <prism:PopupWindowAction IsModal="True">
@@ -25,19 +30,30 @@ Date de création : 1 décembre 2018
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <StackPanel HorizontalAlignment="Stretch" Margin="200">
-    <TextBlock Text="{Binding Path=(prop:Resources.TitleReglageBD)}" HorizontalAlignment="Center" />
+    <Button Content="{StaticResource BDReglage}" HorizontalAlignment="Center"/>
+    <TextBlock Text="{Binding Path=(prop:Resources.TitleReglageBD)}" HorizontalAlignment="Center" FontSize="25"/>
     <Label Content="{Binding Path=(prop:Resources.Hote)}" HorizontalContentAlignment="Center" />
-    <TextBox Text="{Binding Host}" />
+    <TextBox Text="{Binding Host}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.Hote)}" />
 
     <Label Content="{Binding Path=(prop:Resources.BD)}" HorizontalContentAlignment="Center" />
-    <TextBox Text="{Binding Database}" />
+    <TextBox Text="{Binding Database}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.BD)}" />
 
     <Label Content="{Binding Path=(prop:Resources._Utilisateur)}" HorizontalContentAlignment="Center" />
-    <TextBox Text="{Binding User}" />
+    <TextBox Text="{Binding User}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources._Utilisateur)}" />
 
     <Label Content="{Binding Path=(prop:Resources._MotDePasse)}" HorizontalContentAlignment="Center" />
     <PasswordBox do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
-    <Button Command="{Binding Connexion}" Content="{Binding Path=(prop:Resources.Connexion)}" />
+        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" />
+    <Button Command="{Binding Connexion}" Content="{StaticResource BDAccepte}"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources.Connexion)}" />
+    <Button Command="{Binding NavigateBack}" Content="{StaticResource Return}" ToolTipService.InitialShowDelay="0"
+        ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources.Retour)}" />
   </StackPanel>
 </UserControl>
