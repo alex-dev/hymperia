@@ -14,7 +14,7 @@ namespace Hymperia.Model.Migrations
     {
 #pragma warning disable 612, 618
       modelBuilder
-          .HasAnnotation("ProductVersion", "2.2.0-preview3-35497")
+          .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
           .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
       modelBuilder.Entity("Hymperia.Model.Modeles.Acces", b =>
@@ -76,7 +76,8 @@ namespace Hymperia.Model.Migrations
             b.Property<int>("G");
 
             b.Property<string>("Nom")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasMaxLength(100);
 
             b.Property<double>("Prix");
 
@@ -95,7 +96,8 @@ namespace Hymperia.Model.Migrations
                       .ValueGeneratedOnAdd();
 
             b.Property<string>("Nom")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasMaxLength(250);
 
             b.HasKey("Id");
 
@@ -108,16 +110,24 @@ namespace Hymperia.Model.Migrations
                       .ValueGeneratedOnAdd();
 
             b.Property<string>("Langue")
-                      .IsRequired();
+                      .IsRequired()
+                      .ValueGeneratedOnAdd()
+                      .HasMaxLength(5)
+                      .HasDefaultValue("fr-CA");
 
             b.Property<string>("MotDePasse")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasMaxLength(250);
 
             b.Property<string>("Nom")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasMaxLength(250);
 
             b.Property<string>("Theme")
-                      .IsRequired();
+                      .IsRequired()
+                      .ValueGeneratedOnAdd()
+                      .HasMaxLength(20)
+                      .HasDefaultValue("Dark");
 
             b.HasKey("Id");
 

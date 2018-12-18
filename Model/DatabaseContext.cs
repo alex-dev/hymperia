@@ -122,6 +122,8 @@ namespace Hymperia.Model
     {
       builder.Entity<Utilisateur>().ToTable("Utilisateurs");
       builder.Entity<Utilisateur>().HasAlternateKey(utilisateur => utilisateur.Nom);
+      builder.Entity<Utilisateur>().Property(user => user.Langue).HasDefaultValue("fr-CA");
+      builder.Entity<Utilisateur>().Property(user => user.Theme).HasDefaultValue("Dark");
 
       builder.Entity<Materiau>().ToTable("Materiaux");
       builder.Entity<Materiau>().Property(materiau => materiau.R).HasConversion<int>();

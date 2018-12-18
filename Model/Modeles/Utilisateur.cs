@@ -29,6 +29,7 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom d'utilisateur ne peut pas être vide.")]
+    [MaxLength(250)]
     public string Nom { get; private set; }
 
     /// <summary>Le mot de passe encrypté de l'utilisateur.</summary>
@@ -36,14 +37,17 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le mot de passe ne peut pas être vide.")]
+    [MaxLength(250)]
     public string MotDePasse { get; set; }
 
     [NotNull]
     [Required]
+    [MaxLength(20)]
     public string Theme { get; set; } = "Default";
 
     [NotNull]
     [Required]
+    [MaxLength(5)]
     public string Langue { get; set; } = "fr-CA";
 
     #endregion

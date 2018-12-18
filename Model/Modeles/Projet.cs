@@ -27,6 +27,7 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du projet ne peut pas être vide.")]
+    [MaxLength(250)]
     public string Nom { get; private set; }
 
     #endregion

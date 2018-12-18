@@ -47,7 +47,6 @@ Date de création : 8 novembre 2018
       <Button Command="{Binding NavigateToReglage}" Content="{StaticResource BDReglage}"
           ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
           ToolTip="{Binding Path=(prop:Resources.TitleReglageBD)}" />
-      
     </StackPanel>
   </Grid>
 </UserControl>

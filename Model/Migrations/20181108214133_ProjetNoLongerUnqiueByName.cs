@@ -11,7 +11,10 @@ namespace Hymperia.Model.Migrations.Database
         table: "Projets");
 
     protected override void Down(MigrationBuilder migrationBuilder) =>
-      throw new NotImplementedException();
+      migrationBuilder.AddUniqueConstraint(
+        name: "AK_Projets_Nom",
+        table: "Projets",
+        column: "Nom");
 
   }
 }

@@ -242,6 +242,9 @@
     <Compile Include="Views\Popups\EntitySuppressionPopup.xaml.cs">
       <DependentUpon>EntitySuppressionPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popups\SingleInformationPopup.xaml.cs">
+      <DependentUpon>SingleInformationPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Popups\InformationPopup.xaml.cs">
       <DependentUpon>InformationPopup.xaml</DependentUpon>
     </Compile>
@@ -349,6 +352,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Popups\EntitySuppressionPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Popups\SingleInformationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -575,7 +582,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next">
-      <Version>3.1.0</Version>
+      <Version>3.1.2</Version>
     </PackageReference>
     <PackageReference Include="Dragablz">
       <Version>0.0.3.203</Version>

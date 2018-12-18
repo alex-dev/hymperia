@@ -19,7 +19,7 @@ using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.BD
 {
-  public sealed class ReglageViewModel : ValidatingBase
+  public sealed class ReglageViewModel : BindableBase
   {
     #region Properties
 
