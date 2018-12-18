@@ -29,26 +29,26 @@ Date de création : 1 décembre 2018
       </prism:PopupWindowAction>
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
-  <StackPanel HorizontalAlignment="Stretch" Margin="200">
+  <StackPanel HorizontalAlignment="Stretch" Margin="50">
     <Button Content="{StaticResource BDReglage}" HorizontalAlignment="Center"/>
     <TextBlock Text="{Binding Path=(prop:Resources.TitleReglageBD)}" HorizontalAlignment="Center" FontSize="25"/>
     <Label Content="{Binding Path=(prop:Resources.Hote)}" HorizontalContentAlignment="Center" />
     <TextBox Text="{Binding Host}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
-        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.Hote)}" />
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.Hote)}" TextAlignment="Center" />
 
     <Label Content="{Binding Path=(prop:Resources.BD)}" HorizontalContentAlignment="Center" />
     <TextBox Text="{Binding Database}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
-        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.BD)}" />
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.BD)}"  TextAlignment="Center"/>
 
     <Label Content="{Binding Path=(prop:Resources._Utilisateur)}" HorizontalContentAlignment="Center" />
     <TextBox Text="{Binding User}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
-        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources._Utilisateur)}" />
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources._Utilisateur)}" TextAlignment="Center"/>
 
     <Label Content="{Binding Path=(prop:Resources._MotDePasse)}" HorizontalContentAlignment="Center" />
     <PasswordBox do:PasswordBoxHelper.Attach="True"
         do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦"
         ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
-        ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" />
+        ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" HorizontalContentAlignment="Center"/>
     <Button Command="{Binding Connexion}" Content="{StaticResource BDAccepte}"
         ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
         ToolTip="{Binding Path=(prop:Resources.Connexion)}" />
