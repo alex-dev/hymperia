@@ -15,7 +15,7 @@ namespace Hymperia.Facade.Converters
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
       (value as bool? ?? false)
-        ? new GridLength(System.Convert.ToDouble(parameter), GridUnitType.Star)
+        ? new GridLength(System.Convert.ToDouble(parameter, CultureInfo.InvariantCulture), GridUnitType.Star)
         : new GridLength(0);
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
