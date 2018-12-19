@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Services;
 using Hymperia.Facade.Titles;
@@ -35,19 +36,20 @@ namespace Hymperia.Facade.ViewModels
 
     private async void _Load()
     {
-      if (string.IsNullOrWhiteSpace(Settings.Default.MainDatabase)
-        || string.IsNullOrWhiteSpace(Settings.Default.LocalizationDatabase))
-      {
-        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageBD);
-        return;
-      }
+      const string inner = "Invalid connection strings";
+
+      Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
 
       try
       {
+        if (string.IsNullOrWhiteSpace(Settings.Default.MainDatabase)
+          || string.IsNullOrWhiteSpace(Settings.Default.LocalizationDatabase))
+          throw new InvalidOperationException(inner);
+
         await (App.Current as App).UpdateDatabases();
-        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.Connexion);
       }
-      catch (MySqlException)
+      catch (Exception e) when (e is MySqlException
+        || (e is InvalidOperationException && e.Message == inner))
       {
         Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageBD);
       }
