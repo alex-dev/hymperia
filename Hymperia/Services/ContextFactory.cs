@@ -61,22 +61,6 @@ namespace Hymperia.Facade.Services
 
     #endregion
 
-    #region ReglageBDContext
-
-    [NotNull]
-    public IContextWrapper<DatabaseContext> GetReglageBDContext()
-    {
-      if (ReglageBDContext is null)
-        ReglageBDContext = new Tracker<DatabaseContext>();
-
-      ++ReglageBDContext.Count;
-      return new ContextWrapper<DatabaseContext>(ReglageBDContext.Context, () => Release(ref ReglageBDContext));
-    }
-
-    private Tracker<DatabaseContext> ReglageBDContext;
-
-    #endregion
-
     #region IDisposable
 
     public void Dispose()
@@ -84,7 +68,6 @@ namespace Hymperia.Facade.Services
       ReglageEditeurContext.Dispose();
       ReglageUtilisateurContext.Dispose();
       EditeurContext.Dispose();
-
     }
 
     #endregion

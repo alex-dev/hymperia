@@ -3,10 +3,8 @@
  * Date de création : 9 décembre 2018
 */
 
-using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Model.Modeles;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using S = Hymperia.Model.Properties.Settings;
@@ -20,7 +18,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public string Theme
     {
       get => theme;
-      set => SetProperty(ref theme, value);
+      set => SetProperty(ref theme, value, OnThemeChanged);
     }
 
     public Utilisateur Utilisateur { get; set; }
@@ -29,24 +27,26 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructeur
 
-    public ChangementThemeViewModel(ICommandAggregator commands, IEventAggregator events)
+    public ChangementThemeViewModel(IEventAggregator events)
     {
-      commands.GetCommand<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
     }
 
     #endregion
 
-    #region Sauvegarder
-
-    private void PreSauvegarder()
+    private void OnThemeChanged()
     {
+      Utilisateur.Theme = Theme;
       S.Default.Theme = Theme;
     }
 
-    #endregion
+    private void OnUtilisateurChanged(Utilisateur utilisateur)
+    {
+      Utilisateur = utilisateur;
+      theme = utilisateur?.Theme ?? S.Default.Theme;
 
-    private void OnUtilisateurChanged(Utilisateur utilisateur) => Utilisateur = utilisateur;
+      RaisePropertyChanged(nameof(Theme));
+    }
 
     #region Private Fields
 

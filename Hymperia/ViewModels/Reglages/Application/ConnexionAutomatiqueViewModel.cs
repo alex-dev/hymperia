@@ -3,10 +3,8 @@
  * Date de création : 23 novembre 2018 
 */
 
-using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Model.Modeles;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using S = Hymperia.Model.Properties.Settings;
@@ -20,7 +18,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
     public bool Selectionne
     {
       get => selectionne;
-      set => SetProperty(ref selectionne, value);
+      set => SetProperty(ref selectionne, value, OnChanged);
     }
 
     public Utilisateur Utilisateur { get; set; }
@@ -29,9 +27,8 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Constructeur
 
-    public ConnexionAutomatiqueViewModel(ICommandAggregator commands, IEventAggregator events)
+    public ConnexionAutomatiqueViewModel(IEventAggregator events)
     {
-      commands.GetCommand<PreSauvegarderReglageApplication>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageUtilisateurChanged>().Subscribe(OnUtilisateurChanged);
     }
 
@@ -39,7 +36,7 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #region Sauvegarder
 
-    private void PreSauvegarder()
+    private void OnChanged()
     {
       S.Default.ConnexionAutomatique = Selectionne;
       S.Default.Utilisateur = Selectionne ? Utilisateur.Nom : string.Empty;
@@ -48,11 +45,17 @@ namespace Hymperia.Facade.ViewModels.Reglages.Application
 
     #endregion
 
-    private void OnUtilisateurChanged(Utilisateur utilisateur) => Utilisateur = utilisateur;
+    private void OnUtilisateurChanged(Utilisateur utilisateur)
+    {
+      Utilisateur = utilisateur;
+      Selectionne = utilisateur is Utilisateur
+        && S.Default.ConnexionAutomatique
+        && Utilisateur.Nom == S.Default.Utilisateur;
+    }
 
     #region Private Fields
 
-    private bool selectionne = S.Default.ConnexionAutomatique;
+    private bool selectionne = false;
     
     #endregion
   }

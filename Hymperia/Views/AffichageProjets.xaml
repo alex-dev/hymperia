@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:popups="clr-namespace:Hymperia.Facade.Views.Popups"
-    xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True">
+    xmlns:prop="clr-namespace:Hymperia.Facade.Properties" xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True">
   <UserControl.Resources>
     <Image x:Key="Trashcan" Source="{StaticResource Trash}" Width="30" Height="30" />
     <Image x:Key="Create" Source="{StaticResource Create}" Width="30" Height="30" />
@@ -35,7 +36,8 @@
         SelectionMode="Extended" SelectionChanged="OnSelectionChanged" Grid.Column="0">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <DockPanel LastChildFill="False">
+          <DockPanel LastChildFill="False" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+              ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Projet.Nom}">
             <DockPanel.InputBindings>
               <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.NavigateToProjet, ElementName=view}"
                   CommandParameter="{Binding}" />
@@ -47,12 +49,19 @@
       </ListBox.ItemTemplate>
     </ListBox>
     <DockPanel LastChildFill="False" Grid.Column="1">
-      <Button Content="{StaticResource Create}" Command="{Binding AjouterProjet}" DockPanel.Dock="Top" />
+      <Button Content="{StaticResource Create}" Command="{Binding AjouterProjet}" DockPanel.Dock="Top"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.AjouterProjet)}" />
       <Button x:Name="btnSuppression" Command="{Binding SupprimerProjet}"
           CommandParameter="{Binding SelectedItems, ElementName=ListBox}" DockPanel.Dock="Top"
-          Content="{StaticResource Trashcan}" />
-      <Button Content="{StaticResource Logout}" Command="{Binding NavigateBack}" DockPanel.Dock="Bottom" />
-      <Button Content="{StaticResource Settings}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom" />
+          Content="{StaticResource Trashcan}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+          ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.SupprimerProjet)}" />
+      <Button Content="{StaticResource Logout}" Command="{Binding NavigateBack}" DockPanel.Dock="Bottom"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Deconnexion)}" />
+      <Button Content="{StaticResource Settings}" Command="{Binding NavigateToReglage}" DockPanel.Dock="Bottom"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Reglage)}" />
     </DockPanel>
   </Grid>
 </UserControl>

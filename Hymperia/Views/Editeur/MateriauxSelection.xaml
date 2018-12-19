@@ -1,5 +1,5 @@
 ﻿<UserControl x:Class="Hymperia.Facade.Views.Editeur.MateriauxSelection"
-    do:TabItemNameBehavior.TabItemName="{x:Static prop:Resources.SelectionMateriau}"
+    do:TabItemNameBehavior.TabItemName="{Binding Path=(prop:Resources.SelectionMateriau)}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:prism="http://prismlibrary.com/"
     xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prop="clr-namespace:Hymperia.Facade.Properties" prism:ViewModelLocator.AutoWireViewModel="True">
@@ -8,7 +8,8 @@
       SelectedValue="{Binding SelectedMateriau, Mode=TwoWay}" SelectionMode="Single">
     <ListBox.ItemTemplate>
       <DataTemplate>
-        <StackPanel>
+        <StackPanel ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+            ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Nom}">
           <TextBlock Text="{Binding Nom}" />
           <Rectangle Fill="{Binding Fill}" />
         </StackPanel>

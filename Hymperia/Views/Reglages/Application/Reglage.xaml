@@ -48,10 +48,11 @@ Date de création : 21 novembre 2018
         prism:RegionManager.RegionName="{x:Static const:RegionKeys.ConnexionAutomatiqueRegion}" Grid.Column="1"
         Grid.Row="1" />
     <ContentControl x:Name="regionChangementLangue"
-        prism:RegionManager.RegionName="{x:Static const:RegionKeys.ChangementLangueRegion}" Grid.Column="1"
-        Grid.Row="2" />
-  
-    <Button Command="{Binding Sauvegarder}" Content="{x:Static prop:Resources.Save}" Grid.ColumnSpan="2" Grid.Row="6">
+        prism:RegionManager.RegionName="{x:Static const:RegionKeys.ChangementLangueRegion}" Grid.Column="1" Grid.Row="2" />
+
+    <Button Command="{Binding Sauvegarder}" Content="{Binding Path=(prop:Resources.Save)}" Grid.ColumnSpan="2"
+        Grid.Row="6" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.Save)}">
       <Button.Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
           <Style.Triggers>
@@ -60,8 +61,7 @@ Date de création : 21 novembre 2018
                 Value="True">
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
-            <DataTrigger
-                Binding="{Binding (prism:RegionManager.Context).HasError, ElementName=regionChangementTheme}"
+            <DataTrigger Binding="{Binding (prism:RegionManager.Context).HasError, ElementName=regionChangementTheme}"
                 Value="True">
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
@@ -70,8 +70,7 @@ Date de création : 21 novembre 2018
                 Value="True">
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
-            <DataTrigger 
-                Binding="{Binding (prism:RegionManager.Context).HasError, ElementName=regionChangementLangue}"
+            <DataTrigger Binding="{Binding (prism:RegionManager.Context).HasError, ElementName=regionChangementLangue}"
                 Value="True">
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
@@ -79,6 +78,8 @@ Date de création : 21 novembre 2018
         </Style>
       </Button.Style>
     </Button>
-    <Button Command="{Binding NavigateBack}" Content="{x:Static prop:Resources.Return}" Grid.ColumnSpan="2" Grid.Row="7"/>
+    <Button Command="{Binding NavigateBack}" Content="{Binding Path=(prop:Resources.Return)}" Grid.ColumnSpan="2"
+        Grid.Row="7" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+        ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.Retour)}" />
   </Grid>
 </UserControl>

@@ -3,20 +3,26 @@ Auteur : Antoine Mailhot
 Date de création : 21 novembre 2018
 -->
 <UserControl x:Class="Hymperia.Facade.Views.Reglages.Application.ChangementMotDePasse"
-    do:TabItemNameBehavior.TabItemName="{x:Static prop:Resources.ChangementDuMotDePasse}"
+    do:TabItemNameBehavior.TabItemName="{Binding Path=(prop:Resources.ChangementDuMotDePasse)}"
     Style="{StaticResource SettingsGroup}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:prism="http://prismlibrary.com/" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:do="clr-namespace:Hymperia.Facade.DependencyObjects" xmlns:prop="clr-namespace:Hymperia.Facade.Properties"
     prism:ViewModelLocator.AutoWireViewModel="True">
   <StackPanel Orientation="Vertical">
-    <Label Target="{Binding ElementName=txtOldPassword}" Content="{x:Static prop:Resources._AncientMotDePasse}" />
+    <Label Target="{Binding ElementName=txtOldPassword}" Content="{Binding Path=(prop:Resources._AncientMotDePasse)}" />
     <PasswordBox x:Name="txtOldPassword" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding OldPassword, ValidatesOnDataErrors=True}" PasswordChar="♦" />
-    <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
+        do:PasswordBoxHelper.Password="{Binding OldPassword, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._AncientMotDePasse)}" />
+    <Label Target="{Binding ElementName=txtPassword}" Content="{Binding Path=(prop:Resources._MotDePasse)}" />
     <PasswordBox x:Name="txtPassword" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦" />
-    <Label Target="{Binding ElementName=txtVerification}" Content="{x:Static prop:Resources._VerificationMotDePasse}" />
+        do:PasswordBoxHelper.Password="{Binding Password, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" />
+    <Label Target="{Binding ElementName=txtVerification}" Content="{Binding Path=(prop:Resources._VerificationMotDePasse)}" />
     <PasswordBox x:Name="txtVerification" do:PasswordBoxHelper.Attach="True"
-        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦" />
+        do:PasswordBoxHelper.Password="{Binding Verification, ValidatesOnDataErrors=True}" PasswordChar="♦"
+        ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+        ToolTip="{Binding Path=(prop:Resources._VerificationMotDePasse)}" />
   </StackPanel>
 </UserControl>

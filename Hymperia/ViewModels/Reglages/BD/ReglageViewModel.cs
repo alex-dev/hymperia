@@ -3,24 +3,15 @@
  * Date de création : 1 décembre 2018
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Hymperia.Facade.CommandAggregatorCommands;
 using Hymperia.Facade.Constants;
-using Hymperia.Facade.EventAggregatorMessages;
 using Hymperia.Facade.Loaders;
 using Hymperia.Facade.Properties;
 using Hymperia.Facade.Services;
-using Hymperia.Model;
-using Hymperia.Model.Modeles;
 using JetBrains.Annotations;
-using Prism;
+using MySql.Data.MySqlClient;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -28,7 +19,7 @@ using S = Hymperia.Model.Properties.Settings;
 
 namespace Hymperia.Facade.ViewModels.Reglages.BD
 {
-  public sealed class ReglageViewModel : ValidatingBase
+  public sealed class ReglageViewModel : BindableBase
   {
     #region Properties
 
@@ -62,7 +53,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.BD
 
     #region Interaction Requests
 
-    public InteractionRequest<IConfirmation> ConfirmationRequest { get; } = new InteractionRequest<IConfirmation>();
     public InteractionRequest<INotification> InformationRequest { get; } = new InteractionRequest<INotification>();
 
     #endregion
@@ -77,7 +67,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.BD
 
     #region Asynchronous Loading
 
-    public AsyncLoader<Utilisateur> UtilisateurLoader { get; } = new AsyncLoader<Utilisateur>();
     public AsyncLoader SaveLoader { get; } = new AsyncLoader();
 
     #endregion
@@ -89,11 +78,10 @@ namespace Hymperia.Facade.ViewModels.Reglages.BD
     public ReglageViewModel([NotNull] ContextFactory factory, [NotNull] IRegionManager manager)
     {
       NavigateBack = new DelegateCommand(_NavigateBack);
-      Connexion = new DelegateCommand(InteractionSauvegarder);
+      Connexion = new DelegateCommand(() => SaveLoader.Loading = Save());
 
       ContextFactory = factory;
       Manager = manager;
-
     }
 
     #endregion
@@ -105,121 +93,29 @@ namespace Hymperia.Facade.ViewModels.Reglages.BD
 
     #endregion
 
-    #region Command Sauvegarder
+    #region Command Connexion
 
-    private ICollection<string> _PreSauvegarder()
+    private async Task Save()
     {
-      var errors = new List<string>();
-      //PreSauvegarder.Execute(errors);
-      return errors;
-    }
+      S.Default.SetMainConnectionString(Host, Database, User, Password);
+      S.Default.SetLocalizationConnectionString(Host, Database, User, Password);
 
-    private async Task _Sauvegarder()
-    {
-      S.Default.Save();
-      using (await AsyncLock.Lock(ContextWrapper.Context))
-        await ContextWrapper.Context.SaveChangesAsync();
-    }
-
-    #endregion
-
-    #region Command InformationSauvegarde
-
-    private void InteractionSauvegarder()
-    {
-      async Task ExecuteReussite(IConfirmation context)
+      try
       {
-        if (context.Confirmed)
-          await _Sauvegarder();
+        await (App.Current as App).UpdateDatabases();
+        S.Default.Save();
       }
+      catch (MySqlException e)
+      {
+        S.Default.Reload();
 
-      var errors = _PreSauvegarder();
-
-      if (errors.Any())
         InformationRequest.Raise(new Notification
         {
           Title = Resources.Echec,
-          Content = errors
+          Content = e.Message
         });
-      else
-        ConfirmationRequest.Raise(new Confirmation
-        {
-          Title = Resources.Reussite,
-          Content = Resources.SaveDataInfo
-        }, context => SaveLoader.Loading = ExecuteReussite(context));
-    }
-
-    #endregion
-
-    #region Queries
-
-    #endregion
-
-    #region IActiveAware
-
-    public event EventHandler IsActiveChanged;
-
-    public bool IsActive
-    {
-      get => isActive;
-      set
-      {
-        if (isActive == value)
-          return;
-
-        isActive = value;
-
-        if (value)
-          OnActivation();
-        else
-          OnDeactivation();
-
-        IsActiveChanged?.Invoke(this, EventArgs.Empty);
       }
     }
-
-#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
-
-    private void OnActivation()
-    {
-      if (ContextWrapper is null)
-        ContextWrapper = ContextFactory.GetReglageBDContext();
-      else
-        CancelDispose();
-    }
-
-    private void OnDeactivation() => DisposeContext();
-
-
-#pragma warning restore 4014
-
-    #endregion
-
-    #region IDisposable
-
-#pragma warning disable 4014 // Justification: The async call is meant to release resources after making sure every async calls running ended.
-
-    public void Dispose() => DisposeContext();
-
-#pragma warning restore 4014
-
-    private async Task DisposeContext()
-    {
-      if (ContextWrapper is null)
-        return;
-
-      disposeToken = new CancellationTokenSource();
-      using (await AsyncLock.Lock(ContextWrapper.Context, disposeToken.Token))
-      {
-        if (disposeToken.IsCancellationRequested)
-          return;
-
-        ContextWrapper.Dispose();
-        ContextWrapper = null;
-      }
-    }
-
-    private void CancelDispose() => disposeToken.Cancel();
 
     #endregion
 
@@ -230,9 +126,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.BD
     [NotNull]
     private readonly IRegionManager Manager;
 
-    [NotNull]
-    private ContextFactory.IContextWrapper<DatabaseContext> ContextWrapper;
-
     #endregion
 
     #region Private Fields
@@ -241,8 +134,6 @@ namespace Hymperia.Facade.ViewModels.Reglages.BD
     private string database;
     private string user;
     private string password;
-    private bool isActive;
-    private CancellationTokenSource disposeToken;
 
     #endregion
   }

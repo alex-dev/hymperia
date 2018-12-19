@@ -27,7 +27,7 @@ namespace Hymperia.Facade.Services
        select new MateriauWrapper(materiau, localized.Value)).ToArray();
 
     public async Task<IDictionary<MateriauWrapper, Tuple<double, double>>> Convertir([NotNull][ItemNotNull] IEnumerable<KeyValuePair<Materiau, double>> materiaux) =>
-      // C# doesn't support deconstruction in from/let clause... Yet!
+      // C# doesn't support destructuring in from/let clause... Yet!
       // (from (materiau, prix) in Projet.PrixMateriaux
       (from pair in materiaux
        let materiau = pair.Key

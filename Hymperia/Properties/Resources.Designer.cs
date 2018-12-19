@@ -11,6 +11,100 @@ namespace Hymperia.Facade.Properties
   /// <summary>This class wraps <see cref="ResourceManager" /> to ease usage.</summary>
   internal static partial class Resources
   {
+    private static void RaiseStaticPropertiesChanged()
+    {
+      RaiseStaticPropertyChanged(nameof(Ajouter));
+      RaiseStaticPropertyChanged(nameof(AjouterProjet));
+      RaiseStaticPropertyChanged(nameof(AnalyseMateriau));
+      RaiseStaticPropertyChanged(nameof(And));
+      RaiseStaticPropertyChanged(nameof(Annuler));
+      RaiseStaticPropertyChanged(nameof(ChangementDuMotDePasse));
+      RaiseStaticPropertyChanged(nameof(Confirmer));
+      RaiseStaticPropertyChanged(nameof(Connexion));
+      RaiseStaticPropertyChanged(nameof(ConnexionAutomatique));
+      RaiseStaticPropertyChanged(nameof(DestructiveConversion));
+      RaiseStaticPropertyChanged(nameof(DontMatchPassword));
+      RaiseStaticPropertyChanged(nameof(EnumerationSeparator));
+      RaiseStaticPropertyChanged(nameof(Fermer));
+      RaiseStaticPropertyChanged(nameof(FieldCannotBeEmpty));
+      RaiseStaticPropertyChanged(nameof(Inscription));
+      RaiseStaticPropertyChanged(nameof(InvalidCredential));
+      RaiseStaticPropertyChanged(nameof(Material));
+      RaiseStaticPropertyChanged(nameof(MaterialPrice));
+      RaiseStaticPropertyChanged(nameof(Movement));
+      RaiseStaticPropertyChanged(nameof(Non));
+      RaiseStaticPropertyChanged(nameof(NouveauNomProjet));
+      RaiseStaticPropertyChanged(nameof(Oui));
+      RaiseStaticPropertyChanged(nameof(Ouvrir));
+      RaiseStaticPropertyChanged(nameof(OuvrirFenetre));
+      RaiseStaticPropertyChanged(nameof(Position));
+      RaiseStaticPropertyChanged(nameof(PositionX));
+      RaiseStaticPropertyChanged(nameof(PositionY));
+      RaiseStaticPropertyChanged(nameof(PositionZ));
+      RaiseStaticPropertyChanged(nameof(Price));
+      RaiseStaticPropertyChanged(nameof(ProprieteForme));
+      RaiseStaticPropertyChanged(nameof(Radius_Base));
+      RaiseStaticPropertyChanged(nameof(Radius_Top));
+      RaiseStaticPropertyChanged(nameof(Radius_X));
+      RaiseStaticPropertyChanged(nameof(Radius_Y));
+      RaiseStaticPropertyChanged(nameof(Radius_Z));
+      RaiseStaticPropertyChanged(nameof(Reglage));
+      RaiseStaticPropertyChanged(nameof(Rotation));
+      RaiseStaticPropertyChanged(nameof(RotationW));
+      RaiseStaticPropertyChanged(nameof(RotationX));
+      RaiseStaticPropertyChanged(nameof(RotationY));
+      RaiseStaticPropertyChanged(nameof(RotationZ));
+      RaiseStaticPropertyChanged(nameof(RequiredPassword));
+      RaiseStaticPropertyChanged(nameof(RequiredUsername));
+      RaiseStaticPropertyChanged(nameof(RequiredVerification));
+      RaiseStaticPropertyChanged(nameof(Save));
+      RaiseStaticPropertyChanged(nameof(Scaling));
+      RaiseStaticPropertyChanged(nameof(SelectionForme));
+      RaiseStaticPropertyChanged(nameof(SelectionMateriau));
+      RaiseStaticPropertyChanged(nameof(Supprimer));
+      RaiseStaticPropertyChanged(nameof(SupprimerProjets));
+      RaiseStaticPropertyChanged(nameof(TotalPrice));
+      RaiseStaticPropertyChanged(nameof(UsedUsername));
+      RaiseStaticPropertyChanged(nameof(Volume));
+      RaiseStaticPropertyChanged(nameof(_Diametre));
+      RaiseStaticPropertyChanged(nameof(_Height));
+      RaiseStaticPropertyChanged(nameof(_InnerDiametre));
+      RaiseStaticPropertyChanged(nameof(_Length));
+      RaiseStaticPropertyChanged(nameof(_Material));
+      RaiseStaticPropertyChanged(nameof(_MotDePasse));
+      RaiseStaticPropertyChanged(nameof(_Utilisateur));
+      RaiseStaticPropertyChanged(nameof(_VerificationMotDePasse));
+      RaiseStaticPropertyChanged(nameof(_Width));
+      RaiseStaticPropertyChanged(nameof(_AncientMotDePasse));
+      RaiseStaticPropertyChanged(nameof(Ok));
+      RaiseStaticPropertyChanged(nameof(Echec));
+      RaiseStaticPropertyChanged(nameof(Reussite));
+      RaiseStaticPropertyChanged(nameof(SaveDataInfo));
+      RaiseStaticPropertyChanged(nameof(TitleRenameProject));
+      RaiseStaticPropertyChanged(nameof(DroitEdition));
+      RaiseStaticPropertyChanged(nameof(Retour));
+      RaiseStaticPropertyChanged(nameof(SupprimerProjet));
+      RaiseStaticPropertyChanged(nameof(SupprimerProjetContent));
+      RaiseStaticPropertyChanged(nameof(TitleAccesProjet));
+      RaiseStaticPropertyChanged(nameof(TitleConfirmDelete));
+      RaiseStaticPropertyChanged(nameof(UserExistProjet));
+      RaiseStaticPropertyChanged(nameof(UserNotExist));
+      RaiseStaticPropertyChanged(nameof(Return));
+      RaiseStaticPropertyChanged(nameof(Deconnexion));
+      RaiseStaticPropertyChanged(nameof(Hymperia));
+      RaiseStaticPropertyChanged(nameof(Langue));
+      RaiseStaticPropertyChanged(nameof(English));
+      RaiseStaticPropertyChanged(nameof(French));
+      RaiseStaticPropertyChanged(nameof(Theme));
+      RaiseStaticPropertyChanged(nameof(Dark));
+      RaiseStaticPropertyChanged(nameof(Default));
+      RaiseStaticPropertyChanged(nameof(Eyesore));
+      RaiseStaticPropertyChanged(nameof(Light));
+      RaiseStaticPropertyChanged(nameof(BD));
+      RaiseStaticPropertyChanged(nameof(Hote));
+      RaiseStaticPropertyChanged(nameof(TitleReglageBD));
+    }
+
     private static readonly ResourceManager manager =
       new ResourceManager("Hymperia.Facade.Properties.Resources", typeof(Resources).GetTypeInfo().Assembly);
 
@@ -42,16 +136,16 @@ namespace Hymperia.Facade.Properties
     /// <summary>
     ///   Peut seulement convertir depuis {origins}.
     /// </summary>
-    public static string CanOnlyConvertFrom([CanBeNull] object origins)
-      => string.Format(
+    public static string CanOnlyConvertFrom([CanBeNull] object origins) =>
+      string.Format(
         GetString("CanOnlyConvertFrom", nameof(origins)),
         origins);
 
     /// <summary>
     ///   Peut seulement convertir vers {targets}.
     /// </summary>
-    public static string CanOnlyConvertTo([CanBeNull] object targets)
-      => string.Format(
+    public static string CanOnlyConvertTo([CanBeNull] object targets) =>
+      string.Format(
         GetString("CanOnlyConvertTo", nameof(targets)),
         targets);
 
@@ -103,16 +197,16 @@ namespace Hymperia.Facade.Properties
     /// <summary>
     ///   N'as pas pu convertir {value} en {targets}.
     /// </summary>
-    public static string ImpossibleCast([CanBeNull] object value, [CanBeNull] object targets)
-      => string.Format(
+    public static string ImpossibleCast([CanBeNull] object value, [CanBeNull] object targets) =>
+      string.Format(
         GetString("ImpossibleCast", nameof(value), nameof(targets)),
         value, targets);
 
     /// <summary>
     ///   N'a pas pu instantier un {type}.
     /// </summary>
-    public static string ImpossibleInstantiation([CanBeNull] object type)
-      => string.Format(
+    public static string ImpossibleInstantiation([CanBeNull] object type) =>
+      string.Format(
         GetString("ImpossibleInstantiation", nameof(type)),
         type);
 
@@ -129,16 +223,16 @@ namespace Hymperia.Facade.Properties
     /// <summary>
     ///   Clé de localisation {key} est invalide pour l'entité {entity}.
     /// </summary>
-    public static string InvalidLocalizationKey([CanBeNull] object key, [CanBeNull] object entity)
-      => string.Format(
+    public static string InvalidLocalizationKey([CanBeNull] object key, [CanBeNull] object entity) =>
+      string.Format(
         GetString("InvalidLocalizationKey", nameof(key), nameof(entity)),
         key, entity);
 
     /// <summary>
     ///   Ce manipulateur ne supporte que les {visuals}.
     /// </summary>
-    public static string ManipulatorSupport([CanBeNull] object visuals)
-      => string.Format(
+    public static string ManipulatorSupport([CanBeNull] object visuals) =>
+      string.Format(
         GetString("ManipulatorSupport", nameof(visuals)),
         visuals);
 
@@ -320,8 +414,8 @@ namespace Hymperia.Facade.Properties
     /// <summary>
     ///   Enfant inconnu de {parent}.
     /// </summary>
-    public static string UnknownChild([CanBeNull] object parent)
-      => string.Format(
+    public static string UnknownChild([CanBeNull] object parent) =>
+      string.Format(
         GetString("UnknownChild", nameof(parent)),
         parent);
 
@@ -333,8 +427,8 @@ namespace Hymperia.Facade.Properties
     /// <summary>
     ///   Ce viewport ne support que les manipulateurs de {types}.
     /// </summary>
-    public static string ViewportManipulatorSupport([CanBeNull] object types)
-      => string.Format(
+    public static string ViewportManipulatorSupport([CanBeNull] object types) =>
+      string.Format(
         GetString("ViewportManipulatorSupport", nameof(types)),
         types);
 
@@ -487,6 +581,8 @@ namespace Hymperia.Facade.Properties
     ///   Français
     /// </summary>
     public static string French => GetString("French");
+
+    /// <summary>
     ///   Thème
     /// </summary>
     public static string Theme => GetString("Theme");
@@ -510,6 +606,8 @@ namespace Hymperia.Facade.Properties
     ///   Lumière
     /// </summary>
     public static string Light => GetString("Light");
+
+    /// <summary>
     ///   Base de données
     /// </summary>
     public static string BD => GetString("BD");

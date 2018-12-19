@@ -20,6 +20,7 @@ namespace Hymperia.Model.Modeles
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du matériau ne peut pas être vide.")]
+    [MaxLength(100)]
     public string Nom { get; private set; }
 
     /// <summary>Le prix du matériaux par volume.</summary>

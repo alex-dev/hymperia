@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Hymperia.Model.Identity;
 using Hymperia.Model.Modeles;
@@ -13,12 +12,14 @@ namespace Hymperia.Model.Localization
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du matériau ne peut pas être vide.")]
+    [MaxLength(100)]
     public string StringKey { get; private set; }
 
     /// <remarks>Primary Key</remarks>
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du matériau ne peut pas être vide.")]
+    [MaxLength(5)]
     public string CultureKey { get; private set; }
 
     /// <summary>Le nom du matériau.</summary>
@@ -26,6 +27,7 @@ namespace Hymperia.Model.Localization
     [NotNull]
     [Required]
     [MinLength(1, ErrorMessage = "Le nom du matériau ne peut pas être vide.")]
+    [MaxLength(100)]
     public string Nom { get; set; }
 
     public LocalizedMateriau([NotNull] string stringKey, [NotNull] string cultureKey, [NotNull] string nom)

@@ -18,14 +18,10 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
     public string Nom
     {
       get => nom;
-      set => SetProperty(ref nom, value);
+      set => SetProperty(ref nom, value, () => Projet.RenommerProjet(value));
     }
 
-    public Projet Projet
-    {
-      get => projet;
-      set => SetProperty(ref projet, value);
-    }
+    public Projet Projet { get; set; }
 
     #endregion
 
@@ -33,30 +29,22 @@ namespace Hymperia.Facade.ViewModels.Reglages.Editeur
 
     public RenommerProjetViewModel(ICommandAggregator commands, IEventAggregator events)
     {
-      commands.GetCommand<PreSauvegarderReglageEditeur>().RegisterCommand(new DelegateCommand(PreSauvegarder));
       events.GetEvent<ReglageProjetChanged>().Subscribe(OnProjetChanged);
     }
 
     #endregion
 
-    #region Sauvegarder
-
-    private void PreSauvegarder()
+    private void OnProjetChanged(Projet projet)
     {
-      if (Nom != "")
-      {
-        Projet.RenommerProjet(Nom);
-      }
+      Projet = projet;
+      nom = Projet?.Nom;
+
+      RaisePropertyChanged(nameof(Nom));
     }
-
-    #endregion
-
-    private void OnProjetChanged(Projet projet) => Projet = projet;
 
     #region Private Fields
 
-    private string nom = "";
-    private Projet projet;
+    private string nom;
 
     #endregion
   }

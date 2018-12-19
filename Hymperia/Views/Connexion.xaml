@@ -10,6 +10,7 @@ Date de création : 8 novembre 2018
   <UserControl.Resources>
     <Image x:Key="Login" Source="{StaticResource Login}" Width="30" Height="30" />
     <Image x:Key="Register" Source="{StaticResource Register}" Width="30" Height="30" />
+    <Image x:Key="BDReglage" Source="{StaticResource BDReglage}" Width="30" Height="30" />
   </UserControl.Resources>
   <Grid Style="{StaticResource ConnexionScreen}">
     <Grid.RowDefinitions>
@@ -18,7 +19,7 @@ Date de création : 8 novembre 2018
     </Grid.RowDefinitions>
     <Image Grid.Row="0" Source="{StaticResource Logo}" />
     <StackPanel Orientation="Vertical" Grid.Row="1">
-      <TextBlock Text="{x:Static prop:Resources.InvalidCredential}">
+      <TextBlock Text="{Binding Path=(prop:Resources.InvalidCredential)}">
         <TextBlock.Style>
           <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ErrorTextBlock}">
             <Style.Triggers>
@@ -29,14 +30,23 @@ Date de création : 8 novembre 2018
           </Style>
         </TextBlock.Style>
       </TextBlock>
-      <Label Target="{Binding ElementName=txtUsername}" Content="{x:Static prop:Resources._Utilisateur}" />
-      <TextBox x:Name="txtUsername" Text="{Binding Username}" Validation.ErrorTemplate="{x:Null}" />
-      <Label Target="{Binding ElementName=txtPassword}" Content="{x:Static prop:Resources._MotDePasse}" />
-      <PasswordBox x:Name="txtPassword" PasswordChar="♦" />
+      <Label Target="{Binding ElementName=txtUsername}" Content="{Binding Path=(prop:Resources._Utilisateur)}" />
+      <TextBox x:Name="txtUsername" Text="{Binding Username}" Validation.ErrorTemplate="{x:Null}"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources._Utilisateur)}" />
+      <Label Target="{Binding ElementName=txtPassword}" Content="{Binding Path=(prop:Resources._MotDePasse)}" />
+      <PasswordBox x:Name="txtPassword" PasswordChar="♦" ToolTipService.InitialShowDelay="0"
+          ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources._MotDePasse)}" />
       <Button Command="{Binding Connexion}" CommandParameter="{Binding ., ElementName=txtPassword}"
-          Content="{StaticResource Login}" />
-      <Button Command="{Binding Inscription}" Content="{StaticResource Register}" />
-      <Button Command="{Binding NavigateToReglage}" Content="{x:Static prop:Resources.BD}" />
+          Content="{StaticResource Login}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000"
+          ToolTipService.BetweenShowDelay="2000" ToolTip="{Binding Path=(prop:Resources.Connexion)}" />
+      <Button Command="{Binding Inscription}" Content="{StaticResource Register}" ToolTipService.InitialShowDelay="0"
+          ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.Inscription)}" />
+      <Button Command="{Binding NavigateToReglage}" Content="{StaticResource BDReglage}"
+          ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="2000"
+          ToolTip="{Binding Path=(prop:Resources.TitleReglageBD)}" />
     </StackPanel>
   </Grid>
 </UserControl>
