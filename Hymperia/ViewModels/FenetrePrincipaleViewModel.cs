@@ -2,6 +2,7 @@
 using Hymperia.Facade.Constants;
 using Hymperia.Facade.Services;
 using Hymperia.Facade.Titles;
+using Hymperia.Model.Properties;
 using MySql.Data.MySqlClient;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -34,6 +35,13 @@ namespace Hymperia.Facade.ViewModels
 
     private async void _Load()
     {
+      if (string.IsNullOrWhiteSpace(Settings.Default.MainDatabase)
+        || string.IsNullOrWhiteSpace(Settings.Default.LocalizationDatabase))
+      {
+        Manager.RequestNavigate(RegionKeys.ContentRegion, NavigationKeys.ReglageBD);
+        return;
+      }
+
       try
       {
         await (App.Current as App).UpdateDatabases();

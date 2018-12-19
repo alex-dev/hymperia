@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="MainDatabase" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymperia; Password=infoH25978;</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LocalizationDatabase" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; Username=Hymperia; Password=infoH25978;</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Culture" Type="System.String" Scope="User">
-      <Value Profile="(Default)">en-US</Value>
+      <Value Profile="(Default)">fr-CA</Value>
     </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Dark</Value>
+      <Value Profile="(Default)">Light</Value>
     </Setting>
     <Setting Name="Utilisateur" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

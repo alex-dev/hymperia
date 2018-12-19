@@ -85,7 +85,6 @@ namespace Hymperia.Facade
       }
     }
 
-
     private CultureInfo SetAppCulture(string name)
     {
       var culture = CultureInfo.CreateSpecificCulture(name);

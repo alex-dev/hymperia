@@ -12,7 +12,7 @@ namespace Hymperia.Model.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,8 +25,7 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master; Username=Hymp" +
-            "eria; Password=infoH25978;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string MainDatabase {
             get {
                 return ((string)(this["MainDatabase"]));
@@ -38,8 +37,7 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=420.cstj.qc.ca; SslMode=Preferred; Database=hymperia_master_localization; " +
-            "Username=Hymperia; Password=infoH25978;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LocalizationDatabase {
             get {
                 return ((string)(this["LocalizationDatabase"]));
@@ -51,7 +49,7 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        [global::System.Configuration.DefaultSettingValueAttribute("fr-CA")]
         public string Culture {
             get {
                 return ((string)(this["Culture"]));
@@ -63,7 +61,7 @@ namespace Hymperia.Model.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Dark")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Light")]
         public string Theme {
             get {
                 return ((string)(this["Theme"]));
