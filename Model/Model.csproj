@@ -71,6 +71,10 @@
     <Compile Include="Migrations\20181027032045_Initial.designer.cs">
       <DependentUpon>20181027032045_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181027133117_Localization.cs" />
+    <Compile Include="Migrations\20181027133117_Localization.designer.cs">
+      <DependentUpon>20181027133117_Localization.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\20181108214133_ProjetNoLongerUnqiueByName.cs" />
     <Compile Include="Migrations\20181108214133_ProjetNoLongerUnqiueByName.designer.cs">
       <DependentUpon>20181108214133_ProjetNoLongerUnqiueByName.cs</DependentUpon>
@@ -79,12 +83,12 @@
     <Compile Include="Migrations\20181218153935_UserSettings.designer.cs">
       <DependentUpon>20181218153935_UserSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181218154046_Length.cs" />
+    <Compile Include="Migrations\20181218154046_Length.designer.cs">
+      <DependentUpon>20181218154046_Length.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Migrations\Initializer.cs" />
-    <Compile Include="Migrations\20181027133117_Localization.cs" />
-    <Compile Include="Migrations\20181027133117_Localization.designer.cs">
-      <DependentUpon>20181027133117_Localization.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\LocalizationContextModelSnapshot.cs" />
     <Compile Include="Modeles\Acces.cs" />
     <Compile Include="Modeles\Cone.cs" />
@@ -194,7 +198,7 @@
       <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql">
-      <Version>2.1.2</Version>
+      <Version>2.1.4</Version>
     </PackageReference>
     <PackageReference Include="System.AppContext">
       <Version>4.3.0</Version>

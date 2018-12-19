@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hymperia.Model.Migrations.Database
+namespace Hymperia.Model.Migrations
 {
   [DbContext(typeof(DatabaseContext))]
   [Migration("20181218153935_UserSettings")]

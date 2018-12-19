@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Hymperia.Model.Migrations.Database
+namespace Hymperia.Model.Migrations
 {
   public partial class UserSettings : Migration
   {

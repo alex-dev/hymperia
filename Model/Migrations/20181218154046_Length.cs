@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Hymperia.Model.Migrations.Localization
+namespace Hymperia.Model.Migrations
 {
   public partial class Length : Migration
   {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hymperia.Model.Migrations.Localization
+namespace Hymperia.Model.Migrations
 {
   [DbContext(typeof(LocalizationContext))]
   [Migration("20181218154046_Length")]
