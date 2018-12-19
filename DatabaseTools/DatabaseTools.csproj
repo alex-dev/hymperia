@@ -125,7 +125,7 @@
       <Version>2018.2.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore">
-      <Version>2.2.0</Version>
+      <Version>2.2.0-preview3-35497</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils">
       <Version>1.1.1</Version>

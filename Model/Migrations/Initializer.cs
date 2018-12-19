@@ -25,7 +25,7 @@ namespace Hymperia.Model.Migrations
         materiaux => new PrismeRectangulaire(
           materiaux[Random.Next(materiaux.Length)],
           new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
+          new Quaternion(Random.NextDouble(), Random.NextDouble(), Random.NextDouble(), Random.NextDouble()))
         {
           Hauteur = Random.Next(1, 15),
           Largeur = Random.Next(1, 15),
@@ -34,7 +34,7 @@ namespace Hymperia.Model.Migrations
         materiaux => new Ellipsoide(
           materiaux[Random.Next(materiaux.Length)],
           new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
+          new Quaternion(Random.NextDouble(), Random.NextDouble(), Random.NextDouble(), Random.NextDouble()))
         {
           RayonX = Random.Next(1, 15),
           RayonY = Random.Next(1, 15),
@@ -43,7 +43,7 @@ namespace Hymperia.Model.Migrations
         materiaux => new Cylindre(
           materiaux[Random.Next(materiaux.Length)],
           new Point(Random.Next(-100, 100), Random.Next(-100, 100), Random.Next(-100, 100)),
-          new Quaternion(Random.Next(100), Random.Next(100), Random.Next(100), Random.NextDouble()))
+          new Quaternion(Random.NextDouble(), Random.NextDouble(), Random.NextDouble(), Random.NextDouble()))
         {
           Hauteur = Random.Next(1, 15),
           Diametre = Random.Next(1, 15)
@@ -64,10 +64,12 @@ namespace Hymperia.Model.Migrations
     /// <param name="token">Un token d'annulation.</param>
     public async Task Initialize([NotNull] DatabaseContext context, [NotNull] CancellationToken token = default)
     {
-      await context.Utilisateurs.AddRangeAsync(InitializeUtilisateurs(), token).ConfigureAwait(false);
+      context.Utilisateurs.AddRange(InitializeUtilisateurs());
       await context.SaveChangesAsync(token).ConfigureAwait(false);
 
-      await context.Projets.AddRangeAsync(InitializeProjets(await context.Materiaux.ToArrayAsync(token).ConfigureAwait(false)), token);
+      context.Projets.AddRange(
+        InitializeProjets(await context.Materiaux.ToArrayAsync(token).ConfigureAwait(false)));
+
       await context.SaveChangesAsync(token);
 
       InitializeAcces(
